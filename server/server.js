@@ -5,8 +5,7 @@ const express = require('express')
 
 const server = express()
 
-// const port = config.server.port
-const port = process.env.PORT
+const port = config.server.port
 
 server.get('/', function (req, res) {
 	res.send('Hello World!')
