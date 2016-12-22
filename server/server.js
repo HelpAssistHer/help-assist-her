@@ -1,14 +1,16 @@
 'use strict'
 
+const config = require('config')
 const express = require('express')
+
 const server = express()
 
-const port = 4000
+const port = config.server.port
 
 server.get('/', function (req, res) {
 	res.send('Hello World!')
 })
 
 server.listen(port, function () {
-	console.log(`Example app listening on port ${port}!`)
+	console.log(`Help Assist Her server listening on port ${port}`)
 })
