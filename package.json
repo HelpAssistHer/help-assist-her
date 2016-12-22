@@ -1,0 +1,23 @@
+{
+  "name": "help-assist-her",
+  "version": "0.0.1",
+  "description": "Women's Healthcare resources in the palm of your hand.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node ./server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HelpAssistHer/help-assist-her.git"
+  },
+  "author": "Karen M. Rose",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HelpAssistHer/help-assist-her/issues"
+  },
+  "homepage": "https://github.com/HelpAssistHer/help-assist-her#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
