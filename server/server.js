@@ -19,11 +19,18 @@ const startDatabase = P.coroutine(function *startDatabase() {
 	const pregnancyCenterSchema = mongoose.Schema({
 		name: String,
 		address: String,
+		phone: String,
+		website: String
 	})
 
 	const PregnancyCenter = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
 
-	const aPregnancyCenter = new PregnancyCenter({ name: 'Life Etc' })
+	const aPregnancyCenter = new PregnancyCenter({
+		name: 'Third Box Pregnancy Clinic',
+		address: '450 Sutter St., Ste 1740, San Francisco, CA 94108',
+		phone: '415.627.9175',
+		website: 'http://www.firstresort.org'
+	})
 	console.log(aPregnancyCenter.name)
 
 	aPregnancyCenter.save(function (err) {
