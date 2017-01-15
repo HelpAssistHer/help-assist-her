@@ -10,8 +10,8 @@ const pregnancyCenterSchema = mongoose.Schema({
 })
 
 // create model using the schema
-const PregnancyCenter = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
+const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
 
 // make available
-module.exports = PregnancyCenter
+module.exports = PregnancyCenterModel
 

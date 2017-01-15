@@ -7,7 +7,7 @@ const P = require('bluebird')
 
 const server = express()
 const port = config.server.port
-const PregnancyCenter = require('../app/models/PregnancyCenter');
+const PregnancyCenterModel = require('../app/models/PregnancyCenter');
 
 mongoose.Promise = require('bluebird')
 
@@ -28,9 +28,9 @@ server.get('/', function(req, res) {
     res.send('Hello World!')
 })
 
-server.get('/api/pregnancycenters', function(req, res) {
+server.get('/api/pregnancy-centers', function(req, res) {
 
-	PregnancyCenter.find({}, function (err, db_pcs) {
+	PregnancyCenterModel.find({}, function (err, db_pcs) {
         if(err) {
         	console.log(err)
 		}

@@ -4,7 +4,7 @@ const config = require('config')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 const fs = require('fs')
-const PregnancyCenter = require('../app/models/PregnancyCenter');
+const PregnancyCenterModel = require('../app/models/PregnancyCenter');
 
 mongoose.Promise = require('bluebird')
 
@@ -19,7 +19,7 @@ const loadData = P.coroutine(function *startDatabase() {
         console.log(data);
         const docs = JSON.parse(data);
 
-        PregnancyCenter.collection.insertMany(docs, function (err, result) {
+        PregnancyCenterModel.collection.insertMany(docs, function (err, result) {
             if (err) {
                 console.log(err);
             } else {
