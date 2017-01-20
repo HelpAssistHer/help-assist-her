@@ -14,7 +14,7 @@ const loadData = P.coroutine(function *startDatabase() {
 
     yield mongoose.connect(connectionString)
 
-    fs.readFile('../test/fixtures/ny_pc.json', 'utf8', function (err, data) {
+    fs.readFile('../test/fixtures/ny-pc.json', 'utf8', function (err, data) {
         if (err) throw err;
         console.log(data);
         const docs = JSON.parse(data);
