@@ -4,7 +4,7 @@ const config = require('config')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 const fs = require('fs')
-const PregnancyCenterModel = require('../app/models/PregnancyCenter');
+const PregnancyCenterModel = require('../app/models/pregnancy-center');
 
 mongoose.Promise = require('bluebird')
 
