@@ -7,6 +7,7 @@ const P = require('bluebird')
 
 const server = express()
 const port = config.server.port
+const PregnancyCenterModel = require('../app/models/pregnancy-center');
 
 mongoose.Promise = require('bluebird')
 
@@ -16,32 +17,26 @@ const startDatabase = P.coroutine(function *startDatabase() {
 
 	yield mongoose.connect(connectionString)
 
-	const pregnancyCenterSchema = mongoose.Schema({
-		name: String,
-		address: String,
-		phone: String,
-		website: String
-	})
+    console.log("connecting to database")
 
-	const PregnancyCenter = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
-
-	const aPregnancyCenter = new PregnancyCenter({
-		name: 'Third Box Pregnancy Clinic',
-		address: '450 Sutter St., Ste 1740, San Francisco, CA 94108',
-		phone: '415.627.9175',
-		website: 'http://www.firstresort.org'
-	})
-	console.log(aPregnancyCenter.name)
-
-	aPregnancyCenter.save(function (err) {
-		if (err) return console.error(err)
-	})
 })
 
 startDatabase()
 
+
 server.get('/', function(req, res) {
-	res.send('Hello World!')
+    res.send('Hello World!')
+})
+
+server.get('/api/pregnancy-centers', function(req, res) {
+
+	PregnancyCenterModel.find({}, function (err, db_pcs) {
+        if(err) {
+        	console.log(err)
+		}
+
+		res.send(db_pcs);
+    });
 })
 
 server.listen(port, function() {
