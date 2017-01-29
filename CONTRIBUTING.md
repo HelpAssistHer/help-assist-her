@@ -14,7 +14,8 @@
 ````
 brew install git
 ````
-## Install Node 
+## Install Node
+We are using versions: node v6.9.4 (npm v3.10.10)
 
 ````
 brew install node
