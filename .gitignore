@@ -40,3 +40,6 @@ yarn.lock
 # IDE and OS files
 *.idea
 *.DS_Store
+
+# Client Build files
+public/bundle.js
