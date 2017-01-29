@@ -4,7 +4,7 @@
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=localhost node ./server/server.js",
+    "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
