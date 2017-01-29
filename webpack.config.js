@@ -28,7 +28,7 @@ module.exports = {
 			loader: 'eslint-loader',
 			exclude: /node_modules/
 		}, {
-			include: path.resolve(__dirname, 'js'),
+			include: path.resolve(__dirname, 'client/js'),
 			test: /\.js$/,
 			loader: 'babel-loader'
 		}, {
