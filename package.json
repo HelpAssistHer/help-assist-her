@@ -4,9 +4,12 @@
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
   "scripts": {
-    "client-dev": "webpack-dev-server",
+    "wds": "webpack-dev-server",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "startdb": "mongod --dbpath ~/.hah/data",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "n": "nvm use lts/boron",
+    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config"
   },
   "repository": {
     "type": "git",
