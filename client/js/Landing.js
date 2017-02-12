@@ -4,18 +4,24 @@ import React from 'react'
 import { Link } from 'react-router'
 import ResourceButton from './ResourceButton'
 
+const resources = require('./list-of-resources.json')
+
 const Landing = React.createClass({
 	render() {
 		return (
 			<div className='landing'>
 				<h1>Welcome to HAH</h1>
 				<input type='text' placeholder='Search' />
-				<Link to='/search'>Pregnancy Centers</Link>
-				<Link to='/search'>Well Woman Care</Link>
+
+				{ resources.map((resource => {
+					return (
+						<Link to='/search' key={resource.id}>{resource.name}</Link>
+					)
+				}))}
+
+				<Link to='/search'>Just in case I forget</Link>
 				<ResourceButton/>
-				<ResourceButton/>
-				<ResourceButton/>
-				<ResourceButton/>
+				<pre><code>{ 'This is a good way to debug' }</code></pre>
 			</div>
 		)
 	}
