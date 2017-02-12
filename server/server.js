@@ -2,12 +2,14 @@
 
 const config = require('config')
 const express = require('express')
+const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 
 const server = express()
 const port = config.server.port
 const PregnancyCenterModel = require('../app/models/pregnancy-center');
+const log = new Log('info')
 
 mongoose.Promise = require('bluebird')
 
@@ -17,7 +19,7 @@ const startDatabase = P.coroutine(function *startDatabase() {
 
 	yield mongoose.connect(connectionString)
 
-    console.log("connecting to database")
+    log.info('Connected to database')
 
 })
 
@@ -32,13 +34,24 @@ server.get('/api/pregnancy-centers', function(req, res) {
 
 	PregnancyCenterModel.find({}, function (err, db_pcs) {
         if(err) {
-        	console.log(err)
+        	log.error(err)
 		}
 
 		res.send(db_pcs);
     });
 })
 
+server.get('/api/pregnancy-centers/one', function(req, res) {
+
+	PregnancyCenterModel.findOne({}, function (err, result) {
+		if (err) {
+			log.error(err)
+		}
+
+		res.send(result)
+	})
+})
+
 server.listen(port, function() {
-	console.log(`Help Assist Her server listening on port ${port}`)
+	log.info(`Help Assist Her server listening on port ${port}`)
 })

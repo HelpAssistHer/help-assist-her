@@ -29,6 +29,7 @@
     "express": "^4.14.0",
     "history": "^4.4.0",
     "lodash": "^4.17.4",
+    "log": "^1.4.0",
     "mapbox": "^1.0.0-beta5",
     "mongodb": "^2.2.16",
     "mongoose": "^4.7.5",
