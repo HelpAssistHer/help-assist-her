@@ -1,6 +1,6 @@
 'use strict'
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const pregnancyCenterHistorySchema = mongoose.Schema({
     pregnancyCenterId: mongoose.Schema.Types.ObjectId,

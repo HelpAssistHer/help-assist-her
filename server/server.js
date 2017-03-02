@@ -4,13 +4,13 @@ const config = require('config')
 const express = require('express')
 const mongoose = require('mongoose')
 const P = require('bluebird')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 
 const server = express()
-server.use(bodyParser.urlencoded());
-server.use(bodyParser.json());
+server.use(bodyParser.urlencoded())
+server.use(bodyParser.json())
 const port = config.server.port
-const PregnancyCenterModel = require('../app/models/pregnancy-center');
+const PregnancyCenterModel = require('../app/models/pregnancy-center')
 
 
 mongoose.Promise = require('bluebird')
@@ -40,13 +40,13 @@ server.get('/api/pregnancy-centers', function(req, res) {
 		}
 
 		res.send(db_pcs)
-    });
+    })
 })
 
 
 server.get('/api/pregnancy-centers/verify', function(req, res) {
 	PregnancyCenterModel.findOne({ verifiedById: null}, function (err, pc) {
-        if (err) console.log(err);
+        if (err) console.log(err)
         res.send(pc)
 	})
 })
@@ -54,7 +54,7 @@ server.get('/api/pregnancy-centers/verify', function(req, res) {
 server.put('/api/pregnancy-centers/:pregnancyCenterId', function(req, res) {
     PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pc) {
         if (err) {
-            console.log(err);
+            console.log(err)
         } else {
             res.status(200).json(pc)
         }
