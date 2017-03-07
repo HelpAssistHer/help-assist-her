@@ -3,10 +3,16 @@
 const mongoose = require('mongoose')
 const PregnancyCenterHistoryModel = require('./pregnancy-center-history')
 
+
+const pointSchema = new mongoose.Schema({
+    type: { type: String },
+    coordinates: [Number]
+});
+
 const pregnancyCenterSchema = mongoose.Schema({
     name: String,
     address: String,
-    hours: String,
+    hours: Object,
     phone: String,
     website: String,
     resources: [String],
@@ -19,12 +25,7 @@ const pregnancyCenterSchema = mongoose.Schema({
     dateCreated: Date,
     verifiedById: Number,
     dateVerified: Date,
-    location: {  // naming scheme matches MongoDB GeoJSON Point examples
-        coordinates: {
-            'lng': Number,
-            'lat': Number,
-        },
-    },
+    location: pointSchema,
     dateLocationUpdated: Date,
     googlePlaceId: String, // we can store the google place ID according to TOS
 })

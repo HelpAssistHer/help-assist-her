@@ -44,6 +44,32 @@ server.get('/api/pregnancy-centers', function(req, res) {
 })
 
 
+// temporarily hardcoded for testing GeoJSON
+// to test, navigate to /data and run "node data", then run the server and access this endpoint
+
+server.get('/api/pregnancy-centers/near-me', function(req, res) {
+
+    const METERS_PER_MILE = 1609.34
+
+    PregnancyCenterModel.find({
+        location: {
+            $nearSphere: {
+                $geometry: {
+                    type: "Point",
+                    coordinates: [-73.781332, 42.6721989]
+                },
+                $maxDistance: 5 * METERS_PER_MILE
+            }
+        }
+    }, function (err, pcs) {
+        if (err) {
+            console.log(err)
+        }
+        res.send(pcs)
+    })
+})
+
+
 server.get('/api/pregnancy-centers/verify', function(req, res) {
 	PregnancyCenterModel.findOne({ verifiedById: null}, function (err, pc) {
         if (err) console.log(err)
