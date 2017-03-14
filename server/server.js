@@ -33,13 +33,11 @@ server.get('/', function(req, res) {
 })
 
 server.get('/api/pregnancy-centers', function(req, res) {
-
-	PregnancyCenterModel.find({}, function (err, db_pcs) {
+	PregnancyCenterModel.find({}, function (err, allPregnancyCenters) {
         if(err) {
         	console.log(err)
 		}
-
-		res.send(db_pcs)
+		res.send(allPregnancyCenters)
     })
 })
 
@@ -61,28 +59,33 @@ server.get('/api/pregnancy-centers/near-me', function(req, res) {
                 $maxDistance: 5 * METERS_PER_MILE
             }
         }
-    }, function (err, pcs) {
+    }, function (err, pregnancyCentersNearMe) {
         if (err) {
             console.log(err)
         }
-        res.send(pcs)
+        res.status(200).json(pregnancyCentersNearMe)
     })
 })
 
 
 server.get('/api/pregnancy-centers/verify', function(req, res) {
-	PregnancyCenterModel.findOne({ verifiedById: null}, function (err, pc) {
+
+    // We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
+    // and what attributes were verified
+
+	PregnancyCenterModel.findOne({ 'verified.address' : null}, function (err, pregnancyCenterToVerify) {
         if (err) console.log(err)
-        res.send(pc)
+        res.status(200).json(pregnancyCenterToVerify)
 	})
 })
 
+
 server.put('/api/pregnancy-centers/:pregnancyCenterId', function(req, res) {
-    PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pc) {
+    PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
         if (err) {
             console.log(err)
         } else {
-            res.status(200).json(pc)
+            res.status(200).json(pregnancyCenterUpdated)
         }
     })
 })

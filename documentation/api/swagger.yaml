@@ -1,0 +1,264 @@
+---
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Help Assist Her API"
+  contact:
+    name: "Kate Sills"
+    url: "https://github.com/HelpAssistHer/help-assist-her"
+    email: "katelynsills@gmail.com"
+basePath: "/api"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /:
+    get:
+      summary: "Home"
+      description: "Current returns 'Hello World' to test that the basic setup is\
+        \ working. \n"
+      operationId: "rootGET"
+      parameters: []
+      responses:
+        200:
+          description: "the string 'Hello World'"
+          schema:
+            type: "string"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "Default"
+  /pregnancy-centers:
+    get:
+      tags:
+      - "PregnancyCenter"
+      - "App"
+      summary: "All Pregnancy Centers"
+      description: "The all Pregnancy Centers endpoint returns an array of all pregnancy\
+        \ centers \ncurrently stored in the database. \n"
+      operationId: "pregnancy_centersGET"
+      parameters:
+      - name: "limit"
+        in: "query"
+        description: "Limit the number of pregnancy centers returned. Default is 50"
+        required: true
+        type: "number"
+        format: "integer"
+      responses:
+        200:
+          description: "An array of pregnancy centers"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PregnancyCenter"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "PregnancyCenter"
+  /pregnancy-centers/near-me:
+    get:
+      tags:
+      - "PregnancyCenter"
+      - "App"
+      summary: "Near Me"
+      description: "The Near Me endpoint is currently hardcoded for testing purposes.\
+        \ It returns an array of pregnancy centers within a 5 mile radius, ordered\
+        \ by distance from the center."
+      operationId: "pregnancy_centersNear_meGET"
+      parameters: []
+      responses:
+        200:
+          description: "An array of pregnancy centers"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PregnancyCenter"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "PregnancyCenter"
+  /pregnancy-centers/verify:
+    get:
+      tags:
+      - "PregnancyCenter"
+      - "Verification"
+      summary: "Verify Pregnancy Center"
+      description: "The Verify Pregnancy Center endpoint returns a single pregnancy\
+        \ center that needs verification (aka has not had its address verified.)"
+      operationId: "pregnancy_centersVerifyGET"
+      parameters: []
+      responses:
+        200:
+          description: "A single pregnancy center"
+          schema:
+            $ref: "#/definitions/PregnancyCenter"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "PregnancyCenter"
+  /pregnancy-centers/{id}:
+    put:
+      tags:
+      - "PregnancyCenter"
+      - "Verification"
+      summary: "Update Pregnancy Center"
+      description: "The Update Pregnancy Center endpoint allows the end user to update\
+        \ and verify information about a pregnancy center."
+      operationId: "updatePregnancyCenter"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The ID for the pregnancy center to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "pregnancyCenterUpdate"
+        description: "The Pregnancy Center Json to Update"
+        required: true
+        schema:
+          $ref: "#/definitions/PregnancyCenterUpdate"
+      responses:
+        200:
+          description: "The updated PregnancyCenter, returned"
+          schema:
+            $ref: "#/definitions/PregnancyCenter"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "PregnancyCenter"
+definitions:
+  PregnancyCenterUpdate:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        description: "Unique identifier representing a specific pregnancy center"
+      name:
+        type: "string"
+        description: "Name of pregnancy center [PUBLIC]"
+      address:
+        $ref: "#/definitions/PregnancyCenterUpdate_address"
+      hours:
+        $ref: "#/definitions/PregnancyCenterUpdate_hours"
+      phone:
+        type: "string"
+        description: "The public phone number of the pregnancy center [PUBLIC]"
+      website:
+        type: "string"
+        description: "The public website of the pregnancy center [PUBLIC]"
+      resources:
+        type: "string"
+        description: "The resources that the pregnancy center provides, such as ['Ultrasounds',\
+          \ 'STD Testing']. Array format. [PUBLIC]"
+      primary_contact:
+        $ref: "#/definitions/PregnancyCenterUpdate_primary_contact"
+      notes:
+        type: "string"
+        description: "Our notes on the pregnancy center [PRIVATE]"
+      location:
+        $ref: "#/definitions/PregnancyCenterUpdate_location"
+      googlePlaceId:
+        type: "string"
+        description: "Google allows us to store the id to the pregnancy center's google\
+          \ business place, which will allow us to easily update in the future [PUBLIC]"
+      verified:
+        $ref: "#/definitions/PregnancyCenterUpdate_verified"
+  PregnancyCenter:
+    allOf:
+    - $ref: "#/definitions/PregnancyCenterUpdate"
+    - {}
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+      fields:
+        type: "string"
+  PregnancyCenterUpdate_address:
+    properties:
+      line1:
+        type: "string"
+      line2:
+        type: "string"
+      city:
+        type: "string"
+      state:
+        type: "string"
+      zip:
+        type: "string"
+    description: "Address of pregnancy center [PUBLIC]"
+  PregnancyCenterUpdate_hours_mon:
+    properties:
+      open:
+        type: "string"
+      close:
+        type: "string"
+  PregnancyCenterUpdate_hours:
+    properties:
+      mon:
+        $ref: "#/definitions/PregnancyCenterUpdate_hours_mon"
+    description: "The hours that a pregnancy center is open, by day of week [PUBLIC]"
+  PregnancyCenterUpdate_primary_contact:
+    properties:
+      firstName:
+        type: "string"
+        description: "The first name of the primary contact"
+      lastName:
+        type: "string"
+        description: "The last name of the primary contact"
+      email:
+        type: "string"
+        description: "the email of the primary contact"
+      phone:
+        type: "string"
+        description: "the phone number of the primary contact"
+    description: "The person, likely the pregnancy center administrator, who we can\
+      \ contact for more information"
+  PregnancyCenterUpdate_location:
+    properties:
+      type:
+        type: "string"
+        description: "Always 'Point'"
+      coordinates:
+        type: "object"
+        description: "a [longitude, latitude] array"
+        properties: {}
+    description: "The coordinates for the pregnancy center in GeoJSON form [PUBLIC]"
+  PregnancyCenterUpdate_verified_name:
+    properties:
+      date:
+        type: "string"
+      userId:
+        type: "string"
+    description: "records the datetime and user who verified the 'name' field of the\
+      \ pregnancy center last"
+  PregnancyCenterUpdate_verified_phone:
+    properties:
+      date:
+        type: "string"
+      userId:
+        type: "string"
+    description: "records the datetime and user who verified the 'phone' field of\
+      \ the pregnancy center last"
+  PregnancyCenterUpdate_verified:
+    properties:
+      name:
+        $ref: "#/definitions/PregnancyCenterUpdate_verified_name"
+      phone:
+        $ref: "#/definitions/PregnancyCenterUpdate_verified_phone"
+    description: "a json object with each PregnancyCenter field as a key, and the\
+      \ date and userId as values for that key. For instance, if the pregnancy center's\
+      \ name is verified, the verified object includes the key 'name' with values\
+      \ date, userId. Other keys have the same format (not specified here for brevity.)\
+      \ [PUBLIC]"
