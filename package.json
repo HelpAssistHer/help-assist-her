@@ -25,6 +25,7 @@
     "@turf/turf": "^3.7.4",
     "axios": "0.15.2",
     "bluebird": "^3.4.7",
+    "body-parser": "^1.16.1",
     "config": "^1.24.0",
     "cors": "^2.8.1",
     "express": "^4.14.0",

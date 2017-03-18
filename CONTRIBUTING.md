@@ -2,11 +2,11 @@
 
 ## Install Homebrew (Or Update)
 ````
-	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ````
 
 ````
-	brew update
+brew update
 ````
 
 ## Install Git
@@ -38,15 +38,16 @@ yarn
 yarn global add jest@v16.0.2
 yarn global add nodemon
 yarn global add webpack@v2.1.0-beta.25
+yarn global add body-parser
 ````
 
 ## Install Mongo
 ````
 brew link makedepend
 brew install mongodb
-````
 export NODE_CONFIG_DIR=[INSERT PATH]
 export NODE_ENV='localhost'
+````
 
 ## Start Mongo
 ````
