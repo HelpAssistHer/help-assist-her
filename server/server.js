@@ -1,6 +1,7 @@
 'use strict'
 
 const config = require('config')
+const cors = require('cors')
 const express = require('express')
 const Log = require('log')
 const mongoose = require('mongoose')
@@ -12,6 +13,7 @@ const PregnancyCenterModel = require('../app/models/pregnancy-center');
 const log = new Log('info')
 
 mongoose.Promise = require('bluebird')
+server.use(cors())
 
 // TODO: Error handling
 const startDatabase = P.coroutine(function *startDatabase() {
@@ -24,7 +26,6 @@ const startDatabase = P.coroutine(function *startDatabase() {
 })
 
 startDatabase()
-
 
 server.get('/', function(req, res) {
     res.send('Hello World!')
