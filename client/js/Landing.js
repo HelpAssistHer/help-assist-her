@@ -11,6 +11,7 @@ const Landing = React.createClass({
 		return (
 			<div className='landing'>
 				<h1>Welcome to HAH</h1>
+				<Link to='/verification'>Verification Portal</Link>
 				<input type='text' placeholder='Search' />
 
 				{ resources.map((resource => {

@@ -12,12 +12,11 @@ const pointSchema = new mongoose.Schema({
 const addressSchema = new mongoose.Schema({
     city: String,
     googlePlaceId: String, // we can store the google place ID according to TOS
-    line1 : String,
+    line1: String,
     line2: String,
     location: pointSchema,
     state: String,
     zip: String,
-
 })
 
 
@@ -51,10 +50,10 @@ const pregnancyCenterSchema = mongoose.Schema({
     address: addressSchema,
     dateCreated: Date,
     hours: Object,
-    name: String,
+    name: String, // change to PRC name
     notes: String,
     phone: String,
-    primary_contact: {
+    primaryContact: {
         firstName: String,
         lastName: String,
         email: String,
@@ -82,7 +81,7 @@ const pregnancyCenterSchema = mongoose.Schema({
             date: Date,
             userId: mongoose.Schema.Types.ObjectId
         },
-        primary_contact: {
+        primaryContact: {
             date: Date,
             userId: mongoose.Schema.Types.ObjectId
         },
@@ -116,7 +115,7 @@ const pregnancyCenterSchema = mongoose.Schema({
             date: Date,
             userId: mongoose.Schema.Types.ObjectId
         },
-        primary_contact: {
+        primaryContact: {
             date: Date,
             userId: mongoose.Schema.Types.ObjectId
         },

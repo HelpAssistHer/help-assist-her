@@ -4,7 +4,7 @@ const path = require('path')
 
 module.exports = {
 	context: __dirname,
-	entry: './client/js/HahApp.js',
+	entry: ['babel-polyfill', './client/js/HahApp.js'],
 	devtool: 'eval',
 	output: {
 		path: path.join(__dirname, '/public'),
@@ -24,11 +24,11 @@ module.exports = {
 	},
 	module: {
 		rules: [{
-			enforce: 'pre',
-			test: /\.js$/,
-			loader: 'eslint-loader',
-			exclude: /node_modules/
-		}, {
+		// 	enforce: 'pre',
+		// 	test: /\.js$/,
+		// 	loader: 'eslint-loader',
+		// 	exclude: /node_modules/
+		// }, {
 			test: /\.json$/,
 			loader: 'json-loader'
 		},{

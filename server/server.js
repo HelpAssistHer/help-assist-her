@@ -70,7 +70,6 @@ server.get('/api/pregnancy-centers/near-me', function(req, res) {
     })
 })
 
-
 server.get('/api/pregnancy-centers/verify', function(req, res) {
 
     // We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
@@ -82,6 +81,12 @@ server.get('/api/pregnancy-centers/verify', function(req, res) {
 	})
 })
 
+server.post('/api/pregnancy-centers', function(req, res) {
+    PregnancyCenterModel.create(req.body, function(err, result) {
+        if (err) log.error(err)
+        res.status(204).json(result)
+    })
+})
 
 server.put('/api/pregnancy-centers/:pregnancyCenterId', function(req, res) {
     PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
