@@ -49,6 +49,7 @@ const addressSchema = new mongoose.Schema({
 const pregnancyCenterSchema = mongoose.Schema({
     address: addressSchema,
     dateCreated: Date,
+    email: String,
     hours: Object,
     name: String, // change to PRC name
     notes: String,
@@ -62,6 +63,10 @@ const pregnancyCenterSchema = mongoose.Schema({
     resources: [String],
     verified: {
         address: {
+            date: Date,
+            userId: mongoose.Schema.Types.ObjectId
+        },
+        email: {
             date: Date,
             userId: mongoose.Schema.Types.ObjectId
         },
@@ -96,6 +101,10 @@ const pregnancyCenterSchema = mongoose.Schema({
     },
     updated: {
         address: {
+            date: Date,
+            userId: mongoose.Schema.Types.ObjectId
+        },
+        email: {
             date: Date,
             userId: mongoose.Schema.Types.ObjectId
         },
