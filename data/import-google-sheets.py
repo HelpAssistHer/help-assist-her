@@ -42,7 +42,7 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 				
 				resources = []
 				for i in range(11, 18):
-					if row[i]:
+					if row[i] == 'Yes':
 						resources.append(headers[i])
 
 				dateVerifiedObj = {
@@ -85,6 +85,9 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 
 				if row[4]:
 					pregnancyCenter['phone'] = row[4]
+
+				if row[8]:
+					pregnancyCenter['email'] = row[8]
 			
 				if len(resources) > 0:
 					pregnancyCenter['resources'] = resources
@@ -97,8 +100,6 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 					if 'verified' not in pregnancyCenter:
 						pregnancyCenter['verified'] = {}
 					pregnancyCenter['verified']['address'] = dateVerifiedObj
-
-
 
 				if len(hours) > 0: 
 					if 'verified' not in pregnancyCenter:
@@ -119,6 +120,11 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 					if 'verified' not in pregnancyCenter:
 						pregnancyCenter['verified'] = {}
 					pregnancyCenter['verified']['website'] = dateVerifiedObj
+
+				if row[9] == 'Yes': #website
+					if 'verified' not in pregnancyCenter:
+						pregnancyCenter['verified'] = {}
+					pregnancyCenter['verified']['email'] = dateVerifiedObj
 
 				data.append(pregnancyCenter)
 			json.dump(data, outfile)
