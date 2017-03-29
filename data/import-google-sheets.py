@@ -43,7 +43,7 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 				resources = []
 				for i in range(11, 18):
 					if row[i]:
-						resources.append(headers[0])
+						resources.append(headers[i])
 
 				dateVerifiedObj = {
 					'date': row[26]
