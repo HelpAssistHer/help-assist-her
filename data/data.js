@@ -19,12 +19,12 @@ const loadData = P.coroutine(function *startDatabase() {
 
 	PregnancyCenterModel.collection.drop()
 
-    // note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
+	// note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
 
-    fs.readFile('../test/fixtures/cessilye_nypc_geocoded.json', 'utf8', function (err, data) {
-        if (err) throw err
-        console.log(data)
-        const docs = EJSON.parse(data)
+	fs.readFile('../test/fixtures/cessilye_nypc_geocoded.json', 'utf8', function (err, data) {
+		if (err) throw err
+		log.info(data)
+		const docs = EJSON.parse(data)
 
 		PregnancyCenterModel.collection.insertMany(docs, function (err, result) {
 			if (err) {
