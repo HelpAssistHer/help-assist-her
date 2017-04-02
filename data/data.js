@@ -16,7 +16,7 @@ const loadData = P.coroutine(function *startDatabase() {
 
     PregnancyCenterModel.collection.drop()
 
-    fs.readFile('../test/fixtures/cessilye_nypc.json', 'utf8', function (err, data) {
+    fs.readFile('../test/fixtures/cessilye_nypc_geocoded.json', 'utf8', function (err, data) {
         if (err) throw err
         console.log(data)
         const docs = JSON.parse(data)
@@ -31,7 +31,8 @@ const loadData = P.coroutine(function *startDatabase() {
 
     })
 
-    db.pregnancycenters.createIndex({location:"2dsphere"});
+    db.pregnancycenters.createIndex({'address.location':"2dsphere"})
+    mongoose.disconnect()
 
 })
 
