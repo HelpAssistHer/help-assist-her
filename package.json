@@ -4,6 +4,8 @@
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
   "scripts": {
+    "lint": "./node_modules/.bin/eslint .",
+    "lint-path": "./node_modules/.bin/eslint",
     "wds": "webpack-dev-server",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
@@ -58,7 +60,7 @@
     "css-loader": "0.25.0",
     "enzyme": "2.0.0",
     "enzyme-to-json": "^1.3.0",
-    "eslint": "3.6.1",
+    "eslint": "^3.19.0",
     "eslint-config-standard": "6.1.0",
     "eslint-config-standard-jsx": "3.1.0",
     "eslint-config-standard-react": "4.1.0",

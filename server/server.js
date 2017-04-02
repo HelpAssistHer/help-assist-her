@@ -15,7 +15,6 @@ const port = config.server.port
 const log = new Log('info')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
 
-
 mongoose.Promise = require('bluebird')
 server.use(cors())
 
@@ -25,79 +24,82 @@ const startDatabase = P.coroutine(function *startDatabase() {
 
 	yield mongoose.connect(connectionString)
 
-    log.info('Connected to database')
+	log.info('Connected to database')
 
 })
 
 startDatabase()
 
-server.get('/', function(req, res) {
-    res.send('Hello World!')
+server.get('/', function (req, res) {
+	res.send('Hello World!')
 })
 
-server.get('/api/pregnancy-centers', function(req, res) {
+server.get('/api/pregnancy-centers', function (req, res) {
 	PregnancyCenterModel.find({}, function (err, allPregnancyCenters) {
-        if(err) {
-        	log.error(err)
+		if (err) {
+			log.error(err)
 		}
 		res.send(allPregnancyCenters)
-    })
+	})
 })
-
 
 // temporarily hardcoded for testing GeoJSON
 // to test, navigate to /data and run "node data", then run the server and access this endpoint
 
-server.get('/api/pregnancy-centers/near-me', function(req, res) {
+server.get('/api/pregnancy-centers/near-me', function (req, res) {
 
-    const METERS_PER_MILE = 1609.34
+	const METERS_PER_MILE = 1609.34
 
-    PregnancyCenterModel.find({
-        location: {
-            $nearSphere: {
-                $geometry: {
-                    type: "Point",
-                    coordinates: [-73.781332, 42.6721989]
-                },
-                $maxDistance: 5 * METERS_PER_MILE
-            }
-        }
-    }, function (err, pregnancyCentersNearMe) {
-        if (err) {
-            console.log(err)
-        }
-        res.status(200).json(pregnancyCentersNearMe)
-    })
-})
-
-server.get('/api/pregnancy-centers/verify', function(req, res) {
-
-    // We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
-    // and what attributes were verified
-
-	PregnancyCenterModel.findOne({ 'verified.address' : null}, function (err, pregnancyCenterToVerify) {
-        if (err) console.log(err)
-        res.status(200).json(pregnancyCenterToVerify)
+	PregnancyCenterModel.find({
+		location: {
+			$nearSphere: {
+				$geometry: {
+					type: 'Point',
+					coordinates: [-73.781332, 42.6721989]
+				},
+				$maxDistance: 5 * METERS_PER_MILE
+			}
+		}
+	}, function (err, pregnancyCentersNearMe) {
+		if (err) {
+			log.error(err)
+		}
+		res.status(200).json(pregnancyCentersNearMe)
 	})
 })
 
-server.post('/api/pregnancy-centers', function(req, res) {
-    PregnancyCenterModel.create(req.body, function(err, result) {
-        if (err) log.error(err)
-        res.status(204).json(result)
-    })
+server.get('/api/pregnancy-centers/verify', function (req, res) {
+
+	// We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
+	// and what attributes were verified
+
+	PregnancyCenterModel.findOne({'verified.address': null}, function (err, pregnancyCenterToVerify) {
+		if (err) {
+			log.error(err)
+		}
+		res.status(200).json(pregnancyCenterToVerify)
+	})
 })
 
-server.put('/api/pregnancy-centers/:pregnancyCenterId', function(req, res) {
-    PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
-        if (err) {
-            console.log(err)
-        } else {
-            res.status(200).json(pregnancyCenterUpdated)
-        }
-    })
+server.post('/api/pregnancy-centers', function (req, res) {
+	PregnancyCenterModel.create(req.body, function (err, result) {
+		if (err) {
+			log.error(err)
+		}
+		res.status(204).json(result)
+	})
 })
 
-server.listen(port, function() {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', function (req, res) {
+	PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
+		if (err) {
+			log.error(err)
+		} else {
+			res.status(200).json(pregnancyCenterUpdated)
+		}
+	})
+})
+
+server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
