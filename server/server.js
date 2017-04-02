@@ -52,6 +52,11 @@ server.get('/api/pregnancy-centers/near-me', function(req, res) {
 
     const METERS_PER_MILE = 1609.34
 
+    // var id = req.query.id;
+    const lat = req.query.lat || -73.781332
+    const lng = req.query.lng || 42.6721989
+    const miles = req.query.miles || 5 
+
     PregnancyCenterModel.find({
         'address.location': {
             $nearSphere: {

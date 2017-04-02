@@ -33,7 +33,7 @@ const loadData = P.coroutine(function *startDatabase() {
         })
 
     })
-    
+
 
 })
 
