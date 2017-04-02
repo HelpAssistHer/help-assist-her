@@ -56,16 +56,19 @@ PregnancyCenterModel.find({ 'address.location' : null}, function (err, db_pcs) {
                     'coordinates': [location.lng, location.lat]
                 }
 
-                pc.save()
+                pc.save(function(err, pc) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log('Save complete.')
+                    }})
+
+            } else {
+                console.log(err)
             }
         })
 
     }
-
-
-
-    mongoose.disconnect()
-
 })
 
 

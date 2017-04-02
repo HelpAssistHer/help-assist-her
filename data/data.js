@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const P = require('bluebird')
 const fs = require('fs')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const EJSON = require('mongodb-extended-json')
 
 mongoose.Promise = require('bluebird')
 
@@ -16,10 +17,12 @@ const loadData = P.coroutine(function *startDatabase() {
 
     PregnancyCenterModel.collection.drop()
 
+    // note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
+
     fs.readFile('../test/fixtures/cessilye_nypc_geocoded.json', 'utf8', function (err, data) {
         if (err) throw err
         console.log(data)
-        const docs = JSON.parse(data)
+        const docs = EJSON.parse(data)
 
         PregnancyCenterModel.collection.insertMany(docs, function (err, result) {
             if (err) {
@@ -30,9 +33,7 @@ const loadData = P.coroutine(function *startDatabase() {
         })
 
     })
-
-    db.pregnancycenters.createIndex({'address.location':"2dsphere"})
-    mongoose.disconnect()
+    
 
 })
 
