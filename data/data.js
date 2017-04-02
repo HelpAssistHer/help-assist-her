@@ -16,7 +16,7 @@ const loadData = P.coroutine(function *startDatabase() {
 
     PregnancyCenterModel.collection.drop()
 
-    fs.readFile('../test/fixtures/ny-pc-example.json', 'utf8', function (err, data) {
+    fs.readFile('../test/fixtures/cessilye_nypc.json', 'utf8', function (err, data) {
         if (err) throw err
         console.log(data)
         const docs = JSON.parse(data)
