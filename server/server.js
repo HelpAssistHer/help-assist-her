@@ -53,7 +53,7 @@ server.get('/api/pregnancy-centers/near-me', function(req, res) {
     const METERS_PER_MILE = 1609.34
 
     PregnancyCenterModel.find({
-        location: {
+        'address.location': {
             $nearSphere: {
                 $geometry: {
                     type: "Point",
