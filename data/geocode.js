@@ -56,7 +56,7 @@ PregnancyCenterModel.find({'address.location': null}, function (err, db_pcs) {
 					'coordinates': [location.lng, location.lat]
 				}
 
-				pc.save(function (err, pc) {
+				pc.save(function (err) {
 					if (err) {
 						Log.info(err)
 					} else {
@@ -71,6 +71,3 @@ PregnancyCenterModel.find({'address.location': null}, function (err, db_pcs) {
 
 	}
 })
-
-
-
