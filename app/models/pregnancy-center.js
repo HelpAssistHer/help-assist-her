@@ -1,6 +1,8 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const _ = require('lodash')
+
 
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
@@ -136,6 +138,14 @@ const pregnancyCenterSchema = mongoose.Schema({
 	},
 	website: String,
 })
+
+pregnancyCenterSchema.index({'address.location': '2dsphere'})
+
+pregnancyCenterSchema.methods.getFullAddress = function getFullAddress() {
+	return _.get(this, 'address.line1', '') + _.get(this, 'address.line2', '')
+		+ _.get(this, 'address.city', '') + _.get(this, 'address.state', '')
+		+ _.get(this, 'address.zip', '')
+}
 
 // Immediately after an update to a pregnancyCenter, this is triggered.
 // It records the changes in a new PregnancyCenterHistory

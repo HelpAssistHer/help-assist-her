@@ -36,6 +36,7 @@
     "log": "^1.4.0",
     "mapbox": "^1.0.0-beta5",
     "mongodb": "^2.2.16",
+    "mongodb-extended-json": "^1.9.0",
     "mongoose": "^4.7.5",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.3",
