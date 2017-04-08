@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/HelpAssistHer/help-assist-her#readme",
   "dependencies": {
+    "@google/maps": "^0.3.1",
     "@turf/turf": "^3.7.4",
     "axios": "0.15.2",
     "bluebird": "^3.4.7",
