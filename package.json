@@ -9,7 +9,7 @@
     "wds": "webpack-dev-server",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Tests are not setup yet\" && exit 0",
     "n": "nvm use lts/boron",
     "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config"
   },
