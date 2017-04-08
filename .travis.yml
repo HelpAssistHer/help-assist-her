@@ -12,5 +12,5 @@ services:
   - mongodb
 
 script:
+  - node server/server.js &
   - npm run lint
-  - node server/server.js
