@@ -5,39 +5,6 @@ import injectSheet from 'react-jss'
 
 import Button from './button'
 
-class GeneralForm extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { value: '' }
-
-		this.handleChange = this.handleChange.bind(this)
-		this.handleSubmit = this.handleSubmit.bind(this)
-	}
-
-	handleChange(event) {
-		console.log('EVENT', event.target.value)
-		this.setState({ value: event.target.value })
-	}
-
-	handleSubmit(event) {
-		alert('Something was submitted: ' + this.state.value)
-		event.preventDefault()
-	}
-
-	render() {
-		return (
-			<form onSubmit={this.handleSubmit}>
-				<h1>General Info</h1>
-				<label>
-					Name:
-					<input type='text' placeholder='Name' value={this.state.value} onChange={this.handleChange} />
-				</label>
-				<input type='submit' value='Submit' />
-			</form>
-		)
-	}
-}
-
 const GeneralInfoForm = React.createClass({
 	getInitialState() {
 		return {
