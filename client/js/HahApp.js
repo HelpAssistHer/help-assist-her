@@ -3,11 +3,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter, Match } from 'react-router'
+
 import Landing from './Landing'
 import Search from './Search'
-import VerificationPortal from './VerificationPortal'
-import '../../public/normalize.css'
-import '../../public/style.css'
+import VerificationPortal from './verification-portal-index'
 
 const App = React.createClass({
 	render() {
