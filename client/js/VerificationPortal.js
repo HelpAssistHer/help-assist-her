@@ -1,8 +1,9 @@
 'use strict'
 
-import 'babel-polyfill'
 import React from 'react'
-import ResourceButton from './ResourceButton'
+import injectSheet from 'react-jss'
+
+import Button from './button'
 
 class GeneralForm extends React.Component {
 	constructor(props) {
@@ -90,7 +91,7 @@ const GeneralInfoForm = React.createClass({
 		console.log('RESULT', result)
 		const { city, line1, line2, state, zip } = result.address
 		const { name, notes, phone, website } = result
-		const { firstName, lastName, email } = result.primaryContact
+		// const { firstName, lastName, email } = result.primaryContact
 
 		this.setState({
 			name,
@@ -102,18 +103,16 @@ const GeneralInfoForm = React.createClass({
 			phone,
 			website,
 			notes,
-			primaryContactFirstName: firstName,
-			primaryContactLastName: lastName,
-			primaryContactEmail: email,
-			primaryContactPhone: result.primaryContact.phone, // how can you rename after destructuring
+			// primaryContactFirstName: firstName || null,
+			// primaryContactLastName: lastName || null,
+			// primaryContactEmail: email || null,
+			// primaryContactPhone: result.primaryContact.phone, // how can you rename after destructuring
 		})
 	},
 	render() {
 		return (
 			<div className='generalInfoForm'>
-				<button onClick={this.handleClick}>
-					Verify Something Test
-				</button>
+				<Button onClick={this.handleClick} buttonText='Get One Resource'/>
 
 				<div>
 					<h1>General Info</h1>
@@ -126,53 +125,19 @@ const GeneralInfoForm = React.createClass({
 					<input type='text' placeholder='Phone Number' value={ this.state.phone } />
 					<input type='text' placeholder='Website' value={ this.state.website } />
 				</div>
-				<div>
-					<h3>Primary Contact Info</h3>
-					<input type='text' placeholder='First Name' value={ this.state.primaryContactFirstName } />
-					<input type='text' placeholder='Last Name' value={ this.state.primaryContactLastName } />
-					<input type='text' placeholder='Email Address' value={ this.state.primaryContactEmail } />
-					<input type='text' placeholder='Phone' value={ this.state.primaryContactPhone } />
-				</div>
+				{/*<div>*/}
+					{/*<h3>Primary Contact Info</h3>*/}
+					{/*<input type='text' placeholder='First Name' value={ this.state.primaryContactFirstName } />*/}
+					{/*<input type='text' placeholder='Last Name' value={ this.state.primaryContactLastName } />*/}
+					{/*<input type='text' placeholder='Email Address' value={ this.state.primaryContactEmail } />*/}
+					{/*<input type='text' placeholder='Phone' value={ this.state.primaryContactPhone } />*/}
+				{/*</div>*/}
 
-				<button onClick={this.handleSubmit}>
-					SAVE
-				</button>
+				<Button onClick={this.handleSubmit} buttonText='Save Info' />
 			</div>
 		)
 	}
 })
-
-const ServicesOfferedForm = React.createClass({
-	render() {
-		return (
-			<div className='servicesOfferedForm'>
-				<h1>Services Offered</h1>
-			</div>
-		)
-	}
-})
-
-const HoursForm = React.createClass({
-	render() {
-		return (
-			<div className='hoursForm'>
-				<h1>Hours</h1>
-			</div>
-		)
-	}
-})
-
-// 'https://mywebsite.com/endpoint/', {
-// 	method: 'POST',
-// 	headers: {
-// 		'Accept': 'application/json',
-// 		'Content-Type': 'application/json',
-// 	},
-// 	body: JSON.stringify({
-// 		firstParam: 'yourValue',
-// 		secondParam: 'yourOtherValue',
-// 	})
-// }
 
 async function getOneResource() {
 	try {
@@ -192,37 +157,27 @@ async function getOneResource() {
 	}
 }
 
-const VerificationPortal = React.createClass({
-	render () {
-		return (
-			<div className='verificationPortal'>
-				<h1>Verification Portal</h1>
+const VerificationPortal = ({ classes }) => (
+	<div className={classes.verificationPortal}>
+		<h1>Verification Portal</h1>
 
-				{/*TODO this works but is probably baddddd*/}
-				{/*<button onClick={getOneResource}>*/}
-					{/*Verify Something*/}
-				{/*</button>*/}
+		<GeneralInfoForm />
 
-				<GeneralInfoForm />
-				{/*<GeneralForm />*/}
-				{/*<ServicesOfferedForm />*/}
-				{/*<HoursForm />*/}
-			</div>
-		)
+
+	</div>
+)
+
+const styles = {
+	verificationPortal: {
+		background: 'pink',
+	},
+	label: {
+		fontWeight: 'bold',
+	},
+	h1: {
+		fontWeight: 'bold',
+		color: 'blue',
 	}
-})
+}
 
-// const styles = {
-// 	row: {
-// 		'align-items': 'center',
-// 		display: 'flex',
-// 	},
-// 	label: {
-// 		color: styleVars.gray65,
-// 		flex: '0 0 auto',
-// 		'font-weight': styleVars.fontWeightMedium,
-// 		'padding-right': '12px',
-// 	},
-// }
-
-export default VerificationPortal
+export default injectSheet(styles)(VerificationPortal)

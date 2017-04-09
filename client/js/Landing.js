@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { Link } from 'react-router'
-import ResourceButton from './ResourceButton'
 
 const resources = require('./list-of-resources.json')
 
@@ -21,7 +20,6 @@ const Landing = React.createClass({
 				}))}
 
 				<Link to='/search'>Just in case I forget</Link>
-				<ResourceButton/>
 				<pre><code>{ 'This is a good way to debug' }</code></pre>
 			</div>
 		)
