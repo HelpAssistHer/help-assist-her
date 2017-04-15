@@ -88,7 +88,7 @@ server.get('/', function (req, res) {
 	res.send('Hello World!')
 })
 
-server.get('/api/pregnancy-centers', function (req, res) {
+server.get('/api/pregnancy-centers', isLoggedIn, function (req, res) {
 	PregnancyCenterModel.find({}, function (err, allPregnancyCenters) {
 		if (err) {
 			log.error(err)
@@ -100,7 +100,7 @@ server.get('/api/pregnancy-centers', function (req, res) {
 // temporarily hardcoded for testing GeoJSON
 // to test, navigate to /data and run "node data", then run the server and access this endpoint
 
-server.get('/api/pregnancy-centers/near-me', function (req, res) {
+server.get('/api/pregnancy-centers/near-me', isLoggedIn, function (req, res) {
 
 	const METERS_PER_MILE = 1609.34
 
@@ -122,7 +122,7 @@ server.get('/api/pregnancy-centers/near-me', function (req, res) {
 	})
 })
 
-server.get('/api/pregnancy-centers/verify', function (req, res) {
+server.get('/api/pregnancy-centers/verify', isLoggedIn, function (req, res) {
 
 	// We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
 	// and what attributes were verified
@@ -137,7 +137,7 @@ server.get('/api/pregnancy-centers/verify', function (req, res) {
 	})
 })
 
-server.post('/api/pregnancy-centers', function (req, res) {
+server.post('/api/pregnancy-centers', isLoggedIn, function (req, res) {
 	PregnancyCenterModel.create(req.body, function (err, result) {
 		if (err) {
 			log.error(err)
@@ -146,7 +146,7 @@ server.post('/api/pregnancy-centers', function (req, res) {
 	})
 })
 
-server.put('/api/pregnancy-centers/:pregnancyCenterId', function (req, res) {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (req, res) {
 	PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
 		if (err) {
 			log.error(err)
@@ -173,3 +173,19 @@ server.get('/auth/facebook', passport.authenticate('facebook'))
 server.get('/auth/facebook/callback',
 	passport.authenticate('facebook', { successRedirect: '/',
 		failureRedirect: '/login' }))
+
+
+server.get('/logout', function(req, res) {
+	req.logout()
+	res.redirect('/')
+})
+
+function isLoggedIn(req, res, next) {
+
+	// if user is authenticated in the session, carry on
+	if (req.isAuthenticated())
+		return next()
+
+	// if they aren't, redirect them to be authenticated
+	res.redirect('/auth/facebook')
+}
