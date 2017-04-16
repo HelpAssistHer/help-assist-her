@@ -50,7 +50,7 @@ passport.use(
 				providerId: profile.id,
 				displayName: profile.displayName,
 			},
-			options = { upsert: true, new: true, setDefaultsOnInsert: true };
+			options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
 		// Find the document
 		UserModel.findOneAndUpdate(query, update, options, function (err, user) {
