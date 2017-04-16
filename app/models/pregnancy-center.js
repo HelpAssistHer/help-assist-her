@@ -3,7 +3,6 @@
 const mongoose = require('mongoose')
 const _ = require('lodash')
 
-
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
 	coordinates: [Number]
@@ -19,31 +18,6 @@ const addressSchema = new mongoose.Schema({
 	zip: String,
 })
 
-// Hours Example:
-// hours : {
-// "mon": {
-//     "open": "9:00",
-//         "close": "18:00"
-// },
-// "tue": {
-//     "open": "9:00",
-//         "close": "17:30"
-// },
-// "wed": {
-//     "open": "9:00",
-//         "close": "18:00"
-// },
-// "thurs": [
-//     {
-//         "open": "9:00",
-//         "close": "12:00"
-//     },
-//     {
-//         "open": "13:00",
-//         "close": "18:00"
-//     }
-// ]
-// },
 
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
@@ -138,6 +112,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	},
 	website: String,
 })
+
 
 pregnancyCenterSchema.index({'address.location': '2dsphere'})
 

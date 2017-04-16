@@ -7,13 +7,17 @@ const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 const bodyParser = require('body-parser')
+const Joi = require('joi')
+const boom = require('express-boom')
 
 const server = express()
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
+server.use(boom())
 const port = config.server.port
 const log = new Log('info')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
 
 mongoose.Promise = require('bluebird')
 server.use(cors())
@@ -87,24 +91,77 @@ server.get('/api/pregnancy-centers/verify', function (req, res) {
 })
 
 server.post('/api/pregnancy-centers', function (req, res) {
-	PregnancyCenterModel.create(req.body, function (err, result) {
+	Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+		abortEarly: false
+	}, function(err, result) {
 		if (err) {
-			log.error(err)
+			handleJoiValidationError(err)
+		} else {
+			PregnancyCenterModel.create(result, function (err, result) {
+				if (err) {
+					log.error(err)
+					res.boom.badImplementation()
+				} else {
+					res.status(200).json(result)
+				}
+
+			})
 		}
-		res.status(204).json(result)
+
 	})
+
 })
 
 server.put('/api/pregnancy-centers/:pregnancyCenterId', function (req, res) {
-	PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
-		if (err) {
-			log.error(err)
-		} else {
-			res.status(200).json(pregnancyCenterUpdated)
-		}
-	})
+	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
+		Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+			abortEarly: false
+		}, function(err, validatedData) {
+			if (err) {
+				handleJoiValidationError(err)
+			} else {
+				PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, validatedData, function (err, pregnancyCenterUpdated) {
+					if (err) {
+						log.error(err)
+						res.boom.badImplementation()
+					} else {
+						res.status(200).json(pregnancyCenterUpdated)
+					}
+				})
+			}
+		})
+	} else {
+		res.boom.badRequest('Invalid id. id must be a ObjectId.')
+	}
+})
+
+server.get('/api/pregnancy-centers/:pregnancyCenterId', function (req, res) {
+	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
+		PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function (err, pregnancyCenter) {
+			if (err) {
+				log.error(err)
+				res.boom.badImplementation()
+			} else if (!pregnancyCenter) {
+				res.boom.notFound()
+			} else {
+				res.status(200).json(pregnancyCenter)
+			}
+		})
+	} else {
+		res.boom.badRequest('Invalid id. id must be a ObjectId.')
+	}
+
 })
 
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
+
+function handleJoiValidationError(err) {
+	log.error(err)
+	const data = _.clone( err['_object'])
+	delete err['_object']
+	return res.boom.badRequest(err, data)
+}
+
+module.exports = server
