@@ -22,6 +22,55 @@ async function getOneResource() {
 	}
 }
 
+async function submitResource(data) {
+	const options = {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': '*',
+		},
+		mode: 'no-cors',
+		cache: 'default',
+		body: JSON.stringify({
+			address: {
+				city: data.city,
+				line1: data.address1,
+				line2: data.address2,
+				state: data.state,
+				zip: data.zip,
+			},
+			dateCreated: Date.now(),
+			// hours: Object,
+			name: data.name, // change to prcName?
+			// notes: this.state.notes,
+			phone: data.phone,
+			primaryContact: {
+				firstName: data.primaryContactFirstName,
+				lastName: data.primaryContactLastName,
+				email: data.primaryContactEmail,
+				phone: data.primaryContactPhone,
+			},
+			// resources: [String],
+			website: data.website,
+		})
+	}
+
+	try {
+		const response = await fetch('http://localhost:4000/api/pregnancy-centers', options)
+		// const result = await response.json()
+		console.log('RESPONSE FROM SERVER', response)
+		if (response.type === 'cors') {
+			console.log('CORS')
+		} else {
+			console.log('NOT CORS')
+		}
+		// return result
+	} catch(error) {
+		console.error(error)
+	}
+}
+
 const VerificationPortal = React.createClass({
 	getInitialState() {
 		return {
