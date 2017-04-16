@@ -9,7 +9,7 @@
     "wds": "webpack-dev-server",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Tests are not setup yet\" && exit 0",
     "n": "nvm use lts/boron",
     "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config"
   },
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/HelpAssistHer/help-assist-her#readme",
   "dependencies": {
+    "@google/maps": "^0.3.1",
     "@turf/turf": "^3.7.4",
     "axios": "0.15.2",
     "bluebird": "^3.4.7",
@@ -38,6 +39,7 @@
     "log": "^1.4.0",
     "mapbox": "^1.0.0-beta5",
     "mongodb": "^2.2.16",
+    "mongodb-extended-json": "^1.9.0",
     "mongoose": "^4.7.5",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
@@ -45,6 +47,7 @@
     "preact-compat": "^3.9.3",
     "react": "15.3.2",
     "react-dom": "15.3.2",
+    "react-jss": "^5.4.1",
     "react-redux": "4.4.0",
     "react-router": "4.0.0-alpha.5",
     "redux": "3.3.1",
@@ -78,6 +81,7 @@
     "react-addons-test-utils": "15.3.2",
     "react-test-renderer": "15.3.2",
     "style-loader": "0.13.1",
+    "url-loader": "^0.5.8",
     "webpack": "2.1.0-beta.25",
     "webpack-dev-server": "1.16.2"
   }
