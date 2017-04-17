@@ -9,6 +9,12 @@ import Spacer from './spacer'
 const VerificationPortalView = ({ classes, info, getResourceClick, submitResource }) => (
 	<div className={classes.verificationPortal}>
 		<h1>VERIFICATION PORTAL</h1>
+		<Button
+			onClick={() => {
+				window.location.href = 'http://localhost:4000/auth/facebook'
+			}}
+			buttonText='(icon) Sign In with Facebook'
+		/>
 		<h3>Type: Pregnancy Centers</h3>
 		{console.log(info)}
 
