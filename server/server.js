@@ -33,7 +33,6 @@ server.use(session({
 server.use(passport.initialize())
 server.use(passport.session())
 
-
 passport.use(
 	new FacebookStrategy({
 		clientID: process.env.V_FACEBOOK_APP_ID,
@@ -143,11 +142,11 @@ server.get('/api/pregnancy-centers/verify', isLoggedIn, function (req, res) {
 })
 
 server.post('/api/pregnancy-centers', isLoggedIn, function (req, res) {
-	PregnancyCenterModel.create(req.body, function (err, result) {
+	PregnancyCenterModel.create(req.body, (err, result) => {
 		if (err) {
 			log.error(err)
 		}
-		res.status(204).json(result)
+		res.status(201).json(result)
 	})
 })
 
@@ -176,13 +175,16 @@ server.get('/auth/facebook', passport.authenticate('facebook'))
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 server.get('/auth/facebook/callback',
-	passport.authenticate('facebook', { successRedirect: '/',
-		failureRedirect: '/login' }))
+	passport.authenticate('facebook', {
+		successRedirect: 'http://localhost:8080/verification',
+		failureRedirect: '/login'
+	})
+)
 
 
-server.get('/logout', function(req, res) {
+server.get('/logout', (req, res) => {
 	req.logout()
-	res.redirect('/')
+	res.redirect('http://localhost:8080/')
 })
 
 function isLoggedIn(req, res, next) {
