@@ -12,6 +12,8 @@ const boom = require('express-boom')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
+const moment = require('moment')
+
 const server = express()
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
@@ -94,19 +96,19 @@ server.get('/', function (req, res) {
 	res.send('Hello World!')
 })
 
-server.get('/api/pregnancy-centers', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
 	PregnancyCenterModel.find({}, function (err, allPregnancyCenters) {
 		if (err) {
 			log.error(err)
+			res.boom.badImplementation()
+		} else {
+			res.send(allPregnancyCenters)
 		}
-		res.send(allPregnancyCenters)
+
 	})
 })
 
-// temporarily hardcoded for testing GeoJSON
-// to test, navigate to /data and run "node data", then run the server and access this endpoint
-
-server.get('/api/pregnancy-centers/near-me', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) {
 
 	const METERS_PER_MILE = 1609.34
 
@@ -128,12 +130,16 @@ server.get('/api/pregnancy-centers/near-me', isLoggedIn, function (req, res) {
 	}, function (err, pregnancyCentersNearMe) {
 		if (err) {
 			log.error(err)
+			res.boom.badImplementation()
+		} else if (!pregnancyCentersNearMe) {
+			res.boom.notFound()
+		} else {
+			res.status(200).json(pregnancyCentersNearMe)
 		}
-		res.status(200).json(pregnancyCentersNearMe)
 	})
 })
 
-server.get('/api/pregnancy-centers/verify', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, function (req, res) {
 
 	// We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
 	// and what attributes were verified
@@ -143,12 +149,17 @@ server.get('/api/pregnancy-centers/verify', isLoggedIn, function (req, res) {
 	PregnancyCenterModel.findOne({'verified.address': null}, function (err, pregnancyCenterToVerify) {
 		if (err) {
 			log.error(err)
+			res.boom.badImplementation()
+		} else if (!pregnancyCenterToVerify) {
+			res.boom.notFound()
+		} else {
+			res.status(200).json(pregnancyCenterToVerify)
 		}
-		res.status(200).json(pregnancyCenterToVerify)
+
 	})
 })
 
-server.post('/api/pregnancy-centers', isLoggedIn, function (req, res) {
+server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
 	Joi.validate(req.body, pregnancyCenterSchemaJoi, {
 		abortEarly: false
 	}, function(err, result) {
@@ -170,7 +181,7 @@ server.post('/api/pregnancy-centers', isLoggedIn, function (req, res) {
 
 })
 
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (req, res) {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
 	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
 		Joi.validate(req.body, pregnancyCenterSchemaJoi, {
 			abortEarly: false
@@ -178,12 +189,19 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (re
 			if (err) {
 				handleJoiValidationError(res, err)
 			} else {
-				PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, validatedData, function (err, pregnancyCenterUpdated) {
+				PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, validatedData, {runValidators: true }, function (err, updateInfoFromMongo) {
 					if (err) {
 						log.error(err)
 						res.boom.badImplementation()
 					} else {
-						res.status(200).json(pregnancyCenterUpdated)
+						if (updateInfoFromMongo.nModified != 1) {
+							log.error(err)
+							res.boom.badImplementation()
+						} else {
+							PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function(err, pregnancyCenterUpdated) {
+								res.status(200).json(pregnancyCenterUpdated)
+							})
+						}
 					}
 				})
 			}
@@ -193,7 +211,7 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (re
 	}
 })
 
-server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
 	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
 		PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function (err, pregnancyCenter) {
 			if (err) {
@@ -208,7 +226,6 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (re
 	} else {
 		res.boom.badRequest('Invalid id. id must be a ObjectId.')
 	}
-
 })
 
 server.listen(port, function () {
@@ -234,15 +251,25 @@ server.get('/logout', function(req, res) {
 	req.logout()
 	res.redirect('/')
 })
+//
+// function isLoggedIn(req, res, next) {
+//
+// 	// if user is authenticated in the session, carry on
+// 	if (req.isAuthenticated())
+// 		return next()
+//
+// 	// if they aren't, and redirect them to be authenticated
+// 	res.redirect('/auth/facebook')
+// }
 
-function isLoggedIn(req, res, next) {
+function isLoggedInAPI(req, res, next) {
 
 	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next()
 
-	// if they aren't, redirect them to be authenticated
-	res.redirect('/auth/facebook')
+	// if they aren't, return an http error
+	res.boom.unauthorized('User is not logged in.')
 }
 
 function handleJoiValidationError(res, err) {
@@ -250,6 +277,40 @@ function handleJoiValidationError(res, err) {
 	const data = _.clone( err['_object'])
 	delete err['_object']
 	return res.boom.badRequest(err, data)
+}
+
+function createReadableTime(secondsSinceStart) {
+	const hours = secondsSinceStart / 3600  // needs to be an integer division
+	const leaves = secondsSinceStart - hours * 3600
+	const minutes = leaves / 60
+	return moment({ hour:hours, minute:minutes }).format('h:mmA')
+}
+
+function getHumanReadableHours(queryableHours) {
+	let readableHours = {}
+	const days = {
+		1: 'mon',
+		2: 'tue',
+		3: 'wed',
+		4: 'thurs',
+		5: 'fri',
+		6: 'sat',
+		7: 'sun'
+	}
+	for (let day in queryableHours) {
+		if (queryableHours.hasOwnProperty(day)) {
+			let hours = queryableHours[day]
+			let new_hours = []
+			for (let hourspan of hours) {
+				new_hours.push({
+					'open': createReadableTime(hourspan['open']),
+					'close': createReadableTime(hourspan['close'])
+				})
+			}
+			readableHours[days[day]] = new_hours
+		}
+	}
+	return readableHours
 }
 
 module.exports = server

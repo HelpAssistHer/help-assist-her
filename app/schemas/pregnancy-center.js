@@ -4,6 +4,7 @@ const Joi = require('joi')
 const phoneValidator = require('joi-phone-validator')
 
 const pointSchemaJoi = Joi.object().keys({
+	_id: Joi.string(),
 	type: Joi.string().valid('Point').required(),
 	coordinates: Joi.array().ordered(
 		Joi.number().max(-66).min(-128).required(), // general continental US longitude parameters
@@ -12,6 +13,7 @@ const pointSchemaJoi = Joi.object().keys({
 })
 
 const addressSchemaJoi = Joi.object().keys({
+	_id: Joi.string(),
 	city: Joi.string(),
 	googlePlaceId: Joi.string(), // we can store the google place ID according to TOS
 	line1: Joi.string(),
@@ -26,14 +28,14 @@ const queryableDayHoursSchemaJoi = Joi.object().keys({
 	close: Joi.number().min(0).max(86400) // number of seconds since 00:00:00
 })
 
-const queryableHoursSchemaJoi = Joi.object().keys({
-	0: Joi.array().items(queryableDayHoursSchemaJoi),
+const queryableHoursSchemaJoi = Joi.object().keys({ // ISO day of the week with 1 being Monday and 7 being Sunday.
 	1: Joi.array().items(queryableDayHoursSchemaJoi),
 	2: Joi.array().items(queryableDayHoursSchemaJoi),
 	3: Joi.array().items(queryableDayHoursSchemaJoi),
 	4: Joi.array().items(queryableDayHoursSchemaJoi),
 	5: Joi.array().items(queryableDayHoursSchemaJoi),
-	6: Joi.array().items(queryableDayHoursSchemaJoi)
+	6: Joi.array().items(queryableDayHoursSchemaJoi),
+	7: Joi.array().items(queryableDayHoursSchemaJoi)
 })
 
 const readableDayHoursSchemaJoi = Joi.object().keys({
@@ -58,6 +60,8 @@ const dateUserActionSchemaJoi = Joi.object().keys({
 
 
 const pregnancyCenterSchemaJoi = Joi.object().keys({
+	__v: Joi.number().min(0),
+	_id: Joi.string(),
 	address: addressSchemaJoi,
 	dateCreated: Joi.date().iso(),
 	email: Joi.string().email(),
