@@ -164,7 +164,6 @@ server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
 
-
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
 //     /auth/facebook/callback
@@ -180,7 +179,6 @@ server.get('/auth/facebook/callback',
 		failureRedirect: '/login'
 	})
 )
-
 
 server.get('/logout', (req, res) => {
 	req.logout()

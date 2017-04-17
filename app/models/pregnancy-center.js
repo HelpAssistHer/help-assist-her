@@ -3,7 +3,6 @@
 const mongoose = require('mongoose')
 const _ = require('lodash')
 
-
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
 	coordinates: [Number]
@@ -168,4 +167,3 @@ const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterS
 
 // make available
 module.exports = PregnancyCenterModel
-

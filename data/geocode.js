@@ -22,7 +22,6 @@ const loadData = P.coroutine(function *startDatabase() {
 
 loadData()
 
-
 // the longitude and latitute of PregnancyCenter are in pc.address.location, which is a GeoJSON point
 // GeoJSON Point: { type: "Point", coordinates: [long, lat] }
 //
