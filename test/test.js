@@ -63,6 +63,67 @@ describe('PregnancyCenters', () => {
 			done()
 		})
 	})
+
+	/*
+	 * Test the /GET /api/pregnancy-centers/open-now route w/o authentication
+	 */
+	describe('/GET /api/pregnancy-centers/open-now no-auth', () => {
+		it('it should return a 401 error because there is no authentication', (done) => {
+			chai.request(server)
+				.get('/api/pregnancy-centers/open-now')
+				.end((err, res) => {
+					assertUnauthenticatedError(res)
+					done()
+				})
+		})
+	})
+
+	/*
+	 * Test the /GET /api/pregnancy-centers/open-now route with authentication
+	 */
+	describe('/GET /api/pregnancy-centers/open-now ', () => {
+		it('it should return one pregnancy center open at 8PM on Sundays', (done) => {
+
+			// Sunday is 7 according to moment().isoWeekday(7)
+
+			PregnancyCenterModel.create({
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'name': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'resources': [],
+				'queryableHours': {
+					7: [
+						{
+							open: 0,
+							close: 82800
+						}
+					]
+				}
+
+			}, function(err, pc) {
+				if (err) log.info(err)
+			})
+			mockAuthenticate()
+			chai.request(server)
+				.get('/api/pregnancy-centers/open-now?'+encodeURIComponent('2017-04-17T03:47:00.023Z'))
+				.end((err, res) => {
+					log.info(res.body)
+					assertUnauthenticatedError(res)
+					done()
+				})
+		})
+	})
+
 	/*
 	 * Test the /GET /api/pregnancy-centers route w/o authentication
 	 */

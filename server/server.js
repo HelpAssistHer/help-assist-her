@@ -23,6 +23,7 @@ const passport = require('passport')
 	, FacebookStrategy = require('passport-facebook').Strategy
 const UserModel = require('../app/models/user')
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
+const hoursUtils = require('../utils/utils')
 const _ = require('lodash')
 mongoose.Promise = require('bluebird')
 
@@ -47,8 +48,6 @@ passport.use(
 	},
 	function(accessToken, refreshToken, profile, done) {
 
-		log.info(profile)
-
 		const query = { providerId: profile.id },
 			update = {
 				provider: profile.provider,
@@ -71,7 +70,6 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(providerId, done) {
-	log.info('inside deserializeUser, providerId: '+providerId)
 	UserModel.find({providerId: providerId}, function(err, user) {
 		done(err, user)
 	})
@@ -208,6 +206,34 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function 
 	}
 })
 
+server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res) {
+
+	const today = moment(req.query.date) || moment()
+	const dayOfWeek = today.isoWeekday()
+	log.info('dayOfWeek', dayOfWeek)
+	const timeOfDaySeconds = hoursUtils.createQueryableSeconds(today)
+	log.info('timeOfDaySeconds', timeOfDaySeconds)
+	const query = {}
+	query['queryableHours.' + dayOfWeek] = {
+		$elemMatch: {
+			open: {$lte: timeOfDaySeconds},
+			close: {$gte: timeOfDaySeconds}
+		}
+	}
+	log.info('query: %j', query)
+
+	PregnancyCenterModel.find(query, function (err, pregnancyCentersOpenNow) {
+		if (err) {
+			log.error(err)
+			res.boom.badImplementation()
+		} else if (!pregnancyCentersOpenNow) {
+			res.boom.notFound()
+		} else {
+			res.status(200).json(pregnancyCentersOpenNow)
+		}
+	})
+})
+
 server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
 	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
 		PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function (err, pregnancyCenter) {
@@ -224,6 +250,8 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function 
 		res.boom.badRequest('Invalid id. id must be a ObjectId.')
 	}
 })
+
+
 
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
@@ -275,40 +303,6 @@ function handleJoiValidationError(res, err) {
 	const data = _.clone( err['_object'])
 	delete err['_object']
 	return res.boom.badRequest(err, data)
-}
-
-function createReadableTime(secondsSinceStart) {
-	const hours = secondsSinceStart / 3600  // needs to be an integer division
-	const leaves = secondsSinceStart - hours * 3600
-	const minutes = leaves / 60
-	return moment({ hour:hours, minute:minutes }).format('h:mmA')
-}
-
-function getHumanReadableHours(queryableHours) {
-	let readableHours = {}
-	const days = {
-		1: 'mon',
-		2: 'tue',
-		3: 'wed',
-		4: 'thurs',
-		5: 'fri',
-		6: 'sat',
-		7: 'sun'
-	}
-	for (let day in queryableHours) {
-		if (queryableHours.hasOwnProperty(day)) {
-			let hours = queryableHours[day]
-			let new_hours = []
-			for (let hourspan of hours) {
-				new_hours.push({
-					'open': createReadableTime(hourspan['open']),
-					'close': createReadableTime(hourspan['close'])
-				})
-			}
-			readableHours[days[day]] = new_hours
-		}
-	}
-	return readableHours
 }
 
 module.exports = server
