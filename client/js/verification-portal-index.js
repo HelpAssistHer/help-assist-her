@@ -10,7 +10,6 @@ async function getOneResource() {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
-				'Access-Control-Allow-Origin': '*',
 			},
 		})
 		const result = await response.json()
@@ -88,13 +87,12 @@ const VerificationPortal = React.createClass({
 			primaryContactPhone: '', // is this even needed? It will probs just be blank
 		}
 	},
+
 	handleSubmit: async function() {
-		console.log('SUBMITTED', this.state.name)
-		const thisResult = await fetch('http://localhost:4000/api/pregnancy-centers', {
+		await fetch('http://localhost:4000/api/pregnancy-centers', {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
 				address: {
@@ -119,8 +117,8 @@ const VerificationPortal = React.createClass({
 				website: this.state.website,
 			})
 		})
-		console.log('RESPONSE FROM SERVER', thisResult)
 	},
+
 	handleClick: async function() {
 		const result = await getOneResource()
 		console.log('RESULT', result)
@@ -144,9 +142,14 @@ const VerificationPortal = React.createClass({
 			// primaryContactPhone: result.primaryContact.phone, // how can you rename after destructuring
 		})
 	},
+
 	render() {
 		return (
-			<VerificationPortalView info={this.state} getResourceClick={this.handleClick} submitResource={this.handleSubmit} />
+			<VerificationPortalView
+				info={this.state}
+				getResourceClick={this.handleClick}
+				submitResource={this.handleSubmit}
+			/>
 		)
 	}
 })
