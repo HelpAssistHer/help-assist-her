@@ -143,4 +143,3 @@ const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterS
 
 // make available
 module.exports = PregnancyCenterModel
-

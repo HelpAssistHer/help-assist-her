@@ -10,7 +10,6 @@ async function getOneResource() {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
-				'Access-Control-Allow-Origin': '*',
 			},
 		})
 		const result = await response.json()
@@ -18,55 +17,6 @@ async function getOneResource() {
 		return result
 	} catch(error) {
 		// TODO is it ok to have console shtuff in client
-		console.error(error)
-	}
-}
-
-async function submitResource(data) {
-	const options = {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json',
-			'Access-Control-Allow-Origin': '*',
-		},
-		mode: 'no-cors',
-		cache: 'default',
-		body: JSON.stringify({
-			address: {
-				city: data.city,
-				line1: data.address1,
-				line2: data.address2,
-				state: data.state,
-				zip: data.zip,
-			},
-			dateCreated: Date.now(),
-			// hours: Object,
-			name: data.name, // change to prcName?
-			// notes: this.state.notes,
-			phone: data.phone,
-			primaryContact: {
-				firstName: data.primaryContactFirstName,
-				lastName: data.primaryContactLastName,
-				email: data.primaryContactEmail,
-				phone: data.primaryContactPhone,
-			},
-			// resources: [String],
-			website: data.website,
-		})
-	}
-
-	try {
-		const response = await fetch('http://localhost:4000/api/pregnancy-centers', options)
-		// const result = await response.json()
-		console.log('RESPONSE FROM SERVER', response)
-		if (response.type === 'cors') {
-			console.log('CORS')
-		} else {
-			console.log('NOT CORS')
-		}
-		// return result
-	} catch(error) {
 		console.error(error)
 	}
 }
@@ -88,13 +38,12 @@ const VerificationPortal = React.createClass({
 			primaryContactPhone: '', // is this even needed? It will probs just be blank
 		}
 	},
+
 	handleSubmit: async function() {
-		console.log('SUBMITTED', this.state.name)
-		const thisResult = await fetch('http://localhost:4000/api/pregnancy-centers', {
+		await fetch('http://localhost:4000/api/pregnancy-centers', {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
 				address: {
@@ -119,8 +68,8 @@ const VerificationPortal = React.createClass({
 				website: this.state.website,
 			})
 		})
-		console.log('RESPONSE FROM SERVER', thisResult)
 	},
+
 	handleClick: async function() {
 		const result = await getOneResource()
 		console.log('RESULT', result)
@@ -144,9 +93,14 @@ const VerificationPortal = React.createClass({
 			// primaryContactPhone: result.primaryContact.phone, // how can you rename after destructuring
 		})
 	},
+
 	render() {
 		return (
-			<VerificationPortalView info={this.state} getResourceClick={this.handleClick} submitResource={this.handleSubmit} />
+			<VerificationPortalView
+				info={this.state}
+				getResourceClick={this.handleClick}
+				submitResource={this.handleSubmit}
+			/>
 		)
 	}
 })

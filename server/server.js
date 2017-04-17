@@ -15,8 +15,6 @@ const cookieParser = require('cookie-parser')
 const moment = require('moment')
 
 const server = express()
-server.use(bodyParser.urlencoded())
-server.use(bodyParser.json())
 server.use(boom())
 const port = config.server.port
 const log = new Log('info')
@@ -40,7 +38,6 @@ server.use(session({
 }))
 server.use(passport.initialize())
 server.use(passport.session())
-
 
 passport.use(
 	new FacebookStrategy({
@@ -171,7 +168,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
 					log.error(err)
 					res.boom.badImplementation()
 				} else {
-					res.status(200).json(result)
+					res.status(201).json(result)
 				}
 
 			})
@@ -232,7 +229,6 @@ server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
 
-
 // Redirect the user to Facebook for authentication.  When complete,
 // Facebook will redirect the user back to the application at
 //     /auth/facebook/callback
@@ -243,24 +239,26 @@ server.get('/auth/facebook', passport.authenticate('facebook'))
 // access was granted, the user will be logged in.  Otherwise,
 // authentication has failed.
 server.get('/auth/facebook/callback',
-	passport.authenticate('facebook', { successRedirect: '/',
-		failureRedirect: '/login' }))
+	passport.authenticate('facebook', {
+		successRedirect: 'http://localhost:8080/verification',
+		failureRedirect: '/login'
+	})
+)
 
-
-server.get('/logout', function(req, res) {
+server.get('/logout', (req, res) => {
 	req.logout()
-	res.redirect('/')
+	res.redirect('http://localhost:8080/')
 })
-//
-// function isLoggedIn(req, res, next) {
-//
-// 	// if user is authenticated in the session, carry on
-// 	if (req.isAuthenticated())
-// 		return next()
-//
-// 	// if they aren't, and redirect them to be authenticated
-// 	res.redirect('/auth/facebook')
-// }
+
+function isLoggedIn(req, res, next) {
+
+	// if user is authenticated in the session, carry on
+	if (req.isAuthenticated())
+		return next()
+
+	// if they aren't, and redirect them to be authenticated
+	res.redirect('/auth/facebook')
+}
 
 function isLoggedInAPI(req, res, next) {
 
