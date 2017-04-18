@@ -58,7 +58,6 @@ const dateUserActionSchemaJoi = Joi.object().keys({
 	userId: Joi.string()
 })
 
-
 const pregnancyCenterSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
 	_id: Joi.string(),
@@ -112,5 +111,5 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	website: Joi.string()
 })
 
-
 module.exports = pregnancyCenterSchemaJoi
+

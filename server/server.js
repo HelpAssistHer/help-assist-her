@@ -246,8 +246,6 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function 
 	}
 })
 
-
-
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
