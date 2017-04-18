@@ -207,12 +207,9 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function 
 })
 
 server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res) {
-
 	const today = moment(req.query.date) || moment()
 	const dayOfWeek = today.isoWeekday()
-	log.info('dayOfWeek', dayOfWeek)
 	const timeOfDaySeconds = hoursUtils.createQueryableSeconds(today)
-	log.info('timeOfDaySeconds', timeOfDaySeconds)
 	const query = {}
 	query['queryableHours.' + dayOfWeek] = {
 		$elemMatch: {
@@ -220,8 +217,6 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res)
 			close: {$gte: timeOfDaySeconds}
 		}
 	}
-	log.info('query: %j', query)
-
 	PregnancyCenterModel.find(query, function (err, pregnancyCentersOpenNow) {
 		if (err) {
 			log.error(err)

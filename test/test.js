@@ -14,6 +14,7 @@ const log = new Log('info')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server/server')
+const hoursUtil = require('../utils/utils')
 const should = chai.should()
 const Joi = require('joi')
 
@@ -43,7 +44,6 @@ function assertError(res, statusCode, error, message=null) {
 		res.body.message.should.equal(message)
 	}
 
-
 	res.body.statusCode.should.equal(statusCode)
 	res.body.error.should.equal(error)
 
@@ -53,13 +53,75 @@ function assertUnauthenticatedError(res) {
 	assertError(res, 401, 'Unauthorized', 'User is not logged in.')
 }
 
-
-
 //Our parent block
 describe('PregnancyCenters', () => {
 	beforeEach((done) => { //Before each test we empty the database
 		mockUnauthenticate()
 		PregnancyCenterModel.remove({}, (err) => {
+			done()
+		})
+	})
+
+	describe('Test getHumanReadableHours util function', () => {
+		it('it should return a queryable hours obj transformed into a human readable object', (done) => {
+			// the pregnancy center is open from 8 to 5 on weekdays, except for a lunch break on mondays
+			const queryableHours = {
+				1: [{
+					open: 28800,
+					close: 43200
+				}, {
+					open: 46800,
+					close: 61200
+				}],
+				2: [{
+					open: 28800,
+					close: 61200
+				}],
+				3: [{
+					open: 28800,
+					close: 61200
+				}],
+				4: [{
+					open: 28800,
+					close: 61200
+				}],
+				5: [{
+					open: 28800,
+					close: 61200
+				}],
+				6: [],
+				7: []
+
+			}
+			const readableHours = hoursUtil.getHumanReadableHours(queryableHours)
+			const expectedReadableHours = {
+				'mon': [{
+					open: '8:00AM',
+					close: '12:00PM'
+				}, {
+					open: '1:00PM',
+					close: '5:00PM'
+				}],
+				'tue': [{
+					open: '8:00AM',
+					close: '5:00PM'
+				}],
+				'wed':[{
+					open: '8:00AM',
+					close: '5:00PM'
+				}],
+				'thurs': [{
+					open: '8:00AM',
+					close: '5:00PM'
+				}],
+				'fri': [{
+					open: '8:00AM',
+					close: '5:00PM'
+				}],
+				'sat': [],
+				'sun': []
+			}
+			readableHours.should.deep.equal(expectedReadableHours)
 			done()
 		})
 	})
@@ -111,14 +173,51 @@ describe('PregnancyCenters', () => {
 				}
 
 			}, function(err, pc) {
+				if (err) log.info('Error in saving', err)
+			})
+
+			PregnancyCenterModel.create({
+				'address': {
+					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.9241081,
+							40.771253
+						]
+					},
+				},
+				'name': 'The Bridge To Life, Inc.',
+				'phone': '+17182743577',
+				'email': 'thebridgetolife@verizon.net',
+				'website': 'http://www.thebridgetolife.org',
+				'resources': [],
+				'queryableHours': {
+					0: [
+						{
+							open: 0,
+							close: 82800
+						}
+					],
+					7: [
+						{
+							open: 80000,
+							close: 82800
+						}
+					],
+				}
+			}, function(err, pc) {
 				if (err) log.info(err)
 			})
+
 			mockAuthenticate()
 			chai.request(server)
-				.get('/api/pregnancy-centers/open-now?'+encodeURIComponent('2017-04-17T03:47:00.023Z'))
+				.get('/api/pregnancy-centers/open-now?date='+encodeURIComponent('2017-04-17T03:47:00.023Z'))
 				.end((err, res) => {
-					log.info(res.body)
-					assertUnauthenticatedError(res)
+					res.should.have.status(200)
+					res.body.should.be.a('array')
+					res.body.length.should.be.eql(1)
+					res.body[0].name.should.equal('Birthright of Albany')
 					done()
 				})
 		})
@@ -181,7 +280,6 @@ describe('PregnancyCenters', () => {
 				})
 		})
 	})
-
 
 	/*
 	 * Test the /POST /api/pregnancy-centers route -- authenticated
@@ -300,7 +398,6 @@ describe('PregnancyCenters', () => {
 		})
 	})
 
-
 	/*
 	 * Test the /GET /api/pregnancy-centers/verify route w/o authentication
 	 */
@@ -409,7 +506,6 @@ describe('PregnancyCenters', () => {
 					}
 				}
 
-
 			}, function(err, pc) {
 				if (err) log.error(err)
 			})
@@ -456,7 +552,6 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId no-auth', () => {
 		it('it should return a 401 error because there is no authentication', (done) => {
 
-
 			PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -478,7 +573,6 @@ describe('PregnancyCenters', () => {
 					}
 				}
 
-
 			}, function(err, pc) {
 				if (err) log.error(err)
 				chai.request(server)
@@ -498,7 +592,6 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', (done) => {
 
-
 			PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -513,18 +606,15 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': []
-
-
-			}, function(err, pc) {
-				if (err) log.error(err)
-				mockAuthenticate()
-
-				pc['verified'] = {
+				'resources': [],
+				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
+			}, function(err, pc) {
+				if (err) log.error(err)
+				mockAuthenticate()
 
 				chai.request(server)
 					.put('/api/pregnancy-centers/'+pc._id)
@@ -544,7 +634,6 @@ describe('PregnancyCenters', () => {
 			})
 		})
 	})
-
 
 	/*
 	 * Test the /GET /api/pregnancy-centers/:pregnancyCenterId route w/o authentication
@@ -567,7 +656,6 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'resources': []
-
 
 			}, function(err, pc) {
 				if (err) log.error(err)
@@ -602,7 +690,6 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'resources': []
-
 
 			}, function(err, pc) {
 				if (err) log.error(err)
@@ -767,7 +854,6 @@ describe('PregnancyCenters', () => {
 			Joi.validate(testPCObj6, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			}, function(err, validatedData) {
-				log.info(validatedData)
 				validatedData.hours.should.deep.equal({
 					tue: [{
 						open: '8:00AM',
@@ -778,7 +864,6 @@ describe('PregnancyCenters', () => {
 			})
 		})
 	})
-
 
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
@@ -966,7 +1051,4 @@ describe('PregnancyCenters', () => {
 	})
 
 })
-
-
-
 

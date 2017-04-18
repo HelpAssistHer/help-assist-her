@@ -63,10 +63,10 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
 	_id: Joi.string(),
 	address: addressSchemaJoi,
+	createdAt: Joi.date().iso(),
 	dateCreated: Joi.date().iso(),
 	email: Joi.string().email(),
 	hours: readableHoursSchemaJoi,
-	queryableHours: queryableHoursSchemaJoi,
 	name: Joi.string(), // change to PRC name
 	notes: Joi.string(),
 	phone: phoneValidator.phone().validate(),
@@ -85,6 +85,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		'STD Testing',
 		'Counseling'
 	)),
+	queryableHours: queryableHoursSchemaJoi,
 	verified: {
 		address: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,
@@ -107,6 +108,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		resources: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
+	updatedAt: Joi.date().iso(),
 	website: Joi.string()
 })
 

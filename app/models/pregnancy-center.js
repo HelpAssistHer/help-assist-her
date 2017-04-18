@@ -18,10 +18,8 @@ const addressSchema = new mongoose.Schema({
 	zip: String,
 })
 
-
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
-	dateCreated: Date,
 	email: String,
 	hours: Object,
 	name: String, // change to PRC name
@@ -33,6 +31,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 		email: String,
 		phone: String,
 	},
+	queryableHours: Object,
 	resources: [String],
 	verified: {
 		address: {
@@ -111,8 +110,9 @@ const pregnancyCenterSchema = mongoose.Schema({
 		},
 	},
 	website: String,
+}, {
+	timestamps: true, // createdAt and updatedAt are automatically added
 })
-
 
 pregnancyCenterSchema.index({'address.location': '2dsphere'})
 
