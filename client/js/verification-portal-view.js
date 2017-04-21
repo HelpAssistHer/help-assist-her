@@ -8,12 +8,6 @@ import Input from './input'
 const VerificationPortalView = ({ classes, info, getResourceClick, submitResource }) => (
 	<div className={classes.verificationPortal}>
 		<h1>VERIFICATION PORTAL</h1>
-		<Button
-			onClick={() => {
-				window.location.href = 'http://localhost:4000/auth/facebook'
-			}}
-			buttonText='(icon) Sign In with Facebook'
-		/>
 		<h3>Type: Pregnancy Centers</h3>
 		{console.log(info)}
 
@@ -97,13 +91,6 @@ const styles = {
 		'text-align': 'center',
 		'font-family': 'sans-serif',
 		color: '#4A4A4A',
-	},
-	fields: {
-		/* Input / Text: */
-		/* Address 1: */
-		// font-family: AvenirNext-Regular;
-		// font-size: 14px;
-		// color: #4A4A4A;
 	},
 }
 

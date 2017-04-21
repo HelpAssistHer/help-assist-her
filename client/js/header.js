@@ -1,17 +1,25 @@
-'use strict'
-
 import React from 'react'
 import injectSheet from 'react-jss'
 
+import Button from './button'
+
 const Header = ({ classes }) => (
 	<div className={classes.header}>
+		<div className={classes.authenticationButtonDiv}>
+			<Button
+				onClick={() => {
+					window.location.href = 'http://localhost:4000/auth/facebook'
+				}}
+				buttonText='Account'
+			/>
+		</div>
 		<img className={classes.logo} src='../../public/img/logo-white.png' />
 	</div>
 )
 
 const styles = {
 	header: {
-		'background-image': 'linear-gradient(-90deg, #FCC582 0%, #F0649A 100%);',
+		'background-image': 'linear-gradient(-90deg, #FCC582 0%, #F0649A 100%)',
 		height: '200px',
 		position: 'relative',
 	},
@@ -26,6 +34,11 @@ const styles = {
 		left: '0',
 		right: '0',
 		margin: 'auto',
+	},
+	authenticationButtonDiv: {
+		width: '7%',
+		float: 'right',
+		padding: '10px',
 	},
 }
 

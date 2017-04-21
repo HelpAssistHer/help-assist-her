@@ -13,7 +13,7 @@ const App = React.createClass({
 	render() {
 		return (
 			<div>
-				<Header/>
+				<Header />
 				<BrowserRouter>
 					<div className='app'>
 						<Match exactly pattern='/' component={Landing} />
