@@ -1,10 +1,9 @@
-'use strict'
-
 import React from 'react'
 import injectSheet from 'react-jss'
 
 import Button from './button'
 import Spacer from './spacer'
+import Input from './input'
 
 const VerificationPortalView = ({ classes, info, getResourceClick, submitResource }) => (
 	<div className={classes.verificationPortal}>
@@ -20,25 +19,74 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 
 		<Spacer height='20px' />
 		<Button onClick={getResourceClick} buttonText='Get One Resource'/>
-
 		<Spacer height='50px' />
+
 		<div className={classes.fields}>
-			<input type='text' placeholder='Name' value={ info.name }/>
-			<input type='text' placeholder='Address 1' value={ info.address1 }/>
-			<input type='text' placeholder='Address 2' value={ info.address2 }/>
-			<input type='text' placeholder='City' value={ info.city }/>
-			<input type='text' placeholder='State' value={ info.state }/>
-			<input type='text' placeholder='Zip Code' value={ info.zipCode }/>
-			<input type='text' placeholder='Phone Number' value={ info.phone }/>
-			<input type='text' placeholder='Website' value={ info.website }/>
+			<Input label='Name'
+				   value={ info.name }
+				   placeholder='Enter Name'
+				   id='name'
+			/>
+			<Input label='Address 1'
+				   value={ info.address1 }
+				   placeholder='Enter Address 1'
+				   id='address1'
+			/>
+			<Input label='Address 2'
+				   value={ info.address2 }
+				   placeholder='Enter Address 2'
+				   id='address2'
+			/>
+			<Input label='City'
+				   value={ info.city }
+				   placeholder='Enter City'
+				   id='city'
+			/>
+			<Input label='State'
+				   value={ info.state }
+				   placeholder='Enter State'
+				   id='state'
+			/>
+			<Input label='Zip Code'
+				   value={ info.zipCode }
+				   placeholder='Enter Zip Code'
+				   id='zipCode'
+			/>
+			<Input label='Phone Number'
+				   value={ info.phone }
+				   placeholder='Enter Phone Number'
+				   id='phone'
+			/>
+			<Input label='Website'
+				   value={ info.website }
+				   placeholder='Enter Website'
+				   id='website'
+			/>
 		</div>
-		{/*<div>*/}
-		{/*<h3>Primary Contact Info</h3>*/}
-		{/*<input type='text' placeholder='First Name' value={ this.state.primaryContactFirstName } />*/}
-		{/*<input type='text' placeholder='Last Name' value={ this.state.primaryContactLastName } />*/}
-		{/*<input type='text' placeholder='Email Address' value={ this.state.primaryContactEmail } />*/}
-		{/*<input type='text' placeholder='Phone' value={ this.state.primaryContactPhone } />*/}
-		{/*</div>*/}
+
+		<div>
+		<h3>Primary Contact</h3>
+			<Input label='First Name'
+				   value={ info.primaryContactFirstName }
+				   placeholder='First Name'
+				   id='primary_contact_first_name'
+			/>
+			<Input label='Last Name'
+				   value={ info.primaryContactLastName }
+				   placeholder='Enter Last Name'
+				   id='primary_contact_last_name'
+			/>
+			<Input label='Email'
+				   value={ info.primaryContactEmail }
+				   placeholder='Enter Email'
+				   id='primary_contact_email'
+			/>
+			<Input label='Phone'
+				   value={ info.primaryContactPhone }
+				   placeholder='Enter Phone'
+				   id='primary_contact_phone'
+			/>
+		</div>
 
 		<Button onClick={submitResource} buttonText='Save Info'/>
 	</div>
