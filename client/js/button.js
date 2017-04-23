@@ -4,9 +4,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 const Button = ({ classes, onClick, buttonText }) => (
-	<div>
-		<button className={classes.button} onClick={onClick}>{ buttonText }</button>
-	</div>
+	<button className={classes.button} onClick={onClick}>{ buttonText }</button>
 )
 
 // TODO cleanup
@@ -19,7 +17,7 @@ const styles = {
 			'border': '1px solid #f60080;',
 			'background-color': '#ff2a98; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff2a98), to(#bc0062));',
 		}
-	}
+	},
 }
 
 export default injectSheet(styles)(Button)
