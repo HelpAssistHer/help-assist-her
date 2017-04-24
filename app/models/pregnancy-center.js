@@ -18,47 +18,27 @@ const addressSchema = new mongoose.Schema({
 	zip: String,
 })
 
-// Hours Example:
-// hours : {
-// "mon": {
-//     "open": "9:00",
-//         "close": "18:00"
-// },
-// "tue": {
-//     "open": "9:00",
-//         "close": "17:30"
-// },
-// "wed": {
-//     "open": "9:00",
-//         "close": "18:00"
-// },
-// "thurs": [
-//     {
-//         "open": "9:00",
-//         "close": "12:00"
-//     },
-//     {
-//         "open": "13:00",
-//         "close": "18:00"
-//     }
-// ]
-// },
-
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
-	dateCreated: Date,
 	email: String,
 	hours: Object,
 	name: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContact: {
-		firstName: String,
-		lastName: String,
-		email: String,
-		phone: String,
-	},
-	resources: [String],
+	primaryContact: mongoose.Schema.Types.ObjectId,  // a user
+	queryableHours: Object,
+	services: [{
+		type:String,
+		enum: [
+			'PREGNANCY_TEST',
+			'ULTRASOUND',
+			'MATERIAL_ASSISTANCE',
+			'POST_ABORTION_HEALING',
+			'PARENTING_CLASSES',
+			'STD_TESTING',
+			'COUNSELING'
+		]
+	}],
 	verified: {
 		address: {
 			date: Date,
@@ -136,6 +116,8 @@ const pregnancyCenterSchema = mongoose.Schema({
 		},
 	},
 	website: String,
+}, {
+	timestamps: true, // createdAt and updatedAt are automatically added
 })
 
 pregnancyCenterSchema.index({'address.location': '2dsphere'})

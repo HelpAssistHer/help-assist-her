@@ -7,17 +7,24 @@ const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 const bodyParser = require('body-parser')
+const Joi = require('joi')
+const boom = require('express-boom')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
+const moment = require('moment')
+
 const server = express()
+server.use(boom())
 const port = config.server.port
 const log = new Log('info')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
 const passport = require('passport')
 	, FacebookStrategy = require('passport-facebook').Strategy
 const UserModel = require('../app/models/user')
-
+const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
+const hoursUtils = require('../utils/utils')
+const _ = require('lodash')
 mongoose.Promise = require('bluebird')
 
 server.use(express.static('public'))
@@ -41,8 +48,6 @@ passport.use(
 	},
 	function(accessToken, refreshToken, profile, done) {
 
-		log.info(profile)
-
 		const query = { providerId: profile.id },
 			update = {
 				provider: profile.provider,
@@ -65,7 +70,6 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(providerId, done) {
-	log.info('inside deserializeUser, providerId: '+providerId)
 	UserModel.find({providerId: providerId}, function(err, user) {
 		done(err, user)
 	})
@@ -87,19 +91,19 @@ server.get('/', function (req, res) {
 	res.send('Hello World!')
 })
 
-server.get('/api/pregnancy-centers', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
 	PregnancyCenterModel.find({}, function (err, allPregnancyCenters) {
 		if (err) {
 			log.error(err)
+			res.boom.badImplementation()
+		} else {
+			res.send(allPregnancyCenters)
 		}
-		res.send(allPregnancyCenters)
+
 	})
 })
 
-// temporarily hardcoded for testing GeoJSON
-// to test, navigate to /data and run "node data", then run the server and access this endpoint
-
-server.get('/api/pregnancy-centers/near-me', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) {
 
 	const METERS_PER_MILE = 1609.34
 
@@ -121,12 +125,16 @@ server.get('/api/pregnancy-centers/near-me', isLoggedIn, function (req, res) {
 	}, function (err, pregnancyCentersNearMe) {
 		if (err) {
 			log.error(err)
+			res.boom.badImplementation()
+		} else if (!pregnancyCentersNearMe) {
+			res.boom.notFound()
+		} else {
+			res.status(200).json(pregnancyCentersNearMe)
 		}
-		res.status(200).json(pregnancyCentersNearMe)
 	})
 })
 
-server.get('/api/pregnancy-centers/verify', isLoggedIn, function (req, res) {
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, function (req, res) {
 
 	// We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
 	// and what attributes were verified
@@ -136,28 +144,106 @@ server.get('/api/pregnancy-centers/verify', isLoggedIn, function (req, res) {
 	PregnancyCenterModel.findOne({'verified.address': null}, function (err, pregnancyCenterToVerify) {
 		if (err) {
 			log.error(err)
-		}
-		res.status(200).json(pregnancyCenterToVerify)
-	})
-})
-
-server.post('/api/pregnancy-centers', isLoggedIn, function (req, res) {
-	PregnancyCenterModel.create(req.body, (err, result) => {
-		if (err) {
-			log.error(err)
-		}
-		res.status(201).json(result)
-	})
-})
-
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedIn, function (req, res) {
-	PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, req.body, function (err, pregnancyCenterUpdated) {
-		if (err) {
-			log.error(err)
+			res.boom.badImplementation()
+		} else if (!pregnancyCenterToVerify) {
+			res.boom.notFound()
 		} else {
-			res.status(200).json(pregnancyCenterUpdated)
+			res.status(200).json(pregnancyCenterToVerify)
+		}
+
+	})
+})
+
+server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
+	Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+		abortEarly: false
+	}, function(err, result) {
+		if (err) {
+			handleJoiValidationError(res, err)
+		} else {
+			PregnancyCenterModel.create(result, function (err, result) {
+				if (err) {
+					log.error(err)
+					res.boom.badImplementation()
+				} else {
+					res.status(201).json(result)
+				}
+
+			})
+		}
+
+	})
+
+})
+
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
+	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
+		Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+			abortEarly: false
+		}, function(err, validatedData) {
+			if (err) {
+				handleJoiValidationError(res, err)
+			} else {
+				PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, validatedData, {runValidators: true }, function (err, updateInfoFromMongo) {
+					if (err) {
+						log.error(err)
+						res.boom.badImplementation()
+					} else {
+						if (updateInfoFromMongo.nModified != 1) {
+							log.error(err)
+							res.boom.badImplementation()
+						} else {
+							PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function(err, pregnancyCenterUpdated) {
+								res.status(200).json(pregnancyCenterUpdated)
+							})
+						}
+					}
+				})
+			}
+		})
+	} else {
+		res.boom.badRequest('Invalid id. id must be a ObjectId.')
+	}
+})
+
+server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res) {
+	const today = moment(req.query.date) || moment()
+	const dayOfWeek = today.isoWeekday()
+	const timeOfDaySeconds = hoursUtils.createQueryableSeconds(today)
+	const query = {}
+	query['queryableHours.' + dayOfWeek] = {
+		$elemMatch: {
+			open: {$lte: timeOfDaySeconds},
+			close: {$gte: timeOfDaySeconds}
+		}
+	}
+	PregnancyCenterModel.find(query, function (err, pregnancyCentersOpenNow) {
+		if (err) {
+			log.error(err)
+			res.boom.badImplementation()
+		} else if (!pregnancyCentersOpenNow) {
+			res.boom.notFound()
+		} else {
+			res.status(200).json(pregnancyCentersOpenNow)
 		}
 	})
+})
+
+server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
+	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
+		PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function (err, pregnancyCenter) {
+			if (err) {
+				log.error(err)
+				res.boom.badImplementation()
+			} else if (!pregnancyCenter) {
+				res.boom.notFound()
+			} else {
+				res.status(200).json(pregnancyCenter)
+			}
+		})
+	} else {
+		res.boom.badRequest('Invalid id. id must be a ObjectId.')
+	}
 })
 
 server.listen(port, function () {
@@ -185,12 +271,21 @@ server.get('/logout', (req, res) => {
 	res.redirect('http://localhost:8080/')
 })
 
-function isLoggedIn(req, res, next) {
+function isLoggedInAPI(req, res, next) {
 
 	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next()
 
-	// if they aren't, redirect them to be authenticated
-	res.redirect('/auth/facebook')
+	// if they aren't, return an http error
+	res.boom.unauthorized('User is not logged in.')
 }
+
+function handleJoiValidationError(res, err) {
+	log.error(err)
+	const data = _.clone( err['_object'])
+	delete err['_object']
+	return res.boom.badRequest(err, data)
+}
+
+module.exports = server
