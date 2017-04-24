@@ -1,5 +1,3 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test'
 'use strict'
 
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
@@ -15,6 +13,8 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server/server')
 const hoursUtil = require('../utils/utils')
+
+// eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
 
@@ -57,7 +57,7 @@ function assertUnauthenticatedError(res) {
 describe('PregnancyCenters', () => {
 	beforeEach((done) => { //Before each test we empty the database
 		mockUnauthenticate()
-		PregnancyCenterModel.remove({}, (err) => {
+		PregnancyCenterModel.remove({}, () => {
 			done()
 		})
 	})
@@ -162,7 +162,7 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': [],
+				'services': [],
 				'queryableHours': {
 					7: [
 						{
@@ -172,7 +172,7 @@ describe('PregnancyCenters', () => {
 					]
 				}
 
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.info('Error in saving', err)
 			})
 
@@ -191,7 +191,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'resources': [],
+				'services': [],
 				'queryableHours': {
 					0: [
 						{
@@ -206,7 +206,7 @@ describe('PregnancyCenters', () => {
 						}
 					],
 				}
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.info(err)
 			})
 
@@ -252,7 +252,7 @@ describe('PregnancyCenters', () => {
 				name:'Birthright of Albany',
 				phone:'+15184382978',
 				website:'http://www.birthright.org',
-				resources:[],
+				services:[],
 			}
 			chai.request(server)
 				.post('/api/pregnancy-centers')
@@ -296,7 +296,7 @@ describe('PregnancyCenters', () => {
 				name:'Birthright of Albany',
 				phone:'+15184382978',
 				website:'http://www.birthright.org',
-				resources:[],
+				services:[],
 			}
 			mockAuthenticate()
 			chai.request(server)
@@ -310,7 +310,7 @@ describe('PregnancyCenters', () => {
 					res.body.should.have.property('_id')
 					res.body.should.have.property('website')
 					res.body.should.have.property('phone')
-					res.body.should.have.property('resources')
+					res.body.should.have.property('services')
 					res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
 					res.body.address.location.type.should.equal('Point')
 					res.body.address.location.coordinates.should.deep.equal(
@@ -318,7 +318,7 @@ describe('PregnancyCenters', () => {
 					res.body.name.should.equal('Birthright of Albany')
 					res.body.phone.should.equal('+15184382978')
 					res.body.website.should.equal('http://www.birthright.org')
-					res.body.resources.should.deep.equal([])
+					res.body.services.should.deep.equal([])
 					done()
 				})
 		})
@@ -358,9 +358,9 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': []
+				'services': []
 			
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.info(err)
 			})
 
@@ -379,8 +379,8 @@ describe('PregnancyCenters', () => {
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'resources': []
-			}, function(err, pc) {
+				'services': []
+			}, function(err) {
 				if (err) log.info(err)
 			})
 
@@ -432,9 +432,9 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': []
+				'services': []
 
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.error(err)
 			})
 
@@ -453,13 +453,13 @@ describe('PregnancyCenters', () => {
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'resources': [],
+				'services': [],
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.error(err)
 			})
 
@@ -499,14 +499,14 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': [],
+				'services': [],
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
 
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.error(err)
 			})
 
@@ -525,13 +525,13 @@ describe('PregnancyCenters', () => {
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'resources': [],
+				'services': [],
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err, pc) {
+			}, function(err) {
 				if (err) log.error(err)
 			})
 
@@ -566,7 +566,7 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': [],
+				'services': [],
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -606,7 +606,7 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': [],
+				'services': [],
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -655,7 +655,7 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': []
+				'services': []
 
 			}, function(err, pc) {
 				if (err) log.error(err)
@@ -689,7 +689,7 @@ describe('PregnancyCenters', () => {
 				'name': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'resources': []
+				'services': []
 
 			}, function(err, pc) {
 				if (err) log.error(err)
@@ -722,7 +722,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj1, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "address" fails because ["address" must be an object]')
 				done()
@@ -755,7 +755,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj2, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
 				done()
@@ -788,7 +788,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj3, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
 				done()
@@ -808,7 +808,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj4, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
 				done()
@@ -828,7 +828,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj5, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "email" fails because ["email" must be a valid email]')
 				done()
@@ -882,7 +882,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj7, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "hours" fails because ["tues" is not allowed]')
 				done()
@@ -931,7 +931,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj9, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "phone" fails because ["phone" needs to be a valid phone number according to E.164 international format]')
 				done()
@@ -957,46 +957,24 @@ describe('PregnancyCenters', () => {
 			})
 		})
 	})
-
+	
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers primary contact extra fields 11', () => {
-		it('validation should fail because there is an additional field in primary contact', (done) => {
-
-			const testPCObj11 = {
-				primaryContact: {
-					middleName: 'Lauren'
-				}
-			}
-
-			Joi.validate(testPCObj11, pregnancyCenterSchemaJoi, {
-				abortEarly: false
-			}, function(err, validatedData) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "primaryContact" fails because ["middleName" is not allowed]')
-				done()
-			})
-		})
-	})
-
-	/*
-	 * Test the Joi validation for pregnancy centers separately from the API routes
-	 */
-	describe('Test Joi validation for pregnancy centers resources 12', () => {
-		it('validation should fail because one of the resources is mispelled', (done) => {
+	describe('Test Joi validation for pregnancy centers services 12', () => {
+		it('validation should fail because one of the services is mispelled', (done) => {
 
 			const testPCObj12 = {
-				resources: [
-					'Ulllltrasound', 'Parenting Classes'
+				services: [
+					'Ulllltrasound', 'PARENTING_CLASSES'
 				]
 			}
 
 			Joi.validate(testPCObj12, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "resources" fails because ["resources" at position 0 fails because ["0" must be one of [Medical Quality Pregnancy Test, Ultrasound, Material Assistance, Post-Abortion Healing, Parenting Classes, STD Testing, Counseling]]]')
+				err.message.should.equal('child "services" fails because ["services" at position 0 fails because ["0" must be one of [PREGNANCY_TEST, ULTRASOUND, MATERIAL_ASSISTANCE, POST_ABORTION_HEALING, PARENTING_CLASSES, STD_TESTING, COUNSELING]]]')
 				done()
 			})
 		})
@@ -1018,7 +996,7 @@ describe('PregnancyCenters', () => {
 
 			Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
+			}, function(err) {
 				err.name.should.equal('ValidationError')
 				err.message.should.equal('child "verified" fails because [child "address" fails because ["dateVerified" is not allowed]]')
 				done()

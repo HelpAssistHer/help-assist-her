@@ -271,16 +271,6 @@ server.get('/logout', (req, res) => {
 	res.redirect('http://localhost:8080/')
 })
 
-function isLoggedIn(req, res, next) {
-
-	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated())
-		return next()
-
-	// if they aren't, and redirect them to be authenticated
-	res.redirect('/auth/facebook')
-}
-
 function isLoggedInAPI(req, res, next) {
 
 	// if user is authenticated in the session, carry on

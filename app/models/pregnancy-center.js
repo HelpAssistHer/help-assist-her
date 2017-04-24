@@ -25,14 +25,20 @@ const pregnancyCenterSchema = mongoose.Schema({
 	name: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContact: {
-		firstName: String,
-		lastName: String,
-		email: String,
-		phone: String,
-	},
+	primaryContact: mongoose.Schema.Types.ObjectId,  // a user
 	queryableHours: Object,
-	resources: [String],
+	services: [{
+		type:String,
+		enum: [
+			'PREGNANCY_TEST',
+			'ULTRASOUND',
+			'MATERIAL_ASSISTANCE',
+			'POST_ABORTION_HEALING',
+			'PARENTING_CLASSES',
+			'STD_TESTING',
+			'COUNSELING'
+		]
+	}],
 	verified: {
 		address: {
 			date: Date,

@@ -24,8 +24,8 @@ const addressSchemaJoi = Joi.object().keys({
 })
 
 const queryableDayHoursSchemaJoi = Joi.object().keys({
-	open: Joi.number().min(0).max(86400), // number of seconds since 00:00:00
-	close: Joi.number().min(0).max(86400) // number of seconds since 00:00:00
+	open: Joi.number().min(0).max(60 * 60 * 24), // number of seconds since 00:00:00
+	close: Joi.number().min(0).max(60 * 60 * 24) // number of seconds since 00:00:00
 })
 
 const queryableHoursSchemaJoi = Joi.object().keys({ // ISO day of the week with 1 being Monday and 7 being Sunday.
@@ -69,20 +69,15 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	name: Joi.string(), // change to PRC name
 	notes: Joi.string(),
 	phone: phoneValidator.phone().validate(),
-	primaryContact: {
-		firstName: Joi.string(),
-		lastName: Joi.string(),
-		email: Joi.string().email(),
-		phone: phoneValidator.phone().validate(),
-	},
-	resources: Joi.array().items(Joi.string().valid(
-		'Medical Quality Pregnancy Test',
-		'Ultrasound',
-		'Material Assistance',
-		'Post-Abortion Healing',
-		'Parenting Classes',
-		'STD Testing',
-		'Counseling'
+	primaryContact: Joi.string(),
+	services: Joi.array().items(Joi.string().valid(
+		'PREGNANCY_TEST',
+		'ULTRASOUND',
+		'MATERIAL_ASSISTANCE',
+		'POST_ABORTION_HEALING',
+		'PARENTING_CLASSES',
+		'STD_TESTING',
+		'COUNSELING'
 	)),
 	queryableHours: queryableHoursSchemaJoi,
 	verified: {
