@@ -2,17 +2,27 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import Spacer from './spacer'
 
-const HoursInput = ({ classes, label, value, placeholder, id }) => (
-	<div className={classes.root}>
-		<label className={classes.label}>{label}</label>
+const HoursInput = ({ classes, label, value, placeholder, id, hours }) => {
+	let timeOpens
+	let timeCloses
 
-		<input className={classes.checkbox} type='checkbox' value='1' name='verified' id={`${id}-checkbox`} />
-		<input className={classes.textInput} id={id} type='time' placeholder='Time Opens'  />
-		<input className={classes.textInput} type='time' placeholder='Time Closes'  />
-		<br />
-		<Spacer height='10px' />
-	</div>
-)
+	if (hours) {
+		timeOpens = hours.open
+		timeCloses = hours.close
+	}
+
+	return (
+		<div className={classes.root}>
+			<label className={classes.label}>{label}</label>
+
+			<input className={classes.checkbox} type='checkbox' value='1' name='verified' id={`${id}-checkbox`}/>
+			<input className={classes.textInput} id={id} type='time' placeholder='Time Opens' value={timeOpens}/>
+			<input className={classes.textInput} type='time' placeholder='Time Closes' value={timeCloses}/>
+			<br />
+			<Spacer height='10px'/>
+		</div>
+	)
+}
 
 const styles = {
 	label: {

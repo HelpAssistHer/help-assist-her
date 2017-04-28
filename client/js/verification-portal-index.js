@@ -24,18 +24,18 @@ async function getOneResource() {
 const VerificationPortal = React.createClass({
 	getInitialState() {
 		return {
+			address: {},
+			email: '',
+			hours: {
+				open: '',
+				close: '',
+			},
 			name: '',
-			address1: '',
-			address2: '',
-			city: '',
-			state: '',
-			zipCode: '',
+			notes: '',
 			phone: '',
+			primaryContact: {},
+			services: [],
 			website: '',
-			primaryContactFirstName: '',
-			primaryContactLastName: '',
-			primaryContactEmail: '',
-			primaryContactPhone: '', // is this even needed? It will probs just be blank
 		}
 	},
 
@@ -72,32 +72,37 @@ const VerificationPortal = React.createClass({
 
 	handleClick: async function() {
 		const result = await getOneResource()
-		console.log('RESULT', result)
-		const { city, line1, line2, state, zip } = result.address
-		const { name, notes, phone, website } = result
-		// const { firstName, lastName, email } = result.primaryContact
+		console.log('GET ONE RESOURCE', result)
+
+		const {
+			address,
+			email,
+			hours,
+			name,
+			notes,
+			phone,
+			primaryContact,
+			services,
+			website,
+		} = result
 
 		this.setState({
+			address,
+			email,
+			hours,
 			name,
-			address1: line1,
-			address2: line2,
-			city,
-			state,
-			zip,
-			phone,
-			website,
 			notes,
-			// primaryContactFirstName: firstName || null,
-			// primaryContactLastName: lastName || null,
-			// primaryContactEmail: email || null,
-			// primaryContactPhone: result.primaryContact.phone, // how can you rename after destructuring
+			phone,
+			primaryContact,
+			services,
+			website,
 		})
 	},
 
 	render() {
 		return (
 			<VerificationPortalView
-				info={this.state}
+				data={this.state}
 				getResourceClick={this.handleClick}
 				submitResource={this.handleSubmit}
 			/>
