@@ -8,6 +8,8 @@ const mongoose = require('mongoose')
 const P = require('bluebird')
 const bodyParser = require('body-parser')
 const Joi = require('joi')
+P.promisifyAll(Joi)
+P.promisifyAll(mongoose)
 const boom = require('express-boom')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
@@ -19,6 +21,7 @@ server.use(boom())
 const port = config.server.port
 const log = new Log('info')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-history')
 const passport = require('passport')
 	, FacebookStrategy = require('passport-facebook').Strategy
 const UserModel = require('../app/models/user')
@@ -61,16 +64,15 @@ passport.use(
 			if (err) { return done(err) }
 			done(null, user)
 		})
-
 	}
 ))
 
 passport.serializeUser(function(user, done) {
-	done(null, user.providerId)
+	done(null, user._id)
 })
 
-passport.deserializeUser(function(providerId, done) {
-	UserModel.find({providerId: providerId}, function(err, user) {
+passport.deserializeUser(function(objectId, done) {
+	UserModel.find({_id: objectId}, (err, user) => {
 		done(err, user)
 	})
 })
@@ -136,22 +138,17 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) 
 
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, function (req, res) {
 
-	// We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
-	// and what attributes were verified
+	// We can change the search conditions in the future based on how recently the pregnancy center
+	// has been verified and what attributes were verified
 
-	log.info(req.user)
-
-	PregnancyCenterModel.findOne({'verified.address': null}, function (err, pregnancyCenterToVerify) {
-		if (err) {
-			log.error(err)
-			res.boom.badImplementation()
-		} else if (!pregnancyCenterToVerify) {
-			res.boom.notFound()
-		} else {
-			res.status(200).json(pregnancyCenterToVerify)
-		}
-
-	})
+	PregnancyCenterModel.findOneAsync({'verified.address': null})
+		.then( (pregnancyCenterToVerify) => {
+			if (!pregnancyCenterToVerify) {
+				res.boom.notFound()
+			} else {
+				res.status(200).json(pregnancyCenterToVerify)
+			}
+		}).catch( (err) => handleDatabaseError(res, err))
 })
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
@@ -176,47 +173,49 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
 
 })
 
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
-	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
-		Joi.validate(req.body, pregnancyCenterSchemaJoi, {
-			abortEarly: false
-		}, function(err, validatedData) {
-			if (err) {
-				handleJoiValidationError(res, err)
-			} else {
-				PregnancyCenterModel.update({_id: req.params['pregnancyCenterId']}, validatedData, {runValidators: true }, function (err, updateInfoFromMongo) {
-					if (err) {
-						log.error(err)
-						res.boom.badImplementation()
-					} else {
-						if (updateInfoFromMongo.nModified != 1) {
-							log.error(err)
-							res.boom.badImplementation()
-						} else {
-							PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function(err, pregnancyCenterUpdated) {
-								res.status(200).json(pregnancyCenterUpdated)
-							})
-						}
-					}
-				})
-			}
-		})
-	} else {
-		res.boom.badRequest('Invalid id. id must be a ObjectId.')
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, (req, res) => {
+
+	if (!mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
+		res.boom.badRequest('Invalid pregnancyCenterId. Id must be a ObjectId.')
 	}
+
+	Joi.validateAsync(req.body, pregnancyCenterSchemaJoi, {
+		abortEarly: false
+	})
+		.catch((err) => handleJoiValidationError(res, err))
+		.then( (validatedData) => createUpdateHistory(req, validatedData))
+		.then( (updatedValidatedData) => {
+
+			PregnancyCenterModel.updateAsync(
+				{_id: req.params['pregnancyCenterId']},
+				updatedValidatedData,
+				{runValidators: true }
+			).then( (updateInfoFromMongo) => {
+				if (updateInfoFromMongo.nModified != 1) {
+					handleDatabaseError(res, Error('Update was expected but failed or modified more than one.'))
+				}
+			}).then( () => {
+				PregnancyCenterModel.findByIdAsync(req.params['pregnancyCenterId'])
+					.then( (pregnancyCenterUpdated) => res.status(200).json(pregnancyCenterUpdated))
+					.catch((err) => handleDatabaseError(res, err))
+			}).catch((err) => handleDatabaseError(res, err))
+
+		})
 })
 
 server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res) {
 	const today = moment(req.query.date) || moment()
-	const dayOfWeek = today.isoWeekday()
-	const timeOfDaySeconds = hoursUtils.createQueryableSeconds(today)
+	const dayOfWeek = today.day()
+	const time = hoursUtils.getGoogleFormatTime(today)
 	const query = {}
-	query['queryableHours.' + dayOfWeek] = {
+
+	query['hours.' + dayOfWeek] = {
 		$elemMatch: {
-			open: {$lte: timeOfDaySeconds},
-			close: {$gte: timeOfDaySeconds}
+			open: {$lte: time},
+			close: {$gte: time}
 		}
 	}
+	log.info(JSON.stringify(query))
 	PregnancyCenterModel.find(query, function (err, pregnancyCentersOpenNow) {
 		if (err) {
 			log.error(err)
@@ -286,6 +285,52 @@ function handleJoiValidationError(res, err) {
 	const data = _.clone( err['_object'])
 	delete err['_object']
 	return res.boom.badRequest(err, data)
+}
+
+function handleDatabaseError(res, err) {
+	log.error(err)
+	return res.boom.badImplementation()
+}
+
+
+function createUpdateHistory(req, pregnancyCenterRawObj) {
+
+	return new P( (resolve, reject) => {
+		const pregnancyCenterId = req.params['pregnancyCenterId']
+		const pregnancyCenterRawObjWithStamps = _.clone(pregnancyCenterRawObj)
+
+		PregnancyCenterModel.findById(pregnancyCenterId, (err, oldObj) => {
+
+			if (err) reject(err)
+
+			_.forOwn(pregnancyCenterRawObj, (value, key) => {
+				if (pregnancyCenterRawObjWithStamps.hasOwnProperty('updated')) {
+					pregnancyCenterRawObjWithStamps['updated'][key] = {
+						userId: req.user._id,
+						date: new Date().toISOString()
+					}
+				} else {
+					pregnancyCenterRawObjWithStamps['updated'] = {
+						[key]: {
+							userId: req.user._id,
+							date: new Date().toISOString()
+						}
+					}
+				}
+
+				const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
+					pregnancyCenterId: pregnancyCenterId,
+					field: key,
+					newValue: value,
+					oldValue: oldObj[key],
+					userId: req.user._id,
+				})
+				pregnancyCenterHistoryObj.save()
+			} )
+		})
+
+		resolve(pregnancyCenterRawObjWithStamps)
+	})
 }
 
 module.exports = server

@@ -8,7 +8,8 @@ const pointSchemaJoi = Joi.object().keys({
 	type: Joi.string().valid('Point').required(),
 	coordinates: Joi.array().ordered(
 		Joi.number().max(-66).min(-128).required(), // general continental US longitude parameters
-		Joi.number().min(23).max(50).required() // general continental US latitude parameters, to keep from accidently switching lat, lng
+		Joi.number().min(23).max(50).required() 	// general continental US latitude parameters, to keep
+													// from accidentally switching lat, lng
 	).min(2).max(2)
 })
 
@@ -23,34 +24,24 @@ const addressSchemaJoi = Joi.object().keys({
 	zip: Joi.string(),
 })
 
-const queryableDayHoursSchemaJoi = Joi.object().keys({
-	open: Joi.number().min(0).max(60 * 60 * 24), // number of seconds since 00:00:00
-	close: Joi.number().min(0).max(60 * 60 * 24) // number of seconds since 00:00:00
+const dayHoursSchemaJoi = Joi.object().keys({
+	open: Joi.number().min(0).max(2359), // corresponds to 00:00 to 23:59 24-hour hhmm format.
+	close: Joi.number().min(0).max(2359) // corresponds to 00:00 to 23:59 24-hour hhmm format.
 })
 
-const queryableHoursSchemaJoi = Joi.object().keys({ // ISO day of the week with 1 being Monday and 7 being Sunday.
-	1: Joi.array().items(queryableDayHoursSchemaJoi),
-	2: Joi.array().items(queryableDayHoursSchemaJoi),
-	3: Joi.array().items(queryableDayHoursSchemaJoi),
-	4: Joi.array().items(queryableDayHoursSchemaJoi),
-	5: Joi.array().items(queryableDayHoursSchemaJoi),
-	6: Joi.array().items(queryableDayHoursSchemaJoi),
-	7: Joi.array().items(queryableDayHoursSchemaJoi)
-})
+// key: a number from 0–6, corresponding to the days of the week, starting on Sunday. For example, 2 means Tuesday.
+// values: an object with 'open' and 'close' keys with values of a time of day in 24-hour hhmm format.
+// Values are in the range 0000–2359. The time will be reported in the place’s time zone
+// as much as possible, we are matching Google's Business hours https://developers.google.com/places/web-service/details
 
-const readableDayHoursSchemaJoi = Joi.object().keys({
-	open: Joi.string(),
-	close: Joi.string()
-})
-
-const readableHoursSchemaJoi = Joi.object().keys({
-	mon: Joi.array().items(readableDayHoursSchemaJoi),
-	tue: Joi.array().items(readableDayHoursSchemaJoi),
-	wed: Joi.array().items(readableDayHoursSchemaJoi),
-	thurs: Joi.array().items(readableDayHoursSchemaJoi),
-	fri: Joi.array().items(readableDayHoursSchemaJoi),
-	sat: Joi.array().items(readableDayHoursSchemaJoi),
-	sun: Joi.array().items(readableDayHoursSchemaJoi)
+const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunday.
+	0: Joi.array().items(dayHoursSchemaJoi),
+	1: Joi.array().items(dayHoursSchemaJoi),
+	2: Joi.array().items(dayHoursSchemaJoi),
+	3: Joi.array().items(dayHoursSchemaJoi),
+	4: Joi.array().items(dayHoursSchemaJoi),
+	5: Joi.array().items(dayHoursSchemaJoi),
+	6: Joi.array().items(dayHoursSchemaJoi)
 })
 
 const dateUserActionSchemaJoi = Joi.object().keys({
@@ -65,7 +56,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	createdAt: Joi.date().iso(),
 	dateCreated: Joi.date().iso(),
 	email: Joi.string().email(),
-	hours: readableHoursSchemaJoi,
+	hours: hoursSchemaJoi,
 	name: Joi.string(), // change to PRC name
 	notes: Joi.string(),
 	phone: phoneValidator.phone().validate(),
@@ -79,7 +70,6 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		'STD_TESTING',
 		'COUNSELING'
 	)),
-	queryableHours: queryableHoursSchemaJoi,
 	verified: {
 		address: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,

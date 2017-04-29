@@ -7,7 +7,9 @@ const P = require('bluebird')
 const fs = require('fs')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
 const EJSON = require('mongodb-extended-json')
-
+const Joi = require('joi')
+P.promisifyAll(Joi)
+const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
 const log = new Log('info')
 mongoose.Promise = require('bluebird')
 
@@ -21,19 +23,21 @@ const loadData = P.coroutine(function *startDatabase() {
 
 	// note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
 
-	fs.readFile('../test/fixtures/cessilye_nypc_geocoded.json', 'utf8', function (err, data) {
+	fs.readFile('../test/fixtures/cessilye_nypc.json', 'utf8', function (err, data) {
 		if (err) throw err
-		log.info(data)
 		const docs = EJSON.parse(data)
-
-		PregnancyCenterModel.collection.insertMany(docs, function (err, result) {
-			if (err) {
-				log.error(err)
-			} else {
-				log.info(result)
-			}
-		})
-
+		for (let doc_num in docs) {
+			Joi.validateAsync(docs[doc_num], pregnancyCenterSchemaJoi, {
+				abortEarly: false
+			}).then( (validatedData) => {
+				PregnancyCenterModel.create(validatedData, function (err) {
+					if (err) {
+						log.error(err)
+					}
+				})
+			}).catch( (err) => log.error(err))
+				.then( () => log.info('pregnancy center imported'))
+		}
 	})
 })
 

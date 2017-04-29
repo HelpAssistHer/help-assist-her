@@ -2,6 +2,7 @@
 
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
+const UserModel = require('../app/models/user')
 
 const moment = require('moment')
 
@@ -17,13 +18,22 @@ const hoursUtil = require('../utils/utils')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
-
+const mongoose = require('mongoose')
+const P = require('bluebird')
+P.promisifyAll(Joi)
+P.promisifyAll(mongoose)
+mongoose.Promise = require('bluebird')
 chai.use(chaiHttp)
 
 // Allows the middleware to think we're already authenticated.
 function mockAuthenticate() {
 	server.request.isAuthenticated = function () {
 		return true
+	}
+	server.request.user = function () {
+		UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
+			return found
+		})
 	}
 }
 
@@ -60,12 +70,21 @@ describe('PregnancyCenters', () => {
 		PregnancyCenterModel.remove({}, () => {
 			done()
 		})
+		const me = new UserModel({
+			displayName: 'Kate Sills'
+		})
+		me.save()
+
+		const someoneElse = new UserModel({
+			displayName: 'Someone Else'
+		})
+		someoneElse.save()
 	})
 
 	describe('Test getHumanReadableHours util function', () => {
 		it('it should return a queryable hours obj transformed into a human readable object', (done) => {
 			// the pregnancy center is open from 8 to 5 on weekdays, except for a lunch break on mondays
-			const queryableHours = {
+			const hours = {
 				1: [{
 					open: 28800,
 					close: 43200
@@ -93,7 +112,7 @@ describe('PregnancyCenters', () => {
 				7: []
 
 			}
-			const readableHours = hoursUtil.getHumanReadableHours(queryableHours)
+			const readableHours = hoursUtil.getHumanReadableHours(hours)
 			const expectedReadableHours = {
 				'mon': [{
 					open: '8:00AM',
@@ -144,11 +163,11 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/open-now route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/open-now ', () => {
-		it('it should return one pregnancy center open at 8PM on Sundays', (done) => {
+		it('it should return one pregnancy center open at 10am on Mondays', (done) => {
 
-			// Sunday is 7 according to moment().isoWeekday(7)
+			// 1 is Monday
 
-			PregnancyCenterModel.create({
+			PregnancyCenterModel.createAsync({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -163,20 +182,16 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services': [],
-				'queryableHours': {
-					7: [
+				'hours': {
+					1: [
 						{
-							open: 0,
-							close: 82800
+							open: 800, // 8am
+							close: 1500 // 3pm
 						}
-					]
+					] // 1 is Monday
 				}
 
-			}, function(err) {
-				if (err) log.info('Error in saving', err)
-			})
-
-			PregnancyCenterModel.create({
+			}).then(PregnancyCenterModel.createAsync({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -192,34 +207,32 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services': [],
-				'queryableHours': {
-					0: [
+				'hours': {
+					1: [
 						{
-							open: 0,
-							close: 82800
+							open: 1300, // 1pm
+							close: 1500 // 3pm
 						}
-					],
-					7: [
+					], // monday
+					2: [
 						{
-							open: 80000,
-							close: 82800
+							open: 1300, // 1pm
+							close: 1500 // 3pm
 						}
-					],
+					],  // tuesday
 				}
-			}, function(err) {
-				if (err) log.info(err)
-			})
+			})).then(mockAuthenticate()).then( () => {
 
-			mockAuthenticate()
-			chai.request(server)
-				.get('/api/pregnancy-centers/open-now?date='+encodeURIComponent('2017-04-17T03:47:00.023Z'))
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(1)
-					res.body[0].name.should.equal('Birthright of Albany')
-					done()
-				})
+				chai.request(server)
+					.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
+					.end((err, res) => {
+						res.should.have.status(200)
+						res.body.should.be.a('array')
+						res.body.length.should.be.eql(1)
+						res.body[0].name.should.equal('Birthright of Albany')
+						done()
+					})
+			})
 		})
 	})
 
@@ -418,7 +431,7 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/verify', () => {
 		it('it should return a single pregnancy center were verified.address is null', (done) => {
 
-			PregnancyCenterModel.create({
+			PregnancyCenterModel.createAsync({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -434,47 +447,44 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 
-			}, function(err) {
-				if (err) log.error(err)
-			})
+			}).catch( (err) => log.error(err))
+				.then( () => {
 
-			PregnancyCenterModel.create({
-				'address': {
-					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
-							-73.9241081,
-							40.771253
-						]
-					},
-				},
-				'name': 'The Bridge To Life, Inc.',
-				'phone': '+17182743577',
-				'email': 'thebridgetolife@verizon.net',
-				'website': 'http://www.thebridgetolife.org',
-				'services': [],
-				'verified': {
-					'address': {
-						'date' : '2017-04-16T23:33:17.220Z'
-					}
-				}
-			}, function(err) {
-				if (err) log.error(err)
-			})
-
-			mockAuthenticate()
-
-			chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-
-					res.should.have.status(200)
-					res.body.should.be.a('object')
-					res.body.should.have.property('name')
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.should.not.have.property('verified')
-					done()
+					PregnancyCenterModel.createAsync({
+						'address': {
+							'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
+							'location': {
+								'type': 'Point',
+								'coordinates': [
+									-73.9241081,
+									40.771253
+								]
+							},
+						},
+						'name': 'The Bridge To Life, Inc.',
+						'phone': '+17182743577',
+						'email': 'thebridgetolife@verizon.net',
+						'website': 'http://www.thebridgetolife.org',
+						'services': [],
+						'verified': {
+							'address': {
+								'date': '2017-04-16T23:33:17.220Z'
+							}
+						}
+					})
+				}).catch( (err) => log.error(err))
+				.then(mockAuthenticate())
+				.then( () => {
+					chai.request(server)
+						.get('/api/pregnancy-centers/verify')
+						.end((err, res) => {
+							res.should.have.status(200)
+							res.body.should.be.a('object')
+							res.body.should.have.property('name')
+							res.body.name.should.equal('Birthright of Albany')
+							res.body.should.not.have.property('verified')
+							done()
+						})
 				})
 		})
 	})
@@ -592,7 +602,7 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', (done) => {
 
-			PregnancyCenterModel.create({
+			PregnancyCenterModel.createAsync({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -612,25 +622,28 @@ describe('PregnancyCenters', () => {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err, pc) {
-				if (err) log.error(err)
-				mockAuthenticate()
+			})
+				.catch( (err) => log.error(err))
+				.then(mockAuthenticate())
+				.then( () => {
 
-				chai.request(server)
-					.put('/api/pregnancy-centers/'+pc._id)
-					.send(pc)
-					.end((err, res) => {
-
-						res.should.have.status(200)
-						res.body.should.be.a('object')
-						res.body.should.have.property('_id')
-						res.body.should.have.property('name')
-						res.body._id.should.equal(String(pc._id))
-						res.body.name.should.equal('Birthright of Albany')
-						res.body.should.have.property('verified')
-						res.body.verified.should.have.property('address')
-						done()
-					})
+					chai.request(server)
+						.put('/api/pregnancy-centers/' + pc._id)
+						.send(pc)
+						.end((err, res) => {
+							log.info(res.body)
+							res.should.have.status(200)
+							res.body.should.be.a('object')
+							res.body.should.have.property('_id')
+							res.body.should.have.property('name')
+							res.body._id.should.equal(String(pc._id))
+							res.body.name.should.equal('Birthright of Albany')
+							res.body.should.have.property('verified')
+							res.body.should.have.property('updated')
+							res.body.verified.should.have.property('address')
+							done()
+						})
+				})
 			})
 		})
 	})
@@ -893,14 +906,14 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers queryable hours 8', () => {
-		it('validation should pass because queryable hours follow this format', (done) => {
+	describe('Test Joi validation for pregnancy centers hours 8', () => {
+		it('validation should pass because hours follow this format', (done) => {
 
 			const testPCObj8 = {
-				queryableHours: {
-					2: [{
-						open: '28800',
-						close: '61200'
+				hours: {
+					1: [{
+						open: 800,
+						close: 1600,
 					}]
 				}
 			}
@@ -908,10 +921,10 @@ describe('PregnancyCenters', () => {
 			Joi.validate(testPCObj8, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			}, function(err, validatedData) {
-				validatedData.queryableHours.should.deep.equal({
-					2: [{
-						open: 28800,
-						close: 61200
+				validatedData.hours.should.deep.equal({
+					1: [{
+						open: 800,
+						close: 1600,
 					}]
 				})
 				done()

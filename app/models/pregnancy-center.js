@@ -26,7 +26,6 @@ const pregnancyCenterSchema = mongoose.Schema({
 	notes: String,
 	phone: String,
 	primaryContact: mongoose.Schema.Types.ObjectId,  // a user
-	queryableHours: Object,
 	services: [{
 		type:String,
 		enum: [
