@@ -1,9 +1,12 @@
+import _ from 'lodash'
 import React from 'react'
 import injectSheet from 'react-jss'
 
 import Button from './button'
 import Spacer from './spacer'
 import Input from './input'
+import HoursInput from './hours-input'
+import services from './pregnancy-center-services'
 
 const VerificationPortalView = ({ classes, info, getResourceClick, submitResource }) => (
 	<div className={classes.verificationPortal}>
@@ -15,6 +18,7 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 		<Button onClick={getResourceClick} buttonText='Get One Resource'/>
 		<Spacer height='50px' />
 
+		<h3>General Info</h3>
 		<div className={classes.fields}>
 			<Input label='Name'
 				   value={ info.name }
@@ -51,7 +55,7 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 		</div>
 
 		<div>
-		<h3>Primary Contact</h3>
+			<h3>Primary Contact</h3>
 			<Input label='First Name'
 				   value={ info.primaryContactFirstName }
 				   id='primary_contact_first_name'
@@ -70,7 +74,41 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 			/>
 		</div>
 
+		<div>
+			<h3>Services</h3>
+			{
+				_.map(services, service => {
+					return (
+						<div key={service.id}>
+							<input type='checkbox' id={service.id} />
+							<label>{service.name}</label>
+						</div>
+					)
+				})
+			}
+			<textarea rows="4" cols="50" />
+		</div>
+
+		<div>
+			<h3>Hours</h3>
+			<HoursInput label='Sunday' />
+			<HoursInput label='Monday' />
+			<HoursInput label='Tuesday' />
+			<HoursInput label='Wednesday' />
+			<HoursInput label='Thursday' />
+			<HoursInput label='Friday' />
+			<HoursInput label='Saturday' />
+		</div>
+
+		<div>
+			<h3>Notes</h3>
+			<textarea rows="4" cols="50" />
+		</div>
+
+		<Spacer height='50px'/>
 		<Button onClick={submitResource} buttonText='Save Info'/>
+
+		<Spacer height='100px'/>
 	</div>
 )
 
