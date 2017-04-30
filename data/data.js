@@ -25,7 +25,6 @@ loadData()
 
 // note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
 
-
 PregnancyCenterModel.collection.dropAsync()
 	.catch( (err) => log.error(err))
 	.then( () => {
