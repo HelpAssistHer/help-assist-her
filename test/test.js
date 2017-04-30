@@ -1,8 +1,10 @@
 'use strict'
 
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-history')
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
 const UserModel = require('../app/models/user')
+const _ = require('lodash')
 
 const moment = require('moment')
 
@@ -13,16 +15,16 @@ const log = new Log('info')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server/server')
-const hoursUtil = require('../utils/utils')
 
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
 const mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 const P = require('bluebird')
 P.promisifyAll(Joi)
 P.promisifyAll(mongoose)
-mongoose.Promise = require('bluebird')
+
 chai.use(chaiHttp)
 
 // Allows the middleware to think we're already authenticated.
@@ -30,11 +32,10 @@ function mockAuthenticate() {
 	server.request.isAuthenticated = function () {
 		return true
 	}
-	server.request.user = function () {
-		UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
-			return found
-		})
-	}
+	UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
+		server.request.user =  found
+	})
+
 }
 
 // Allows the middleware to think we are *not* authenticated
@@ -79,70 +80,6 @@ describe('PregnancyCenters', () => {
 			displayName: 'Someone Else'
 		})
 		someoneElse.save()
-	})
-
-	describe('Test getHumanReadableHours util function', () => {
-		it('it should return a queryable hours obj transformed into a human readable object', (done) => {
-			// the pregnancy center is open from 8 to 5 on weekdays, except for a lunch break on mondays
-			const hours = {
-				1: [{
-					open: 28800,
-					close: 43200
-				}, {
-					open: 46800,
-					close: 61200
-				}],
-				2: [{
-					open: 28800,
-					close: 61200
-				}],
-				3: [{
-					open: 28800,
-					close: 61200
-				}],
-				4: [{
-					open: 28800,
-					close: 61200
-				}],
-				5: [{
-					open: 28800,
-					close: 61200
-				}],
-				6: [],
-				7: []
-
-			}
-			const readableHours = hoursUtil.getHumanReadableHours(hours)
-			const expectedReadableHours = {
-				'mon': [{
-					open: '8:00AM',
-					close: '12:00PM'
-				}, {
-					open: '1:00PM',
-					close: '5:00PM'
-				}],
-				'tue': [{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'wed':[{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'thurs': [{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'fri': [{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'sat': [],
-				'sun': []
-			}
-			readableHours.should.deep.equal(expectedReadableHours)
-			done()
-		})
 	})
 
 	/*
@@ -602,7 +539,7 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', (done) => {
 
-			PregnancyCenterModel.createAsync({
+			const oldValues = {
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -622,29 +559,48 @@ describe('PregnancyCenters', () => {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			})
-				.catch( (err) => log.error(err))
-				.then(mockAuthenticate())
-				.then( () => {
+			}
 
-					chai.request(server)
-						.put('/api/pregnancy-centers/' + pc._id)
-						.send(pc)
-						.end((err, res) => {
-							log.info(res.body)
-							res.should.have.status(200)
-							res.body.should.be.a('object')
-							res.body.should.have.property('_id')
-							res.body.should.have.property('name')
-							res.body._id.should.equal(String(pc._id))
-							res.body.name.should.equal('Birthright of Albany')
-							res.body.should.have.property('verified')
-							res.body.should.have.property('updated')
-							res.body.verified.should.have.property('address')
-							done()
+			const newValues = _.cloneDeep(oldValues)
+			newValues.address.line1 = 'New Address'
+
+			UserModel.findOneAsync({ displayName: 'Kate Sills'}).then(
+				(testUser) => {
+
+					PregnancyCenterModel.createAsync(oldValues)
+						.catch((err) => log.error(err))
+						.then(mockAuthenticate())
+						.then((pc) => {
+
+							chai.request(server)
+								.put('/api/pregnancy-centers/' + pc._id)
+								.send(newValues)
+								.end((err, res) => {
+									res.should.have.status(200)
+									res.body.should.be.a('object')
+									res.body.should.have.property('_id')
+									res.body.should.have.property('name')
+									res.body._id.should.equal(String(pc._id))
+									res.body.name.should.equal('Birthright of Albany')
+									res.body.should.have.property('verified')
+									res.body.should.have.property('updated')
+									res.body.updated.should.have.property('address')
+									res.body.updated.address.should.have.property('userId')
+									res.body.updated.address.userId.should.equal(testUser._id.toString())
+									res.body.verified.should.have.property('address')
+
+									// check that the pregnancy center history is created as well.
+									PregnancyCenterHistoryModel.findAsync({
+										pregnancyCenterId: pc._id
+									})
+										.catch((err) => log.error(err))
+										.then((histories) => {
+											histories.should.have.length(1)
+										}).then(done())
+
+								})
 						})
 				})
-			})
 		})
 	})
 
@@ -1040,6 +996,5 @@ describe('PregnancyCenters', () => {
 			})
 		})
 	})
-
 })
 

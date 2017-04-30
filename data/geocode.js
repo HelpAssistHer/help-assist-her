@@ -3,12 +3,16 @@
 const config = require('config')
 const mongoose = require('mongoose')
 const P = require('bluebird')
+const Joi = require('joi')
 const Log = require('log')
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const log = new Log('info')
 
 mongoose.Promise = require('bluebird')
+P.promisifyAll(Joi)
+P.promisifyAll(mongoose)
 
-var googleMapsClient = require('@google/maps').createClient({
+const googleMapsClient = require('@google/maps').createClient({
 	key: 'AIzaSyDcdO_wAguQsbU1BJbeNIblfylyUNho7us'
 })
 
@@ -32,41 +36,39 @@ loadData()
 //     "lng" : -122.0842499
 // }
 
-PregnancyCenterModel.find({'address.location': null}, function (err, db_pcs) {
-	if (err) {
-		Log.info(err)
-	}
-
-	for (var i = 0, len = db_pcs.length; i < len; i++) {
-		const pc = db_pcs[i]
-		Log.info('found pregnancy center with id ' + pc.id)
-		Log.info('address: ' + pc.getFullAddress())
-
-		// Geocode an address.
-		googleMapsClient.geocode({
-			address: pc.getFullAddress()
-		}, function (err, response) {
-			if (!err) {
-				const location = response.json.results[0].geometry.location
-				Log.info(location)
-
-				pc.address.location = {
-					'type': 'Point',
-					'coordinates': [location.lng, location.lat]
-				}
-
-				pc.save(function (err) {
-					if (err) {
-						Log.info(err)
-					} else {
-						Log.info('Save complete.')
-					}
-				})
-
+function geocode(address) {
+	return new P(function(resolve, reject) {
+		googleMapsClient.geocode({ 'address': address }, function (err, response) { // called asynchronously
+			if (err) {
+				reject(err)
 			} else {
-				Log.info(err)
+				resolve(response.json.results[0].geometry.location)
 			}
 		})
+	})
+}
 
-	}
-})
+PregnancyCenterModel.findAsync({'address.location': null})
+	.catch( (err) => log.error(err))
+	.then ( (pregnancyCenters) => {
+
+		for (const pregnancyCenter of pregnancyCenters) {
+			log.info(pregnancyCenter.name)
+			log.info(pregnancyCenter.getFullAddress())
+
+			// Geocode an address.
+			geocode(pregnancyCenter.getFullAddress())
+				.catch((err) => log.error(err))
+				.then((location) => {
+					log.info(location)
+
+					pregnancyCenter.address.location = {
+						'type': 'Point',
+						'coordinates': [location.lng, location.lat]
+					}
+					pregnancyCenter.saveAsync()
+						.catch((err) => log.error(err))
+						.then(() => log.info('Save complete'))
+				})
+		}
+	})

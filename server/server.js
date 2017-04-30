@@ -5,6 +5,7 @@ const cors = require('cors')
 const express = require('express')
 const Log = require('log')
 const mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 const P = require('bluebird')
 const bodyParser = require('body-parser')
 const Joi = require('joi')
@@ -28,7 +29,6 @@ const UserModel = require('../app/models/user')
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
 const hoursUtils = require('../utils/utils')
 const _ = require('lodash')
-mongoose.Promise = require('bluebird')
 
 server.use(express.static('public'))
 server.use(cookieParser())
@@ -72,7 +72,7 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(objectId, done) {
-	UserModel.find({_id: objectId}, (err, user) => {
+	UserModel.findOne({_id: objectId}, (err, user) => {
 		done(err, user)
 	})
 })
@@ -112,7 +112,6 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) 
 	const lng = req.query.lng || -73.781332
 	const lat = req.query.lat || 42.6721989
 	const miles = req.query.miles || 5
-	log.info({'lat': lat, 'lng': lng, 'miles': miles})
 
 	PregnancyCenterModel.find({
 		'address.location': {
@@ -215,7 +214,6 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res)
 			close: {$gte: time}
 		}
 	}
-	log.info(JSON.stringify(query))
 	PregnancyCenterModel.find(query, function (err, pregnancyCentersOpenNow) {
 		if (err) {
 			log.error(err)
@@ -292,44 +290,64 @@ function handleDatabaseError(res, err) {
 	return res.boom.badImplementation()
 }
 
+const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt']
+
+function removeMongooseKeys(obj) {
+	for (const key in obj) {
+		if (keysToIgnore.includes(key)) {
+			delete obj[key]
+		} else if (typeof obj[key] == 'object' && obj.hasOwnProperty(key)) {
+			removeMongooseKeys(obj[key])
+		}
+	}
+	return obj
+}
+
+function isEqualMongoose(a, b){
+	return _.isEqual(removeMongooseKeys(a), removeMongooseKeys(b))
+}
 
 function createUpdateHistory(req, pregnancyCenterRawObj) {
 
 	return new P( (resolve, reject) => {
 		const pregnancyCenterId = req.params['pregnancyCenterId']
-		const pregnancyCenterRawObjWithStamps = _.clone(pregnancyCenterRawObj)
+		const pregnancyCenterRawObjWithStamps = removeMongooseKeys(_.clone(pregnancyCenterRawObj))
 
-		PregnancyCenterModel.findById(pregnancyCenterId, (err, oldObj) => {
+		PregnancyCenterModel.findByIdAsync(pregnancyCenterId)
+			.catch( (err) => reject(err))
+			.then( (oldObj) => {
 
-			if (err) reject(err)
+				oldObj = oldObj.toObject()
 
-			_.forOwn(pregnancyCenterRawObj, (value, key) => {
-				if (pregnancyCenterRawObjWithStamps.hasOwnProperty('updated')) {
-					pregnancyCenterRawObjWithStamps['updated'][key] = {
-						userId: req.user._id,
-						date: new Date().toISOString()
-					}
-				} else {
-					pregnancyCenterRawObjWithStamps['updated'] = {
-						[key]: {
+				_.forOwn(pregnancyCenterRawObj, (value, key) => {
+
+					// if the 'new' data doesn't match old
+					// this prevents us from creating histories for an update with same exact data
+
+					if (!keysToIgnore.includes(key) && !isEqualMongoose(oldObj[key],value)) {
+						if (oldObj.hasOwnProperty('updated')) {
+							pregnancyCenterRawObjWithStamps['updated'] = oldObj['updated']
+						} else {
+							pregnancyCenterRawObjWithStamps['updated'] = {}
+						}
+						pregnancyCenterRawObjWithStamps['updated'][key] = {
 							userId: req.user._id,
 							date: new Date().toISOString()
 						}
+
+						const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
+							pregnancyCenterId: pregnancyCenterId,
+							field: key,
+							newValue: value,
+							oldValue: oldObj[key],
+							userId: req.user._id,
+						})
+						pregnancyCenterHistoryObj.save()
 					}
-				}
-
-				const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
-					pregnancyCenterId: pregnancyCenterId,
-					field: key,
-					newValue: value,
-					oldValue: oldObj[key],
-					userId: req.user._id,
 				})
-				pregnancyCenterHistoryObj.save()
-			} )
-		})
 
-		resolve(pregnancyCenterRawObjWithStamps)
+				resolve(pregnancyCenterRawObjWithStamps)
+			})
 	})
 }
 
