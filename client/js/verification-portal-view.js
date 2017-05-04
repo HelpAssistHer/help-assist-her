@@ -8,11 +8,11 @@ import Input from './input'
 import HoursInput from './hours-input'
 import services from './pregnancy-center-services'
 
-const VerificationPortalView = ({ classes, info, getResourceClick, submitResource }) => (
+const VerificationPortalView = ({ classes, data, getResourceClick, submitResource }) => (
 	<div className={classes.verificationPortal}>
 		<h1>VERIFICATION PORTAL</h1>
 		<h3>Type: Pregnancy Centers</h3>
-		{console.log(info)}
+		{console.log(data)}
 
 		<Spacer height='20px' />
 		<Button onClick={getResourceClick} buttonText='Get One Resource'/>
@@ -21,35 +21,35 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 		<h3>General Info</h3>
 		<div className={classes.fields}>
 			<Input label='Name'
-				   value={ info.name }
+				   value={ data.name }
 				   id='name'
 			/>
 			<Input label='Address 1'
-				   value={ info.address1 }
+				   value={ data.address.line1 }
 				   id='address1'
 			/>
 			<Input label='Address 2'
-				   value={ info.address2 }
+				   value={ data.address.line2 }
 				   id='address2'
 			/>
 			<Input label='City'
-				   value={ info.city }
+				   value={ data.address.city }
 				   id='city'
 			/>
 			<Input label='State'
-				   value={ info.state }
+				   value={ data.address.state }
 				   id='state'
 			/>
 			<Input label='Zip Code'
-				   value={ info.zipCode }
+				   value={ data.address.zip }
 				   id='zipCode'
 			/>
 			<Input label='Phone Number'
-				   value={ info.phone }
+				   value={ data.phone }
 				   id='phone'
 			/>
 			<Input label='Website'
-				   value={ info.website }
+				   value={ data.website }
 				   id='website'
 			/>
 		</div>
@@ -57,19 +57,19 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 		<div>
 			<h3>Primary Contact</h3>
 			<Input label='First Name'
-				   value={ info.primaryContactFirstName }
+				   // value={ data.primaryContact.firstName }
 				   id='primary_contact_first_name'
 			/>
 			<Input label='Last Name'
-				   value={ info.primaryContactLastName }
+				   // value={ data.primaryContact.lastName }
 				   id='primary_contact_last_name'
 			/>
 			<Input label='Email'
-				   value={ info.primaryContactEmail }
+				   // value={ data.primaryContact.email }
 				   id='primary_contact_email'
 			/>
 			<Input label='Phone'
-				   value={ info.primaryContactPhone }
+				   // value={ data.primaryContact.phone }
 				   id='primary_contact_phone'
 			/>
 		</div>
@@ -91,18 +91,18 @@ const VerificationPortalView = ({ classes, info, getResourceClick, submitResourc
 
 		<div>
 			<h3>Hours</h3>
-			<HoursInput label='Sunday' />
-			<HoursInput label='Monday' />
-			<HoursInput label='Tuesday' />
-			<HoursInput label='Wednesday' />
-			<HoursInput label='Thursday' />
-			<HoursInput label='Friday' />
-			<HoursInput label='Saturday' />
+			<HoursInput label='Sunday' hours={data.hours[0]} />
+			<HoursInput label='Monday' hours={data.hours[1]} />
+			<HoursInput label='Tuesday' hours={data.hours[2]} />
+			<HoursInput label='Wednesday' hours={data.hours[3]} />
+			<HoursInput label='Thursday' hours={data.hours[4]} />
+			<HoursInput label='Friday' hours={data.hours[5]} />
+			<HoursInput label='Saturday' hours={data.hours[6]} />
 		</div>
 
 		<div>
 			<h3>Notes</h3>
-			<textarea rows="4" cols="50" />
+			<textarea rows="4" cols="50" value={data.notes} />
 		</div>
 
 		<Spacer height='50px'/>

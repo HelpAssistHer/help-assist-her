@@ -45,8 +45,8 @@ server.use(passport.session())
 
 passport.use(
 	new FacebookStrategy({
-		clientID: process.env.V_FACEBOOK_APP_ID,
-		clientSecret: process.env.V_FACEBOOK_APP_SECRET,
+		clientID: config.facebook.appId,
+		clientSecret: config.facebook.appSecret,
 		callbackURL: 'http://127.0.0.1:4000/auth/facebook/callback'
 	},
 	function(accessToken, refreshToken, profile, done) {
@@ -135,19 +135,32 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) 
 	})
 })
 
-server.get('/api/pregnancy-centers/verify', isLoggedInAPI, function (req, res) {
 
-	// We can change the search conditions in the future based on how recently the pregnancy center
-	// has been verified and what attributes were verified
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async function (req, res) {
+	const pregnancyCenter = await PregnancyCenterModel.findOne({
+		'verified.address': null,
+	})
+		.lean()
 
-	PregnancyCenterModel.findOneAsync({'verified.address': null})
-		.then( (pregnancyCenterToVerify) => {
-			if (!pregnancyCenterToVerify) {
-				res.boom.notFound()
-			} else {
-				res.status(200).json(pregnancyCenterToVerify)
-			}
-		}).catch( (err) => handleDatabaseError(res, err))
+	if (!pregnancyCenter) {
+		res.boom.notFound()
+	}
+
+	const primaryContact = pregnancyCenter.primaryContact
+
+	const user = await UserModel.findOne({
+		_id: primaryContact,
+	})
+		.lean()
+
+	pregnancyCenter.primaryContactUser = {
+		firstName: user.firstName,
+		lastName: user.lastName,
+		email: user.email,
+		phone: user.phone,
+	}
+
+	res.status(200).json(pregnancyCenter)
 })
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
