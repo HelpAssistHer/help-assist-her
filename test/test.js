@@ -4,7 +4,6 @@ const PregnancyCenterModel = require('../app/models/pregnancy-center')
 const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-history')
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
 const UserModel = require('../app/models/user')
-const _ = require('lodash')
 const moment = require('moment')
 const Log = require('log')
 const log = new Log('info')
@@ -59,19 +58,22 @@ function assertUnauthenticatedError(res) {
 
 //Our parent block
 describe('PregnancyCenters', () => {
-	beforeEach( async () => { //Before each test we empty the database
+	beforeEach( (done) => { //Before each test we empty the database
 		mockUnauthenticate()
-		await PregnancyCenterModel.remove({})
-		await UserModel.remove({})
-		const me = new UserModel({
-			displayName: 'Kate Sills'
+		PregnancyCenterModel.remove({}, () =>{
+			UserModel.remove({}, () => {
+				const me = new UserModel({
+					displayName: 'Kate Sills'
+				})
+				me.save()
+				const someoneElse = new UserModel({
+					displayName: 'Someone Else'
+				})
+				someoneElse.save()
+				done()
+			})
 		})
-		await me.save()
 
-		const someoneElse = new UserModel({
-			displayName: 'Someone Else'
-		})
-		await someoneElse.save()
 	})
 
 	/*
@@ -247,7 +249,6 @@ describe('PregnancyCenters', () => {
 				.post('/api/pregnancy-centers')
 				.send(pregnancyCenter)
 				.end((err, res) => {
-					log.info(JSON.stringify(res))
 					res.should.have.status(201)
 					res.body.should.be.a('object')
 					res.body.should.have.property('address')
@@ -518,7 +519,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route with authentication
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
-		it('it should return the updated pregnancyCenter record', async () => {
+		it('it should return the updated pregnancyCenter record', (done) => {
 
 			const oldValues = {
 				'address': {
@@ -542,38 +543,60 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			const newValues = _.cloneDeep(oldValues)
-			newValues.address.line1 = 'New Address'
+			const newValues = {
+				'address': {
+					'line1': 'New Address',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'name': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': [],
+				'verified': {
+					'address': {
+						'date' : '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
 
-			const testUser = await UserModel.findOne({ displayName: 'Kate Sills'})
+			UserModel.findOne({ displayName: 'Kate Sills'}, (err, testUser) => {
+				PregnancyCenterModel.create(oldValues, (err, oldPCObj) => {
+					mockAuthenticate()
 
-			const oldPCObj = await PregnancyCenterModel.create(oldValues)
+					chai.request(server)
+						.put('/api/pregnancy-centers/' + oldPCObj._id)
+						.send(newValues)
+						.end((err, res) => {
+							res.should.have.status(200)
+							res.body.should.be.a('object')
+							res.body.should.have.property('_id')
+							res.body.should.have.property('name')
+							res.body._id.should.equal(String(oldPCObj._id))
+							res.body.name.should.equal('Birthright of Albany')
+							res.body.should.have.property('verified')
+							res.body.should.have.property('updated')
+							res.body.updated.should.have.property('address')
+							res.body.updated.address.should.have.property('userId')
+							res.body.updated.address.userId.should.equal(testUser._id.toString())
+							res.body.verified.should.have.property('address')
 
-			mockAuthenticate()
+							// check that the pregnancy center history is created as well.
+							PregnancyCenterHistoryModel.find({
+								pregnancyCenterId: oldPCObj._id
+							}, (err, data) => {
+								data.should.have.length(1)
+								done()
+							})
 
-			chai.request(server)
-				.put('/api/pregnancy-centers/' + oldPCObj._id)
-				.send(newValues)
-				.end(async (err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('object')
-					res.body.should.have.property('_id')
-					res.body.should.have.property('name')
-					res.body._id.should.equal(String(oldPCObj._id))
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.should.have.property('verified')
-					res.body.should.have.property('updated')
-					res.body.updated.should.have.property('address')
-					res.body.updated.address.should.have.property('userId')
-					res.body.updated.address.userId.should.equal(testUser._id.toString())
-					res.body.verified.should.have.property('address')
-
-					// check that the pregnancy center history is created as well.
-					const histories = await PregnancyCenterHistoryModel.find({
-						pregnancyCenterId: oldPCObj._id
-					})
-					histories.should.have.length(1)
+						})
 				})
+			})
 		})
 	})
 
