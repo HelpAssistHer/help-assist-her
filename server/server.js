@@ -134,24 +134,31 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) 
 	})
 })
 
-server.get('/api/pregnancy-centers/verify', isLoggedInAPI, function (req, res) {
-
-	// We can change the search conditions in the future based on how recently the pregnancy center has been verified ...
-	// and what attributes were verified
-
-	log.info(req.user)
-
-	PregnancyCenterModel.findOne({'verified.address': null}, function (err, pregnancyCenterToVerify) {
-		if (err) {
-			log.error(err)
-			res.boom.badImplementation()
-		} else if (!pregnancyCenterToVerify) {
-			res.boom.notFound()
-		} else {
-			res.status(200).json(pregnancyCenterToVerify)
-		}
-
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async function (req, res) {
+	const pregnancyCenter = await PregnancyCenterModel.findOne({
+		'verified.address': null,
 	})
+	.lean()
+
+	if (!pregnancyCenter) {
+		res.boom.notFound()
+	}
+
+	const primaryContact = pregnancyCenter.primaryContact
+
+	const user = await UserModel.findOne({
+		_id: primaryContact,
+	})
+	.lean()
+
+	pregnancyCenter.primaryContactUser = {
+		firstName: user.firstName,
+		lastName: user.lastName,
+		email: user.email,
+		phone: user.phone,
+	}
+
+	res.status(200).json(pregnancyCenter)
 })
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
