@@ -18,6 +18,11 @@ const addressSchema = new mongoose.Schema({
 	zip: String,
 })
 
+const userDateSchema = new mongoose.Schema({
+	date: Date,
+	userId: mongoose.Schema.Types.ObjectId
+})
+
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
 	email: String,
@@ -26,7 +31,6 @@ const pregnancyCenterSchema = mongoose.Schema({
 	notes: String,
 	phone: String,
 	primaryContact: mongoose.Schema.Types.ObjectId,  // a user
-	queryableHours: Object,
 	services: [{
 		type:String,
 		enum: [
@@ -40,80 +44,24 @@ const pregnancyCenterSchema = mongoose.Schema({
 		]
 	}],
 	verified: {
-		address: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		email: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		hours: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		name: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		notes: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		phone: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		primaryContact: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		resources: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		website: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
+		address: userDateSchema,
+		email: userDateSchema,
+		hours: userDateSchema,
+		name: userDateSchema,
+		notes: userDateSchema,
+		phone: userDateSchema,
+		resources: userDateSchema,
+		website: userDateSchema,
 	},
 	updated: {
-		address: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		email: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		hours: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		name: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		notes: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		phone: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		primaryContact: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		resources: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
-		website: {
-			date: Date,
-			userId: mongoose.Schema.Types.ObjectId
-		},
+		address: userDateSchema,
+		email: userDateSchema,
+		hours: userDateSchema,
+		name: userDateSchema,
+		notes: userDateSchema,
+		phone: userDateSchema,
+		resources: userDateSchema,
+		website: userDateSchema,
 	},
 	website: String,
 }, {
@@ -123,26 +71,10 @@ const pregnancyCenterSchema = mongoose.Schema({
 pregnancyCenterSchema.index({'address.location': '2dsphere'})
 
 pregnancyCenterSchema.methods.getFullAddress = function getFullAddress() {
-	return _.get(this, 'address.line1', '') + _.get(this, 'address.line2', '')
-		+ _.get(this, 'address.city', '') + _.get(this, 'address.state', '')
-		+ _.get(this, 'address.zip', '')
+	return _.get(this, 'address.line1', '') + ' ' + _.get(this, 'address.line2', '') + ' '
+		+ _.get(this, 'address.city', '') + ' ' + _.get(this, 'address.state', '') + ' ' +
+		_.get(this, 'address.zip', '')
 }
-
-// Immediately after an update to a pregnancyCenter, this is triggered.
-// It records the changes in a new PregnancyCenterHistory
-
-// pregnancyCenterSchema.post('update', function(next) {
-//     let changes = this._update.$set
-//     PregnancyCenterHistoryModel.create({
-//             pregnancyCenterId: this._conditions._id,
-//             dateCreated : new Date(),
-//             changes: changes
-//     }, function (err, hist) {
-//         if (err) console.log(err)
-//         // saved!
-//     })
-//     // userId TODO
-// })
 
 // create model using the schema
 const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterSchema)

@@ -11,7 +11,9 @@
     "startdb": "mongod --dbpath ~/.hah/data",
     "test": "NODE_ENV=test mocha",
     "n": "nvm use stable",
-    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config"
+    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
+    "data": "NODE_ENV=localhost node ./data/data.js",
+    "geocode": "NODE_ENV=localhost node ./data/geocode.js"
   },
   "repository": {
     "type": "git",

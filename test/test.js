@@ -1,22 +1,21 @@
 'use strict'
 
 const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-history')
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
-
+const UserModel = require('../app/models/user')
 const moment = require('moment')
-
 const Log = require('log')
 const log = new Log('info')
-
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server/server')
-const hoursUtil = require('../utils/utils')
-
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
+const mongoose = require('mongoose')
+mongoose.Promise = require('bluebird')
 
 chai.use(chaiHttp)
 
@@ -25,6 +24,10 @@ function mockAuthenticate() {
 	server.request.isAuthenticated = function () {
 		return true
 	}
+	UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
+		server.request.user =  found
+	})
+
 }
 
 // Allows the middleware to think we are *not* authenticated
@@ -55,75 +58,22 @@ function assertUnauthenticatedError(res) {
 
 //Our parent block
 describe('PregnancyCenters', () => {
-	beforeEach((done) => { //Before each test we empty the database
+	beforeEach( (done) => { //Before each test we empty the database
 		mockUnauthenticate()
-		PregnancyCenterModel.remove({}, () => {
-			done()
+		PregnancyCenterModel.remove({}, () =>{
+			UserModel.remove({}, () => {
+				const me = new UserModel({
+					displayName: 'Kate Sills'
+				})
+				me.save()
+				const someoneElse = new UserModel({
+					displayName: 'Someone Else'
+				})
+				someoneElse.save()
+				done()
+			})
 		})
-	})
 
-	describe('Test getHumanReadableHours util function', () => {
-		it('it should return a queryable hours obj transformed into a human readable object', (done) => {
-			// the pregnancy center is open from 8 to 5 on weekdays, except for a lunch break on mondays
-			const queryableHours = {
-				1: [{
-					open: 28800,
-					close: 43200
-				}, {
-					open: 46800,
-					close: 61200
-				}],
-				2: [{
-					open: 28800,
-					close: 61200
-				}],
-				3: [{
-					open: 28800,
-					close: 61200
-				}],
-				4: [{
-					open: 28800,
-					close: 61200
-				}],
-				5: [{
-					open: 28800,
-					close: 61200
-				}],
-				6: [],
-				7: []
-
-			}
-			const readableHours = hoursUtil.getHumanReadableHours(queryableHours)
-			const expectedReadableHours = {
-				'mon': [{
-					open: '8:00AM',
-					close: '12:00PM'
-				}, {
-					open: '1:00PM',
-					close: '5:00PM'
-				}],
-				'tue': [{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'wed':[{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'thurs': [{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'fri': [{
-					open: '8:00AM',
-					close: '5:00PM'
-				}],
-				'sat': [],
-				'sun': []
-			}
-			readableHours.should.deep.equal(expectedReadableHours)
-			done()
-		})
 	})
 
 	/*
@@ -144,11 +94,11 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/open-now route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/open-now ', () => {
-		it('it should return one pregnancy center open at 8PM on Sundays', (done) => {
+		it('it should return one pregnancy center open at 10am on Mondays', async () => {
 
-			// Sunday is 7 according to moment().isoWeekday(7)
+			// 1 is Monday
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -163,20 +113,18 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services': [],
-				'queryableHours': {
-					7: [
+				'hours': {
+					1: [
 						{
-							open: 0,
-							close: 82800
+							open: 800, // 8am
+							close: 1500 // 3pm
 						}
-					]
+					] // 1 is Monday
 				}
 
-			}, function(err) {
-				if (err) log.info('Error in saving', err)
 			})
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -192,33 +140,31 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services': [],
-				'queryableHours': {
-					0: [
+				'hours': {
+					1: [
 						{
-							open: 0,
-							close: 82800
+							open: 1300, // 1pm
+							close: 1500 // 3pm
 						}
-					],
-					7: [
+					], // monday
+					2: [
 						{
-							open: 80000,
-							close: 82800
+							open: 1300, // 1pm
+							close: 1500 // 3pm
 						}
-					],
+					],  // tuesday
 				}
-			}, function(err) {
-				if (err) log.info(err)
 			})
 
 			mockAuthenticate()
+
 			chai.request(server)
-				.get('/api/pregnancy-centers/open-now?date='+encodeURIComponent('2017-04-17T03:47:00.023Z'))
+				.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
 				.end((err, res) => {
 					res.should.have.status(200)
 					res.body.should.be.a('array')
 					res.body.length.should.be.eql(1)
 					res.body[0].name.should.equal('Birthright of Albany')
-					done()
 				})
 		})
 	})
@@ -342,9 +288,9 @@ describe('PregnancyCenters', () => {
 	 * Test the GET /api/pregnancy-centers/near-me' route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/near-me', () => {
-		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', (done) => {
+		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -360,11 +306,9 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 			
-			}, function(err) {
-				if (err) log.info(err)
 			})
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -380,8 +324,6 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services': []
-			}, function(err) {
-				if (err) log.info(err)
 			})
 
 			mockAuthenticate()
@@ -393,7 +335,6 @@ describe('PregnancyCenters', () => {
 					res.body.should.be.a('array')
 					res.body.length.should.be.eql(1)
 					res.body[0].name.should.equal('Birthright of Albany')
-					done()
 				})
 		})
 	})
@@ -416,9 +357,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it('it should return a single pregnancy center were verified.address is null', (done) => {
+		it('it should return a single pregnancy center were verified.address is null', async () => {
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -434,11 +375,9 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 
-			}, function(err) {
-				if (err) log.error(err)
 			})
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -456,25 +395,20 @@ describe('PregnancyCenters', () => {
 				'services': [],
 				'verified': {
 					'address': {
-						'date' : '2017-04-16T23:33:17.220Z'
+						'date': '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err) {
-				if (err) log.error(err)
 			})
-
 			mockAuthenticate()
 
 			chai.request(server)
 				.get('/api/pregnancy-centers/verify')
 				.end((err, res) => {
-
 					res.should.have.status(200)
 					res.body.should.be.a('object')
 					res.body.should.have.property('name')
 					res.body.name.should.equal('Birthright of Albany')
 					res.body.should.not.have.property('verified')
-					done()
 				})
 		})
 	})
@@ -483,9 +417,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it('it should return a 404 not found because all pregnancy centers have been verified', (done) => {
+		it('it should return a 404 not found because all pregnancy centers have been verified', async () => {
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -506,11 +440,9 @@ describe('PregnancyCenters', () => {
 					}
 				}
 
-			}, function(err) {
-				if (err) log.error(err)
 			})
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -531,8 +463,6 @@ describe('PregnancyCenters', () => {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err) {
-				if (err) log.error(err)
 			})
 
 			mockAuthenticate()
@@ -541,7 +471,6 @@ describe('PregnancyCenters', () => {
 				.get('/api/pregnancy-centers/verify')
 				.end((err, res) => {
 					assertError(res, 404, 'Not Found')
-					done()
 				})
 		})
 	})
@@ -592,7 +521,7 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', (done) => {
 
-			PregnancyCenterModel.create({
+			const oldValues = {
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -612,25 +541,61 @@ describe('PregnancyCenters', () => {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err, pc) {
-				if (err) log.error(err)
-				mockAuthenticate()
+			}
 
-				chai.request(server)
-					.put('/api/pregnancy-centers/'+pc._id)
-					.send(pc)
-					.end((err, res) => {
+			const newValues = {
+				'address': {
+					'line1': 'New Address',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'name': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': [],
+				'verified': {
+					'address': {
+						'date' : '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
 
-						res.should.have.status(200)
-						res.body.should.be.a('object')
-						res.body.should.have.property('_id')
-						res.body.should.have.property('name')
-						res.body._id.should.equal(String(pc._id))
-						res.body.name.should.equal('Birthright of Albany')
-						res.body.should.have.property('verified')
-						res.body.verified.should.have.property('address')
-						done()
-					})
+			UserModel.findOne({ displayName: 'Kate Sills'}, (err, testUser) => {
+				PregnancyCenterModel.create(oldValues, (err, oldPCObj) => {
+					mockAuthenticate()
+
+					chai.request(server)
+						.put('/api/pregnancy-centers/' + oldPCObj._id)
+						.send(newValues)
+						.end((err, res) => {
+							res.should.have.status(200)
+							res.body.should.be.a('object')
+							res.body.should.have.property('_id')
+							res.body.should.have.property('name')
+							res.body._id.should.equal(String(oldPCObj._id))
+							res.body.name.should.equal('Birthright of Albany')
+							res.body.should.have.property('verified')
+							res.body.should.have.property('updated')
+							res.body.updated.should.have.property('address')
+							res.body.updated.address.should.have.property('userId')
+							res.body.updated.address.userId.should.equal(testUser._id.toString())
+							res.body.verified.should.have.property('address')
+
+							// check that the pregnancy center history is created as well.
+							PregnancyCenterHistoryModel.find({
+								pregnancyCenterId: oldPCObj._id
+							}, (err, data) => {
+								data.should.have.length(1)
+								done()
+							})
+
+						})
+				})
 			})
 		})
 	})
@@ -893,14 +858,14 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers queryable hours 8', () => {
-		it('validation should pass because queryable hours follow this format', (done) => {
+	describe('Test Joi validation for pregnancy centers hours 8', () => {
+		it('validation should pass because hours follow this format', (done) => {
 
 			const testPCObj8 = {
-				queryableHours: {
-					2: [{
-						open: '28800',
-						close: '61200'
+				hours: {
+					1: [{
+						open: 800,
+						close: 1600,
 					}]
 				}
 			}
@@ -908,10 +873,10 @@ describe('PregnancyCenters', () => {
 			Joi.validate(testPCObj8, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			}, function(err, validatedData) {
-				validatedData.queryableHours.should.deep.equal({
-					2: [{
-						open: 28800,
-						close: 61200
+				validatedData.hours.should.deep.equal({
+					1: [{
+						open: 800,
+						close: 1600,
 					}]
 				})
 				done()
@@ -1027,6 +992,4 @@ describe('PregnancyCenters', () => {
 			})
 		})
 	})
-
 })
-
