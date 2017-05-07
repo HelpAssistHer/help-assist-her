@@ -9,7 +9,7 @@ const cors = require('cors')
 const express = require('express')
 const facebookStrategy = require('passport-facebook').Strategy
 const Joi = require('joi')
-const log = require('log')
+const Log = require('log')
 const moment = require('moment')
 const mongoose = require('mongoose')
 const passport = require('passport')
@@ -25,6 +25,7 @@ const UserModel = require('./users/schema/mongoose-schema')
 const port = config.server.port
 const server = express()
 mongoose.Promise = require('bluebird')
+const log = new Log('info')
 
 server.use(boom())
 server.use(express.static('public'))
@@ -44,10 +45,9 @@ passport.use(
 	new facebookStrategy({
 		clientID: config.facebook.appId,
 		clientSecret: config.facebook.appSecret,
-		callbackURL: 'http://127.0.0.1:4000/auth/facebook/callback'
+		callbackURL: `${config.server.url}/auth/facebook/callback`
 	},
-	function(accessToken, refreshToken, profile, done) {
-
+	(accessToken, refreshToken, profile, done) => {
 		const query = { providerId: profile.id },
 			update = {
 				provider: profile.provider,
@@ -56,19 +56,18 @@ passport.use(
 			},
 			options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
-		// Find the document
-		UserModel.findOneAndUpdate(query, update, options, function (err, user) {
+		UserModel.findOneAndUpdate(query, update, options, (err, user) => {
 			if (err) { return done(err) }
 			done(null, user)
 		})
 	}
 ))
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
 	done(null, user._id)
 })
 
-passport.deserializeUser(function(objectId, done) {
+passport.deserializeUser((objectId, done) => {
 	UserModel.findOne({_id: objectId}, (err, user) => {
 		done(err, user)
 	})
@@ -81,20 +80,14 @@ const startDatabase = P.coroutine(function *startDatabase() {
 	yield mongoose.connect(connectionString)
 
 	log.info('Connected to database')
-
 })
 
 startDatabase()
-
-server.get('/', function (req, res) {
-	res.send('Hello World!')
-})
 
 /*
 	Returns all pregnancy centers
 	TODO: limits and paging, if necessary
  */
-
 server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
 	const allPregnancyCenters = await PregnancyCenterModel.find({})
 	if (allPregnancyCenters) {
@@ -106,14 +99,12 @@ server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
 	Takes in 'lng', 'lat', and 'miles' radius as query vars
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
-
 server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => {
-
 	const METERS_PER_MILE = 1609.34
-
 	const lng = req.query.lng || -73.781332
 	const lat = req.query.lat || 42.6721989
 	const miles = req.query.miles || 5
+
 	log.info({'lat': lat, 'lng': lng, 'miles': miles})
 
 	const pregnancyCentersNearMe = await PregnancyCenterModel.find({
@@ -127,8 +118,9 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => 
 			}
 		}
 	})
-	if (!pregnancyCentersNearMe) {
-		return res.boom.notFound()
+
+	if (pregnancyCentersNearMe.length <= 0) {
+		return res.boom.notFound(`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`)
 	} else {
 		res.status(200).json(pregnancyCentersNearMe)
 	}
@@ -136,82 +128,71 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => 
 
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
- */
-
+*/
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
-
-	// Find a pregnancy center that does not have a verified address
-
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		'verified.address': null,
-	})
-		.lean()
+	}).lean()
 
 	if (!pregnancyCenter) {
-		return res.boom.notFound() // we need a return here, otherwise the next line will be exec as well
+		return res.boom.notFound('No pregnancy centers to verify')
 	}
 
 	// This adds in the primaryContact from a separate User Collection
 	const primaryContact = pregnancyCenter.primaryContact
 
 	if (primaryContact) {
-
-		const user = await UserModel.findOne({
+		const { firstName, lastName, email, phone } = await UserModel.findOne({
 			_id: primaryContact,
-		})
-			.lean()
+		}).lean()
 
-		if (user) { // we only want to try to reference the attributes if user exists
-			pregnancyCenter.primaryContactUser = {
-				firstName: user.firstName,
-				lastName: user.lastName,
-				email: user.email,
-				phone: user.phone,
-			}
+		if (!user) {
+			return res.boom.notFound(`No user found by id: ${primaryContact}`)
+		}
+
+		pregnancyCenter.primaryContactUser = {
+			firstName,
+			lastName,
+			email,
+			phone,
 		}
 	}
 
 	res.status(200).json(pregnancyCenter)
-
 })
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+	const newPregnancyCenter = req.body
 
-	// Note: Anything instantiated in a try block and defined as const will only exist in that block!
-	let createdPregnancyCenter
-
-	// Validate the pregnancyCenter data - the entire req.body should be a pregnancy center
-
-	const pregnancyCenterValidationObj = await Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+	const pregnancyCenterValidationObj = await Joi.validate(newPregnancyCenter, pregnancyCenterSchemaJoi, {
 		abortEarly: false
 	})
 
-	// await Joi.validate() returns an obj of form { error: null, value: validatedData}
+	// Joi.validate() returns an obj of form { error: null, value: validatedData}
 	if (pregnancyCenterValidationObj.error) {
 		return handleJoiValidationError(res, pregnancyCenterValidationObj.error)
 	}
-	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
 
-	// if validated, create the pregnancy center instance
+	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
 	try {
-		createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
+		const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 		await createdPregnancyCenter.save()
+
+		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
 		return handleDatabaseError(res, err)
 	}
-
-	res.status(201).json(createdPregnancyCenter)
 })
 
 /*
 	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
 	Returns the updated pregnancy center
  */
-
 server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (req, res) => {
+	const pregnancyCenterId = req.params.pregnancyCenterId
 
-	if (!mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
-		return res.boom.badRequest('Invalid pregnancyCenterId. Id must be a ObjectId.')
+	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
+		return res.boom.badRequest(`Invalid pregnancyCenterId ${pregnancyCenterId}`)
 	}
 
 	const pregnancyCenterValidationObj = await Joi.validate(req.body, pregnancyCenterSchemaJoi, {
@@ -224,14 +205,15 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (re
 	}
 	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
 	const validatedDataWithUpdatedHistory = await createUpdateHistory(req, validatedPregnancyCenter)
-	const pregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(req.params['pregnancyCenterId'], { $set: validatedDataWithUpdatedHistory}, { new: true })
+	const pregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(pregnancyCenterId, {
+		$set: validatedDataWithUpdatedHistory
+	}, { new: true })
 
 	if (!pregnancyCenter) {
-		return res.boom.notFound()
+		return res.boom.notFound(`Pregnancy Center not found with id ${pregnancyCenterId}`)
 	}
 
 	res.status(200).json(pregnancyCenter)
-
 })
 
 /*
@@ -253,8 +235,9 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, async (req, res) =>
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
 	if (!pregnancyCentersOpenNow) {
-		return res.boom.notFound()
+		return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
 	}
+
 	res.status(200).json(pregnancyCentersOpenNow)
 })
 
@@ -263,15 +246,18 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, async (req, res) =>
  */
 
 server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (req, res) => {
-	if (!mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
-		return res.boom.badRequest('Invalid id. id must be a ObjectId.')
+	const pregnancyCenterId = req.params.pregnancyCenterId
+
+	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
+		return res.boom.badRequest(`Invalid pregnancyCenterId: ${pregnancyCenterId}`)
 	}
 
-	const pregnancyCenter = await PregnancyCenterModel.findById(req.params['pregnancyCenterId'])
+	const pregnancyCenter = await PregnancyCenterModel.findById(pregnancyCenterId)
 
 	if (!pregnancyCenter) {
-		return res.boom.notFound()
+		return res.boom.notFound(`No pregnancy center found with id: ${pregnancyCenterId}`)
 	}
+
 	res.status(200).json(pregnancyCenter)
 })
 
@@ -301,7 +287,6 @@ server.get('/logout', (req, res) => {
 })
 
 function isLoggedInAPI(req, res, next) {
-
 	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next()
