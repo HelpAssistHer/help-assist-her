@@ -115,6 +115,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => 
 	const lng = req.query.lng || -73.781332
 	const lat = req.query.lat || 42.6721989
 	const miles = req.query.miles || 5
+	log.info({'lat': lat, 'lng': lng, 'miles': miles})
 
 	const pregnancyCentersNearMe = await PregnancyCenterModel.find({
 		'address.location': {
