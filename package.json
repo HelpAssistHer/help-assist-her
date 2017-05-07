@@ -11,7 +11,7 @@
     "startdb": "mongod --dbpath ~/.hah/data",
     "test": "NODE_ENV=test mocha",
     "n": "nvm use stable",
-    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config"
+    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
     "data": "NODE_ENV=localhost nodemon ./data/data.js",
     "geocode": "NODE_ENV=localhost nodemon ./data/geocode.js"
   },
@@ -28,6 +28,7 @@
   "dependencies": {
     "@google/maps": "^0.3.1",
     "@turf/turf": "^3.7.4",
+    "await-to-js": "^1.0.1",
     "axios": "0.15.2",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.1",

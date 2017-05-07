@@ -9,8 +9,6 @@ mongoose.Promise = require('bluebird')
 const P = require('bluebird')
 const bodyParser = require('body-parser')
 const Joi = require('joi')
-P.promisifyAll(Joi)
-P.promisifyAll(mongoose)
 const boom = require('express-boom')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
@@ -93,19 +91,24 @@ server.get('/', function (req, res) {
 	res.send('Hello World!')
 })
 
-server.get('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
-	PregnancyCenterModel.find({}, function (err, allPregnancyCenters) {
-		if (err) {
-			log.error(err)
-			res.boom.badImplementation()
-		} else {
-			res.send(allPregnancyCenters)
-		}
+/*
+	Returns all pregnancy centers
+	TODO: limits and paging, if necessary
+ */
 
-	})
+server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+	const allPregnancyCenters = await PregnancyCenterModel.find({})
+	if (allPregnancyCenters) {
+		res.status(200).json(allPregnancyCenters)
+	}
 })
 
-server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) {
+/*
+	Takes in 'lng', 'lat', and 'miles' radius as query vars
+	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
+ */
+
+server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => {
 
 	const METERS_PER_MILE = 1609.34
 
@@ -113,7 +116,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) 
 	const lat = req.query.lat || 42.6721989
 	const miles = req.query.miles || 5
 
-	PregnancyCenterModel.find({
+	const pregnancyCentersNearMe = await PregnancyCenterModel.find({
 		'address.location': {
 			$nearSphere: {
 				$geometry: {
@@ -123,20 +126,22 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, function (req, res) 
 				$maxDistance: miles * METERS_PER_MILE
 			}
 		}
-	}, function (err, pregnancyCentersNearMe) {
-		if (err) {
-			log.error(err)
-			res.boom.badImplementation()
-		} else if (!pregnancyCentersNearMe) {
-			res.boom.notFound()
-		} else {
-			res.status(200).json(pregnancyCentersNearMe)
-		}
 	})
+	if (!pregnancyCentersNearMe) {
+		res.boom.notFound()
+	} else {
+		res.status(200).json(pregnancyCentersNearMe)
+	}
 })
 
+/*
+	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
+ */
 
-server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async function (req, res) {
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
+
+	// Find a pregnancy center that does not have a verified address
+
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		'verified.address': null,
 	})
@@ -146,76 +151,104 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async function (req, 
 		res.boom.notFound()
 	}
 
+	// This adds in the primaryContact from a separate User Collection
 	const primaryContact = pregnancyCenter.primaryContact
 
-	const user = await UserModel.findOne({
-		_id: primaryContact,
-	})
-		.lean()
+	if (primaryContact) {
 
-	pregnancyCenter.primaryContactUser = {
-		firstName: user.firstName,
-		lastName: user.lastName,
-		email: user.email,
-		phone: user.phone,
+		const user = await UserModel.findOne({
+			_id: primaryContact,
+		})
+			.lean()
+
+		if (user) { // we only want to try to reference the attributes if user exists
+			pregnancyCenter.primaryContactUser = {
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				phone: user.phone,
+			}
+		}
 	}
 
 	res.status(200).json(pregnancyCenter)
-})
-
-server.post('/api/pregnancy-centers', isLoggedInAPI, function (req, res) {
-	Joi.validate(req.body, pregnancyCenterSchemaJoi, {
-		abortEarly: false
-	}, function(err, result) {
-		if (err) {
-			handleJoiValidationError(res, err)
-		} else {
-			PregnancyCenterModel.create(result, function (err, result) {
-				if (err) {
-					log.error(err)
-					res.boom.badImplementation()
-				} else {
-					res.status(201).json(result)
-				}
-
-			})
-		}
-
-	})
 
 })
 
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, (req, res) => {
+server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+
+	// Note: Anything instantiated in a try block and defined as const will only exist in that block!
+	let validatedPregnancyCenter
+	let createdPregnancyCenter
+
+	// Validate the pregnancyCenter data - the entire req.body should be a pregnancy center
+	try {
+		validatedPregnancyCenter = await Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+			abortEarly: false
+		})
+	} catch (err) {
+		handleJoiValidationError(res, err)
+	}
+
+	// if validated, create the pregnancy center instance
+	try {
+		createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
+		await createdPregnancyCenter.save()
+	} catch (err) {
+		handleDatabaseError(res, err)
+	}
+
+	res.status(201).json(createdPregnancyCenter)
+})
+
+/*
+	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
+	Returns the updated pregnancy center
+ */
+
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (req, res) => {
 
 	if (!mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
 		res.boom.badRequest('Invalid pregnancyCenterId. Id must be a ObjectId.')
 	}
 
-	Joi.validateAsync(req.body, pregnancyCenterSchemaJoi, {
-		abortEarly: false
-	})
-		.catch((err) => handleJoiValidationError(res, err))
-		.then( (validatedData) => createUpdateHistory(req, validatedData))
-		.then( (updatedValidatedData) => {
+	let validatedPregnancyCenter
 
-			PregnancyCenterModel.updateAsync(
-				{_id: req.params['pregnancyCenterId']},
-				updatedValidatedData,
-				{runValidators: true }
-			).then( (updateInfoFromMongo) => {
-				if (updateInfoFromMongo.nModified != 1) {
-					handleDatabaseError(res, Error('Update was expected but failed or modified more than one.'))
-				}
-			}).then( () => {
-				PregnancyCenterModel.findByIdAsync(req.params['pregnancyCenterId'])
-					.then( (pregnancyCenterUpdated) => res.status(200).json(pregnancyCenterUpdated))
-					.catch((err) => handleDatabaseError(res, err))
-			}).catch((err) => handleDatabaseError(res, err))
-
+	try {
+		validatedPregnancyCenter = await Joi.validate(req.body, pregnancyCenterSchemaJoi, {
+			abortEarly: false
 		})
+	} catch (err) {
+		handleJoiValidationError(res, err)
+	}
+
+	const validatedDataWithUpdatedHistory = await createUpdateHistory(req, validatedPregnancyCenter)
+
+	const updateInfoFromMongo = await PregnancyCenterModel.update(
+		{_id: req.params['pregnancyCenterId']},
+		validatedDataWithUpdatedHistory,
+		{runValidators: true }
+	)
+
+	if (updateInfoFromMongo.nModified != 1) {
+		handleDatabaseError(res, Error('Update was expected but failed or modified more than one.'))
+	}
+
+	const pregnancyCenter = await PregnancyCenterModel.findById(req.params['pregnancyCenterId'])
+
+	if (!pregnancyCenter) {
+		res.boom.notFound()
+	}
+
+	res.status(200).json(pregnancyCenter)
+
 })
 
-server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res) {
+/*
+	Takes in an option query var 'date' or uses the current datetime
+	Returns a list of pregnancy centers open now
+ */
+server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, async (req, res) => {
 	const today = moment(req.query.date) || moment()
 	const dayOfWeek = today.day()
 	const time = hoursUtils.getGoogleFormatTime(today)
@@ -227,33 +260,29 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, function (req, res)
 			close: {$gte: time}
 		}
 	}
-	PregnancyCenterModel.find(query, function (err, pregnancyCentersOpenNow) {
-		if (err) {
-			log.error(err)
-			res.boom.badImplementation()
-		} else if (!pregnancyCentersOpenNow) {
-			res.boom.notFound()
-		} else {
-			res.status(200).json(pregnancyCentersOpenNow)
-		}
-	})
+
+	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
+	if (!pregnancyCentersOpenNow) {
+		res.boom.notFound()
+	}
+	res.status(200).json(pregnancyCentersOpenNow)
 })
 
-server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, function (req, res) {
-	if (mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
-		PregnancyCenterModel.findById(req.params['pregnancyCenterId'], function (err, pregnancyCenter) {
-			if (err) {
-				log.error(err)
-				res.boom.badImplementation()
-			} else if (!pregnancyCenter) {
-				res.boom.notFound()
-			} else {
-				res.status(200).json(pregnancyCenter)
-			}
-		})
-	} else {
+/*
+	Returns the pregnancy center that matches the id
+ */
+
+server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (req, res) => {
+	if (!mongoose.Types.ObjectId.isValid(req.params['pregnancyCenterId'])) {
 		res.boom.badRequest('Invalid id. id must be a ObjectId.')
 	}
+
+	const pregnancyCenter = await PregnancyCenterModel.findById(req.params['pregnancyCenterId'])
+
+	if (!pregnancyCenter) {
+		res.boom.notFound()
+	}
+	res.status(200).json(pregnancyCenter)
 })
 
 server.listen(port, function () {
@@ -322,45 +351,45 @@ function isEqualMongoose(a, b){
 
 function createUpdateHistory(req, pregnancyCenterRawObj) {
 
-	return new P( (resolve, reject) => {
+	return new P( async (resolve, reject) => {
 		const pregnancyCenterId = req.params['pregnancyCenterId']
 		const pregnancyCenterRawObjWithStamps = removeMongooseKeys(_.clone(pregnancyCenterRawObj))
 
-		PregnancyCenterModel.findByIdAsync(pregnancyCenterId)
-			.catch( (err) => reject(err))
-			.then( (oldObj) => {
+		let oldPregnancyCenterObj = await PregnancyCenterModel.findById(pregnancyCenterId)
+		if (!oldPregnancyCenterObj) {
+			reject()
+		}
 
-				oldObj = oldObj.toObject()
+		oldPregnancyCenterObj = oldPregnancyCenterObj.toObject()
 
-				_.forOwn(pregnancyCenterRawObj, (value, key) => {
+		_.forOwn(pregnancyCenterRawObj, (value, key) => {
 
-					// if the 'new' data doesn't match old
-					// this prevents us from creating histories for an update with same exact data
+			// check that the 'new' data isn't exactly the same as old
+			// this prevents us from creating histories for an update with same exact data
+			if (!keysToIgnore.includes(key) && !isEqualMongoose(oldPregnancyCenterObj[key],value)) {
+				if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
+					pregnancyCenterRawObjWithStamps['updated'] = oldPregnancyCenterObj['updated']
+				} else {
+					pregnancyCenterRawObjWithStamps['updated'] = {}
+				}
+				pregnancyCenterRawObjWithStamps['updated'][key] = {
+					userId: req.user._id,
+					date: new Date().toISOString()
+				}
 
-					if (!keysToIgnore.includes(key) && !isEqualMongoose(oldObj[key],value)) {
-						if (oldObj.hasOwnProperty('updated')) {
-							pregnancyCenterRawObjWithStamps['updated'] = oldObj['updated']
-						} else {
-							pregnancyCenterRawObjWithStamps['updated'] = {}
-						}
-						pregnancyCenterRawObjWithStamps['updated'][key] = {
-							userId: req.user._id,
-							date: new Date().toISOString()
-						}
-
-						const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
-							pregnancyCenterId: pregnancyCenterId,
-							field: key,
-							newValue: value,
-							oldValue: oldObj[key],
-							userId: req.user._id,
-						})
-						pregnancyCenterHistoryObj.save()
-					}
+				const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
+					pregnancyCenterId: pregnancyCenterId,
+					field: key,
+					newValue: value,
+					oldValue: oldPregnancyCenterObj[key],
+					userId: req.user._id,
 				})
+				pregnancyCenterHistoryObj.save()
+			}
+		})
 
-				resolve(pregnancyCenterRawObjWithStamps)
-			})
+		resolve(pregnancyCenterRawObjWithStamps)
+
 	})
 }
 

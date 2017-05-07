@@ -5,25 +5,18 @@ const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-hist
 const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
 const UserModel = require('../app/models/user')
 const _ = require('lodash')
-
 const moment = require('moment')
-
 const Log = require('log')
 const log = new Log('info')
-
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server/server')
-
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
-const P = require('bluebird')
-P.promisifyAll(Joi)
-P.promisifyAll(mongoose)
 
 chai.use(chaiHttp)
 
@@ -66,20 +59,19 @@ function assertUnauthenticatedError(res) {
 
 //Our parent block
 describe('PregnancyCenters', () => {
-	beforeEach((done) => { //Before each test we empty the database
+	beforeEach( async () => { //Before each test we empty the database
 		mockUnauthenticate()
-		PregnancyCenterModel.remove({}, () => {
-			done()
-		})
+		await PregnancyCenterModel.remove({})
+		await UserModel.remove({})
 		const me = new UserModel({
 			displayName: 'Kate Sills'
 		})
-		me.save()
+		await me.save()
 
 		const someoneElse = new UserModel({
 			displayName: 'Someone Else'
 		})
-		someoneElse.save()
+		await someoneElse.save()
 	})
 
 	/*
@@ -100,11 +92,11 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/open-now route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/open-now ', () => {
-		it('it should return one pregnancy center open at 10am on Mondays', (done) => {
+		it('it should return one pregnancy center open at 10am on Mondays', async () => {
 
 			// 1 is Monday
 
-			PregnancyCenterModel.createAsync({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -128,7 +120,9 @@ describe('PregnancyCenters', () => {
 					] // 1 is Monday
 				}
 
-			}).then(PregnancyCenterModel.createAsync({
+			})
+
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -158,18 +152,18 @@ describe('PregnancyCenters', () => {
 						}
 					],  // tuesday
 				}
-			})).then(mockAuthenticate()).then( () => {
-
-				chai.request(server)
-					.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
-					.end((err, res) => {
-						res.should.have.status(200)
-						res.body.should.be.a('array')
-						res.body.length.should.be.eql(1)
-						res.body[0].name.should.equal('Birthright of Albany')
-						done()
-					})
 			})
+
+			mockAuthenticate()
+
+			chai.request(server)
+				.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
+				.end((err, res) => {
+					res.should.have.status(200)
+					res.body.should.be.a('array')
+					res.body.length.should.be.eql(1)
+					res.body[0].name.should.equal('Birthright of Albany')
+				})
 		})
 	})
 
@@ -253,6 +247,7 @@ describe('PregnancyCenters', () => {
 				.post('/api/pregnancy-centers')
 				.send(pregnancyCenter)
 				.end((err, res) => {
+					log.info(JSON.stringify(res))
 					res.should.have.status(201)
 					res.body.should.be.a('object')
 					res.body.should.have.property('address')
@@ -292,9 +287,9 @@ describe('PregnancyCenters', () => {
 	 * Test the GET /api/pregnancy-centers/near-me' route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/near-me', () => {
-		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', (done) => {
+		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -310,11 +305,9 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 			
-			}, function(err) {
-				if (err) log.info(err)
 			})
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -330,8 +323,6 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services': []
-			}, function(err) {
-				if (err) log.info(err)
 			})
 
 			mockAuthenticate()
@@ -343,7 +334,6 @@ describe('PregnancyCenters', () => {
 					res.body.should.be.a('array')
 					res.body.length.should.be.eql(1)
 					res.body[0].name.should.equal('Birthright of Albany')
-					done()
 				})
 		})
 	})
@@ -366,9 +356,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it('it should return a single pregnancy center were verified.address is null', (done) => {
+		it('it should return a single pregnancy center were verified.address is null', async () => {
 
-			PregnancyCenterModel.createAsync({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -384,44 +374,40 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 
-			}).catch( (err) => log.error(err))
-				.then( () => {
+			})
 
-					PregnancyCenterModel.createAsync({
-						'address': {
-							'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
-							'location': {
-								'type': 'Point',
-								'coordinates': [
-									-73.9241081,
-									40.771253
-								]
-							},
-						},
-						'name': 'The Bridge To Life, Inc.',
-						'phone': '+17182743577',
-						'email': 'thebridgetolife@verizon.net',
-						'website': 'http://www.thebridgetolife.org',
-						'services': [],
-						'verified': {
-							'address': {
-								'date': '2017-04-16T23:33:17.220Z'
-							}
-						}
-					})
-				}).catch( (err) => log.error(err))
-				.then(mockAuthenticate())
-				.then( () => {
-					chai.request(server)
-						.get('/api/pregnancy-centers/verify')
-						.end((err, res) => {
-							res.should.have.status(200)
-							res.body.should.be.a('object')
-							res.body.should.have.property('name')
-							res.body.name.should.equal('Birthright of Albany')
-							res.body.should.not.have.property('verified')
-							done()
-						})
+			await PregnancyCenterModel.create({
+				'address': {
+					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.9241081,
+							40.771253
+						]
+					},
+				},
+				'name': 'The Bridge To Life, Inc.',
+				'phone': '+17182743577',
+				'email': 'thebridgetolife@verizon.net',
+				'website': 'http://www.thebridgetolife.org',
+				'services': [],
+				'verified': {
+					'address': {
+						'date': '2017-04-16T23:33:17.220Z'
+					}
+				}
+			})
+			mockAuthenticate()
+
+			chai.request(server)
+				.get('/api/pregnancy-centers/verify')
+				.end((err, res) => {
+					res.should.have.status(200)
+					res.body.should.be.a('object')
+					res.body.should.have.property('name')
+					res.body.name.should.equal('Birthright of Albany')
+					res.body.should.not.have.property('verified')
 				})
 		})
 	})
@@ -430,9 +416,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it('it should return a 404 not found because all pregnancy centers have been verified', (done) => {
+		it('it should return a 404 not found because all pregnancy centers have been verified', async () => {
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -453,11 +439,9 @@ describe('PregnancyCenters', () => {
 					}
 				}
 
-			}, function(err) {
-				if (err) log.error(err)
 			})
 
-			PregnancyCenterModel.create({
+			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
 					'location': {
@@ -478,8 +462,6 @@ describe('PregnancyCenters', () => {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
-			}, function(err) {
-				if (err) log.error(err)
 			})
 
 			mockAuthenticate()
@@ -488,7 +470,6 @@ describe('PregnancyCenters', () => {
 				.get('/api/pregnancy-centers/verify')
 				.end((err, res) => {
 					assertError(res, 404, 'Not Found')
-					done()
 				})
 		})
 	})
@@ -537,7 +518,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route with authentication
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
-		it('it should return the updated pregnancyCenter record', (done) => {
+		it('it should return the updated pregnancyCenter record', async () => {
 
 			const oldValues = {
 				'address': {
@@ -564,42 +545,34 @@ describe('PregnancyCenters', () => {
 			const newValues = _.cloneDeep(oldValues)
 			newValues.address.line1 = 'New Address'
 
-			UserModel.findOneAsync({ displayName: 'Kate Sills'}).then(
-				(testUser) => {
+			const testUser = await UserModel.findOne({ displayName: 'Kate Sills'})
 
-					PregnancyCenterModel.createAsync(oldValues)
-						.catch((err) => log.error(err))
-						.then(mockAuthenticate())
-						.then((pc) => {
+			const oldPCObj = await PregnancyCenterModel.create(oldValues)
 
-							chai.request(server)
-								.put('/api/pregnancy-centers/' + pc._id)
-								.send(newValues)
-								.end((err, res) => {
-									res.should.have.status(200)
-									res.body.should.be.a('object')
-									res.body.should.have.property('_id')
-									res.body.should.have.property('name')
-									res.body._id.should.equal(String(pc._id))
-									res.body.name.should.equal('Birthright of Albany')
-									res.body.should.have.property('verified')
-									res.body.should.have.property('updated')
-									res.body.updated.should.have.property('address')
-									res.body.updated.address.should.have.property('userId')
-									res.body.updated.address.userId.should.equal(testUser._id.toString())
-									res.body.verified.should.have.property('address')
+			mockAuthenticate()
 
-									// check that the pregnancy center history is created as well.
-									PregnancyCenterHistoryModel.findAsync({
-										pregnancyCenterId: pc._id
-									})
-										.catch((err) => log.error(err))
-										.then((histories) => {
-											histories.should.have.length(1)
-										}).then(done())
+			chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(newValues)
+				.end(async (err, res) => {
+					res.should.have.status(200)
+					res.body.should.be.a('object')
+					res.body.should.have.property('_id')
+					res.body.should.have.property('name')
+					res.body._id.should.equal(String(oldPCObj._id))
+					res.body.name.should.equal('Birthright of Albany')
+					res.body.should.have.property('verified')
+					res.body.should.have.property('updated')
+					res.body.updated.should.have.property('address')
+					res.body.updated.address.should.have.property('userId')
+					res.body.updated.address.userId.should.equal(testUser._id.toString())
+					res.body.verified.should.have.property('address')
 
-								})
-						})
+					// check that the pregnancy center history is created as well.
+					const histories = await PregnancyCenterHistoryModel.find({
+						pregnancyCenterId: oldPCObj._id
+					})
+					histories.should.have.length(1)
 				})
 		})
 	})
@@ -997,4 +970,3 @@ describe('PregnancyCenters', () => {
 		})
 	})
 })
-
