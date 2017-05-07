@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const P = require('bluebird')
 const Joi = require('joi')
 const Log = require('log')
-const PregnancyCenterModel = require('../app/models/pregnancy-center')
+const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
 const log = new Log('info')
 
 mongoose.Promise = require('bluebird')

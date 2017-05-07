@@ -19,13 +19,13 @@ const server = express()
 server.use(boom())
 const port = config.server.port
 const log = new Log('info')
-const PregnancyCenterModel = require('../app/models/pregnancy-center')
-const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-history')
+const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
 const passport = require('passport')
 	, FacebookStrategy = require('passport-facebook').Strategy
-const UserModel = require('../app/models/user')
-const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
-const hoursUtils = require('../utils/utils')
+const UserModel = require('./users/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('./pregnancy-centers/schema/joi-schema')
+const hoursUtils = require('./pregnancy-centers/utils/utils')
 const _ = require('lodash')
 
 server.use(express.static('public'))

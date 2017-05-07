@@ -9,11 +9,11 @@
     "wds": "webpack-dev-server",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test mochad",
     "n": "nvm use stable",
     "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
-    "data": "NODE_ENV=localhost node ./data/data.js",
-    "geocode": "NODE_ENV=localhost node ./data/geocode.js"
+    "data": "NODE_ENV=localhost node ./server/data-import/data.js",
+    "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js"
   },
   "repository": {
     "type": "git",

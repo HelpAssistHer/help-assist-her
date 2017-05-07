@@ -1,16 +1,16 @@
 'use strict'
 
-const PregnancyCenterModel = require('../app/models/pregnancy-center')
-const PregnancyCenterHistoryModel = require('../app/models/pregnancy-center-history')
-const pregnancyCenterSchemaJoi = require('../app/schemas/pregnancy-center')
-const UserModel = require('../app/models/user')
+const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
+const UserModel = require('../../users/schema/mongoose-schema')
 const moment = require('moment')
 const Log = require('log')
 const log = new Log('info')
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const server = require('../server/server')
+const server = require('../../server')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
@@ -305,7 +305,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services': []
-			
+
 			})
 
 			await PregnancyCenterModel.create({
@@ -922,7 +922,7 @@ describe('PregnancyCenters', () => {
 			})
 		})
 	})
-	
+
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
