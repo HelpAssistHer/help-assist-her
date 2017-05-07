@@ -1,33 +1,32 @@
 'use strict'
 
+const _ = require('lodash')
+const bodyParser = require('body-parser')
+const boom = require('express-boom')
 const config = require('config')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
-const Log = require('log')
-const mongoose = require('mongoose')
-mongoose.Promise = require('bluebird')
-const P = require('bluebird')
-const bodyParser = require('body-parser')
+const facebookStrategy = require('passport-facebook').Strategy
 const Joi = require('joi')
-const boom = require('express-boom')
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
-
+const log = require('log')
 const moment = require('moment')
-
-const server = express()
-server.use(boom())
-const port = config.server.port
-const log = new Log('info')
-const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
-const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
+const mongoose = require('mongoose')
 const passport = require('passport')
-	, FacebookStrategy = require('passport-facebook').Strategy
-const UserModel = require('./users/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('./pregnancy-centers/schema/joi-schema')
-const hoursUtils = require('./pregnancy-centers/utils/utils')
-const _ = require('lodash')
+const P = require('bluebird')
+const session = require('express-session')
 
+const hoursUtils = require('./pregnancy-centers/utils/utils')
+const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('./pregnancy-centers/schema/joi-schema')
+const UserModel = require('./users/schema/mongoose-schema')
+
+const port = config.server.port
+const server = express()
+mongoose.Promise = require('bluebird')
+
+server.use(boom())
 server.use(express.static('public'))
 server.use(cookieParser())
 server.use(cors())
@@ -42,7 +41,7 @@ server.use(passport.initialize())
 server.use(passport.session())
 
 passport.use(
-	new FacebookStrategy({
+	new facebookStrategy({
 		clientID: config.facebook.appId,
 		clientSecret: config.facebook.appSecret,
 		callbackURL: 'http://127.0.0.1:4000/auth/facebook/callback'
