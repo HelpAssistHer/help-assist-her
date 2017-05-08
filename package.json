@@ -55,13 +55,13 @@
     "passport-facebook": "^2.1.1",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.3",
-    "react": "15.3.2",
-    "react-dom": "15.3.2",
-    "react-jss": "^5.4.1",
-    "react-redux": "4.4.0",
-    "react-router": "4.0.0-alpha.5",
-    "redux": "3.3.1",
-    "redux-thunk": "^2.1.0"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-jss": "^6.1.1",
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-core": "6.16.0",
@@ -92,7 +92,7 @@
     "react-test-renderer": "15.3.2",
     "style-loader": "0.13.1",
     "url-loader": "^0.5.8",
-    "webpack": "2.1.0-beta.25",
-    "webpack-dev-server": "1.16.2"
+    "webpack": "^2.5.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }
