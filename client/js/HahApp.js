@@ -8,7 +8,7 @@ import Header from './header'
 import Landing from './Landing'
 import VerificationPortal from './verification-portal-index'
 
-const App = React.createClass({
+class App extends React.Component {
 	render() {
 		return (
 			<div>
@@ -22,6 +22,6 @@ const App = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 render(<App />, document.getElementById('app'))
