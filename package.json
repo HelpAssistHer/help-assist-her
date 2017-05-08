@@ -29,6 +29,7 @@
     "@google/maps": "^0.3.1",
     "@turf/turf": "^3.7.4",
     "axios": "0.15.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.1",
     "boom": "^4.3.1",
@@ -59,7 +60,7 @@
     "react-dom": "^15.5.4",
     "react-jss": "^6.1.1",
     "react-redux": "^5.0.4",
-    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
   },
