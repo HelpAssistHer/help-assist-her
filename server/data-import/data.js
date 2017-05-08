@@ -12,7 +12,6 @@ const Joi = require('joi')
 const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
 const log = new Log('info')
 
-
 const loadData = P.coroutine(function *startDatabase() {
 	const connectionString = `mongodb://${config.server.hostname}/${config.database.name}`
 
@@ -22,7 +21,6 @@ const loadData = P.coroutine(function *startDatabase() {
 loadData()
 
 // note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
-
 
 async function reimport() {
 

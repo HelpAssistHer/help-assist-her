@@ -142,7 +142,7 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
 	const primaryContact = pregnancyCenter.primaryContact
 
 	if (primaryContact) {
-		const { firstName, lastName, email, phone } = await UserModel.findOne({
+		const user = await UserModel.findOne({
 			_id: primaryContact,
 		}).lean()
 
@@ -151,10 +151,10 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
 		}
 
 		pregnancyCenter.primaryContactUser = {
-			firstName,
-			lastName,
-			email,
-			phone,
+			firstName: user.firstName,
+			lastName: user.lastName,
+			email: user.email,
+			phone: user.phone
 		}
 	}
 
