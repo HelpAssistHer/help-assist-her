@@ -7,11 +7,12 @@ const config = require('config')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
-const facebookStrategy = require('passport-facebook').Strategy
+const facebookTokenStrategy = require('passport-facebook-token')
 const Joi = require('joi')
 const Log = require('log')
 const moment = require('moment')
 const mongoose = require('mongoose')
+const morgan = require('morgan')
 const passport = require('passport')
 const P = require('bluebird')
 const session = require('express-session')
@@ -33,6 +34,7 @@ server.use(cookieParser())
 server.use(cors())
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
+server.use(morgan('combined'))
 server.use(session({
 	secret: 'keyboard cat',
 	resave: false,
@@ -42,7 +44,7 @@ server.use(passport.initialize())
 server.use(passport.session())
 
 passport.use(
-	new facebookStrategy({
+	new facebookTokenStrategy({
 		clientID: config.facebook.appId,
 		clientSecret: config.facebook.appSecret,
 		callbackURL: `${config.server.url}/auth/facebook/callback`
@@ -88,7 +90,7 @@ startDatabase()
 	Returns all pregnancy centers
 	TODO: limits and paging, if necessary
  */
-server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+server.get('/api/pregnancy-centers', passport.authenticate('facebook-token'), async (req, res) => {
 	const allPregnancyCenters = await PregnancyCenterModel.find({})
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
@@ -99,7 +101,7 @@ server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
 	Takes in 'lng', 'lat', and 'miles' radius as query vars
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
-server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => {
+server.get('/api/pregnancy-centers/near-me', passport.authenticate('facebook-token'), async (req, res) => {
 	const METERS_PER_MILE = 1609.34
 	const lng = req.query.lng || -73.781332
 	const lat = req.query.lat || 42.6721989
@@ -129,7 +131,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, async (req, res) => 
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
-server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
+server.get('/api/pregnancy-centers/verify', passport.authenticate('facebook-token'), async (req, res) => {
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		'verified.address': null,
 	}).lean()
@@ -161,7 +163,7 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
 	res.status(200).json(pregnancyCenter)
 })
 
-server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+server.post('/api/pregnancy-centers', passport.authenticate('facebook-token'), async (req, res) => {
 	const newPregnancyCenter = req.body
 
 	const pregnancyCenterValidationObj = await Joi.validate(newPregnancyCenter, pregnancyCenterSchemaJoi, {
@@ -188,7 +190,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
 	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
 	Returns the updated pregnancy center
  */
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (req, res) => {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('facebook-token'), async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
@@ -220,7 +222,7 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (re
 	Takes in an option query var 'date' or uses the current datetime
 	Returns a list of pregnancy centers open now
  */
-server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, async (req, res) => {
+server.get('/api/pregnancy-centers/open-now', passport.authenticate('facebook-token'), async (req, res) => {
 	const today = moment(req.query.date) || moment()
 	const dayOfWeek = today.day()
 	const time = hoursUtils.getGoogleFormatTime(today)
@@ -245,7 +247,7 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, async (req, res) =>
 	Returns the pregnancy center that matches the id
  */
 
-server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (req, res) => {
+server.get('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('facebook-token'), async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
@@ -264,36 +266,6 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, async (re
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
-
-// Redirect the user to Facebook for authentication.  When complete,
-// Facebook will redirect the user back to the application at
-//     /auth/facebook/callback
-server.get('/auth/facebook', passport.authenticate('facebook'))
-
-// Facebook will redirect the user to this URL after approval.  Finish the
-// authentication process by attempting to obtain an access token.  If
-// access was granted, the user will be logged in.  Otherwise,
-// authentication has failed.
-server.get('/auth/facebook/callback',
-	passport.authenticate('facebook', {
-		successRedirect: 'http://localhost:8080/verification',
-		failureRedirect: '/login'
-	})
-)
-
-server.get('/logout', (req, res) => {
-	req.logout()
-	res.redirect('http://localhost:8080/')
-})
-
-function isLoggedInAPI(req, res, next) {
-	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated())
-		return next()
-
-	// if they aren't, return an http error
-	res.boom.unauthorized('User is not logged in.')
-}
 
 function handleJoiValidationError(res, err) {
 	log.error(err)
