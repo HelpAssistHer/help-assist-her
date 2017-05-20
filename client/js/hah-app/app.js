@@ -1,12 +1,10 @@
-'use strict'
-
 import React from 'react'
 import { render } from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Header from './header'
 import Landing from './Landing'
-import VerificationPortal from './verification-portal-index'
+import VerificationPortal from './verification-portal/index'
 
 class App extends React.Component {
 	render() {
