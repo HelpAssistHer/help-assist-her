@@ -4,7 +4,7 @@ const path = require('path')
 
 module.exports = {
 	context: __dirname,
-	entry: ['babel-polyfill', './client/js/HahApp.js'],
+	entry: ['babel-polyfill', './client/js/hah-app.js'],
 	devtool: 'eval',
 	output: {
 		path: path.join(__dirname, '/public'),

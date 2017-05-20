@@ -3,10 +3,10 @@ import injectSheet from 'react-jss'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-import Button from './button'
-import Spacer from './spacer'
-import Input from './input'
-import HoursInput from './hours-input'
+import Button from '../components/button'
+import Spacer from '../components/spacer'
+import Input from '../components/input'
+import HoursInput from '../components/hours-input'
 import services from './pregnancy-center-services'
 
 async function getOneResource() {

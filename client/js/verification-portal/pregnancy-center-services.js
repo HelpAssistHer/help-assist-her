@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = [
 	{
 		id: 'STD_TESTING',
