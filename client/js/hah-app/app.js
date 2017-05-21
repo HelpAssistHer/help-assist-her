@@ -1,25 +1,13 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Header from './header'
-import Landing from './Landing'
-import VerificationPortal from '../verification-portal/index'
+import HahRouter from './router'
 
-class App extends React.Component {
-	render() {
-		return (
-			<div>
-				<Header />
-				<Router>
-					<div className='app'>
-						<Route exact path='/' component={Landing} />
-						<Route exact path='/verification' component={VerificationPortal} />
-					</div>
-				</Router>
-			</div>
-		)
-	}
-}
+const App = () => (
+	<div id='app'>
+		<Header />
+		<HahRouter />
+	</div>
+)
 
-render(<App />, document.getElementById('app'))
+export default App
