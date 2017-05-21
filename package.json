@@ -9,7 +9,7 @@
     "wds": "webpack-dev-server",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
-    "test": "NODE_ENV=test mochad",
+    "test": "NODE_ENV=test mocha 'server/data-import/test/test.js'",
     "n": "nvm use stable",
     "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
     "data": "NODE_ENV=localhost node ./server/data-import/data.js",
