@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import { Field, reduxForm, change } from 'redux-form'
-import { connect } from 'react-redux'
-
-import Input from '../components/input'
+import { Field, reduxForm } from 'redux-form'
 
 class VerificationPortalForm extends Component {
 	render() {
@@ -20,29 +17,6 @@ class VerificationPortalForm extends Component {
 		)
 	}
 }
-
-// const mapStateToProps = state => {
-// 	console.log('MAP STATE TO PROPS', state.resource)
-// 	return {
-// 		resource: state.resource,
-// 	}
-// }
-//
-// const mapDispatchToProps = dispatch => {
-// 	return {
-// 		getResourceToVerify: () => {
-// 			dispatch(getResourceToVerify)
-// 		},
-// 		changeFieldValue: (field, value) => {
-// 			dispatch(change(form, field, value))
-// 		}
-// 	}
-// }
-//
-// VerificationPortalForm = connect(
-// 	mapStateToProps,
-// 	mapDispatchToProps
-// )(VerificationPortalForm)
 
 VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
