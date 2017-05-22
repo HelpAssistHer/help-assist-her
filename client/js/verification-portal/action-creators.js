@@ -7,14 +7,12 @@ async function getOneResource() {
 			'Accept': 'application/json',
 		},
 	})
-	const result = await response.json()
-	console.log(result)
-	return result
+	return await response.json()
 }
 
 function getResource(resource) {
 	return {
-		type: 'GET_RESOURCE_TO_VERIFY',
+		type: GET_RESOURCE_TO_VERIFY,
 		resource,
 	}
 }

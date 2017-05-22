@@ -1,14 +1,13 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import Spacer from './spacer'
 
-const Input = ({ classes, label, value, placeholder, id, type, onChange }) => (
-	<div className={classes.root}>
-		<label className={classes.label}>{label}</label>
-		<input className={classes.textInput} id={id} type={type} placeholder={placeholder} value={value} onChange={onChange} />
-		<input className={classes.checkbox} type='checkbox' value='1' name='verified' id={`${id}-checkbox`} />
-		<br />
-		<Spacer height='10px' />
+const Input = ({ classes, label, placeholder, id, type }) => (
+	<div>
+		{/*<label className={classes.label}>{label}</label>*/}
+		<input className={classes.textInput} id={id} type={type} placeholder={placeholder} />
+		{/*<input className={classes.checkbox} type='checkbox' value='1' name='verified' id={`${id}-checkbox`} />*/}
+		{/*<br />*/}
+		{/*<Spacer height='10px' />*/}
 	</div>
 )
 

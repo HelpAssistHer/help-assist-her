@@ -1,29 +1,51 @@
-import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import React, { Component } from 'react'
+import { Field, reduxForm, change } from 'redux-form'
+import { connect } from 'react-redux'
 
-import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Input from '../components/input'
 
-const VerificationPortalForm = () => {
-	return (
-		<div>
-			<h1>VERIFICATION PORTAL</h1>
-			<h3>Type: Pregnancy Centers</h3>
-			<GetResourceToVerifyButton />
+class VerificationPortalForm extends Component {
+	render() {
+		const { handleSubmit } = this.props
 
-			<h3>General Info</h3>
-			<div>
+		return (
+			<form onSubmit={handleSubmit}>
 				<Field
-					name='resourceName'
-					component={Input}
+					name='name'
+					component='input'
 					type='text'
-					label='Name'
 				/>
-			</div>
-		</div>
-	)
+				<button type="submit">Submit</button>
+			</form>
+		)
+	}
 }
 
-export default reduxForm({
-	form: 'verificationPortal'
+// const mapStateToProps = state => {
+// 	console.log('MAP STATE TO PROPS', state.resource)
+// 	return {
+// 		resource: state.resource,
+// 	}
+// }
+//
+// const mapDispatchToProps = dispatch => {
+// 	return {
+// 		getResourceToVerify: () => {
+// 			dispatch(getResourceToVerify)
+// 		},
+// 		changeFieldValue: (field, value) => {
+// 			dispatch(change(form, field, value))
+// 		}
+// 	}
+// }
+//
+// VerificationPortalForm = connect(
+// 	mapStateToProps,
+// 	mapDispatchToProps
+// )(VerificationPortalForm)
+
+VerificationPortalForm = reduxForm({
+	form: 'verificationPortal',
 })(VerificationPortalForm)
+
+export default VerificationPortalForm

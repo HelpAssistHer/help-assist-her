@@ -1,21 +1,23 @@
+import _ from 'lodash'
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
 import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/action-types'
 
-const verificationPortalReducer = (state = {}, action) => {
+const resourceReducer = (state = {}, action) => {
+	// console.log('ACTION', action)
+	// console.log('STATE b4', state)
 	switch (action.type) {
 		case GET_RESOURCE_TO_VERIFY:
-			return {
-				resource: 'all the data objects',
-			}
+			return _.assign({}, state, action.resource)
 		default:
 			return state
 	}
+	console.log('STATE', state)
 }
 
 const reducers = {
-	verificationPortal: verificationPortalReducer,
+	resource: resourceReducer,
 	form: formReducer,
 }
 
