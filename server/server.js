@@ -40,7 +40,7 @@ server.use(session({
 }))
 server.use(passport.initialize())
 server.use(passport.session())
-
+(
 passport.use(
 	new facebookStrategy({
 		clientID: config.facebook.appId,
