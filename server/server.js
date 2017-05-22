@@ -368,5 +368,3 @@ function isLoggedInAPI(req, res, next) {
 }
 
 module.exports = server
-
-throw new Error()
