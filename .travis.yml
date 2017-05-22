@@ -13,10 +13,12 @@ services:
 
 before_script:
   - sleep 15
-  - mongo hah-test --eval 'db.addUser("travis", "test");'
+  - mongo --eval 'db.getName()'
 
 script:
   - yarn lint
+  - mongo --eval 'db.getName()'
   - yarn test
+  - mongo --eval 'db.getName()'
   - yarn wds &
 
