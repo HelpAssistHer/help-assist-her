@@ -1,7 +1,6 @@
 'use strict'
 
 const moment = require('moment')
-const Log = require('log')
 
 //Require the dev-dependencies
 const chai = require('chai')
@@ -652,7 +651,6 @@ describe('PregnancyCenters', () => {
 				})
 		})
 	})
-
 
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes

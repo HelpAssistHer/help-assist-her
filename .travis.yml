@@ -11,6 +11,10 @@ cache:
 services:
   - mongodb
 
+before_script:
+  - sleep 15
+  - mongo hah-test --eval 'db.addUser("travis", "test");'
+
 script:
   - yarn lint
   - yarn test
