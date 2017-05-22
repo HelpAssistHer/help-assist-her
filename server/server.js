@@ -75,6 +75,11 @@ passport.deserializeUser((objectId, done) => {
 	})
 })
 
+// adapted from https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
+let wrap = fn => (...args) => fn(...args).catch((e) => {
+	handleError(args[1], e)
+})
+
 // TODO: Error handling
 const startDatabase = P.coroutine(function *startDatabase() {
 	const connectionString = `mongodb://${config.server.hostname}/${config.database.name}`
@@ -90,18 +95,18 @@ startDatabase()
 	Returns all pregnancy centers
 	TODO: limits and paging, if necessary
  */
-server.get('/api/pregnancy-centers', passport.authenticate('facebook-token'), async (req, res) => {
+server.get('/api/pregnancy-centers', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const allPregnancyCenters = await PregnancyCenterModel.find({})
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
 	}
-})
+}))
 
 /*
 	Takes in 'lng', 'lat', and 'miles' radius as query vars
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
-server.get('/api/pregnancy-centers/near-me', passport.authenticate('facebook-token'), async (req, res) => {
+server.get('/api/pregnancy-centers/near-me', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const METERS_PER_MILE = 1609.34
 	const lng = req.query.lng || -73.781332
 	const lat = req.query.lat || 42.6721989
@@ -126,12 +131,12 @@ server.get('/api/pregnancy-centers/near-me', passport.authenticate('facebook-tok
 	} else {
 		res.status(200).json(pregnancyCentersNearMe)
 	}
-})
+}))
 
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
-server.get('/api/pregnancy-centers/verify', passport.authenticate('facebook-token'), async (req, res) => {
+server.get('/api/pregnancy-centers/verify', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		'verified.address': null,
 	}).lean()
@@ -144,7 +149,7 @@ server.get('/api/pregnancy-centers/verify', passport.authenticate('facebook-toke
 	const primaryContact = pregnancyCenter.primaryContact
 
 	if (primaryContact) {
-		const { firstName, lastName, email, phone } = await UserModel.findOne({
+		const user = await UserModel.findOne({
 			_id: primaryContact,
 		}).lean()
 
@@ -153,17 +158,17 @@ server.get('/api/pregnancy-centers/verify', passport.authenticate('facebook-toke
 		}
 
 		pregnancyCenter.primaryContactUser = {
-			firstName,
-			lastName,
-			email,
-			phone,
+			firstName: user.firstName,
+			lastName: user.lastName,
+			email: user.email,
+			phone: user.phone
 		}
 	}
 
 	res.status(200).json(pregnancyCenter)
-})
+}))
 
-server.post('/api/pregnancy-centers', passport.authenticate('facebook-token'), async (req, res) => {
+server.post('/api/pregnancy-centers', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const newPregnancyCenter = req.body
 
 	const pregnancyCenterValidationObj = await Joi.validate(newPregnancyCenter, pregnancyCenterSchemaJoi, {
@@ -182,15 +187,15 @@ server.post('/api/pregnancy-centers', passport.authenticate('facebook-token'), a
 
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
-		return handleDatabaseError(res, err)
+		return handleError(res, err)
 	}
-})
+}))
 
 /*
 	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
 	Returns the updated pregnancy center
  */
-server.put('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('facebook-token'), async (req, res) => {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
@@ -216,13 +221,13 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('f
 	}
 
 	res.status(200).json(pregnancyCenter)
-})
+}))
 
 /*
 	Takes in an option query var 'date' or uses the current datetime
 	Returns a list of pregnancy centers open now
  */
-server.get('/api/pregnancy-centers/open-now', passport.authenticate('facebook-token'), async (req, res) => {
+server.get('/api/pregnancy-centers/open-now', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const today = moment(req.query.date) || moment()
 	const dayOfWeek = today.day()
 	const time = hoursUtils.getGoogleFormatTime(today)
@@ -241,13 +246,13 @@ server.get('/api/pregnancy-centers/open-now', passport.authenticate('facebook-to
 	}
 
 	res.status(200).json(pregnancyCentersOpenNow)
-})
+}))
 
 /*
 	Returns the pregnancy center that matches the id
  */
 
-server.get('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('facebook-token'), async (req, res) => {
+server.get('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('facebook-token'), wrap(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
@@ -261,7 +266,7 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', passport.authenticate('f
 	}
 
 	res.status(200).json(pregnancyCenter)
-})
+}))
 
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
@@ -274,7 +279,7 @@ function handleJoiValidationError(res, err) {
 	return res.boom.badRequest(err, data)
 }
 
-function handleDatabaseError(res, err) {
+function handleError(res, err) {
 	log.error(err)
 	return res.boom.badImplementation()
 }
