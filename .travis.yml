@@ -13,6 +13,6 @@ services:
 
 script:
   - yarn lint
-  - node server/server.js &
+  - yarn test
   - yarn wds &
 
