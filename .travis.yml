@@ -12,6 +12,7 @@ services:
   - mongodb
 
 script:
-  - node server/server.js &
-  - yarn wds &
   - yarn lint
+  - node server/server.js
+  - yarn wds
+
