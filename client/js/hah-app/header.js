@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Button from './button'
+import Button from '../components/button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>

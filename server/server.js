@@ -74,7 +74,7 @@ passport.deserializeUser((objectId, done) => {
 })
 
 // adapted from https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
-let wrap = fn => (...args) => fn(...args).catch((e) => {
+let handleRejectedPromise = fn => (...args) => fn(...args).catch((e) => {
 	handleError(args[1], e)
 })
 
@@ -93,7 +93,7 @@ startDatabase()
 	Returns all pregnancy centers
 	TODO: limits and paging, if necessary
  */
-server.get('/api/pregnancy-centers', isLoggedInAPI, wrap(async (req, res) => {
+server.get('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const allPregnancyCenters = await PregnancyCenterModel.find({})
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
@@ -104,7 +104,7 @@ server.get('/api/pregnancy-centers', isLoggedInAPI, wrap(async (req, res) => {
 	Takes in 'lng', 'lat', and 'miles' radius as query vars
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
-server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, wrap(async (req, res) => {
+server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const METERS_PER_MILE = 1609.34
 	const lng = req.query.lng || -73.781332
 	const lat = req.query.lat || 42.6721989
@@ -134,7 +134,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, wrap(async (req, res
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
-server.get('/api/pregnancy-centers/verify', isLoggedInAPI, wrap(async (req, res) => {
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		'verified.address': null,
 	}).lean()
@@ -166,7 +166,7 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, wrap(async (req, res)
 	res.status(200).json(pregnancyCenter)
 }))
 
-server.post('/api/pregnancy-centers', isLoggedInAPI, wrap(async (req, res) => {
+server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const newPregnancyCenter = req.body
 
 	const pregnancyCenterValidationObj = await Joi.validate(newPregnancyCenter, pregnancyCenterSchemaJoi, {
@@ -193,7 +193,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, wrap(async (req, res) => {
 	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
 	Returns the updated pregnancy center
  */
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, wrap(async (req, res) => {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
@@ -226,7 +226,7 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, wrap(asyn
 	and a query var day which is an integer where Monday is 1 and Sunday is 7
 	Returns a list of pregnancy centers open now
  */
-server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, wrap(async (req, res) => {
+server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const time = parseInt(req.query.time)
 	const dayOfWeek = parseInt(req.query.day)
 	const query = {}
@@ -251,7 +251,7 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, wrap(async (req, re
 	Returns the pregnancy center that matches the id
  */
 
-server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, wrap(async (req, res) => {
+server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
