@@ -50,7 +50,6 @@ function assertError(res, statusCode, error, message=null) {
 
 	res.body.statusCode.should.equal(statusCode)
 	res.body.error.should.equal(error)
-
 }
 
 function assertUnauthenticatedError(res) {
@@ -79,11 +78,12 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/GET /api/pregnancy-centers/open-now no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
-			chai.request(server)
-				.get('/api/pregnancy-centers/open-now')
-				.end((err, res) => {
-					return assertUnauthenticatedError(res)
-				})
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/open-now')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -155,14 +155,12 @@ describe('PregnancyCenters', () => {
 
 			mockAuthenticate()
 
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(1)
-					res.body[0].name.should.equal('Birthright of Albany')
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(1)
+			res.body[0].name.should.equal('Birthright of Albany')
 		})
 	})
 
@@ -171,11 +169,12 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/GET /api/pregnancy-centers no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
-			chai.request(server)
-				.get('/api/pregnancy-centers')
-				.end((err, res) => {
-					return assertUnauthenticatedError(res)
-				})
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -196,12 +195,14 @@ describe('PregnancyCenters', () => {
 				website:'http://www.birthright.org',
 				services:[],
 			}
-			chai.request(server)
-				.post('/api/pregnancy-centers')
-				.send(pregnancyCenter)
-				.end((err, res) => {
-					return assertUnauthenticatedError(res)
-				})
+
+			try {
+				await chai.request(server)
+					.post('/api/pregnancy-centers')
+					.send(pregnancyCenter)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -211,13 +212,11 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers', () => {
 		it('it should return an empty array because there are no pregnancy centers yet', async () => {
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers')
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(0)
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(0)
 		})
 	})
 
@@ -239,27 +238,25 @@ describe('PregnancyCenters', () => {
 				services:[],
 			}
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
 				.send(pregnancyCenter)
-				.end((err, res) => {
-					res.should.have.status(201)
-					res.body.should.be.a('object')
-					res.body.should.have.property('address')
-					res.body.should.have.property('name')
-					res.body.should.have.property('_id')
-					res.body.should.have.property('website')
-					res.body.should.have.property('phone')
-					res.body.should.have.property('services')
-					res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
-					res.body.address.location.type.should.equal('Point')
-					res.body.address.location.coordinates.should.deep.equal(
-						[-73.7814005, 42.6722152])
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.phone.should.equal('+15184382978')
-					res.body.website.should.equal('http://www.birthright.org')
-					res.body.services.should.deep.equal([])
-				})
+			res.should.have.status(201)
+			res.body.should.be.a('object')
+			res.body.should.have.property('address')
+			res.body.should.have.property('name')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('website')
+			res.body.should.have.property('phone')
+			res.body.should.have.property('services')
+			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
+			res.body.address.location.type.should.equal('Point')
+			res.body.address.location.coordinates.should.deep.equal(
+				[-73.7814005, 42.6722152])
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.phone.should.equal('+15184382978')
+			res.body.website.should.equal('http://www.birthright.org')
+			res.body.services.should.deep.equal([])
 		})
 	})
 
@@ -268,11 +265,12 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/GET /api/pregnancy-centers/near-me no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
-			chai.request(server)
-			.get('/api/pregnancy-centers/near-me')
-			.end((err, res) => {
-				return assertUnauthenticatedError(res)
-			})
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/near-me')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -319,14 +317,12 @@ describe('PregnancyCenters', () => {
 			})
 
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(1)
-					res.body[0].name.should.equal('Birthright of Albany')
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(1)
+			res.body[0].name.should.equal('Birthright of Albany')
 		})
 	})
 
@@ -335,11 +331,12 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/GET /api/pregnancy-centers/verify no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
-			chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-					return assertUnauthenticatedError(res)
-				})
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/verify')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -391,15 +388,15 @@ describe('PregnancyCenters', () => {
 			})
 			mockAuthenticate()
 
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('object')
-					res.body.should.have.property('name')
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.should.not.have.property('verified')
-				})
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('name')
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.should.not.have.property('verified')
+
 		})
 	})
 
@@ -457,11 +454,12 @@ describe('PregnancyCenters', () => {
 
 			mockAuthenticate()
 
-			chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-					assertError(res, 404, 'Not Found')
-				})
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/verify')
+			} catch (err) {
+				assertError(err.response, 404, 'Not Found')
+			}
 		})
 	})
 
@@ -471,7 +469,7 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
 
-			const pc = await PregnancyCenterModel.create({
+			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -493,13 +491,15 @@ describe('PregnancyCenters', () => {
 				}
 
 			})
+			await pc.save()
 
-			chai.request(server)
-				.put('/api/pregnancy-centers/'+pc._id)
-				.send(pc)
-				.end((err, res) => {
-					return assertUnauthenticatedError(res)
-				})
+			try {
+				await chai.request(server)
+					.put('/api/pregnancy-centers/'+pc._id)
+					.send(pc)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -559,29 +559,28 @@ describe('PregnancyCenters', () => {
 
 			mockAuthenticate()
 
-			chai.request(server)
+			const res = await chai.request(server)
 				.put('/api/pregnancy-centers/' + oldPCObj._id)
 				.send(newValues)
-				.end(async (err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('object')
-					res.body.should.have.property('_id')
-					res.body.should.have.property('name')
-					res.body._id.should.equal(String(oldPCObj._id))
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.should.have.property('verified')
-					res.body.should.have.property('updated')
-					res.body.updated.should.have.property('address')
-					res.body.updated.address.should.have.property('userId')
-					res.body.updated.address.userId.should.equal(testUser._id.toString())
-					res.body.verified.should.have.property('address')
 
-					// check that the pregnancy center history is created as well.
-					const newPCObj = await PregnancyCenterHistoryModel.find({
-						pregnancyCenterId: oldPCObj._id
-					})
-					newPCObj.should.have.length(1)
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('name')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.should.have.property('verified')
+			res.body.should.have.property('updated')
+			res.body.updated.should.have.property('address')
+			res.body.updated.address.should.have.property('userId')
+			res.body.updated.address.userId.should.equal(testUser._id.toString())
+			res.body.verified.should.have.property('address')
+
+			// check that the pregnancy center history is created as well.
+			const newPCObj = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
+			})
+			newPCObj.should.have.length(1)
 		})
 	})
 
@@ -591,7 +590,7 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/:pregnancyCenterId no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
 
-			const pc = await PregnancyCenterModel.create({
+			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -608,11 +607,14 @@ describe('PregnancyCenters', () => {
 				'services': []
 
 			})
-			chai.request(server)
-				.get('/api/pregnancy-centers/'+pc._id)
-				.end((err, res) => {
-					return assertUnauthenticatedError(res)
-				})
+			await pc.save()
+
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/'+pc._id)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -622,7 +624,7 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return a single pregnancy center matching the id', async () => {
 
-			const pc = PregnancyCenterModel.create({
+			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -640,18 +642,19 @@ describe('PregnancyCenters', () => {
 
 			})
 
+			await pc.save()
+
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/'+pc._id)
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('object')
-					res.body.should.have.property('_id')
-					res.body.should.have.property('name')
-					res.body._id.should.equal(String(pc._id))
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.should.not.have.property('verified')
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('name')
+			res.body._id.should.equal(String(pc._id))
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.should.not.have.property('verified')
+
 		})
 	})
 

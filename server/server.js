@@ -239,7 +239,6 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, wrap(async (req, re
 			close: {$gte: time}
 		}
 	}
-	log.info(JSON.stringify(query))
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
 	if (pregnancyCentersOpenNow.length <= 0) {
