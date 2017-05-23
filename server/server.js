@@ -10,14 +10,12 @@ const express = require('express')
 const facebookTokenStrategy = require('passport-facebook-token')
 const Joi = require('joi')
 const Log = require('log')
-const moment = require('moment')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const passport = require('passport')
 const P = require('bluebird')
 const session = require('express-session')
 
-const hoursUtils = require('./pregnancy-centers/utils/utils')
 const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('./pregnancy-centers/schema/joi-schema')
@@ -224,13 +222,13 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, wrap(asyn
 }))
 
 /*
-	Takes in an option query var 'date' or uses the current datetime
+	Takes in a query var time, which is in the format 'hhmm',
+	and a query var day which is an integer where Monday is 1 and Sunday is 7
 	Returns a list of pregnancy centers open now
  */
 server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, wrap(async (req, res) => {
-	const today = moment(req.query.date) || moment()
-	const dayOfWeek = today.day()
-	const time = hoursUtils.getGoogleFormatTime(today)
+	const time = parseInt(req.query.time)
+	const dayOfWeek = parseInt(req.query.day)
 	const query = {}
 
 	query['hours.' + dayOfWeek] = {
@@ -239,6 +237,7 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, wrap(async (req, re
 			close: {$gte: time}
 		}
 	}
+	log.info(JSON.stringify(query))
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
 	if (pregnancyCentersOpenNow.length <= 0) {

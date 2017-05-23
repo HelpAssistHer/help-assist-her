@@ -156,7 +156,7 @@ describe('PregnancyCenters', () => {
 			mockAuthenticate()
 
 			const res = await chai.request(server)
-				.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
+				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
@@ -778,14 +778,14 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers readable hours 6', () => {
-		it('validation should pass because readable hours follow this format', async () => {
+	describe('Test Joi validation for pregnancy centers hours 6', () => {
+		it('validation should pass because hours follow this format', async () => {
 
 			const testPCObj6 = {
 				hours: {
-					tue: [{
-						open: '8:00AM',
-						close: '5:00PM'
+					2: [{
+						open: 800,
+						close: 1700
 					}]
 				}
 			}
@@ -793,11 +793,14 @@ describe('PregnancyCenters', () => {
 			const validationObj = await Joi.validate(testPCObj6, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
 			const validatedData = validationObj.value
 			validatedData.hours.should.deep.equal({
-				tue: [{
-					open: '8:00AM',
-					close: '5:00PM'
+				2: [{
+					open: 800,
+					close: 1700
 				}]
 			})
 		})
@@ -807,13 +810,13 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers readable hours 7', () => {
-		it('validation should fail because tues is not one of the keys (it\'s tue)', async () => {
+		it('validation should fail because tues is not one of the keys (it\'s 1-7)', async () => {
 
 			const testPCObj7 = {
 				hours: {
 					tues: [{
-						open: '8:00AM',
-						close: '5:00PM'
+						open: '800',
+						close: '1700'
 					}]
 				}
 			}
@@ -844,6 +847,9 @@ describe('PregnancyCenters', () => {
 			const validationObj = await Joi.validate(testPCObj8, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
 			const validatedData = validationObj.value
 
 			validatedData.hours.should.deep.equal({
@@ -886,6 +892,9 @@ describe('PregnancyCenters', () => {
 			const validationObj = await Joi.validate(testPCObj10, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
 			const validatedData = validationObj.value
 			validatedData.phone.should.equal('+18884442222')
 		})
@@ -951,6 +960,9 @@ describe('PregnancyCenters', () => {
 			const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
 			const validatedData = validationObj.value
 			validatedData.verified.address.userId.should.equal('58e46a8d210140d7e47bf58b')
 		})
