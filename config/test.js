@@ -5,8 +5,8 @@ module.exports = {
 		name: 'hah-test'
 	},
 	facebook: {
-		appId: process.env.FACEBOOK_APP_ID,
-		appSecret: process.env.FACEBOOK_APP_SECRET,
+		appId: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
+		appSecret: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_SECRET,
 	},
 	mapbox: {
 		accessToken: 'pk.eyJ1Ijoia2FyZW5tcm9zZSIsImEiOiJjaXd6bWoyeXowMGg2MnRvNnlncWE0azZsIn0.R61g_76oVqY3Jg7ob4kSsA',
