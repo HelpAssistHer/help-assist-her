@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 
+import Input from '../components/input'
+
 class VerificationPortalForm extends Component {
 	render() {
 		const { handleSubmit } = this.props
@@ -9,8 +11,9 @@ class VerificationPortalForm extends Component {
 			<form onSubmit={handleSubmit}>
 				<Field
 					name='name'
-					component='input'
+					component={Input}
 					type='text'
+					label='Name'
 				/>
 				<button type="submit">Submit</button>
 			</form>

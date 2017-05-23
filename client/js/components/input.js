@@ -1,15 +1,17 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-const Input = ({ classes, label, placeholder, id, type }) => (
-	<div>
-		{/*<label className={classes.label}>{label}</label>*/}
-		<input className={classes.textInput} id={id} type={type} placeholder={placeholder} />
-		{/*<input className={classes.checkbox} type='checkbox' value='1' name='verified' id={`${id}-checkbox`} />*/}
-		{/*<br />*/}
-		{/*<Spacer height='10px' />*/}
-	</div>
-)
+import Spacer from '../components/spacer'
+
+const Input = ({ classes, input, label, type }) => {
+	return (
+		<div>
+			<label className={classes.label}>{label}</label>
+			<input className={classes.textInput} type={type} {...input} />
+			<Spacer height='10px' />
+		</div>
+	)
+}
 
 const styles = {
 	label: {
