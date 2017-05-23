@@ -10,16 +10,20 @@ class VerificationPortal extends React.Component {
 		console.log('SUBMITTED', values)
 	}
 	render() {
-		const { classes } = this.props
+		const { classes, changeFieldValue } = this.props
 
 		return (
 			<div className={classes.verificationPortal}>
 				<h1>VERIFICATION PORTAL</h1>
 				<h3>Type: Pregnancy Centers</h3>
-				<GetResourceToVerifyButton />
+				<GetResourceToVerifyButton
+					changeFieldValue={changeFieldValue}
+				/>
 
 				<h3>General Info</h3>
-				<VerificationPortalForm onSubmit={this.submit} />
+				<VerificationPortalForm
+					onSubmit={this.submit}
+				/>
 			</div>
 		)
 	}
