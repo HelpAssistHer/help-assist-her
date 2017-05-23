@@ -7,9 +7,16 @@ import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
 
 const updateForm = ({ changeFieldValue, resource }) => {
-	const { name } = resource
+	const { name, address, phone, website } = resource
 
 	changeFieldValue('name', name)
+	changeFieldValue('address1', address.line1)
+	changeFieldValue('address2', address.line2)
+	changeFieldValue('city', address.city)
+	changeFieldValue('state', address.state)
+	changeFieldValue('zip', address.zip)
+	changeFieldValue('phone', phone)
+	changeFieldValue('website', website)
 }
 
 const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {

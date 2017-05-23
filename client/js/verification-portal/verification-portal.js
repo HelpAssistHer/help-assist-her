@@ -20,7 +20,6 @@ class VerificationPortal extends React.Component {
 					changeFieldValue={changeFieldValue}
 				/>
 
-				<h3>General Info</h3>
 				<VerificationPortalForm
 					onSubmit={this.submit}
 				/>
