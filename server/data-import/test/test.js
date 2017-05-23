@@ -90,81 +90,81 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the /GET /api/pregnancy-centers/open-now route with authentication
 	 */
-	// describe('/GET /api/pregnancy-centers/open-now ', () => {
-	// 	it('it should return one pregnancy center open at 10am on Mondays', async () => {
-	//
-	// 		// 1 is Monday
-	//
-	// 		await PregnancyCenterModel.create({
-	// 			'address': {
-	// 				'line1': '586 Central Ave.\nAlbany, NY 12206',
-	// 				'location': {
-	// 					'type': 'Point',
-	// 					'coordinates': [
-	// 						-73.7814005,
-	// 						42.6722152
-	// 					]
-	// 				},
-	// 			},
-	// 			'name': 'Birthright of Albany',
-	// 			'phone': '+15184382978',
-	// 			'website': 'http://www.birthright.org',
-	// 			'services': [],
-	// 			'hours': {
-	// 				1: [
-	// 					{
-	// 						open: 800, // 8am
-	// 						close: 1500 // 3pm
-	// 					}
-	// 				] // 1 is Monday
-	// 			}
-	//
-	// 		})
-	//
-	// 		await PregnancyCenterModel.create({
-	// 			'address': {
-	// 				'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
-	// 				'location': {
-	// 					'type': 'Point',
-	// 					'coordinates': [
-	// 						-73.9241081,
-	// 						40.771253
-	// 					]
-	// 				},
-	// 			},
-	// 			'name': 'The Bridge To Life, Inc.',
-	// 			'phone': '+17182743577',
-	// 			'email': 'thebridgetolife@verizon.net',
-	// 			'website': 'http://www.thebridgetolife.org',
-	// 			'services': [],
-	// 			'hours': {
-	// 				1: [
-	// 					{
-	// 						open: 1300, // 1pm
-	// 						close: 1500 // 3pm
-	// 					}
-	// 				], // monday
-	// 				2: [
-	// 					{
-	// 						open: 1300, // 1pm
-	// 						close: 1500 // 3pm
-	// 					}
-	// 				],  // tuesday
-	// 			}
-	// 		})
-	//
-	// 		mockAuthenticate()
-	//
-	// 		chai.request(server)
-	// 			.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
-	// 			.end((err, res) => {
-	// 				res.should.have.status(200)
-	// 				res.body.should.be.a('array')
-	// 				res.body.length.should.be.eql(1)
-	// 				res.body[0].name.should.equal('Birthright of Albany')
-	// 			})
-	// 	})
-	// })
+	describe('/GET /api/pregnancy-centers/open-now ', () => {
+		it('it should return one pregnancy center open at 10am on Mondays', async () => {
+
+			// 1 is Monday
+
+			await PregnancyCenterModel.create({
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'name': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': [],
+				'hours': {
+					1: [
+						{
+							open: 800, // 8am
+							close: 1500 // 3pm
+						}
+					] // 1 is Monday
+				}
+
+			})
+
+			await PregnancyCenterModel.create({
+				'address': {
+					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.9241081,
+							40.771253
+						]
+					},
+				},
+				'name': 'The Bridge To Life, Inc.',
+				'phone': '+17182743577',
+				'email': 'thebridgetolife@verizon.net',
+				'website': 'http://www.thebridgetolife.org',
+				'services': [],
+				'hours': {
+					1: [
+						{
+							open: 1300, // 1pm
+							close: 1500 // 3pm
+						}
+					], // monday
+					2: [
+						{
+							open: 1300, // 1pm
+							close: 1500 // 3pm
+						}
+					],  // tuesday
+				}
+			})
+
+			mockAuthenticate()
+
+			chai.request(server)
+				.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
+				.end((err, res) => {
+					res.should.have.status(200)
+					res.body.should.be.a('array')
+					res.body.length.should.be.eql(1)
+					res.body[0].name.should.equal('Birthright of Albany')
+				})
+		})
+	})
 
 	/*
 	 * Test the /GET /api/pregnancy-centers route w/o authentication

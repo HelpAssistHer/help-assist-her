@@ -239,9 +239,10 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, wrap(async (req, re
 			close: {$gte: time}
 		}
 	}
+	log.info(query)
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
-	if (!pregnancyCentersOpenNow) {
+	if (pregnancyCentersOpenNow.length <= 0) {
 		return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
 	}
 
