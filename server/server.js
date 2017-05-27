@@ -134,9 +134,9 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
-server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+server.get('/api/pregnancy-centers/verify', handleRejectedPromise(async (req, res) => {
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
-		'verified.address': null,
+		// 'verified.address': null,
 	}).lean()
 
 	if (!pregnancyCenter) {
@@ -144,15 +144,15 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 	}
 
 	// This adds in the primaryContact from a separate User Collection
-	const primaryContact = pregnancyCenter.primaryContact
+	const primaryContactUserId = pregnancyCenter.primaryContactUserId
 
-	if (primaryContact) {
+	if (primaryContactUserId) {
 		const user = await UserModel.findOne({
-			_id: primaryContact,
+			_id: primaryContactUserId,
 		}).lean()
 
 		if (!user) {
-			return res.boom.notFound(`No user found by id: ${primaryContact}`)
+			return res.boom.notFound(`No user found by id: ${primaryContactUserId}`)
 		}
 
 		pregnancyCenter.primaryContactUser = {

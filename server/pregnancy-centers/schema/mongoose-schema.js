@@ -30,7 +30,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	name: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContact: mongoose.Schema.Types.ObjectId,  // a user
+	primaryContactUserId: mongoose.Schema.Types.ObjectId,  // a user
 	services: [{
 		type:String,
 		enum: [
@@ -40,17 +40,18 @@ const pregnancyCenterSchema = mongoose.Schema({
 			'POST_ABORTION_HEALING',
 			'PARENTING_CLASSES',
 			'STD_TESTING',
-			'COUNSELING'
+			'PROFESSIONAL_COUNSELING',
+			'OTHER',
 		]
 	}],
 	verified: {
 		address: userDateSchema,
-		email: userDateSchema,
+		email: userDateSchema, //todo don't need this
 		hours: userDateSchema,
 		name: userDateSchema,
-		notes: userDateSchema,
 		phone: userDateSchema,
-		resources: userDateSchema,
+		primaryContact: userDateSchema,
+		services: userDateSchema,
 		website: userDateSchema,
 	},
 	updated: {
