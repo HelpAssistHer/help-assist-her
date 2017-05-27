@@ -42,7 +42,7 @@ export async function updateResource(updatedResource) {
 	console.log('TRANSFORMED RESOURCE', transformedResource)
 
 	fetch('http://localhost:4000/api/pregnancy-centers', {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
