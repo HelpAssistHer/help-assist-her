@@ -22,6 +22,13 @@ module.exports = {
 		reasons: true,
 		chunks: true
 	},
+	externals: {
+		'clientConfig': JSON.stringify(process.env.ENV === 'dev' ? {
+			serverUrl: 'https://hah-dev.herokuapp.com'
+		} : {
+			serverUrl: 'http://localhost:4000'
+		})
+	},
 	module: {
 		rules: [{
 		// 	enforce: 'pre',
