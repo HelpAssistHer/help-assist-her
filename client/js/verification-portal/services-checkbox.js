@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 const ServicesCheckbox = ({ classes, input, label }) => {
 	return (
 		<div className={classes.parent}>
-			<input type='checkbox' {...input} />
+			<input type='checkbox' checked={input.value} {...input} />
 			<label className={classes.label}>{label}</label>
 		</div>
 	)
