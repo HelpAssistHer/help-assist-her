@@ -2,6 +2,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import GetResourceToVerifyButton from './get-resource-to-verify-button'
+import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 
 class VerificationPortal extends React.Component {
@@ -23,6 +24,7 @@ class VerificationPortal extends React.Component {
 				<VerificationPortalForm
 					onSubmit={this.submit}
 				/>
+				<Spacer height='100px'/>
 			</div>
 		)
 	}

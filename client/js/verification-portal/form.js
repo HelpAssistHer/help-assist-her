@@ -5,6 +5,7 @@ import _ from 'lodash'
 
 import Input from '../components/input'
 import ServicesCheckbox from './services-checkbox'
+import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import services from './pregnancy-center-services'
 
@@ -255,6 +256,17 @@ class VerificationPortalForm extends Component {
 						component={VerifiedCheckbox}
 					/>
 				</div>
+
+				<div>
+					<h3>Notes</h3>
+					<Field
+						name='notes'
+						component='textarea'
+						rows='4'
+						cols='50'
+					/>
+				</div>
+				<Spacer height='50px'/>
 
 				<button type="submit">Submit</button>
 			</form>
