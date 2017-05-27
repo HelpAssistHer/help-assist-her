@@ -15,6 +15,6 @@ module.exports = {
 		hostname: 'localhost',
 		port: 4000,
 		protocol: 'https',
-		url: 'https://localhost:4000',
+		url: 'http://localhost:4000',
 	},
 }

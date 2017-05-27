@@ -1,23 +1,25 @@
 'use strict'
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
-const UserModel = require('../../users/schema/mongoose-schema')
 const moment = require('moment')
-const Log = require('log')
-const log = new Log('info')
+
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const server = require('../../server')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
+const Log = require('log')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
+const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
+const server = require('../../server')
+const UserModel = require('../../users/schema/mongoose-schema')
+
 chai.use(chaiHttp)
+const log = new Log('info')
 
 // Allows the middleware to think we're already authenticated.
 function mockAuthenticate() {
@@ -27,7 +29,6 @@ function mockAuthenticate() {
 	UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
 		server.request.user =  found
 	})
-
 }
 
 // Allows the middleware to think we are *not* authenticated
@@ -49,7 +50,6 @@ function assertError(res, statusCode, error, message=null) {
 
 	res.body.statusCode.should.equal(statusCode)
 	res.body.error.should.equal(error)
-
 }
 
 function assertUnauthenticatedError(res) {
@@ -58,35 +58,32 @@ function assertUnauthenticatedError(res) {
 
 //Our parent block
 describe('PregnancyCenters', () => {
-	beforeEach( (done) => { //Before each test we empty the database
+	beforeEach( async () => { //Before each test we empty the database
+		log.info(PregnancyCenterModel.db.name)
 		mockUnauthenticate()
-		PregnancyCenterModel.remove({}, () =>{
-			UserModel.remove({}, () => {
-				const me = new UserModel({
-					displayName: 'Kate Sills'
-				})
-				me.save()
-				const someoneElse = new UserModel({
-					displayName: 'Someone Else'
-				})
-				someoneElse.save()
-				done()
-			})
+		await PregnancyCenterModel.remove({})
+		await UserModel.remove({})
+		const me = new UserModel({
+			displayName: 'Kate Sills'
 		})
-
+		await me.save()
+		const someoneElse = new UserModel({
+			displayName: 'Someone Else'
+		})
+		return someoneElse.save()
 	})
 
 	/*
 	 * Test the /GET /api/pregnancy-centers/open-now route w/o authentication
 	 */
 	describe('/GET /api/pregnancy-centers/open-now no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
-			chai.request(server)
-				.get('/api/pregnancy-centers/open-now')
-				.end((err, res) => {
-					assertUnauthenticatedError(res)
-					done()
-				})
+		it('it should return a 401 error because there is no authentication', async () => {
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/open-now')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -158,14 +155,12 @@ describe('PregnancyCenters', () => {
 
 			mockAuthenticate()
 
-			chai.request(server)
-				.get('/api/pregnancy-centers/open-now?date=' + encodeURIComponent('2017-04-17T17:00:00.023Z'))
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(1)
-					res.body[0].name.should.equal('Birthright of Albany')
-				})
+			const res = await chai.request(server)
+				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(1)
+			res.body[0].name.should.equal('Birthright of Albany')
 		})
 	})
 
@@ -173,13 +168,13 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers route w/o authentication
 	 */
 	describe('/GET /api/pregnancy-centers no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
-			chai.request(server)
-				.get('/api/pregnancy-centers')
-				.end((err, res) => {
-					assertUnauthenticatedError(res)
-					done()
-				})
+		it('it should return a 401 error because there is no authentication', async () => {
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -187,7 +182,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /POST /api/pregnancy-centers route w/o authentication
 	 */
 	describe('/POST /api/pregnancy-centers no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
+		it('it should return a 401 error because there is no authentication', async () => {
 			const pregnancyCenter = {
 				address: {
 					line1:'586 Central Ave.\nAlbany, NY 12206',
@@ -200,13 +195,14 @@ describe('PregnancyCenters', () => {
 				website:'http://www.birthright.org',
 				services:[],
 			}
-			chai.request(server)
-				.post('/api/pregnancy-centers')
-				.send(pregnancyCenter)
-				.end((err, res) => {
-					assertUnauthenticatedError(res)
-					done()
-				})
+
+			try {
+				await chai.request(server)
+					.post('/api/pregnancy-centers')
+					.send(pregnancyCenter)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -214,16 +210,13 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers route -- authenticated
 	 */
 	describe('/GET /api/pregnancy-centers', () => {
-		it('it should return an empty array because there are no pregnancy centers yet', (done) => {
+		it('it should return an empty array because there are no pregnancy centers yet', async () => {
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers')
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(0)
-					done()
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(0)
 		})
 	})
 
@@ -231,7 +224,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /POST /api/pregnancy-centers route -- authenticated
 	 */
 	describe('/POST /api/pregnancy-centers', () => {
-		it('it should create a new pregnancy center and return the data', (done) => {
+		it('it should create a new pregnancy center and return the data', async () => {
 			const pregnancyCenter = {
 				address: {
 					line1:'586 Central Ave.\nAlbany, NY 12206',
@@ -245,28 +238,25 @@ describe('PregnancyCenters', () => {
 				services:[],
 			}
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
 				.send(pregnancyCenter)
-				.end((err, res) => {
-					res.should.have.status(201)
-					res.body.should.be.a('object')
-					res.body.should.have.property('address')
-					res.body.should.have.property('name')
-					res.body.should.have.property('_id')
-					res.body.should.have.property('website')
-					res.body.should.have.property('phone')
-					res.body.should.have.property('services')
-					res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
-					res.body.address.location.type.should.equal('Point')
-					res.body.address.location.coordinates.should.deep.equal(
-						[-73.7814005, 42.6722152])
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.phone.should.equal('+15184382978')
-					res.body.website.should.equal('http://www.birthright.org')
-					res.body.services.should.deep.equal([])
-					done()
-				})
+			res.should.have.status(201)
+			res.body.should.be.a('object')
+			res.body.should.have.property('address')
+			res.body.should.have.property('name')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('website')
+			res.body.should.have.property('phone')
+			res.body.should.have.property('services')
+			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
+			res.body.address.location.type.should.equal('Point')
+			res.body.address.location.coordinates.should.deep.equal(
+				[-73.7814005, 42.6722152])
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.phone.should.equal('+15184382978')
+			res.body.website.should.equal('http://www.birthright.org')
+			res.body.services.should.deep.equal([])
 		})
 	})
 
@@ -274,13 +264,13 @@ describe('PregnancyCenters', () => {
 	 * Test the GET /api/pregnancy-centers/near-me' route w/o authentication
 	 */
 	describe('/GET /api/pregnancy-centers/near-me no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
-			chai.request(server)
-			.get('/api/pregnancy-centers/near-me')
-			.end((err, res) => {
-				assertUnauthenticatedError(res)
-				done()
-			})
+		it('it should return a 401 error because there is no authentication', async () => {
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/near-me')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -327,15 +317,12 @@ describe('PregnancyCenters', () => {
 			})
 
 			mockAuthenticate()
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
-				.end((err, res) => {
-
-					res.should.have.status(200)
-					res.body.should.be.a('array')
-					res.body.length.should.be.eql(1)
-					res.body[0].name.should.equal('Birthright of Albany')
-				})
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(1)
+			res.body[0].name.should.equal('Birthright of Albany')
 		})
 	})
 
@@ -343,13 +330,13 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route w/o authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
-			chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-					assertUnauthenticatedError(res)
-					done()
-				})
+		it('it should return a 401 error because there is no authentication', async () => {
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/verify')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -401,15 +388,15 @@ describe('PregnancyCenters', () => {
 			})
 			mockAuthenticate()
 
-			chai.request(server)
+			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-					res.should.have.status(200)
-					res.body.should.be.a('object')
-					res.body.should.have.property('name')
-					res.body.name.should.equal('Birthright of Albany')
-					res.body.should.not.have.property('verified')
-				})
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('name')
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.should.not.have.property('verified')
+
 		})
 	})
 
@@ -467,11 +454,12 @@ describe('PregnancyCenters', () => {
 
 			mockAuthenticate()
 
-			chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-				.end((err, res) => {
-					assertError(res, 404, 'Not Found')
-				})
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/verify')
+			} catch (err) {
+				assertError(err.response, 404, 'Not Found')
+			}
 		})
 	})
 
@@ -479,9 +467,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route w/o authentication
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
+		it('it should return a 401 error because there is no authentication', async () => {
 
-			PregnancyCenterModel.create({
+			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -502,16 +490,16 @@ describe('PregnancyCenters', () => {
 					}
 				}
 
-			}, function(err, pc) {
-				if (err) log.error(err)
-				chai.request(server)
+			})
+			await pc.save()
+
+			try {
+				await chai.request(server)
 					.put('/api/pregnancy-centers/'+pc._id)
 					.send(pc)
-					.end((err, res) => {
-						assertUnauthenticatedError(res)
-						done()
-					})
-			})
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -519,7 +507,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route with authentication
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
-		it('it should return the updated pregnancyCenter record', (done) => {
+		it('it should return the updated pregnancyCenter record', async () => {
 
 			const oldValues = {
 				'address': {
@@ -565,38 +553,34 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			UserModel.findOne({ displayName: 'Kate Sills'}, (err, testUser) => {
-				PregnancyCenterModel.create(oldValues, (err, oldPCObj) => {
-					mockAuthenticate()
+			const testUser = await UserModel.findOne({ displayName: 'Kate Sills'})
 
-					chai.request(server)
-						.put('/api/pregnancy-centers/' + oldPCObj._id)
-						.send(newValues)
-						.end((err, res) => {
-							res.should.have.status(200)
-							res.body.should.be.a('object')
-							res.body.should.have.property('_id')
-							res.body.should.have.property('name')
-							res.body._id.should.equal(String(oldPCObj._id))
-							res.body.name.should.equal('Birthright of Albany')
-							res.body.should.have.property('verified')
-							res.body.should.have.property('updated')
-							res.body.updated.should.have.property('address')
-							res.body.updated.address.should.have.property('userId')
-							res.body.updated.address.userId.should.equal(testUser._id.toString())
-							res.body.verified.should.have.property('address')
+			const oldPCObj = await PregnancyCenterModel.create(oldValues)
 
-							// check that the pregnancy center history is created as well.
-							PregnancyCenterHistoryModel.find({
-								pregnancyCenterId: oldPCObj._id
-							}, (err, data) => {
-								data.should.have.length(1)
-								done()
-							})
+			mockAuthenticate()
 
-						})
-				})
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(newValues)
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('name')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.should.have.property('verified')
+			res.body.should.have.property('updated')
+			res.body.updated.should.have.property('address')
+			res.body.updated.address.should.have.property('userId')
+			res.body.updated.address.userId.should.equal(testUser._id.toString())
+			res.body.verified.should.have.property('address')
+
+			// check that the pregnancy center history is created as well.
+			const newPCObj = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
 			})
+			newPCObj.should.have.length(1)
 		})
 	})
 
@@ -604,9 +588,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/:pregnancyCenterId route w/o authentication
 	 */
 	describe('/GET /api/pregnancy-centers/:pregnancyCenterId no-auth', () => {
-		it('it should return a 401 error because there is no authentication', (done) => {
+		it('it should return a 401 error because there is no authentication', async () => {
 
-			PregnancyCenterModel.create({
+			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -622,15 +606,15 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 
-			}, function(err, pc) {
-				if (err) log.error(err)
-				chai.request(server)
-					.get('/api/pregnancy-centers/'+pc._id)
-					.end((err, res) => {
-						assertUnauthenticatedError(res)
-						done()
-					})
 			})
+			await pc.save()
+
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/'+pc._id)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
@@ -638,9 +622,9 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/:pregnancyCenterId route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/:pregnancyCenterId', () => {
-		it('it should return a single pregnancy center matching the id', (done) => {
+		it('it should return a single pregnancy center matching the id', async () => {
 
-			PregnancyCenterModel.create({
+			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
 					'location': {
@@ -656,22 +640,21 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': []
 
-			}, function(err, pc) {
-				if (err) log.error(err)
-				mockAuthenticate()
-				chai.request(server)
-					.get('/api/pregnancy-centers/'+pc._id)
-					.end((err, res) => {
-						res.should.have.status(200)
-						res.body.should.be.a('object')
-						res.body.should.have.property('_id')
-						res.body.should.have.property('name')
-						res.body._id.should.equal(String(pc._id))
-						res.body.name.should.equal('Birthright of Albany')
-						res.body.should.not.have.property('verified')
-						done()
-					})
 			})
+
+			await pc.save()
+
+			mockAuthenticate()
+			const res = await chai.request(server)
+				.get('/api/pregnancy-centers/'+pc._id)
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('name')
+			res.body._id.should.equal(String(pc._id))
+			res.body.name.should.equal('Birthright of Albany')
+			res.body.should.not.have.property('verified')
+
 		})
 	})
 
@@ -679,19 +662,17 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers address 1', () => {
-		it('validation should fail because the address is not an object ', (done) => {
+		it('validation should fail because the address is not an object ', async () => {
 
 			const testPCObj1 = {
 				address: 'My address' // should be an object with line1, line2, city, etc.
 			}
 
-			Joi.validate(testPCObj1, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj1, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "address" fails because ["address" must be an object]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "address" fails because ["address" must be an object]')
 		})
 	})
 
@@ -699,7 +680,7 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers address 2', () => {
-		it('validation should fail because the location coordinates are reversed ', (done) => {
+		it('validation should fail because the location coordinates are reversed ', async () => {
 
 			const testPCObj2 = {
 				address: {
@@ -718,13 +699,12 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			Joi.validate(testPCObj2, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj2, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
-				done()
 			})
+
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
 		})
 	})
 
@@ -732,7 +712,7 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers address 3', () => {
-		it('validation should fail because the location coordinates are reversed ', (done) => {
+		it('validation should fail because the location coordinates are reversed ', async () => {
 
 			const testPCObj3 = {
 				address: {
@@ -751,13 +731,11 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			Joi.validate(testPCObj3, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj3, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
 		})
 	})
 
@@ -765,19 +743,17 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers dateCreated 4', () => {
-		it('validation should fail because the dateCreated provided is not a date ', (done) => {
+		it('validation should fail because the dateCreated provided is not a date ', async () => {
 
 			const testPCObj4 = {
 				dateCreated: '3/3/2017'
 			}
 
-			Joi.validate(testPCObj4, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj4, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
 		})
 	})
 
@@ -785,47 +761,47 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers email 5', () => {
-		it('validation should fail because the email address provided does not have an @', (done) => {
+		it('validation should fail because the email address provided does not have an @', async () => {
 
 			const testPCObj5 = {
 				email: 'pregnancycenter.com'
 			}
 
-			Joi.validate(testPCObj5, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj5, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "email" fails because ["email" must be a valid email]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "email" fails because ["email" must be a valid email]')
 		})
 	})
 
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers readable hours 6', () => {
-		it('validation should pass because readable hours follow this format', (done) => {
+	describe('Test Joi validation for pregnancy centers hours 6', () => {
+		it('validation should pass because hours follow this format', async () => {
 
 			const testPCObj6 = {
 				hours: {
-					tue: [{
-						open: '8:00AM',
-						close: '5:00PM'
+					2: [{
+						open: 800,
+						close: 1700
 					}]
 				}
 			}
 
-			Joi.validate(testPCObj6, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj6, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
-				validatedData.hours.should.deep.equal({
-					tue: [{
-						open: '8:00AM',
-						close: '5:00PM'
-					}]
-				})
-				done()
+			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
+			const validatedData = validationObj.value
+			validatedData.hours.should.deep.equal({
+				2: [{
+					open: 800,
+					close: 1700
+				}]
 			})
 		})
 	})
@@ -834,24 +810,22 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers readable hours 7', () => {
-		it('validation should fail because tues is not one of the keys (it\'s tue)', (done) => {
+		it('validation should fail because tues is not one of the keys (it\'s 1-7)', async () => {
 
 			const testPCObj7 = {
 				hours: {
 					tues: [{
-						open: '8:00AM',
-						close: '5:00PM'
+						open: '800',
+						close: '1700'
 					}]
 				}
 			}
 
-			Joi.validate(testPCObj7, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj7, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "hours" fails because ["tues" is not allowed]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "hours" fails because ["tues" is not allowed]')
 		})
 	})
 
@@ -859,7 +833,7 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers hours 8', () => {
-		it('validation should pass because hours follow this format', (done) => {
+		it('validation should pass because hours follow this format', async () => {
 
 			const testPCObj8 = {
 				hours: {
@@ -870,16 +844,19 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			Joi.validate(testPCObj8, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj8, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
-				validatedData.hours.should.deep.equal({
-					1: [{
-						open: 800,
-						close: 1600,
-					}]
-				})
-				done()
+			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
+			const validatedData = validationObj.value
+
+			validatedData.hours.should.deep.equal({
+				1: [{
+					open: 800,
+					close: 1600,
+				}]
 			})
 		})
 	})
@@ -888,19 +865,17 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers phone 9', () => {
-		it('validation should fail because phone is in format xxx.xxx.xxx and needs to be in E.164 international format', (done) => {
+		it('validation should fail because phone is in format xxx.xxx.xxx and needs to be in E.164 international format', async () => {
 
 			const testPCObj9 = {
 				phone: '888.444.2222'
 			}
 
-			Joi.validate(testPCObj9, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj9, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "phone" fails because ["phone" needs to be a valid phone number according to E.164 international format]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "phone" fails because ["phone" needs to be a valid phone number according to E.164 international format]')
 		})
 	})
 
@@ -908,18 +883,20 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers phone 10', () => {
-		it('validation should pass because phone is in E.164 international format', (done) => {
+		it('validation should pass because phone is in E.164 international format', async () => {
 
 			const testPCObj10 = {
 				phone: '+18884442222'
 			}
 
-			Joi.validate(testPCObj10, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj10, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
-				validatedData.phone.should.equal('+18884442222')
-				done()
 			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
+			const validatedData = validationObj.value
+			validatedData.phone.should.equal('+18884442222')
 		})
 	})
 
@@ -927,7 +904,7 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers services 12', () => {
-		it('validation should fail because one of the services is mispelled', (done) => {
+		it('validation should fail because one of the services is mispelled', async () => {
 
 			const testPCObj12 = {
 				services: [
@@ -935,13 +912,11 @@ describe('PregnancyCenters', () => {
 				]
 			}
 
-			Joi.validate(testPCObj12, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj12, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "services" fails because ["services" at position 0 fails because ["0" must be one of [PREGNANCY_TEST, ULTRASOUND, MATERIAL_ASSISTANCE, POST_ABORTION_HEALING, PARENTING_CLASSES, STD_TESTING, COUNSELING]]]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "services" fails because ["services" at position 0 fails because ["0" must be one of [PREGNANCY_TEST, ULTRASOUND, MATERIAL_ASSISTANCE, POST_ABORTION_HEALING, PARENTING_CLASSES, STD_TESTING, COUNSELING]]]')
 		})
 	})
 
@@ -949,7 +924,7 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers verified 13', () => {
-		it('validation should fail because each verified field object only has keys date and userId', (done) => {
+		it('validation should fail because each verified field object only has keys date and userId', async () => {
 
 			const testPCObj13 = {
 				verified: {
@@ -959,13 +934,11 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err) {
-				err.name.should.equal('ValidationError')
-				err.message.should.equal('child "verified" fails because [child "address" fails because ["dateVerified" is not allowed]]')
-				done()
 			})
+			validationObj.error.name.should.equal('ValidationError')
+			validationObj.error.message.should.equal('child "verified" fails because [child "address" fails because ["dateVerified" is not allowed]]')
 		})
 	})
 
@@ -973,7 +946,7 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers verified 13', () => {
-		it('validation should pass because the verified field for address has date and userId', (done) => {
+		it('validation should pass because the verified field for address has date and userId', async () => {
 
 			const testPCObj13 = {
 				verified: {
@@ -984,12 +957,14 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
-			Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
+			const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
 				abortEarly: false
-			}, function(err, validatedData) {
-				validatedData.verified.address.userId.should.equal('58e46a8d210140d7e47bf58b')
-				done()
 			})
+			if (validationObj.error) {
+				throw validationObj.error
+			}
+			const validatedData = validationObj.value
+			validatedData.verified.address.userId.should.equal('58e46a8d210140d7e47bf58b')
 		})
 	})
 })

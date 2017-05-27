@@ -7,16 +7,15 @@ const config = require('config')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
-const facebookStrategy = require('passport-facebook').Strategy
+const facebookTokenStrategy = require('passport-facebook-token')
 const Joi = require('joi')
 const Log = require('log')
-const moment = require('moment')
 const mongoose = require('mongoose')
+const morgan = require('morgan')
 const passport = require('passport')
 const P = require('bluebird')
 const session = require('express-session')
 
-const hoursUtils = require('./pregnancy-centers/utils/utils')
 const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('./pregnancy-centers/schema/joi-schema')
@@ -33,6 +32,7 @@ server.use(cookieParser())
 server.use(cors())
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
+server.use(morgan('combined'))
 server.use(session({
 	secret: 'keyboard cat',
 	resave: false,
@@ -42,7 +42,7 @@ server.use(passport.initialize())
 server.use(passport.session())
 
 passport.use(
-	new facebookStrategy({
+	new facebookTokenStrategy({
 		clientID: config.facebook.appId,
 		clientSecret: config.facebook.appSecret,
 		callbackURL: `${config.server.url}/auth/facebook/callback`
@@ -222,13 +222,13 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 }))
 
 /*
-	Takes in an option query var 'date' or uses the current datetime
+	Takes in a query var time, which is in the format 'hhmm',
+	and a query var day which is an integer where Monday is 1 and Sunday is 7
 	Returns a list of pregnancy centers open now
  */
 server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const today = moment(req.query.date) || moment()
-	const dayOfWeek = today.day()
-	const time = hoursUtils.getGoogleFormatTime(today)
+	const time = parseInt(req.query.time)
+	const dayOfWeek = parseInt(req.query.day)
 	const query = {}
 
 	query['hours.' + dayOfWeek] = {
@@ -237,9 +237,10 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 			close: {$gte: time}
 		}
 	}
+	log.info(JSON.stringify(query))
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
-	if (!pregnancyCentersOpenNow) {
+	if (pregnancyCentersOpenNow.length <= 0) {
 		return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
 	}
 
@@ -269,36 +270,6 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
-
-// Redirect the user to Facebook for authentication.  When complete,
-// Facebook will redirect the user back to the application at
-//     /auth/facebook/callback
-server.get('/auth/facebook', passport.authenticate('facebook'))
-
-// Facebook will redirect the user to this URL after approval.  Finish the
-// authentication process by attempting to obtain an access token.  If
-// access was granted, the user will be logged in.  Otherwise,
-// authentication has failed.
-server.get('/auth/facebook/callback',
-	passport.authenticate('facebook', {
-		successRedirect: 'http://localhost:8080/verification',
-		failureRedirect: '/login'
-	})
-)
-
-server.get('/logout', (req, res) => {
-	req.logout()
-	res.redirect('http://localhost:8080/')
-})
-
-function isLoggedInAPI(req, res, next) {
-	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated())
-		return next()
-
-	// if they aren't, return an http error
-	res.boom.unauthorized('User is not logged in.')
-}
 
 function handleJoiValidationError(res, err) {
 	log.error(err)
@@ -371,6 +342,28 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 		resolve(pregnancyCenterRawObjWithStamps)
 
 	})
+}
+
+server.get('/auth/facebook/token', passport.authenticate('facebook-token'), (req, res) => {
+	if (req.user) {
+		res.status(200).json('Authentication successful.')
+	} else {
+		res.boom.unauthorized('User is not logged in.')
+	}
+})
+
+server.get('/logout', (req, res) => {
+	req.logout()
+	res.send(200)
+})
+
+function isLoggedInAPI(req, res, next) {
+	// if user is authenticated in the session, carry on
+	if (req.isAuthenticated())
+		return next()
+
+	// if they aren't, return an http error
+	res.boom.unauthorized('User is not logged in.')
 }
 
 module.exports = server
