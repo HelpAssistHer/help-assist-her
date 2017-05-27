@@ -1,22 +1,30 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
+import injectSheet from 'react-jss'
 
 import Input from '../components/input'
+import VerifiedCheckbox from './verified-checkbox'
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { handleSubmit } = this.props
+		const { classes, handleSubmit } = this.props
 
 		return (
 			<form onSubmit={handleSubmit}>
 				<div>
 					<h3>General Info</h3>
-					<Field
-						label='Name'
-						name='name'
-						component={Input}
-						type='text'
-					/>
+					<div className={classes.parent}>
+						<Field
+							label='Name'
+							name='name'
+							component={Input}
+							type='text'
+						/>
+						<Field
+							name='name-verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
 					<Field
 						label='Address 1'
 						name='address1'
@@ -79,4 +87,11 @@ VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
 })(VerificationPortalForm)
 
-export default VerificationPortalForm
+const styles = {
+	parent: {
+		display: 'flex',
+		'align-items': 'baseline',
+	},
+}
+
+export default injectSheet(styles)(VerificationPortalForm)

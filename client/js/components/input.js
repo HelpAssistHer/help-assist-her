@@ -5,7 +5,7 @@ import Spacer from '../components/spacer'
 
 const Input = ({ classes, input, label, type }) => {
 	return (
-		<div>
+		<div className={classes.child}>
 			<label className={classes.label}>{label}</label>
 			<input className={classes.textInput} type={type} {...input} />
 			<Spacer height='10px' />
@@ -14,6 +14,10 @@ const Input = ({ classes, input, label, type }) => {
 }
 
 const styles = {
+	child: {
+		'justify-content': 'center',
+		width: '80%',
+	},
 	label: {
 		padding: '20px 10px',
 		display: 'block',
@@ -25,6 +29,7 @@ const styles = {
 		width: '50%',
 		padding: '12px 20px',
 		margin: '8px 0',
+		'font-size': '90%',
 	},
 }
 
