@@ -21,10 +21,12 @@ class VerificationPortalForm extends Component {
 							type='text'
 						/>
 						<Field
+							label='Name Verified'
 							name='name-verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
+
 					<Field
 						label='Address 1'
 						name='address1'
@@ -49,24 +51,48 @@ class VerificationPortalForm extends Component {
 						component={Input}
 						type='text'
 					/>
-					<Field
-						label='Zip Code'
-						name='zip'
-						component={Input}
-						type='number'
-					/>
-					<Field
-						label='Phone Number'
-						name='phone'
-						component={Input}
-						type='tel'
-					/>
-					<Field
-						label='Website'
-						name='website'
-						component={Input}
-						type='url'
-					/>
+
+					<div className={classes.parent}>
+						<Field
+							label='Zip Code'
+							name='zip'
+							component={Input}
+							type='number'
+						/>
+						<Field
+							label='Address Verified'
+							name='address-verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
+
+					<div className={classes.parent}>
+						<Field
+							label='Phone Number'
+							name='phone'
+							component={Input}
+							type='tel'
+						/>
+						<Field
+							label='Phone Number Verified'
+							name='phone-verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
+
+					<div className={classes.parent}>
+						<Field
+							label='Website'
+							name='website'
+							component={Input}
+							type='url'
+						/>
+						<Field
+							label='Website Verified'
+							name='website-verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
 				</div>
 
 				<div>
