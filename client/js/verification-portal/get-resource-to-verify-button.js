@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import _ from 'lodash'
 
 import { getResourceToVerify } from './action-creators'
 import Button from '../components/button'
@@ -14,6 +15,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		notes,
 		phone,
 		primaryContactUser,
+		services,
 		verified,
 		website
 	} = resource
@@ -37,6 +39,9 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('primary-contact-email', primaryContactUser.email)
 	changeFieldValue('primary-contact-verified', verified.primaryContact)
 
+	_.each(services, service => {
+		changeFieldValue(service, 1)
+	})
 	changeFieldValue('services-verified', verified.services)
 
 	changeFieldValue('sunday-open', hours[0].open)
