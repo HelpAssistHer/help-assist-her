@@ -162,6 +162,98 @@ class VerificationPortalForm extends Component {
 
 				<div>
 					<h3>Hours</h3>
+
+					<label>Sunday Hours</label>
+					<Field
+						name='sunday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='sunday-close'
+						component={Input}
+						type='time'
+					/>
+
+					<label>Monday Hours</label>
+					<Field
+						name='monday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='monday-close'
+						component={Input}
+						type='time'
+					/>
+
+					<label>Tuesday Hours</label>
+					<Field
+						name='tuesday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='tuesday-close'
+						component={Input}
+						type='time'
+					/>
+
+					<label>Wednesday Hours</label>
+					<Field
+						name='wednesday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='wednesday-close'
+						component={Input}
+						type='time'
+					/>
+
+					<label>Thursday Hours</label>
+					<Field
+						name='thursday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='thursday-close'
+						component={Input}
+						type='time'
+					/>
+
+					<label>Friday Hours</label>
+					<Field
+						name='friday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='friday-close'
+						component={Input}
+						type='time'
+					/>
+
+					<label>Saturday Hours</label>
+					<Field
+						name='saturday-open'
+						component={Input}
+						type='time'
+					/>
+					<Field
+						name='saturday-close'
+						component={Input}
+						type='time'
+					/>
+				</div>
+
+				<div className={classes.parent}>
+					<Field
+						label='Hours Verified'
+						name='hours-verified'
+						component={VerifiedCheckbox}
+					/>
 				</div>
 
 				<button type="submit">Submit</button>
