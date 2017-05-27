@@ -7,6 +7,7 @@
     "node": "7.9.0"
   },
   "scripts": {
+    "build": "babel-node client/tools/build.js",
     "build:html": "babel-node client/tools/build-html.js",
     "lint": "./node_modules/.bin/eslint .",
     "lint-path": "./node_modules/.bin/eslint",
