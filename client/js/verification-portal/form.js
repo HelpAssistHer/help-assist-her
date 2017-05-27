@@ -96,6 +96,44 @@ class VerificationPortalForm extends Component {
 				</div>
 
 				<div>
+					<h3>Primary Contact</h3>
+					<Field
+						label='First Name'
+						name='primary-contact-first-name'
+						component={Input}
+						type='text'
+					/>
+
+					<Field
+						label='Last Name'
+						name='primary-contact-last-name'
+						component={Input}
+						type='text'
+					/>
+
+					<Field
+						label='Email'
+						name='primary-contact-email'
+						component={Input}
+						type='text'
+					/>
+
+					<div className={classes.parent}>
+						<Field
+							label='Phone Number'
+							name='primary-contact-phone'
+							component={Input}
+							type='text'
+						/>
+						<Field
+							label='Primary Contact Verified'
+							name='primary-contact-verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
+				</div>
+
+				<div>
 					<h3>Services</h3>
 				</div>
 
