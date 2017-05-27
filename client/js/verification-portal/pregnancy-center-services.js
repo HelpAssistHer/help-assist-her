@@ -8,7 +8,7 @@ module.exports = [
 		name: 'Ultrasound',
 	},
 	{
-		id: 'PREGNANCY_TESTS',
+		id: 'PREGNANCY_TEST',
 		name: 'Medical Quality Pregnancy Tests',
 	},
 	{
