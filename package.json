@@ -7,6 +7,7 @@
     "node": "7.9.0"
   },
   "scripts": {
+    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress",
     "lint": "./node_modules/.bin/eslint .",
     "lint-path": "./node_modules/.bin/eslint",
     "wds": "webpack-dev-server",
