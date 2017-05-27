@@ -35,6 +35,7 @@
     "@google/maps": "^0.3.1",
     "@turf/turf": "^3.7.4",
     "axios": "0.15.2",
+    "babel-cli": "^6.24.1",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.1",
     "boom": "^4.3.1",
@@ -76,7 +77,6 @@
     "webpack": "^2.5.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.24.1",
     "babel-core": "6.16.0",
     "babel-jest": "16.0.0",
     "babel-loader": "6.2.7",
