@@ -66,7 +66,6 @@ const updateForm = ({ changeFieldValue, resource }) => {
 const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	return (
 		<div>
-			<Spacer height='20px' />
 			<Button
 				buttonText='Get One Resource'
 				onClick={() => {
@@ -79,7 +78,7 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 						})
 				}}
 			/>
-			<Spacer height='50px' />
+			<Spacer height='20px' />
 		</div>
 	)
 }

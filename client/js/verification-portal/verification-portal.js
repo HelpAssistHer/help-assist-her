@@ -16,7 +16,6 @@ class VerificationPortal extends React.Component {
 		return (
 			<div className={classes.verificationPortal}>
 				<h1>VERIFICATION PORTAL</h1>
-				<h3>Type: Pregnancy Centers</h3>
 				<GetResourceToVerifyButton
 					changeFieldValue={changeFieldValue}
 				/>
