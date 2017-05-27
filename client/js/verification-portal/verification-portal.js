@@ -4,11 +4,11 @@ import injectSheet from 'react-jss'
 import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
+import { updateResource } from './action-creators'
 
 class VerificationPortal extends React.Component {
 	submit = (values) => {
-		// Do something with the form values
-		console.log('SUBMITTED', values)
+		updateResource(values)
 	}
 	render() {
 		const { classes, changeFieldValue } = this.props
