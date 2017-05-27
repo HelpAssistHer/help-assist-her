@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
+  "engines": {
+    "node": "7.9.0"
+  },
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
     "lint-path": "./node_modules/.bin/eslint",
