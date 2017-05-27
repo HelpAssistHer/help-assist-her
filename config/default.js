@@ -2,7 +2,7 @@
 
 module.exports = {
 	facebook: {
-		appId: process.env.FACEBOOK_APP_ID,
-		appSecret: process.env.FACEBOOK_APP_SECRET,
+		appId: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
+		appSecret: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_SECRET,
 	},
 }
