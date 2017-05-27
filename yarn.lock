@@ -5414,6 +5414,10 @@ react-dom@^15.5.4:
     object-assign "^4.1.0"
     prop-types "~15.5.7"
 
+react-facebook-login@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/react-facebook-login/-/react-facebook-login-3.6.1.tgz#d8e1ea2e7f1803360abc57c93af4167b74f67289"
+
 react-jss@^6.1.1:
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/react-jss/-/react-jss-6.1.1.tgz#01a548e6531b691186c3e8d8250980fb2938f1fe"
