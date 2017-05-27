@@ -26,32 +26,32 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Name Verified'
-							name='name-verified'
+							name='verified.name'
 							component={VerifiedCheckbox}
 						/>
 					</div>
 
 					<Field
 						label='Address 1'
-						name='address1'
+						name='address.line1'
 						component={Input}
 						type='text'
 					/>
 					<Field
 						label='Address 2'
-						name='address2'
+						name='address.line2'
 						component={Input}
 						type='text'
 					/>
 					<Field
 						label='City'
-						name='city'
+						name='address.city'
 						component={Input}
 						type='text'
 					/>
 					<Field
 						label='State'
-						name='state'
+						name='address.state'
 						component={Input}
 						type='text'
 					/>
@@ -59,13 +59,13 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							label='Zip Code'
-							name='zip'
+							name='address.zip'
 							component={Input}
 							type='number'
 						/>
 						<Field
 							label='Address Verified'
-							name='address-verified'
+							name='verified.address'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -79,7 +79,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Phone Number Verified'
-							name='phone-verified'
+							name='verified.phone'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -93,7 +93,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Website Verified'
-							name='website-verified'
+							name='verified.website'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -103,21 +103,21 @@ class VerificationPortalForm extends Component {
 					<h3>Primary Contact</h3>
 					<Field
 						label='First Name'
-						name='primary-contact-first-name'
+						name='primaryContact.firstName'
 						component={Input}
 						type='text'
 					/>
 
 					<Field
 						label='Last Name'
-						name='primary-contact-last-name'
+						name='primaryContact.lastName'
 						component={Input}
 						type='text'
 					/>
 
 					<Field
 						label='Email'
-						name='primary-contact-email'
+						name='primaryContact.email'
 						component={Input}
 						type='text'
 					/>
@@ -125,13 +125,13 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							label='Phone Number'
-							name='primary-contact-phone'
+							name='primaryContact.phone'
 							component={Input}
 							type='text'
 						/>
 						<Field
 							label='Primary Contact Verified'
-							name='primary-contact-verified'
+							name='verified.primaryContact'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -145,7 +145,7 @@ class VerificationPortalForm extends Component {
 								<div key={service.id}>
 									<Field
 										label={service.name}
-										name={service.id}
+										name={`services.${service.id}`}
 										component={ServicesCheckbox}
 									/>
 								</div>
@@ -155,7 +155,7 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							label='Services Verified'
-							name='services-verified'
+							name='verified.services'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -166,84 +166,84 @@ class VerificationPortalForm extends Component {
 
 					<label>Sunday Hours</label>
 					<Field
-						name='sunday-open'
+						name='hours[0].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='sunday-close'
+						name='hours[0].close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Monday Hours</label>
 					<Field
-						name='monday-open'
+						name='hours[1].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='monday-close'
+						name='hours[1].close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Tuesday Hours</label>
 					<Field
-						name='tuesday-open'
+						name='hours[2].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='tuesday-close'
+						name='hours[2].close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Wednesday Hours</label>
 					<Field
-						name='wednesday-open'
+						name='hours[3].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='wednesday-close'
+						name='hours[3].close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Thursday Hours</label>
 					<Field
-						name='thursday-open'
+						name='hours[4].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='thursday-close'
+						name='hours[4].close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Friday Hours</label>
 					<Field
-						name='friday-open'
+						name='hours[5].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='friday-close'
+						name='hours[5].close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Saturday Hours</label>
 					<Field
-						name='saturday-open'
+						name='hours[6].open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='saturday-close'
+						name='hours[6].close'
 						component={Input}
 						type='time'
 					/>
@@ -252,7 +252,7 @@ class VerificationPortalForm extends Component {
 				<div className={classes.parent}>
 					<Field
 						label='Hours Verified'
-						name='hours-verified'
+						name='verified.hours'
 						component={VerifiedCheckbox}
 					/>
 				</div>
