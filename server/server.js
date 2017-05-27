@@ -3,6 +3,7 @@
 const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
+const compression = require('compression')
 const config = require('config')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
@@ -12,8 +13,9 @@ const Joi = require('joi')
 const Log = require('log')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
-const passport = require('passport')
 const P = require('bluebird')
+const passport = require('passport')
+const path = require('path')
 const session = require('express-session')
 
 const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
@@ -28,6 +30,7 @@ const log = new Log('info')
 
 server.use(boom())
 server.use(express.static('public'))
+server.use(compression())
 server.use(cookieParser())
 server.use(cors())
 server.use(bodyParser.urlencoded())
@@ -86,6 +89,10 @@ const startDatabase = P.coroutine(function *startDatabase() {
 })
 
 startDatabase()
+
+server.get('*', function(req, res) {
+	res.sendFile(path.join(__dirname, '../public/index.html'));
+})
 
 /*
 	Returns all pregnancy centers

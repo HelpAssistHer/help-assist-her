@@ -819,7 +819,7 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.16.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@6.16.0, babel-core@^6.0.0, babel-core@^6.11.4, babel-core@^6.16.0:
+babel-core@6.16.0:
   version "6.16.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.16.0.tgz#cf8bbfdf0097c4146195d80d9ec96d73acf387d5"
   dependencies:
@@ -845,7 +845,7 @@ babel-core@6.16.0, babel-core@^6.0.0, babel-core@^6.11.4, babel-core@^6.16.0:
     slash "^1.0.0"
     source-map "^0.5.0"
 
-babel-core@^6.24.1:
+babel-core@^6.0.0, babel-core@^6.11.4, babel-core@^6.16.0, babel-core@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.24.1.tgz#8c428564dce1e1f41fb337ec34f4c3b022b5ad83"
   dependencies:
@@ -1361,7 +1361,7 @@ babel-preset-react@6.16.0:
     babel-plugin-transform-react-jsx-self "^6.11.0"
     babel-plugin-transform-react-jsx-source "^6.3.13"
 
-babel-register@6.16.0, babel-register@^6.16.0:
+babel-register@6.16.0:
   version "6.16.0"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.16.0.tgz#0d1c12aefb0bc839fbd5b3ecb4eca112b9d20ed1"
   dependencies:
@@ -1374,7 +1374,7 @@ babel-register@6.16.0, babel-register@^6.16.0:
     path-exists "^1.0.0"
     source-map-support "^0.4.2"
 
-babel-register@^6.24.1:
+babel-register@^6.16.0, babel-register@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.24.1.tgz#7e10e13a2f71065bdfad5a1787ba45bca6ded75f"
   dependencies:
@@ -1906,7 +1906,7 @@ compressible@~2.0.8:
   dependencies:
     mime-db ">= 1.27.0 < 2"
 
-compression@^1.5.2:
+compression@^1.5.2, compression@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/compression/-/compression-1.6.2.tgz#cceb121ecc9d09c52d7ad0c3350ea93ddd402bc3"
   dependencies:

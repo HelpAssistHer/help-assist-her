@@ -9,6 +9,7 @@
   "scripts": {
     "build": "babel-node client/tools/build.js",
     "build:html": "babel-node client/tools/build-html.js",
+    "postbuild": "babel-node server/server.js",
     "lint": "./node_modules/.bin/eslint .",
     "lint-path": "./node_modules/.bin/eslint",
     "wds": "webpack-dev-server",
@@ -41,6 +42,7 @@
     "chai-http": "^3.0.0",
     "cheerio": "^1.0.0-rc.1",
     "colors": "^1.1.2",
+    "compression": "^1.6.2",
     "config": "^1.24.0",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
