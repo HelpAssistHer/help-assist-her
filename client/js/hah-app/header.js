@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import LoginButton from './facebook-login-button'
+import LoginButton from '../authentication/facebook-login-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
