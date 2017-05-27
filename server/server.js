@@ -80,9 +80,7 @@ let handleRejectedPromise = fn => (...args) => fn(...args).catch((e) => {
 
 // TODO: Error handling
 const startDatabase = P.coroutine(function *startDatabase() {
-	const connectionString = `mongodb://${config.server.hostname}/${config.database.name}`
-
-	yield mongoose.connect(connectionString)
+	yield mongoose.connect(config.mongo.connectionString)
 
 	log.info('Connected to database')
 })
