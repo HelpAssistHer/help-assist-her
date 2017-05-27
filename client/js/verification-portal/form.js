@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
+import _ from 'lodash'
 
 import Input from '../components/input'
+import ServicesCheckbox from './services-checkbox'
 import VerifiedCheckbox from './verified-checkbox'
+import services from './pregnancy-center-services'
 
 class VerificationPortalForm extends Component {
 	render() {
@@ -135,6 +138,26 @@ class VerificationPortalForm extends Component {
 
 				<div>
 					<h3>Services</h3>
+					{
+						_.map(services, service => {
+							return (
+								<div key={service.id}>
+									<Field
+										label={service.name}
+										name={service.id}
+										component={ServicesCheckbox}
+									/>
+								</div>
+							)
+						})
+					}
+					<div className={classes.parent}>
+						<Field
+							label='Services Verified'
+							name='services-verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
 				</div>
 
 				<div>
