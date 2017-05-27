@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - 6.9.4
+  - 7.9.0
 
 cache:
   - yarn: true
@@ -11,7 +11,14 @@ cache:
 services:
   - mongodb
 
+before_script:
+  - sleep 15
+  - mongo --eval 'db.getName()'
+
 script:
-  - node server/server.js &
-  - yarn wds &
   - yarn lint
+  - mongo --eval 'db.getName()'
+  - yarn test
+  - mongo --eval 'db.getName()'
+  - yarn wds &
+
