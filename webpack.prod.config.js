@@ -7,7 +7,7 @@ module.exports = {
 	entry: ['babel-polyfill', './client/js/hah-app/index.js'],
 
 	externals: {
-		'clientConfig': JSON.stringify(process.env.ENV === 'dev' ? {
+		'clientConfig': JSON.stringify(process.env.ENV === 'production' ? {
 			serverUrl: 'https://hah-dev.herokuapp.com'
 		} : {
 			serverUrl: 'http://localhost:4000'
@@ -15,7 +15,7 @@ module.exports = {
 	},
 
 	output: {
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, '/public'),
 		filename: 'bundle.js',
 		publicPath: '/public/'
 	},
@@ -37,16 +37,16 @@ module.exports = {
 
 	module: {
 		loaders: [
-			{ test: /\.js?$/,
+			{
+				test: /\.js?$/,
 				loader: 'babel-loader',
-				exclude: /node_modules/ },
-			{ test: /\.scss?$/,
-				loader: 'style!css!sass',
-				include: path.join(__dirname, 'src', 'styles') },
-			{ test: /\.png$/,
-				loader: 'file' },
-			{ test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-				loader: 'file'}
+				include: path.resolve(__dirname, 'client/js'),
+				exclude: /node_modules/
+			},
+			{
+				test: /\.png$/,
+				loader: 'file'
+			},
 		]
 	}
 }
