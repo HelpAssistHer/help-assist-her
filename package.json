@@ -7,7 +7,7 @@
     "node": "7.9.0"
   },
   "scripts": {
-    "build": "babel-node client/tools/build.js",
+    "build": "NODE_ENV=production babel-node client/tools/build.js",
     "build:html": "babel-node client/tools/build-html.js",
     "postbuild": "babel-node server/server.js",
     "lint": "./node_modules/.bin/eslint .",
@@ -38,6 +38,7 @@
     "babel-cli": "^6.24.1",
     "babel-core": "6.16.0",
     "babel-loader": "6.2.7",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-transform-async-to-generator": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
