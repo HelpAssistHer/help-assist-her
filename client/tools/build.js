@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const webpackConfig = require('../../webpack.prod.config')
 const colors = require('colors')
 
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'dev'
 
 console.log('Generating minified bundle for production via Webpack...'.blue)
 

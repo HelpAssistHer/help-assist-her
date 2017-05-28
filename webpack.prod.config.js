@@ -7,10 +7,10 @@ module.exports = {
 	entry: ['babel-polyfill', './client/js/hah-app/index.js'],
 
 	externals: {
-		'clientConfig': JSON.stringify(process.env.ENV === 'production' ? {
+		'clientConfig': JSON.stringify(process.env.ENV === 'dev' ? {
 			serverUrl: 'https://hah-dev.herokuapp.com'
 		} : {
-			serverUrl: 'http://localhost:4000'
+			serverUrl: 'https://hah-dev.herokuapp.com'
 		})
 	},
 
@@ -30,7 +30,7 @@ module.exports = {
 		}),
 		new webpack.DefinePlugin({
 			'process.env': {
-				'NODE_ENV': JSON.stringify('production')
+				'NODE_ENV': JSON.stringify('dev')
 			}
 		})
 	],
