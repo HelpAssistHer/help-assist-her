@@ -9,7 +9,6 @@
   "scripts": {
     "build": "NODE_ENV=production babel-node client/tools/build.js",
     "build:html": "babel-node client/tools/build-html.js",
-    "postbuild": "babel-node server/server.js",
     "lint": "./node_modules/.bin/eslint .",
     "lint-path": "./node_modules/.bin/eslint",
     "wds": "webpack-dev-server",

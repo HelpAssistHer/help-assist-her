@@ -33,7 +33,7 @@ server.use(express.static('public'))
 server.use(compression())
 server.use(cookieParser())
 server.use(cors())
-server.use(bodyParser.urlencoded())
+server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
 server.use(morgan('combined'))
 server.use(session({
