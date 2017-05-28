@@ -2,7 +2,8 @@
   "plugins": [
     "transform-async-to-generator",
     "transform-class-properties",
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-regenerator"
   ],
   "presets": [
     "react",
