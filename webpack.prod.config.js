@@ -4,9 +4,7 @@ const webpack = require('webpack')
 module.exports = {
 	devtool: 'source-map',
 
-	entry: [
-		'./client/js/hah-app/index.js'
-	],
+	entry: ['babel-polyfill', './client/js/hah-app/index.js'],
 
 	externals: {
 		'clientConfig': JSON.stringify(process.env.ENV === 'dev' ? {
