@@ -17,4 +17,7 @@ module.exports = {
 		protocol: 'https',
 		url: 'http://localhost:4000',
 	},
+	session: {
+		secret:  process.env.SESSION_SECRET,
+	},
 }

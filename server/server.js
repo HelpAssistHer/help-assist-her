@@ -4,7 +4,6 @@ const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const config = require('config')
-const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
 const facebookTokenStrategy = require('passport-facebook-token')
@@ -25,21 +24,24 @@ const port = config.server.port
 const server = express()
 mongoose.Promise = require('bluebird')
 const log = new Log('info')
+const MongoStore = require('connect-mongo')(session)
 
 server.use(boom())
 server.use(express.static('public'))
-server.use(cookieParser())
 server.use(cors())
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
 server.use(morgan('combined'))
 server.use(session({
-	secret: 'keyboard cat',
+	secret: config.session.secret,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: false,
+	name: 'sessionId',
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 server.use(passport.initialize())
 server.use(passport.session())
+server.set('etag', false) // turn off
 
 passport.use(
 	new facebookTokenStrategy({
@@ -135,6 +137,9 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+
+	log.info(req.session)
+
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		'verified.address': null,
 	}).lean()
@@ -162,8 +167,7 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 			phone: user.phone
 		}
 	}
-
-	res.status(200).json(pregnancyCenter)
+	res.json(pregnancyCenter)
 }))
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
@@ -183,7 +187,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 		const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 		await createdPregnancyCenter.save()
 
-		res.status(201).json(createdPregnancyCenter)
+		res.json(createdPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
 	}
@@ -344,20 +348,33 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 	})
 }
 
-server.get('/auth/facebook/token', passport.authenticate('facebook-token'), (req, res) => {
-	if (req.user) {
-		res.status(200).json('Authentication successful.')
-	} else {
-		res.boom.unauthorized('User is not logged in.')
+server.get(
+	'/auth/facebook/token',
+	(req, res, next) => {
+		log.info(req.session)
+		passport.authenticate('facebook-token', (error, user) => {
+			if (error || !user) {
+				res.boom.unauthorized('User is not logged in.')
+			}
+			if (req.sessionID && user) {
+				req.logIn(user, () => {
+					res.status(200).json('Authentication successful.')
+				})
+			}
+			next()
+		})(req, res, next)
 	}
-})
+)
 
 server.get('/logout', (req, res) => {
+	log.info(req.session)
 	req.logout()
 	res.send(200)
 })
 
 function isLoggedInAPI(req, res, next) {
+
+	log.info(req.session)
 	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next()
