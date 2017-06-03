@@ -1,6 +1,7 @@
 'use strict'
 
 module.exports = {
+	corsOriginWhitelist: ['http://localhost:8080', 'https://travis-ci.org/', undefined],
 	database: {
 		name: 'hah-dev'
 	},
@@ -15,8 +16,7 @@ module.exports = {
 		hostname: 'localhost',
 		port: 4000,
 		protocol: 'https',
-		url: 'http://localhost:4000',
-		originWhitelist: ['http://localhost:8080']
+		url: 'http://localhost:4000'
 	},
 	session: {
 		secret: 'rjH(GrYYgPNuMyvP8K6N^gnwAiefksRFWkxbLcznqVvpFmVnGP7QLE)WFuymjZ',

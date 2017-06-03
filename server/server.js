@@ -26,7 +26,7 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
-const whitelist = config.server.originWhitelist
+const whitelist = config.corsOriginWhitelist
 const corsOptions = {
 	origin: (origin, callback) => {
 		if (whitelist.indexOf(origin) !== -1) {
