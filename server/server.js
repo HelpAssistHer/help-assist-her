@@ -26,9 +26,14 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
+const corsOptions = {
+	origin: 'http://localhost:8080',
+	credentials: true,
+}
+server.use(cors(corsOptions))
+
 server.use(boom())
 server.use(express.static('public'))
-server.use(cors())
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
 server.use(morgan('combined'))
@@ -137,12 +142,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-
-	log.info(req.session)
-
-	const pregnancyCenter = await PregnancyCenterModel.findOne({
-		'verified.address': null,
-	}).lean()
+	const pregnancyCenter = await PregnancyCenterModel.findOne({}).lean()
 
 	if (!pregnancyCenter) {
 		return res.boom.notFound('No pregnancy centers to verify')
@@ -367,14 +367,11 @@ server.get(
 )
 
 server.get('/logout', (req, res) => {
-	log.info(req.session)
 	req.logout()
 	res.send(200)
 })
 
 function isLoggedInAPI(req, res, next) {
-
-	log.info(req.session)
 	// if user is authenticated in the session, carry on
 	if (req.isAuthenticated())
 		return next()
