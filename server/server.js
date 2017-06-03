@@ -143,27 +143,13 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 		return res.boom.notFound('No pregnancy centers to verify')
 	}
 
-	// This adds in the primaryContact from a separate User Collection
-	const primaryContactUserId = pregnancyCenter.primaryContactUserId
-
-	if (primaryContactUserId) {
-		const user = await UserModel.findOne({
-			_id: primaryContactUserId,
-		}).lean()
-
-		if (!user) {
-			return res.boom.notFound(`No user found by id: ${primaryContactUserId}`)
-		}
-
-		pregnancyCenter.primaryContactUser = {
-			firstName: user.firstName,
-			lastName: user.lastName,
-			email: user.email,
-			phone: user.phone
-		}
+	try {
+		await embedPrimaryContactUser(pregnancyCenter)
+	} catch (err) {
+		res.boom.notFound(err)
 	}
-
 	res.status(200).json(pregnancyCenter)
+
 }))
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
@@ -179,9 +165,25 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 	}
 
 	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
+	const primaryContactUser = validatedPregnancyCenter.primaryContactUser
+	delete validatedPregnancyCenter.primaryContactUser
+
+	if (primaryContactUser) {
+		try {
+			validatedPregnancyCenter.primaryContactUserId = await updateCreatePrimaryContactUser(primaryContactUser)
+		} catch (err) {
+			handleError(res, err)
+		}
+	}
+
 	try {
-		const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
+		let createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 		await createdPregnancyCenter.save()
+		try {
+			createdPregnancyCenter = await embedPrimaryContactUser(createdPregnancyCenter.toObject())
+		} catch (err) {
+			res.boom.notFound(err)
+		}
 
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
@@ -209,40 +211,36 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 		return handleJoiValidationError(res, pregnancyCenterValidationObj.error)
 	}
 	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
-	const validatedDataWithUpdatedHistory = await createUpdateHistory(req, validatedPregnancyCenter)
-
 	const primaryContactUser = validatedPregnancyCenter.primaryContactUser
 	delete validatedPregnancyCenter.primaryContactUser
 
-	if (primaryContactUser) {
-		let createdPrimaryContactUser
+	const validatedDataWithUpdatedHistory = await createUpdateHistory(req, validatedPregnancyCenter)
 
-		if ('_id' in primaryContactUser) {
-			createdPrimaryContactUser = await UserModel.findByIdAndUpdate(primaryContactUser._id, {
-				$set: primaryContactUser
-			}, { new : true})
-		} else {
-			try {
-				createdPrimaryContactUser = new UserModel(primaryContactUser)
-				await createdPrimaryContactUser.save()
-			} catch (err) {
-				return handleError(res, err)
-			}
+	if (primaryContactUser) {
+		try {
+			validatedDataWithUpdatedHistory.primaryContactUserId = await updateCreatePrimaryContactUser(primaryContactUser)
+		} catch (err) {
+			handleError(res, err)
 		}
-		validatedDataWithUpdatedHistory.primaryContactUserId = createdPrimaryContactUser._id
 	}
 
 	const pregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(pregnancyCenterId, {
 		$set: validatedDataWithUpdatedHistory
-	}, { new: true })
-
-	log.info('pregnancyCenterCreated', JSON.stringify(pregnancyCenter))
+	}, { new: true }).lean()
 
 	if (!pregnancyCenter) {
 		return res.boom.notFound(`Pregnancy Center not found with id ${pregnancyCenterId}`)
 	}
 
-	res.status(200).json(pregnancyCenter)
+	let embeddedPregnancyCenter
+
+	try {
+		embeddedPregnancyCenter = await embedPrimaryContactUser(pregnancyCenter)
+	} catch (err) {
+		res.boom.notFound(err)
+	}
+
+	res.status(200).json(embeddedPregnancyCenter)
 }))
 
 /*
@@ -261,7 +259,6 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 			close: {$gte: time}
 		}
 	}
-	log.info(JSON.stringify(query))
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
 	if (pregnancyCentersOpenNow.length <= 0) {
@@ -335,11 +332,9 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 			reject()
 		}
 
+		embedPrimaryContactUser(oldPregnancyCenterObj)
+
 		oldPregnancyCenterObj = oldPregnancyCenterObj.toObject()
-
-		log.info('oldPregnancyCenterObj', JSON.stringify(oldPregnancyCenterObj))
-
-		log.info('pregnancyCenterRawObjWithStamps', JSON.stringify(pregnancyCenterRawObjWithStamps))
 
 		if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
 			pregnancyCenterRawObjWithStamps['updated'] = oldPregnancyCenterObj['updated']
@@ -371,6 +366,61 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 
 		resolve(pregnancyCenterRawObjWithStamps)
 
+	})
+}
+
+function updateCreatePrimaryContactUser(primaryContactUser) {
+	return new P( async (resolve, reject) => {
+		let createdPrimaryContactUser
+
+		if ('_id' in primaryContactUser) {
+			createdPrimaryContactUser = await UserModel.findByIdAndUpdate(primaryContactUser._id, {
+				$set: primaryContactUser
+			}, {new: true})
+		} else {
+			try {
+				createdPrimaryContactUser = new UserModel(primaryContactUser)
+				await createdPrimaryContactUser.save()
+			} catch (err) {
+				reject(err)
+			}
+		}
+		resolve(createdPrimaryContactUser._id)
+	})
+}
+
+function embedPrimaryContactUser(pregnancyCenter) {
+	return new P( async (resolve, reject) => {
+		// This adds in the primaryContact from a separate User Collection
+		const primaryContactUserId = pregnancyCenter.primaryContactUserId
+
+		if (primaryContactUserId) {
+			const user = await UserModel.findOne({
+				_id: primaryContactUserId,
+			}).lean()
+			log.info('user')
+			log.info(user) // this works!
+
+			if (!user) {
+				reject(`No user found by id: ${primaryContactUserId}`)
+			}
+
+			pregnancyCenter.primaryContactUser = {}
+
+			log.info(pregnancyCenter)
+
+			pregnancyCenter.primaryContactUser = {
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				phone: user.phone
+			}
+			delete pregnancyCenter.primaryContactUserId
+			log.info('Inside embedPrimaryContactUser 1')
+			log.info(pregnancyCenter)
+		}
+
+		resolve(pregnancyCenter)
 	})
 }
 

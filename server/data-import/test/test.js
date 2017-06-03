@@ -234,6 +234,12 @@ describe('PregnancyCenters', () => {
 				prcName:'Birthright of Albany',
 				phone:'+15184382978',
 				website:'http://www.birthright.org',
+				primaryContactUser: {
+					firstName: 'Joanna',
+					lastName: 'Smith',
+					email: 'email@email.org',
+					phone: '+18884442222'
+				},
 				services:{},
 			}
 			mockAuthenticate()
@@ -247,6 +253,11 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('website')
 			res.body.should.have.property('phone')
+			res.body.should.have.property('primaryContactUser')
+			res.body.primaryContactUser.firstName.should.equal('Joanna')
+			res.body.primaryContactUser.lastName.should.equal('Smith')
+			res.body.primaryContactUser.email.should.equal('email@email.org')
+			res.body.primaryContactUser.phone.should.equal('+18884442222')
 			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
 			res.body.address.location.type.should.equal('Point')
 			res.body.address.location.coordinates.should.deep.equal(
@@ -521,6 +532,12 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
+				primaryContactUser: {
+					firstName: 'Joanna',
+					lastName: 'Smith',
+					email: 'email@email.org',
+					phone: '+18884442222'
+				},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -543,6 +560,12 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
+				primaryContactUser: {
+					firstName: 'Joanna B',
+					lastName: 'Smith',
+					email: 'email2@email.org',
+					phone: '+18884442222'
+				},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -565,6 +588,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
+			res.body.should.have.property('primaryContactUser')
 			res.body._id.should.equal(String(oldPCObj._id))
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.should.have.property('verified')
@@ -579,7 +603,7 @@ describe('PregnancyCenters', () => {
 				pregnancyCenterId: oldPCObj._id
 			})
 			log.info(newPCObj)
-			newPCObj.should.have.length(1)
+			newPCObj.should.have.length(2)
 		})
 	})
 
@@ -753,24 +777,6 @@ describe('PregnancyCenters', () => {
 			})
 			validationObj.error.name.should.equal('ValidationError')
 			validationObj.error.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
-		})
-	})
-
-	/*
-	 * Test the Joi validation for pregnancy centers separately from the API routes
-	 */
-	describe('Test Joi validation for pregnancy centers email 5', () => {
-		it('validation should fail because the email address provided does not have an @', async () => {
-
-			const testPCObj5 = {
-				email: 'pregnancycenter.com'
-			}
-
-			const validationObj = await Joi.validate(testPCObj5, pregnancyCenterSchemaJoi, {
-				abortEarly: false
-			})
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal('child "email" fails because ["email" must be a valid email]')
 		})
 	})
 

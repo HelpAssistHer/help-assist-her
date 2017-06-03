@@ -55,7 +55,6 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
 	dateCreated: Joi.date().iso(),
-	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
 	prcName: Joi.string(),
 	notes: Joi.string(),
@@ -78,7 +77,6 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	},
 	verified: {
 		address: dateUserActionSchemaJoi,
-		email: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		name: dateUserActionSchemaJoi,
 		notes: dateUserActionSchemaJoi,
@@ -89,7 +87,6 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	},
 	updated: {
 		address: dateUserActionSchemaJoi,
-		email: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		name: dateUserActionSchemaJoi,
 		notes: dateUserActionSchemaJoi,
