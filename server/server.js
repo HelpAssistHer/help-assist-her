@@ -4,6 +4,7 @@ const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const config = require('config')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
 const facebookTokenStrategy = require('passport-facebook-token')
@@ -158,15 +159,15 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 	}
 
 	// This adds in the primaryContact from a separate User Collection
-	const primaryContact = pregnancyCenter.primaryContact
+	const primaryContactUserId = pregnancyCenter.primaryContactUserId
 
-	if (primaryContact) {
+	if (primaryContactUserId) {
 		const user = await UserModel.findOne({
-			_id: primaryContact,
+			_id: primaryContactUserId,
 		}).lean()
 
 		if (!user) {
-			return res.boom.notFound(`No user found by id: ${primaryContact}`)
+			return res.boom.notFound(`No user found by id: ${primaryContactUserId}`)
 		}
 
 		pregnancyCenter.primaryContactUser = {
@@ -176,7 +177,8 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 			phone: user.phone
 		}
 	}
-	res.json(pregnancyCenter)
+
+	res.status(200).json(pregnancyCenter)
 }))
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
