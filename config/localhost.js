@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-	corsOriginWhitelist: ['http://localhost:8080', 'https://travis-ci.org/', undefined],
+	corsOriginWhitelist: ['http://localhost:8080'],
 	database: {
 		name: 'hah-dev'
 	},
