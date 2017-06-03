@@ -187,7 +187,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 		const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 		await createdPregnancyCenter.save()
 
-		res.json(createdPregnancyCenter)
+		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
 	}
