@@ -8,14 +8,6 @@ module.exports = {
 
 	entry: ['babel-polyfill', './client/js/hah-app/index.js'],
 
-	externals: {
-		'clientConfig': JSON.stringify(process.env.ENV === 'dev' ? {
-			serverUrl: 'https://hah-dev.herokuapp.com'
-		} : {
-			serverUrl: 'https://hah-dev.herokuapp.com'
-		})
-	},
-
 	output: {
 		path: path.join(__dirname, '/public'),
 		filename: 'bundle.js',
