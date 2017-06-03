@@ -9,3 +9,10 @@ export async function authenticateUser(accessToken) {
 
 	return await response.json()
 }
+
+export async function logoutUser() {
+	const response = await fetch('http://localhost:4000/logout', {
+		method: 'GET',
+		credentials: 'include',
+	})
+}

@@ -2,11 +2,13 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import LoginButton from '../authentication/facebook-login-button'
+import LogoutButton from '../authentication/logout-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
 		<div className={classes.authenticationButtonDiv}>
 			<LoginButton />
+			<LogoutButton />
 		</div>
 		<img className={classes.logo} src='../../public/img/logo-white.png' />
 	</div>

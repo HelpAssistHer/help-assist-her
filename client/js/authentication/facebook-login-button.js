@@ -15,7 +15,7 @@ class FacebookLoginButton extends React.Component {
 				autoLoad={false}
 				fields='name,email,picture'
 				callback={this.facebookResponse}
-				textButton='Login'
+				textButton='FB Login'
 			/>
 		)
 	}
