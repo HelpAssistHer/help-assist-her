@@ -1,7 +1,6 @@
 'use strict'
 
 module.exports = {
-	corsOriginWhitelist: ['https://hah-dev.herokuapp.com'],
 	facebook: {
 		appId: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
 		appSecret: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_SECRET,

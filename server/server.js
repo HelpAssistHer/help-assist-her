@@ -27,21 +27,24 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
-const whitelist = config.corsOriginWhitelist
-const corsOptions = {
-	origin: (origin, callback) => {
-		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true)
-		} else {
-			const err = new Error(`${origin} is not allowed by CORS`)
-			log.error(err)
-			callback(err)
-		}
-	},
-	credentials: true,
-}
+if (process.env.NODE_ENV === 'localhost') {
+	const whitelist = config.corsOriginWhitelist
 
-// server.use(cors(corsOptions))
+	const corsOptions = {
+		origin: (origin, callback) => {
+			if (whitelist.indexOf(origin) !== -1) {
+				callback(null, true)
+			} else {
+				const err = new Error(`${origin} is not allowed by CORS`)
+				log.error(err)
+				callback(err)
+			}
+		},
+		credentials: true,
+	}
+
+	server.use(cors(corsOptions))
+}
 
 server.use(boom())
 server.use(express.static('public'))

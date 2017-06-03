@@ -1,7 +1,6 @@
 'use strict'
 
 module.exports = {
-	corsOriginWhitelist: ['http://localhost:8080'],
 	facebook: {
 		appId: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
 		appSecret: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_SECRET,
