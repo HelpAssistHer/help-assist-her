@@ -1,5 +1,7 @@
+import { serverUrl } from 'clientConfig'
+
 export async function authenticateUser(accessToken) {
-	const response = await fetch(`http://localhost:4000/auth/facebook/token?access_token=${accessToken}`, {
+	const response = await fetch(`${serverUrl}/auth/facebook/token?access_token=${accessToken}`, {
 		method: 'GET',
 		credentials: 'include',
 		headers: {
@@ -11,7 +13,7 @@ export async function authenticateUser(accessToken) {
 }
 
 export async function logoutUser() {
-	const response = await fetch('http://localhost:4000/logout', {
+	const response = await fetch(`${serverUrl}/logout`, {
 		method: 'GET',
 		credentials: 'include',
 	})
