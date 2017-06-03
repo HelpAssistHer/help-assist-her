@@ -6,6 +6,7 @@ import { GET_RESOURCE_TO_VERIFY } from './action-types'
 async function getOneResource() {
 	const response = await fetch('http://localhost:4000/api/pregnancy-centers/verify', {
 		method: 'GET',
+		credentials: 'include',
 		headers: {
 			'Accept': 'application/json',
 		},
@@ -43,6 +44,7 @@ export async function updateResource(updatedResource) {
 
 	fetch('http://localhost:4000/api/pregnancy-centers', {
 		method: 'PUT',
+		credentials: 'include',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
