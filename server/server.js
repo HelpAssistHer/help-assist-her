@@ -4,7 +4,6 @@ const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const config = require('config')
-const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
 const facebookTokenStrategy = require('passport-facebook-token')
@@ -25,18 +24,35 @@ const port = config.server.port
 const server = express()
 mongoose.Promise = require('bluebird')
 const log = new Log('info')
+const MongoStore = require('connect-mongo')(session)
+
+const whitelist = config.corsOriginWhitelist
+const corsOptions = {
+	origin: (origin, callback) => {
+		if (whitelist.indexOf(origin) !== -1) {
+			callback(null, true)
+		} else {
+			const err = new Error(`${origin} is not allowed by CORS`)
+			log.error(err)
+			callback(err)
+		}
+	},
+	credentials: true,
+}
+
+server.use(cors(corsOptions))
 
 server.use(boom())
 server.use(express.static('public'))
-server.use(cookieParser())
-server.use(cors())
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
 server.use(morgan('combined'))
 server.use(session({
-	secret: 'keyboard cat',
+	secret: config.session.secret,
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: false,
+	name: 'sessionId',
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }))
 server.use(passport.initialize())
 server.use(passport.session())
@@ -134,10 +150,8 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
-server.get('/api/pregnancy-centers/verify', handleRejectedPromise(async (req, res) => {
-	const pregnancyCenter = await PregnancyCenterModel.findOne({
-		// 'verified.address': null,
-	}).lean()
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const pregnancyCenter = await PregnancyCenterModel.findOne({}).lean()
 
 	if (!pregnancyCenter) {
 		return res.boom.notFound('No pregnancy centers to verify')
@@ -344,13 +358,23 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 	})
 }
 
-server.get('/auth/facebook/token', passport.authenticate('facebook-token'), (req, res) => {
-	if (req.user) {
-		res.status(200).json('Authentication successful.')
-	} else {
-		res.boom.unauthorized('User is not logged in.')
+server.get(
+	'/auth/facebook/token',
+	(req, res, next) => {
+		log.info(req.session)
+		passport.authenticate('facebook-token', (error, user) => {
+			if (error || !user) {
+				res.boom.unauthorized('User is not logged in.')
+			}
+			if (req.sessionID && user) {
+				req.logIn(user, () => {
+					res.status(200).json('Authentication successful.')
+				})
+			}
+			next()
+		})(req, res, next)
 	}
-})
+)
 
 server.get('/logout', (req, res) => {
 	req.logout()

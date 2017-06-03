@@ -1,6 +1,7 @@
 'use strict'
 
 module.exports = {
+	corsOriginWhitelist: ['http://localhost:8080'],
 	database: {
 		name: 'hah-test'
 	},
@@ -15,6 +16,9 @@ module.exports = {
 		hostname: 'localhost',
 		port: 4000,
 		protocol: 'https',
-		url: 'http://localhost:4000',
+		url: 'http://localhost:4000'
+	},
+	session: {
+		secret:  process.env.SESSION_SECRET,
 	},
 }
