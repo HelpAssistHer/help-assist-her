@@ -1,5 +1,3 @@
-import { serverUrl } from 'clientConfig'
-
 export async function authenticateUser(accessToken) {
 	const response = await fetch(`/auth/facebook/token?access_token=${accessToken}`, {
 		method: 'GET',
@@ -13,7 +11,7 @@ export async function authenticateUser(accessToken) {
 }
 
 export async function logoutUser() {
-	const response = await fetch(`${serverUrl}/logout`, {
+	const response = await fetch(`/logout`, {
 		method: 'GET',
 		credentials: 'include',
 	})

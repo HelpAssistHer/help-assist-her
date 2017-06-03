@@ -1,11 +1,10 @@
 import _ from 'lodash'
 
-import { serverUrl } from 'clientConfig'
 import { store } from '../hah-app/index'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
 
 async function getOneResource() {
-	const response = await fetch(`${serverUrl}/api/pregnancy-centers/verify`, {
+	const response = await fetch(`/api/pregnancy-centers/verify`, {
 		method: 'GET',
 		credentials: 'include',
 		headers: {
@@ -43,7 +42,7 @@ export async function updateResource(updatedResource) {
 	}
 	console.log('TRANSFORMED RESOURCE', transformedResource)
 
-	fetch(`${serverUrl}/api/pregnancy-centers`, {
+	fetch(`/api/pregnancy-centers`, {
 		method: 'PUT',
 		credentials: 'include',
 		headers: {
