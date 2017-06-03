@@ -7,6 +7,7 @@ import { GET_RESOURCE_TO_VERIFY } from './action-types'
 async function getOneResource() {
 	const response = await fetch(`${serverUrl}/api/pregnancy-centers/verify`, {
 		method: 'GET',
+		credentials: 'include',
 		headers: {
 			'Accept': 'application/json',
 		},
@@ -44,6 +45,7 @@ export async function updateResource(updatedResource) {
 
 	fetch(`${serverUrl}/api/pregnancy-centers`, {
 		method: 'PUT',
+		credentials: 'include',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
