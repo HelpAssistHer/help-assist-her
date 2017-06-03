@@ -26,10 +26,20 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
+const whitelist = config.server.originWhitelist
 const corsOptions = {
-	origin: 'http://localhost:8080',
+	origin: (origin, callback) => {
+		if (whitelist.indexOf(origin) !== -1) {
+			callback(null, true)
+		} else {
+			const err = new Error(`${origin} is not allowed by CORS`)
+			log.error(err)
+			callback(err)
+		}
+	},
 	credentials: true,
 }
+
 server.use(cors(corsOptions))
 
 server.use(boom())
@@ -186,7 +196,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 		const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 		await createdPregnancyCenter.save()
 
-		res.json(createdPregnancyCenter)
+		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
 	}
