@@ -8,6 +8,12 @@ module.exports = {
 	mongo: {
 		connectionString: process.env.MONGO_DB_CONNECTION,
 	},
+	server: {
+		hostname: 'hah-stage.herokuapp.com',
+		port: process.env.PORT,
+		protocol: 'https',
+		url: 'https://hah-stage.herokuapp.com',
+	},
 	session: {
 		secret:  process.env.SESSION_SECRET,
 	},

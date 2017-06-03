@@ -9,10 +9,10 @@ module.exports = {
 		connectionString: process.env.MONGO_DB_CONNECTION,
 	},
 	server: {
-		hostname: 'hah-dev.herokuapp.com',
+		hostname: 'hah-prod.herokuapp.com',
 		port: process.env.PORT,
 		protocol: 'https',
-		url: 'https://hah-dev.herokuapp.com',
+		url: 'https://hah-prod.herokuapp.com',
 	},
 	session: {
 		secret:  process.env.SESSION_SECRET,
