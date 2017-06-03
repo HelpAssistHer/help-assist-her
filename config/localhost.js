@@ -2,9 +2,6 @@
 
 module.exports = {
 	corsOriginWhitelist: ['http://localhost:8080'],
-	database: {
-		name: 'hah-dev'
-	},
 	facebook: {
 		appId: '1312011635554544',
 		appSecret: '2e89815b8b92f022100a2d8c65e877b2',
