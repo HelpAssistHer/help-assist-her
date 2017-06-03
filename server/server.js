@@ -46,7 +46,6 @@ server.use(session({
 }))
 server.use(passport.initialize())
 server.use(passport.session())
-server.set('etag', false) // turn off
 
 passport.use(
 	new facebookTokenStrategy({

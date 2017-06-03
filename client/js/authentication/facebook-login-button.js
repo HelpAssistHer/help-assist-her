@@ -5,7 +5,6 @@ import { authenticateUser } from './action-creators'
 
 class FacebookLoginButton extends React.Component {
 	facebookResponse(response) {
-		console.log('Facebook response', response)
 		authenticateUser(response.accessToken)
 	}
 
