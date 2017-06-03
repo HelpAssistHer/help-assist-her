@@ -25,11 +25,12 @@ const userDateSchema = new mongoose.Schema({
 
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
+	email: String,
 	hours: Object,
 	prcName: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContactUserId: mongoose.Schema.Types.ObjectId,  // a user
+	primaryContactPersonId: mongoose.Schema.Types.ObjectId,  // a user
 	services: {
 		default: {},
 		pregnancyTest: Boolean,

@@ -1,17 +1,14 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Button from '../components/button'
+import LoginButton from '../authentication/facebook-login-button'
+import LogoutButton from '../authentication/logout-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
 		<div className={classes.authenticationButtonDiv}>
-			<Button
-				onClick={() => {
-					window.location.href = 'http://localhost:4000/auth/facebook'
-				}}
-				buttonText='Account'
-			/>
+			<LoginButton />
+			<LogoutButton />
 		</div>
 		<img className={classes.logo} src='../../public/img/logo-white.png' />
 	</div>
@@ -36,7 +33,7 @@ const styles = {
 		margin: 'auto',
 	},
 	authenticationButtonDiv: {
-		width: '7%',
+		width: '11%',
 		float: 'right',
 		padding: '10px',
 	},

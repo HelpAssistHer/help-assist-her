@@ -59,7 +59,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	prcName: Joi.string(),
 	notes: Joi.string(),
 	phone: phoneValidator.phone().validate(),
-	primaryContactUser: {
+	primaryContactPerson: {
 		firstName: Joi.string(),
 		lastName: Joi.string(),
 		email: Joi.string(),
