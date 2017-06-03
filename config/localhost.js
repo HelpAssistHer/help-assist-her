@@ -18,6 +18,6 @@ module.exports = {
 		url: 'http://localhost:4000',
 	},
 	session: {
-		secret:  process.env.SESSION_SECRET,
+		secret: 'rjH(GrYYgPNuMyvP8K6N^gnwAiefksRFWkxbLcznqVvpFmVnGP7QLE)WFuymjZ',
 	},
 }
