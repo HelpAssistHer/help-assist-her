@@ -26,10 +26,20 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
+const whitelist = config.server.originWhitelist
 const corsOptions = {
-	origin: 'http://localhost:8080',
+	origin: (origin, callback) => {
+		if (whitelist.indexOf(origin) !== -1) {
+			callback(null, true)
+		} else {
+			const err = new Error(`${origin} is not allowed by CORS`)
+			log.error(err)
+			callback(err)
+		}
+	},
 	credentials: true,
 }
+
 server.use(cors(corsOptions))
 
 server.use(boom())
@@ -101,7 +111,6 @@ startDatabase()
 	TODO: limits and paging, if necessary
  */
 server.get('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	log.info(req.get('origin'))
 	const allPregnancyCenters = await PregnancyCenterModel.find({})
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)

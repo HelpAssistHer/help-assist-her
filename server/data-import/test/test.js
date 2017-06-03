@@ -5,6 +5,7 @@ const moment = require('moment')
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
+const config = require('config')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
@@ -59,7 +60,6 @@ function assertUnauthenticatedError(res) {
 //Our parent block
 describe('PregnancyCenters', () => {
 	beforeEach( async () => { //Before each test we empty the database
-		log.info(PregnancyCenterModel.db.name)
 		mockUnauthenticate()
 		await PregnancyCenterModel.remove({})
 		await UserModel.remove({})
@@ -81,6 +81,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.get('/api/pregnancy-centers/open-now')
+					.set('origin', config.server.originWhitelist[0])
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
 			}
@@ -157,6 +158,7 @@ describe('PregnancyCenters', () => {
 
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
+				.set('origin', config.server.originWhitelist[0])
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
@@ -172,6 +174,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.get('/api/pregnancy-centers')
+					.set('origin', config.server.originWhitelist[0])
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
 			}
@@ -199,6 +202,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.post('/api/pregnancy-centers')
+					.set('origin', config.server.originWhitelist[0])
 					.send(pregnancyCenter)
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
@@ -214,6 +218,7 @@ describe('PregnancyCenters', () => {
 			mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers')
+				.set('origin', config.server.originWhitelist[0])
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(0)
@@ -240,6 +245,7 @@ describe('PregnancyCenters', () => {
 			mockAuthenticate()
 			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
+				.set('origin', config.server.originWhitelist[0])
 				.send(pregnancyCenter)
 			res.should.have.status(201)
 			res.body.should.be.a('object')
@@ -268,6 +274,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.get('/api/pregnancy-centers/near-me')
+					.set('origin', config.server.originWhitelist[0])
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
 			}
@@ -319,6 +326,7 @@ describe('PregnancyCenters', () => {
 			mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
+				.set('origin', config.server.originWhitelist[0])
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
@@ -334,6 +342,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.get('/api/pregnancy-centers/verify')
+					.set('origin', config.server.originWhitelist[0])
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
 			}
@@ -390,6 +399,7 @@ describe('PregnancyCenters', () => {
 
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
+				.set('origin', config.server.originWhitelist[0])
 
 			res.should.have.status(200)
 			res.body.should.be.a('object')
@@ -457,6 +467,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.get('/api/pregnancy-centers/verify')
+					.set('origin', config.server.originWhitelist[0])
 			} catch (err) {
 				assertError(err.response, 404, 'Not Found')
 			}
@@ -496,6 +507,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.put('/api/pregnancy-centers/'+pc._id)
+					.set('origin', config.server.originWhitelist[0])
 					.send(pc)
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
@@ -561,6 +573,7 @@ describe('PregnancyCenters', () => {
 
 			const res = await chai.request(server)
 				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.set('origin', config.server.originWhitelist[0])
 				.send(newValues)
 
 			res.should.have.status(200)
@@ -612,6 +625,7 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai.request(server)
 					.get('/api/pregnancy-centers/'+pc._id)
+					.set('origin', config.server.originWhitelist[0])
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
 			}
@@ -647,6 +661,7 @@ describe('PregnancyCenters', () => {
 			mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/'+pc._id)
+				.set('origin', config.server.originWhitelist[0])
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')

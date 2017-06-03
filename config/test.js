@@ -16,6 +16,7 @@ module.exports = {
 		port: 4000,
 		protocol: 'https',
 		url: 'http://localhost:4000',
+		originWhitelist: ['http://localhost:8080']
 	},
 	session: {
 		secret:  process.env.SESSION_SECRET,
