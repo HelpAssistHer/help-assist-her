@@ -134,7 +134,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 /*
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
-server.get('/api/pregnancy-centers/verify', handleRejectedPromise(async (req, res) => {
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenter = await PregnancyCenterModel.findOne({
 		// 'verified.address': null,
 	}).lean()
@@ -210,9 +210,33 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 	}
 	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
 	const validatedDataWithUpdatedHistory = await createUpdateHistory(req, validatedPregnancyCenter)
+
+	const primaryContactUser = validatedPregnancyCenter.primaryContactUser
+	delete validatedPregnancyCenter.primaryContactUser
+
+	if (primaryContactUser) {
+		let createdPrimaryContactUser
+
+		if ('_id' in primaryContactUser) {
+			createdPrimaryContactUser = await UserModel.findByIdAndUpdate(primaryContactUser._id, {
+				$set: primaryContactUser
+			}, { new : true})
+		} else {
+			try {
+				createdPrimaryContactUser = new UserModel(primaryContactUser)
+				await createdPrimaryContactUser.save()
+			} catch (err) {
+				return handleError(res, err)
+			}
+		}
+		validatedDataWithUpdatedHistory.primaryContactUserId = createdPrimaryContactUser._id
+	}
+
 	const pregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(pregnancyCenterId, {
 		$set: validatedDataWithUpdatedHistory
 	}, { new: true })
+
+	log.info('pregnancyCenterCreated', JSON.stringify(pregnancyCenter))
 
 	if (!pregnancyCenter) {
 		return res.boom.notFound(`Pregnancy Center not found with id ${pregnancyCenterId}`)
@@ -313,16 +337,22 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 
 		oldPregnancyCenterObj = oldPregnancyCenterObj.toObject()
 
+		log.info('oldPregnancyCenterObj', JSON.stringify(oldPregnancyCenterObj))
+
+		log.info('pregnancyCenterRawObjWithStamps', JSON.stringify(pregnancyCenterRawObjWithStamps))
+
+		if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
+			pregnancyCenterRawObjWithStamps['updated'] = oldPregnancyCenterObj['updated']
+		} else {
+			pregnancyCenterRawObjWithStamps['updated'] = {}
+		}
+
 		_.forOwn(pregnancyCenterRawObj, (value, key) => {
 
 			// check that the 'new' data isn't exactly the same as old
 			// this prevents us from creating histories for an update with same exact data
 			if (!keysToIgnore.includes(key) && !isEqualMongoose(oldPregnancyCenterObj[key],value)) {
-				if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
-					pregnancyCenterRawObjWithStamps['updated'] = oldPregnancyCenterObj['updated']
-				} else {
-					pregnancyCenterRawObjWithStamps['updated'] = {}
-				}
+
 				pregnancyCenterRawObjWithStamps['updated'][key] = {
 					userId: req.user._id,
 					date: new Date().toISOString()

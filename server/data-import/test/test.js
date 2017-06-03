@@ -59,7 +59,6 @@ function assertUnauthenticatedError(res) {
 //Our parent block
 describe('PregnancyCenters', () => {
 	beforeEach( async () => { //Before each test we empty the database
-		log.info(PregnancyCenterModel.db.name)
 		mockUnauthenticate()
 		await PregnancyCenterModel.remove({})
 		await UserModel.remove({})
@@ -106,10 +105,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': [],
+				'services': {},
 				'hours': {
 					1: [
 						{
@@ -132,11 +131,11 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'The Bridge To Life, Inc.',
+				'prcName': 'The Bridge To Life, Inc.',
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'services': [],
+				'services': {},
 				'hours': {
 					1: [
 						{
@@ -160,7 +159,7 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
-			res.body[0].name.should.equal('Birthright of Albany')
+			res.body[0].prcName.should.equal('Birthright of Albany')
 		})
 	})
 
@@ -190,10 +189,10 @@ describe('PregnancyCenters', () => {
 						'type':'Point',
 						'coordinates':[-73.7814005, 42.6722152]
 					}},
-				name:'Birthright of Albany',
+				prcName:'Birthright of Albany',
 				phone:'+15184382978',
 				website:'http://www.birthright.org',
-				services:[],
+				services:{},
 			}
 
 			try {
@@ -232,10 +231,10 @@ describe('PregnancyCenters', () => {
 						'type':'Point',
 						'coordinates':[-73.7814005, 42.6722152]
 					}},
-				name:'Birthright of Albany',
+				prcName:'Birthright of Albany',
 				phone:'+15184382978',
 				website:'http://www.birthright.org',
-				services:[],
+				services:{},
 			}
 			mockAuthenticate()
 			const res = await chai.request(server)
@@ -244,19 +243,17 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(201)
 			res.body.should.be.a('object')
 			res.body.should.have.property('address')
-			res.body.should.have.property('name')
+			res.body.should.have.property('prcName')
 			res.body.should.have.property('_id')
 			res.body.should.have.property('website')
 			res.body.should.have.property('phone')
-			res.body.should.have.property('services')
 			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
 			res.body.address.location.type.should.equal('Point')
 			res.body.address.location.coordinates.should.deep.equal(
 				[-73.7814005, 42.6722152])
-			res.body.name.should.equal('Birthright of Albany')
+			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.phone.should.equal('+15184382978')
 			res.body.website.should.equal('http://www.birthright.org')
-			res.body.services.should.deep.equal([])
 		})
 	})
 
@@ -291,10 +288,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': []
+				'services': {}
 
 			})
 
@@ -309,11 +306,11 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'The Bridge To Life, Inc.',
+				'prcName': 'The Bridge To Life, Inc.',
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'services': []
+				services:{},
 			})
 
 			mockAuthenticate()
@@ -322,7 +319,7 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
-			res.body[0].name.should.equal('Birthright of Albany')
+			res.body[0].prcName.should.equal('Birthright of Albany')
 		})
 	})
 
@@ -357,10 +354,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': []
+				services:{},
 
 			})
 
@@ -375,11 +372,11 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'The Bridge To Life, Inc.',
+				'prcName': 'The Bridge To Life, Inc.',
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'services': [],
+				'services':{},
 				'verified': {
 					'address': {
 						'date': '2017-04-16T23:33:17.220Z'
@@ -393,9 +390,9 @@ describe('PregnancyCenters', () => {
 
 			res.should.have.status(200)
 			res.body.should.be.a('object')
-			res.body.should.have.property('name')
-			res.body.name.should.equal('Birthright of Albany')
-			res.body.should.not.have.property('verified')
+			res.body.should.have.property('prcName')
+			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.verified.should.deep.equal({})
 
 		})
 	})
@@ -417,10 +414,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': [],
+				'services':{},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -440,11 +437,11 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'The Bridge To Life, Inc.',
+				'prcName': 'The Bridge To Life, Inc.',
 				'phone': '+17182743577',
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
-				'services': [],
+				'services': {},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -480,10 +477,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': [],
+				'services': {},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -520,10 +517,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': [],
+				'services':{},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -542,10 +539,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': [],
+				'services':{},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -564,11 +561,12 @@ describe('PregnancyCenters', () => {
 				.send(newValues)
 
 			res.should.have.status(200)
+			log.info(res.body)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
-			res.body.should.have.property('name')
+			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(oldPCObj._id))
-			res.body.name.should.equal('Birthright of Albany')
+			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.should.have.property('verified')
 			res.body.should.have.property('updated')
 			res.body.updated.should.have.property('address')
@@ -580,6 +578,7 @@ describe('PregnancyCenters', () => {
 			const newPCObj = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
+			log.info(newPCObj)
 			newPCObj.should.have.length(1)
 		})
 	})
@@ -601,10 +600,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': []
+				'services':{}
 
 			})
 			await pc.save()
@@ -635,10 +634,10 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'name': 'Birthright of Albany',
+				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
-				'services': []
+				'services':{}
 
 			})
 
@@ -650,10 +649,10 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
-			res.body.should.have.property('name')
+			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(pc._id))
-			res.body.name.should.equal('Birthright of Albany')
-			res.body.should.not.have.property('verified')
+			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.verified.should.deep.equal({})
 
 		})
 	})
@@ -907,16 +906,17 @@ describe('PregnancyCenters', () => {
 		it('validation should fail because one of the services is mispelled', async () => {
 
 			const testPCObj12 = {
-				services: [
-					'Ulllltrasound', 'PARENTING_CLASSES'
-				]
+				services: {
+					Ulllltrasound: false,
+					parentingClasses: true,
+				}
 			}
 
 			const validationObj = await Joi.validate(testPCObj12, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			})
 			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal('child "services" fails because ["services" at position 0 fails because ["0" must be one of [PREGNANCY_TEST, ULTRASOUND, MATERIAL_ASSISTANCE, POST_ABORTION_HEALING, PARENTING_CLASSES, STD_TESTING, COUNSELING]]]')
+			validationObj.error.message.should.equal('child "services" fails because ["Ulllltrasound" is not allowed]')
 		})
 	})
 

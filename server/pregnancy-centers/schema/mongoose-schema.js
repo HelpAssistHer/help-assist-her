@@ -27,23 +27,21 @@ const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
 	email: String,
 	hours: Object,
-	name: String, // change to PRC name
+	prcName: String, // change to PRC name
 	notes: String,
 	phone: String,
 	primaryContactUserId: mongoose.Schema.Types.ObjectId,  // a user
-	services: [{
-		type:String,
-		enum: [
-			'PREGNANCY_TEST',
-			'ULTRASOUND',
-			'MATERIAL_ASSISTANCE',
-			'POST_ABORTION_HEALING',
-			'PARENTING_CLASSES',
-			'STD_TESTING',
-			'PROFESSIONAL_COUNSELING',
-			'OTHER',
-		]
-	}],
+	services: {
+		default: {},
+		pregnancyTest: Boolean,
+		ultrasound: Boolean,
+		materialAssistance: Boolean,
+		postAbortionHealing: Boolean,
+		parentingClasses: Boolean,
+		stdTesting: Boolean,
+		professionalCounseling: Boolean,
+		other: Boolean
+	},
 	verified: {
 		address: userDateSchema,
 		email: userDateSchema, //todo don't need this
@@ -67,6 +65,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	website: String,
 }, {
 	timestamps: true, // createdAt and updatedAt are automatically added
+	minimize: false // services will have a default of {}
 })
 
 pregnancyCenterSchema.index({'address.location': '2dsphere'})
