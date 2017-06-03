@@ -41,7 +41,7 @@ const corsOptions = {
 	credentials: true,
 }
 
-server.use(cors(corsOptions))
+// server.use(cors(corsOptions))
 
 server.use(boom())
 server.use(express.static('public'))
