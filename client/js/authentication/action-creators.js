@@ -6,7 +6,6 @@ export async function authenticateUser(accessToken) {
 			'Accept': 'application/json',
 		},
 	})
-	console.log('AUTHENTICATE RESPONSE', response)
 
 	return await response.json()
 }
