@@ -19,13 +19,14 @@ const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-sch
 const server = require('../../server')
 const UserModel = require('../../users/schema/mongoose-schema')
 
-server
+PregnancyCenterHistoryModel
 PregnancyCenterModel
 pregnancyCenterSchemaJoi
+server
 UserModel
-PregnancyCenterHistoryModel
 
-//chai.use(chaiHttp)
+// chai.use(chaiHttp)
+// const log = new Log('info')
 //
 // // Allows the middleware to think we're already authenticated.
 // function mockAuthenticate() {
@@ -86,7 +87,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/open-now')
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -112,10 +113,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': [],
+// 				'services': {},
 // 				'hours': {
 // 					1: [
 // 						{
@@ -138,11 +139,11 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'The Bridge To Life, Inc.',
+// 				'prcName': 'The Bridge To Life, Inc.',
 // 				'phone': '+17182743577',
 // 				'email': 'thebridgetolife@verizon.net',
 // 				'website': 'http://www.thebridgetolife.org',
-// 				'services': [],
+// 				'services': {},
 // 				'hours': {
 // 					1: [
 // 						{
@@ -163,11 +164,11 @@ PregnancyCenterHistoryModel
 //
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
-// 				.set('origin', config.server.originWhitelist[0])
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(1)
-// 			res.body[0].name.should.equal('Birthright of Albany')
+// 			res.body[0].prcName.should.equal('Birthright of Albany')
 // 		})
 // 	})
 //
@@ -179,7 +180,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers')
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -198,16 +199,16 @@ PregnancyCenterHistoryModel
 // 						'type':'Point',
 // 						'coordinates':[-73.7814005, 42.6722152]
 // 					}},
-// 				name:'Birthright of Albany',
+// 				prcName:'Birthright of Albany',
 // 				phone:'+15184382978',
 // 				website:'http://www.birthright.org',
-// 				services:[],
+// 				services:{},
 // 			}
 //
 // 			try {
 // 				await chai.request(server)
 // 					.post('/api/pregnancy-centers')
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 					.send(pregnancyCenter)
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
@@ -223,7 +224,7 @@ PregnancyCenterHistoryModel
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers')
-// 				.set('origin', config.server.originWhitelist[0])
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(0)
@@ -242,32 +243,41 @@ PregnancyCenterHistoryModel
 // 						'type':'Point',
 // 						'coordinates':[-73.7814005, 42.6722152]
 // 					}},
-// 				name:'Birthright of Albany',
+// 				prcName:'Birthright of Albany',
 // 				phone:'+15184382978',
 // 				website:'http://www.birthright.org',
-// 				services:[],
+// 				// primaryContactUser: {
+// 				// 	firstName: 'Joanna',
+// 				// 	lastName: 'Smith',
+// 				// 	email: 'email@email.org',
+// 				// 	phone: '+18884442222'
+// 				// },
+// 				services:{},
 // 			}
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.post('/api/pregnancy-centers')
-// 				.set('origin', config.server.originWhitelist[0])
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 				.send(pregnancyCenter)
 // 			res.should.have.status(201)
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('address')
-// 			res.body.should.have.property('name')
+// 			res.body.should.have.property('prcName')
 // 			res.body.should.have.property('_id')
 // 			res.body.should.have.property('website')
 // 			res.body.should.have.property('phone')
-// 			res.body.should.have.property('services')
+// 			// res.body.should.have.property('primaryContactUser')
+// 			// res.body.primaryContactUser.firstName.should.equal('Joanna')
+// 			// res.body.primaryContactUser.lastName.should.equal('Smith')
+// 			// res.body.primaryContactUser.email.should.equal('email@email.org')
+// 			// res.body.primaryContactUser.phone.should.equal('+18884442222')
 // 			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
 // 			res.body.address.location.type.should.equal('Point')
 // 			res.body.address.location.coordinates.should.deep.equal(
 // 				[-73.7814005, 42.6722152])
-// 			res.body.name.should.equal('Birthright of Albany')
+// 			res.body.prcName.should.equal('Birthright of Albany')
 // 			res.body.phone.should.equal('+15184382978')
 // 			res.body.website.should.equal('http://www.birthright.org')
-// 			res.body.services.should.deep.equal([])
 // 		})
 // 	})
 //
@@ -279,7 +289,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/near-me')
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -303,10 +313,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': []
+// 				'services': {}
 //
 // 			})
 //
@@ -321,21 +331,21 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'The Bridge To Life, Inc.',
+// 				'prcName': 'The Bridge To Life, Inc.',
 // 				'phone': '+17182743577',
 // 				'email': 'thebridgetolife@verizon.net',
 // 				'website': 'http://www.thebridgetolife.org',
-// 				'services': []
+// 				services:{},
 // 			})
 //
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
-// 				.set('origin', config.server.originWhitelist[0])
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(1)
-// 			res.body[0].name.should.equal('Birthright of Albany')
+// 			res.body[0].prcName.should.equal('Birthright of Albany')
 // 		})
 // 	})
 //
@@ -347,7 +357,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/verify')
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -371,10 +381,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': []
+// 				services:{},
 //
 // 			})
 //
@@ -389,11 +399,11 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'The Bridge To Life, Inc.',
+// 				'prcName': 'The Bridge To Life, Inc.',
 // 				'phone': '+17182743577',
 // 				'email': 'thebridgetolife@verizon.net',
 // 				'website': 'http://www.thebridgetolife.org',
-// 				'services': [],
+// 				'services':{},
 // 				'verified': {
 // 					'address': {
 // 						'date': '2017-04-16T23:33:17.220Z'
@@ -404,13 +414,12 @@ PregnancyCenterHistoryModel
 //
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/verify')
-// 				.set('origin', config.server.originWhitelist[0])
-//
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('object')
-// 			res.body.should.have.property('name')
-// 			res.body.name.should.equal('Birthright of Albany')
-// 			res.body.should.not.have.property('verified')
+// 			res.body.should.have.property('prcName')
+// 			res.body.prcName.should.equal('Birthright of Albany')
+// 			res.body.verified.should.deep.equal({})
 //
 // 		})
 // 	})
@@ -432,10 +441,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': [],
+// 				'services':{},
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
@@ -455,11 +464,11 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'The Bridge To Life, Inc.',
+// 				'prcName': 'The Bridge To Life, Inc.',
 // 				'phone': '+17182743577',
 // 				'email': 'thebridgetolife@verizon.net',
 // 				'website': 'http://www.thebridgetolife.org',
-// 				'services': [],
+// 				'services': {},
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
@@ -472,7 +481,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/verify')
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 			} catch (err) {
 // 				assertError(err.response, 404, 'Not Found')
 // 			}
@@ -496,10 +505,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': [],
+// 				'services': {},
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
@@ -512,7 +521,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.put('/api/pregnancy-centers/'+pc._id)
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 					.send(pc)
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
@@ -537,10 +546,16 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': [],
+// 				'services':{},
+// 				// primaryContactUser: {
+// 				// 	firstName: 'Joanna',
+// 				// 	lastName: 'Smith',
+// 				// 	email: 'email@email.org',
+// 				// 	phone: '+18884442222'
+// 				// },
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
@@ -559,10 +574,16 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': [],
+// 				'services':{},
+// 				// primaryContactUser: {
+// 				// 	firstName: 'Joanna B',
+// 				// 	lastName: 'Smith',
+// 				// 	email: 'email2@email.org',
+// 				// 	phone: '+18884442222'
+// 				// },
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
@@ -578,15 +599,17 @@ PregnancyCenterHistoryModel
 //
 // 			const res = await chai.request(server)
 // 				.put('/api/pregnancy-centers/' + oldPCObj._id)
-// 				.set('origin', config.server.originWhitelist[0])
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 				.send(newValues)
 //
 // 			res.should.have.status(200)
+// 			log.info(res.body)
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('_id')
-// 			res.body.should.have.property('name')
+// 			res.body.should.have.property('prcName')
+// 			// res.body.should.have.property('primaryContactUser')
 // 			res.body._id.should.equal(String(oldPCObj._id))
-// 			res.body.name.should.equal('Birthright of Albany')
+// 			res.body.prcName.should.equal('Birthright of Albany')
 // 			res.body.should.have.property('verified')
 // 			res.body.should.have.property('updated')
 // 			res.body.updated.should.have.property('address')
@@ -598,6 +621,7 @@ PregnancyCenterHistoryModel
 // 			const newPCObj = await PregnancyCenterHistoryModel.find({
 // 				pregnancyCenterId: oldPCObj._id
 // 			})
+// 			log.info(newPCObj)
 // 			newPCObj.should.have.length(1)
 // 		})
 // 	})
@@ -619,10 +643,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': []
+// 				'services':{}
 //
 // 			})
 // 			await pc.save()
@@ -630,7 +654,7 @@ PregnancyCenterHistoryModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/'+pc._id)
-// 					.set('origin', config.server.originWhitelist[0])
+// 					.set('origin', config.corsOriginWhitelist[0])
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -654,10 +678,10 @@ PregnancyCenterHistoryModel
 // 						]
 // 					},
 // 				},
-// 				'name': 'Birthright of Albany',
+// 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
-// 				'services': []
+// 				'services':{}
 //
 // 			})
 //
@@ -666,14 +690,14 @@ PregnancyCenterHistoryModel
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/'+pc._id)
-// 				.set('origin', config.server.originWhitelist[0])
+// 				.set('origin', config.corsOriginWhitelist[0])
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('_id')
-// 			res.body.should.have.property('name')
+// 			res.body.should.have.property('prcName')
 // 			res.body._id.should.equal(String(pc._id))
-// 			res.body.name.should.equal('Birthright of Albany')
-// 			res.body.should.not.have.property('verified')
+// 			res.body.prcName.should.equal('Birthright of Albany')
+// 			res.body.verified.should.deep.equal({})
 //
 // 		})
 // 	})
@@ -774,24 +798,6 @@ PregnancyCenterHistoryModel
 // 			})
 // 			validationObj.error.name.should.equal('ValidationError')
 // 			validationObj.error.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
-// 		})
-// 	})
-//
-// 	/*
-// 	 * Test the Joi validation for pregnancy centers separately from the API routes
-// 	 */
-// 	describe('Test Joi validation for pregnancy centers email 5', () => {
-// 		it('validation should fail because the email address provided does not have an @', async () => {
-//
-// 			const testPCObj5 = {
-// 				email: 'pregnancycenter.com'
-// 			}
-//
-// 			const validationObj = await Joi.validate(testPCObj5, pregnancyCenterSchemaJoi, {
-// 				abortEarly: false
-// 			})
-// 			validationObj.error.name.should.equal('ValidationError')
-// 			validationObj.error.message.should.equal('child "email" fails because ["email" must be a valid email]')
 // 		})
 // 	})
 //
@@ -927,16 +933,17 @@ PregnancyCenterHistoryModel
 // 		it('validation should fail because one of the services is mispelled', async () => {
 //
 // 			const testPCObj12 = {
-// 				services: [
-// 					'Ulllltrasound', 'PARENTING_CLASSES'
-// 				]
+// 				services: {
+// 					Ulllltrasound: false,
+// 					parentingClasses: true,
+// 				}
 // 			}
 //
 // 			const validationObj = await Joi.validate(testPCObj12, pregnancyCenterSchemaJoi, {
 // 				abortEarly: false
 // 			})
 // 			validationObj.error.name.should.equal('ValidationError')
-// 			validationObj.error.message.should.equal('child "services" fails because ["services" at position 0 fails because ["0" must be one of [PREGNANCY_TEST, ULTRASOUND, MATERIAL_ASSISTANCE, POST_ABORTION_HEALING, PARENTING_CLASSES, STD_TESTING, COUNSELING]]]')
+// 			validationObj.error.message.should.equal('child "services" fails because ["Ulllltrasound" is not allowed]')
 // 		})
 // 	})
 //
@@ -987,4 +994,4 @@ PregnancyCenterHistoryModel
 // 			validatedData.verified.address.userId.should.equal('58e46a8d210140d7e47bf58b')
 // 		})
 // 	})
-//})
+// })
