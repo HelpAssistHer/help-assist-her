@@ -30,12 +30,11 @@ const userDateSchema = new mongoose.Schema({
 
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
-	email: String,
 	hours: Object,
 	name: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContactUserId: { type: Person.ObjectId, ref: 'Person' },
+	primaryContactPerson: { type: Person.ObjectId, ref: 'Person' },
 	services: [{
 		type:String,
 		enum: [
@@ -93,12 +92,6 @@ pregnancyCenterSchema.post('save', function(doc) {
 })
 pregnancyCenterSchema.post('remove', function(doc) {
 	log.info('%s has been removed', doc._id)
-})
-
-pregnancyCenterSchema.post('find', function(result) {
-	for (const pregnancyCenter of result) {
-		pregnancyCenter.primaryContactPerson = {}
-	}
 })
 
 // create model using the schema

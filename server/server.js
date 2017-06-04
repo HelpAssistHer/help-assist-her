@@ -110,7 +110,7 @@ startDatabase()
 	TODO: limits and paging, if necessary
  */
 server.get('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const allPregnancyCenters = await PregnancyCenterModel.find({}).populate('primaryContactUser', ['name'])
+	const allPregnancyCenters = await PregnancyCenterModel.find({}).populate('primaryContactPerson')
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
 	}
