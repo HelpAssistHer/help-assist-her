@@ -54,7 +54,6 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	_id: Joi.string(),
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
-	dateCreated: Joi.date().iso(),
 	hours: hoursSchemaJoi,
 	prcName: Joi.string(),
 	notes: Joi.string(),
