@@ -1,10 +1,7 @@
 'use strict'
 
 const _ = require('lodash')
-const Log = require('log')
 const mongoose = require('mongoose')
-
-const log = new Log('info')
 
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
