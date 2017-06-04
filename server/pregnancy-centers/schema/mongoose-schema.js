@@ -3,7 +3,6 @@
 const _ = require('lodash')
 const Log = require('log')
 const mongoose = require('mongoose')
-const databaseHelpers = require('../../util/database-helpers')
 
 const log = new Log('info')
 
@@ -77,14 +76,6 @@ pregnancyCenterSchema.methods.getFullAddress = function getFullAddress() {
 		+ _.get(this, 'address.city', '') + ' ' + _.get(this, 'address.state', '') + ' ' +
 		_.get(this, 'address.zip', '')
 }
-
-pregnancyCenterSchema.pre('validate', async function(next) {
-	// depopulate the primaryContactPerson and replace with id only.
-	if (this.primaryContactPerson !== null && typeof this.primaryContactPerson  === 'object') {
-		this.primaryContactPerson = await databaseHelpers.updateCreatePrimaryContactPerson(this.primaryContactPerson)
-	}
-	next()
-})
 
 pregnancyCenterSchema.post('init', function(doc) {
 	log.info('%s has been initialized from the db', doc._id)

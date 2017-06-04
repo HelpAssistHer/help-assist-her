@@ -165,7 +165,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 	const newPregnancyCenter = req.body
 
 	try {
-		const createdPregnancyCenter = createPregnancyCenter(newPregnancyCenter)
+		const createdPregnancyCenter = await createPregnancyCenter(newPregnancyCenter)
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
@@ -179,8 +179,11 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPregnancyCenterId, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
+	log.info('got here')
+	log.info(req.user)
+
 	try {
-		const updatedPregnancyCenter = updatePregnancyCenter(req.user._id, pregnancyCenterId, req.body)
+		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, req.body)
 		res.status(200).json(updatedPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)

@@ -2,14 +2,17 @@
 
 const _ = require('lodash')
 const Joi = require('joi')
+const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 
-const PregnancyCenterHistoryModel = require('./pregnancy-center-history/schema/mongoose-schema')
-const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
-const PersonModel = require('./persons/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('./pregnancy-centers/schema/joi-schema')
-const personSchemaJoi = require('./persons/schema/joi-schema')
+const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const PersonModel = require('../persons/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
+const personSchemaJoi = require('../persons/schema/joi-schema')
+
+const log = new Log('info')
 
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt']
 
@@ -131,7 +134,7 @@ module.exports = {
 			}
 
 			try {
-				const createdPregnancyCenter = new PregnancyCenterModel(pregnancyCenterValidationObj.value)
+				const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 				await createdPregnancyCenter.save()
 				resolve(createdPregnancyCenter)
 			} catch (err) {
@@ -142,15 +145,19 @@ module.exports = {
 	updatePregnancyCenter: (userId, pregnancyCenterId, pregnancyCenter) => {
 		return new P(async(resolve, reject) => {
 
+			log.info('hit this')
+
 			const pregnancyCenterValidationObj = await Joi.validate(pregnancyCenter, pregnancyCenterSchemaJoi, {
 				abortEarly: false
 			})
 
 			// await Joi.validate() returns an obj of form { error: null, value: validatedData}
 			if (pregnancyCenterValidationObj.error) {
+				log.error(pregnancyCenterValidationObj.error)
 				reject(pregnancyCenterValidationObj.error)
 			}
 			const validatedPregnancyCenter = pregnancyCenterValidationObj.value
+			log.info(validatedPregnancyCenter)
 
 			const primaryContactPerson = validatedPregnancyCenter.primaryContactPerson
 			delete validatedPregnancyCenter.primaryContactPerson

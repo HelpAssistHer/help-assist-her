@@ -18,6 +18,8 @@ const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-sc
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
 const server = require('../../server')
 const UserModel = require('../../users/schema/mongoose-schema')
+const PersonModel = require('../../persons/schema/mongoose-schema')
+
 
 chai.use(chaiHttp)
 const log = new Log('info')
@@ -230,6 +232,15 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/POST /api/pregnancy-centers', () => {
 		it('it should create a new pregnancy center and return the data', async () => {
+
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
 			const pregnancyCenter = {
 				address: {
 					line1:'586 Central Ave.\nAlbany, NY 12206',
@@ -240,14 +251,10 @@ describe('PregnancyCenters', () => {
 				prcName:'Birthright of Albany',
 				phone:'+15184382978',
 				website:'http://www.birthright.org',
-				// primaryContactUser: {
-				// 	firstName: 'Joanna',
-				// 	lastName: 'Smith',
-				// 	email: 'email@email.org',
-				// 	phone: '+18884442222'
-				// },
+				primaryContactPerson: primaryContactPerson,
 				services:{},
 			}
+
 			mockAuthenticate()
 			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
@@ -260,11 +267,11 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('website')
 			res.body.should.have.property('phone')
-			// res.body.should.have.property('primaryContactUser')
-			// res.body.primaryContactUser.firstName.should.equal('Joanna')
-			// res.body.primaryContactUser.lastName.should.equal('Smith')
-			// res.body.primaryContactUser.email.should.equal('email@email.org')
-			// res.body.primaryContactUser.phone.should.equal('+18884442222')
+			res.body.should.have.property('primaryContactPerson')
+			res.body.primaryContactPerson.firstName.should.equal('Joanna')
+			res.body.primaryContactPerson.lastName.should.equal('Smith')
+			res.body.primaryContactPerson.email.should.equal('email@email.org')
+			res.body.primaryContactPerson.phone.should.equal('+18884442222')
 			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
 			res.body.address.location.type.should.equal('Point')
 			res.body.address.location.coordinates.should.deep.equal(
@@ -375,9 +382,6 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
-				'primaryContactPerson': {
-					'firstName': 'Donna'
-				},
 				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
@@ -416,8 +420,6 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
 			res.body.prcName.should.equal('Birthright of Albany')
-			res.body.should.have.property('primaryContactPerson')
-			res.body.primaryContactPerson.firstName.should.equal('Donna')
 			res.body.verified.should.deep.equal({})
 
 		})
@@ -534,6 +536,16 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', async () => {
 
+			mockAuthenticate()
+
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
 			const oldValues = {
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -549,12 +561,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
-				// primaryContactUser: {
-				// 	firstName: 'Joanna',
-				// 	lastName: 'Smith',
-				// 	email: 'email@email.org',
-				// 	phone: '+18884442222'
-				// },
+				primaryContactPerson: primaryContactPerson,
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -577,12 +584,12 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
-				// primaryContactUser: {
-				// 	firstName: 'Joanna B',
-				// 	lastName: 'Smith',
-				// 	email: 'email2@email.org',
-				// 	phone: '+18884442222'
-				// },
+				primaryContactPerson: {
+					firstName: 'Joanna B',
+					lastName: 'Smith',
+					email: 'email2@email.org',
+					phone: '+18884442222'
+				},
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -594,8 +601,6 @@ describe('PregnancyCenters', () => {
 
 			const oldPCObj = await PregnancyCenterModel.create(oldValues)
 
-			mockAuthenticate()
-
 			const res = await chai.request(server)
 				.put('/api/pregnancy-centers/' + oldPCObj._id)
 				.set('origin', config.corsOriginWhitelist[0])
@@ -606,7 +611,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
-			// res.body.should.have.property('primaryContactUser')
+			res.body.should.have.property('primaryContactPerson')
 			res.body._id.should.equal(String(oldPCObj._id))
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.should.have.property('verified')
@@ -779,24 +784,6 @@ describe('PregnancyCenters', () => {
 			})
 			validationObj.error.name.should.equal('ValidationError')
 			validationObj.error.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
-		})
-	})
-
-	/*
-	 * Test the Joi validation for pregnancy centers separately from the API routes
-	 */
-	describe('Test Joi validation for pregnancy centers dateCreated 4', () => {
-		it('validation should fail because the dateCreated provided is not a date ', async () => {
-
-			const testPCObj4 = {
-				dateCreated: '3/3/2017'
-			}
-
-			const validationObj = await Joi.validate(testPCObj4, pregnancyCenterSchemaJoi, {
-				abortEarly: false
-			})
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
 		})
 	})
 
