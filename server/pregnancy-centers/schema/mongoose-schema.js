@@ -30,7 +30,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	prcName: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContactPersonId: mongoose.Schema.Types.ObjectId,  // a user
+	primaryContactPersonId: mongoose.Schema.Types.ObjectId,
 	services: {
 		default: {},
 		pregnancyTest: Boolean,
@@ -57,6 +57,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 		name: userDateSchema,
 		notes: userDateSchema,
 		phone: userDateSchema,
+		primaryContact: userDateSchema,
 		resources: userDateSchema,
 		website: userDateSchema,
 	},
