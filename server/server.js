@@ -1,6 +1,5 @@
 'use strict'
 
-const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const config = require('config')
@@ -17,7 +16,7 @@ const session = require('express-session')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
-const databaseHelpers = require('/util/database-helpers')
+const databaseHelpers = require('./util/database-helpers')
 const checkPregnancyCenterId = databaseHelpers.checkPregnancyCenterId
 const createPregnancyCenter = databaseHelpers.createPregnancyCenter
 const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter

@@ -19,8 +19,6 @@ const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-sch
 const server = require('../../server')
 const UserModel = require('../../users/schema/mongoose-schema')
 
-
-
 chai.use(chaiHttp)
 const log = new Log('info')
 
