@@ -7,6 +7,8 @@ const PersonSchema = mongoose.Schema({
 	lastName: String,
 	email: String,
 	phone: String,
+}, {
+	timestamps: true, // createdAt and updatedAt are automatically added
 })
 
 PersonSchema.methods.getDisplayName = () => {
