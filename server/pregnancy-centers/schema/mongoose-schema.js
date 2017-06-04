@@ -53,7 +53,6 @@ const pregnancyCenterSchema = mongoose.Schema({
 	},
 	updated: {
 		address: userDateSchema,
-		email: userDateSchema,
 		hours: userDateSchema,
 		name: userDateSchema,
 		notes: userDateSchema,

@@ -10,7 +10,7 @@ const PersonSchema = mongoose.Schema({
 })
 
 PersonSchema.methods.getDisplayName = () => {
-	return '${this.firstName} ${this.lastName}'
+	return `${this.firstName} ${this.lastName}`
 }
 
 const PersonModel = mongoose.model('Persons', PersonSchema)

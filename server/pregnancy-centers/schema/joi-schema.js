@@ -9,7 +9,7 @@ const pointSchemaJoi = Joi.object().keys({
 	coordinates: Joi.array().ordered(
 		Joi.number().max(-66).min(-128).required(), // general continental US longitude parameters
 		Joi.number().min(23).max(50).required() 	// general continental US latitude parameters, to keep
-		// from accidentally switching lat, lng
+													// from accidentally switching lat, lng
 	).min(2).max(2)
 })
 
