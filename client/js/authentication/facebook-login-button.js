@@ -9,6 +9,7 @@ class FacebookLoginButton extends React.Component {
 	}
 
 	render() {
+		console.log('FACEBOOK APP ID', VERIFICATION_PORTAL_FACEBOOK_APP_ID)
 		return (
 			<FacebookLogin
 				appId={VERIFICATION_PORTAL_FACEBOOK_APP_ID}
