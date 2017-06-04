@@ -151,7 +151,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const pregnancyCenter = await PregnancyCenterModel.findOne({}).lean()
+	const pregnancyCenter = await PregnancyCenterModel.findOne({}).populate('primaryContactPerson').lean()
 
 	if (!pregnancyCenter) {
 		return res.boom.notFound('No pregnancy centers to verify')
