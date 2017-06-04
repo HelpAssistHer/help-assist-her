@@ -10,6 +10,8 @@ const UserSchema = mongoose.Schema({
 	lastName: String,
 	email: String,
 	phone: String,
+}, {
+	timestamps: true, // createdAt and updatedAt are automatically added
 })
 
 UserSchema.methods.getDisplayName = function getDisplayName () {

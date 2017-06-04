@@ -65,6 +65,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		email: Joi.string(),
 		phone: Joi.string()
 	},
+	primaryContactPersonId: Joi.string(),
 	services: {
 		pregnancyTest: Joi.boolean(),
 		ultrasound: Joi.boolean(),
@@ -79,10 +80,9 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		address: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		name: dateUserActionSchemaJoi,
-		notes: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
 		primaryContact: dateUserActionSchemaJoi,
-		resources: dateUserActionSchemaJoi,
+		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
 	updated: {
@@ -92,7 +92,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		notes: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
 		primaryContact: dateUserActionSchemaJoi,
-		resources: dateUserActionSchemaJoi,
+		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
 	updatedAt: Joi.date().iso(),

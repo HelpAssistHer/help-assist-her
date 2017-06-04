@@ -7,10 +7,12 @@ const PersonSchema = mongoose.Schema({
 	lastName: String,
 	email: String,
 	phone: String,
+}, {
+	timestamps: true, // createdAt and updatedAt are automatically added
 })
 
 PersonSchema.methods.getDisplayName = () => {
-	return '${this.firstName} ${this.lastName}'
+	return `${this.firstName} ${this.lastName}`
 }
 
 const PersonModel = mongoose.model('Persons', PersonSchema)
