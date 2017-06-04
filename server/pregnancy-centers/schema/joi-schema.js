@@ -55,41 +55,44 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
 	dateCreated: Joi.date().iso(),
-	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
-	name: Joi.string(), // change to PRC name
+	prcName: Joi.string(),
 	notes: Joi.string(),
 	phone: phoneValidator.phone().validate(),
+	primaryContactPerson: {
+		firstName: Joi.string(),
+		lastName: Joi.string(),
+		email: Joi.string(),
+		phone: Joi.string()
+	},
 	primaryContactPersonId: Joi.string(),
-	services: Joi.array().items(Joi.string().valid(
-		'PREGNANCY_TEST',
-		'ULTRASOUND',
-		'MATERIAL_ASSISTANCE',
-		'POST_ABORTION_HEALING',
-		'PARENTING_CLASSES',
-		'STD_TESTING',
-		'COUNSELING'
-	)),
+	services: {
+		pregnancyTest: Joi.boolean(),
+		ultrasound: Joi.boolean(),
+		materialAssistance: Joi.boolean(),
+		postAbortionHealing: Joi.boolean(),
+		parentingClasses: Joi.boolean(),
+		stdTesting: Joi.boolean(),
+		professionalCounseling: Joi.boolean(),
+		other: Joi.boolean()
+	},
 	verified: {
 		address: dateUserActionSchemaJoi,
-		email: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		name: dateUserActionSchemaJoi,
-		notes: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
 		primaryContact: dateUserActionSchemaJoi,
-		resources: dateUserActionSchemaJoi,
+		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
 	updated: {
 		address: dateUserActionSchemaJoi,
-		email: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		name: dateUserActionSchemaJoi,
 		notes: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
 		primaryContact: dateUserActionSchemaJoi,
-		resources: dateUserActionSchemaJoi,
+		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
 	updatedAt: Joi.date().iso(),
