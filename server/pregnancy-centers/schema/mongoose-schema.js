@@ -30,7 +30,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	name: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContactUserId: mongoose.Schema.Types.ObjectId,  // a user
+	primaryContactPersonId: mongoose.Schema.Types.ObjectId, 
 	services: [{
 		type:String,
 		enum: [

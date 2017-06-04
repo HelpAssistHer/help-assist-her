@@ -60,7 +60,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	name: Joi.string(), // change to PRC name
 	notes: Joi.string(),
 	phone: phoneValidator.phone().validate(),
-	primaryContactUserId: Joi.string(),
+	primaryContactPersonId: Joi.string(),
 	services: Joi.array().items(Joi.string().valid(
 		'PREGNANCY_TEST',
 		'ULTRASOUND',
