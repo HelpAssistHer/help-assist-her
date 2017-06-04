@@ -110,7 +110,7 @@ startDatabase()
 	TODO: limits and paging, if necessary
  */
 server.get('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const allPregnancyCenters = await PregnancyCenterModel.find({})
+	const allPregnancyCenters = await PregnancyCenterModel.find({}).populate('primaryContactPerson').lean()
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
 	}
@@ -138,7 +138,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 				$maxDistance: miles * METERS_PER_MILE
 			}
 		}
-	})
+	}).populate('primaryContactPerson').lean()
 
 	if (pregnancyCentersNearMe.length <= 0) {
 		return res.boom.notFound(`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`)
