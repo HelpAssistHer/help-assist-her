@@ -31,17 +31,10 @@ function isEqualMongoose(a, b){
 	return _.isEqual(removeMongooseKeys(a), removeMongooseKeys(b))
 }
 
-function createUpdateHistory(userId, pregnancyCenterId, pregnancyCenterRawObj) {
+function createUpdateHistory(userId, oldPregnancyCenterObj, pregnancyCenterRawObj) {
 
-	return new P( async (resolve, reject) => {
+	return new P( async (resolve) => {
 		const pregnancyCenterRawObjWithStamps = removeMongooseKeys(_.clone(pregnancyCenterRawObj))
-
-		let oldPregnancyCenterObj = await PregnancyCenterModel.findById(pregnancyCenterId)
-		if (!oldPregnancyCenterObj) {
-			reject()
-		}
-
-		oldPregnancyCenterObj = oldPregnancyCenterObj.toObject()
 
 		if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
 			pregnancyCenterRawObjWithStamps['updated'] = oldPregnancyCenterObj['updated']
@@ -60,7 +53,7 @@ function createUpdateHistory(userId, pregnancyCenterId, pregnancyCenterRawObj) {
 				}
 
 				const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
-					pregnancyCenterId: pregnancyCenterId,
+					pregnancyCenterId: oldPregnancyCenterObj._id,
 					field: key,
 					newValue: value,
 					oldValue: oldPregnancyCenterObj[key],
@@ -102,7 +95,7 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 				reject(err)
 			}
 		}
-		resolve(createdPrimaryContactPerson._id)
+		resolve(createdPrimaryContactPerson)
 	})
 }
 
@@ -124,18 +117,20 @@ module.exports = {
 
 			const primaryContactPerson = validatedPregnancyCenter.primaryContactPerson
 			delete validatedPregnancyCenter.primaryContactPerson
+			let createdPregnancyCenter
 
 			if (primaryContactPerson) {
 				try {
-					validatedPregnancyCenter.primaryContactPerson = await updateCreatePrimaryContactPerson(primaryContactPerson)
+					createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
+					createdPregnancyCenter.primaryContactPerson = await updateCreatePrimaryContactPerson(primaryContactPerson)
 				} catch (err) {
 					reject(err)
 				}
 			}
 
 			try {
-				const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 				await createdPregnancyCenter.save()
+				await PregnancyCenterModel.populate(createdPregnancyCenter, 'primaryContactPerson')
 				resolve(createdPregnancyCenter)
 			} catch (err) {
 				reject(err)
@@ -144,8 +139,6 @@ module.exports = {
 	},
 	updatePregnancyCenter: (userId, pregnancyCenterId, pregnancyCenter) => {
 		return new P(async(resolve, reject) => {
-
-			log.info('hit this')
 
 			const pregnancyCenterValidationObj = await Joi.validate(pregnancyCenter, pregnancyCenterSchemaJoi, {
 				abortEarly: false
@@ -157,10 +150,17 @@ module.exports = {
 				reject(pregnancyCenterValidationObj.error)
 			}
 			const validatedPregnancyCenter = pregnancyCenterValidationObj.value
-			log.info(validatedPregnancyCenter)
 
 			const primaryContactPerson = validatedPregnancyCenter.primaryContactPerson
 			delete validatedPregnancyCenter.primaryContactPerson
+
+			let oldPregnancyCenterObj = await PregnancyCenterModel.findById(pregnancyCenterId)
+				.populate('primaryContactPerson')
+			if (!oldPregnancyCenterObj) {
+				reject()
+			}
+
+			oldPregnancyCenterObj = oldPregnancyCenterObj.toObject()
 
 			if (primaryContactPerson) {
 				try {
@@ -170,7 +170,10 @@ module.exports = {
 				}
 			}
 
-			const validatedDataWithUpdatedHistory = await createUpdateHistory(userId, pregnancyCenterId, validatedPregnancyCenter)
+			const tempPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
+			tempPregnancyCenter.populate('primaryContactPerson')
+			const validatedDataWithUpdatedHistory = await createUpdateHistory(userId, oldPregnancyCenterObj, tempPregnancyCenter.toObject())
+			validatedDataWithUpdatedHistory.primaryContactPerson = validatedDataWithUpdatedHistory.primaryContactPerson._id
 			const updatedPregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(pregnancyCenterId, {
 				$set: validatedDataWithUpdatedHistory
 			}, {new: true})
@@ -178,7 +181,7 @@ module.exports = {
 			if (!updatedPregnancyCenter) {
 				reject()
 			}
-
+			await PregnancyCenterModel.populate(updatedPregnancyCenter, 'primaryContactPerson')
 			resolve(updatedPregnancyCenter)
 		})
 	},

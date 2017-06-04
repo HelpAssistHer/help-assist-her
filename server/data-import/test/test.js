@@ -65,6 +65,8 @@ describe('PregnancyCenters', () => {
 		mockUnauthenticate()
 		await PregnancyCenterModel.remove({})
 		await UserModel.remove({})
+		await PregnancyCenterHistoryModel.remove({})
+		await PersonModel.remove({})
 		const me = new UserModel({
 			displayName: 'Kate Sills'
 		})
@@ -96,6 +98,14 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/open-now ', () => {
 		it('it should return one pregnancy center open at 10am on Mondays', async () => {
 
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
 			// 1 is Monday
 
 			await PregnancyCenterModel.create({
@@ -111,6 +121,7 @@ describe('PregnancyCenters', () => {
 				},
 				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
+				'primaryContactPerson':  primaryContactPerson,
 				'website': 'http://www.birthright.org',
 				'services': {},
 				'hours': {
@@ -165,6 +176,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
 			res.body[0].prcName.should.equal('Birthright of Albany')
+			res.body[0].primaryContactPerson.firstName.should.equal('Joanna')
 		})
 	})
 
@@ -303,6 +315,14 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/near-me', () => {
 		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
 
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
 			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -314,6 +334,7 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
+				'primaryContactPerson': primaryContactPerson,
 				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
@@ -347,6 +368,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
 			res.body[0].prcName.should.equal('Birthright of Albany')
+			res.body[0].primaryContactPerson.firstName.should.equal('Joanna')
 		})
 	})
 
@@ -371,6 +393,14 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/verify', () => {
 		it('it should return a single pregnancy center were verified.address is null', async () => {
 
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
 			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -383,11 +413,20 @@ describe('PregnancyCenters', () => {
 					},
 				},
 				'prcName': 'Birthright of Albany',
+				'primaryContactPerson': primaryContactPerson,
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				services:{},
 
 			})
+
+			const primaryContactPerson2 = new PersonModel({
+				firstName: 'Joanna2',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson2.save()
 
 			await PregnancyCenterModel.create({
 				'address': {
@@ -402,6 +441,7 @@ describe('PregnancyCenters', () => {
 				},
 				'prcName': 'The Bridge To Life, Inc.',
 				'phone': '+17182743577',
+				'primaryContactPerson': primaryContactPerson2,
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services':{},
@@ -420,6 +460,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
 			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res.body.verified.should.deep.equal({})
 
 		})
@@ -569,6 +610,14 @@ describe('PregnancyCenters', () => {
 				}
 			}
 
+			const primaryContactPerson2 = {
+				firstName: 'Joanna B',
+				lastName: 'Smith',
+				email: 'email2@email.org',
+				phone: '+18884442222',
+				_id: primaryContactPerson._id
+			}
+
 			const newValues = {
 				'address': {
 					'line1': 'New Address',
@@ -584,12 +633,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
-				primaryContactPerson: {
-					firstName: 'Joanna B',
-					lastName: 'Smith',
-					email: 'email2@email.org',
-					phone: '+18884442222'
-				},
+				primaryContactPerson: primaryContactPerson2,
 				'verified': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
@@ -607,7 +651,6 @@ describe('PregnancyCenters', () => {
 				.send(newValues)
 
 			res.should.have.status(200)
-			log.info(res.body)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
@@ -622,11 +665,18 @@ describe('PregnancyCenters', () => {
 			res.body.verified.should.have.property('address')
 
 			// check that the pregnancy center history is created as well.
-			const newPCObj = await PregnancyCenterHistoryModel.find({
+			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			log.info(newPCObj)
-			newPCObj.should.have.length(1)
+			histories.should.have.length(2) // we want the primary Contact history too.
+			for(const pc_history of histories){
+				if (pc_history.field == 'primaryContactPerson') {
+					pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
+				}
+			}
+
+			const people = await PersonModel.find({})
+			people.should.have.length(1)
 		})
 	})
 
@@ -671,6 +721,14 @@ describe('PregnancyCenters', () => {
 	describe('/GET /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return a single pregnancy center matching the id', async () => {
 
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
 			const pc = new PregnancyCenterModel({
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -683,6 +741,7 @@ describe('PregnancyCenters', () => {
 					},
 				},
 				'prcName': 'Birthright of Albany',
+				'primaryContactPerson': primaryContactPerson,
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{}
@@ -701,6 +760,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(pc._id))
 			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res.body.verified.should.deep.equal({})
 
 		})

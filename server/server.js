@@ -127,8 +127,6 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	const lat = req.query.lat || 42.6721989
 	const miles = req.query.miles || 5
 
-	log.info({'lat': lat, 'lng': lng, 'miles': miles})
-
 	const pregnancyCentersNearMe = await PregnancyCenterModel.find({
 		'address.location': {
 			$nearSphere: {
@@ -178,9 +176,6 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
  */
 server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPregnancyCenterId, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
-
-	log.info('got here')
-	log.info(req.user)
 
 	try {
 		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, req.body)
@@ -242,7 +237,6 @@ function handleError(res, err) {
 server.get(
 	'/auth/facebook/token',
 	(req, res, next) => {
-		log.info(req.session)
 		passport.authenticate('facebook-token', (error, user) => {
 			if (error || !user) {
 				res.boom.unauthorized('User is not logged in.')

@@ -77,19 +77,6 @@ pregnancyCenterSchema.methods.getFullAddress = function getFullAddress() {
 		_.get(this, 'address.zip', '')
 }
 
-pregnancyCenterSchema.post('init', function(doc) {
-	log.info('%s has been initialized from the db', doc._id)
-})
-pregnancyCenterSchema.post('validate', function(doc) {
-	log.info('%s has been validated (but not saved yet)', doc._id)
-})
-pregnancyCenterSchema.post('save', function(doc) {
-	log.info('%s has been saved', doc._id)
-})
-pregnancyCenterSchema.post('remove', function(doc) {
-	log.info('%s has been removed', doc._id)
-})
-
 // create model using the schema
 const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
 
