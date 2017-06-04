@@ -18,7 +18,7 @@ module.exports = {
 	plugins: [
 		new webpack.DefinePlugin({
 			'VERIFICATION_PORTAL_FACEBOOK_APP_ID': JSON.stringify(
-				process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID || '1601964419836286'
+				process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID
 			)
 		})
 	],
