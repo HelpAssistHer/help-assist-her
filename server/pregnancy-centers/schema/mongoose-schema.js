@@ -1,7 +1,12 @@
 'use strict'
 
+const Joi = require('joi')
+const Log = require('log')
 const mongoose = require('mongoose')
+const pregnancyCenterSchemaJoi = require('./joi-schema')
 const _ = require('lodash')
+
+const log = new Log('info')
 
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
@@ -30,7 +35,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	name: String, // change to PRC name
 	notes: String,
 	phone: String,
-	primaryContactUserId: mongoose.Schema.Types.ObjectId,  // a user
+	primaryContactUserId: { type: Person.ObjectId, ref: 'Person' },
 	services: [{
 		type:String,
 		enum: [
@@ -77,8 +82,28 @@ pregnancyCenterSchema.methods.getFullAddress = function getFullAddress() {
 		_.get(this, 'address.zip', '')
 }
 
+pregnancyCenterSchema.post('init', function(doc) {
+	log.info('%s has been initialized from the db', doc._id)
+})
+pregnancyCenterSchema.post('validate', function(doc) {
+	log.info('%s has been validated (but not saved yet)', doc._id)
+})
+pregnancyCenterSchema.post('save', function(doc) {
+	log.info('%s has been saved', doc._id)
+})
+pregnancyCenterSchema.post('remove', function(doc) {
+	log.info('%s has been removed', doc._id)
+})
+
+pregnancyCenterSchema.post('find', function(result) {
+	for (const pregnancyCenter of result) {
+		pregnancyCenter.primaryContactPerson = {}
+	}
+})
+
 // create model using the schema
 const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
 
 // make available
 module.exports = PregnancyCenterModel
+

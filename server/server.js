@@ -110,7 +110,7 @@ startDatabase()
 	TODO: limits and paging, if necessary
  */
 server.get('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const allPregnancyCenters = await PregnancyCenterModel.find({})
+	const allPregnancyCenters = await PregnancyCenterModel.find({}).populate('primaryContactUser', ['name'])
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
 	}
@@ -183,20 +183,8 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const newPregnancyCenter = req.body
 
-	const pregnancyCenterValidationObj = await Joi.validate(newPregnancyCenter, pregnancyCenterSchemaJoi, {
-		abortEarly: false
-	})
-
-	// Joi.validate() returns an obj of form { error: null, value: validatedData}
-	if (pregnancyCenterValidationObj.error) {
-		return handleJoiValidationError(res, pregnancyCenterValidationObj.error)
-	}
-
-	const validatedPregnancyCenter = pregnancyCenterValidationObj.value
 	try {
-		const createdPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
-		await createdPregnancyCenter.save()
-
+		const createdPregnancyCenter = await createPregnancyCenter(newPregnancyCenter)
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
@@ -355,6 +343,28 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 
 		resolve(pregnancyCenterRawObjWithStamps)
 
+	})
+}
+
+function createPregnancyCenter(pregnancyCenter) {
+
+	return new P( async (resolve, reject) => {
+		const pregnancyCenterValidationObj = await Joi.validate(pregnancyCenter, pregnancyCenterSchemaJoi, {
+			abortEarly: false
+		})
+
+		// Joi.validate() returns an obj of form { error: null, value: validatedData}
+		if (pregnancyCenterValidationObj.error) {
+			reject(pregnancyCenterValidationObj.error)
+		}
+
+		try {
+			const createdPregnancyCenter = new PregnancyCenterModel(pregnancyCenterValidationObj.value)
+			await createdPregnancyCenter.save()
+			resolve(createdPregnancyCenter)
+		} catch (err) {
+			reject(err)
+		}
 	})
 }
 
