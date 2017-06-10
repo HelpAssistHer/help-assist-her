@@ -113,7 +113,7 @@ server.get('/verification', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
-server.get('/api/info', (req, res) => {
+server.get('/api/initial-data', (req, res) => {
 	const facebookAppId = config.facebook.appId
 	return res.status(200).json({
 		facebookAppId,
