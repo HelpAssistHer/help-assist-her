@@ -11,7 +11,7 @@ export async function authenticateUser(accessToken) {
 }
 
 export async function logoutUser() {
-	const response = await fetch(`/logout`, {
+	await fetch('/logout', {
 		method: 'GET',
 		credentials: 'include',
 	})
