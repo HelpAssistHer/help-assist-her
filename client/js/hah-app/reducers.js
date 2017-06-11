@@ -2,21 +2,29 @@ import _ from 'lodash'
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
+import { GET_INITIAL_DATA } from './action-types'
 import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/action-types'
 
+const authenticationReducer = (state = {}, action) => {
+	switch (action.type) {
+		case GET_INITIAL_DATA:
+			return _.assign({}, state, action.initialData)
+		default:
+			return state
+	}
+}
+
 const resourceReducer = (state = {}, action) => {
-	// console.log('ACTION', action)
-	// console.log('STATE b4', state)
 	switch (action.type) {
 		case GET_RESOURCE_TO_VERIFY:
 			return _.assign({}, state, action.resource)
 		default:
 			return state
 	}
-	console.log('STATE', state)
 }
 
 const reducers = {
+	initialData: authenticationReducer,
 	resource: resourceReducer,
 	form: formReducer,
 }
