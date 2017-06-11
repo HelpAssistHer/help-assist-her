@@ -1,7 +1,7 @@
 import { GET_INITIAL_DATA } from './action-types'
 
 async function getInitialData() {
-	const response = await fetch('http://localhost:4000/api/initial-data', {
+	const response = await fetch('/api/initial-data', {
 		method: 'GET',
 	})
 	return await response.json()
