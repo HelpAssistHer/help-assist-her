@@ -1,6 +1,8 @@
 import React from 'react'
 import FacebookLogin from 'react-facebook-login'
 
+import { authenticateUser } from '../action-creators'
+
 class FacebookLoginButton extends React.Component {
 	constructor(props) {
 		super(props)
