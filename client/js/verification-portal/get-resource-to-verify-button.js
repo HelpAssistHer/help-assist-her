@@ -33,11 +33,11 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('website', website)
 	changeFieldValue('verified.website', verified.website)
 
-	changeFieldValue('primaryContact.firstName', primaryContactUser.firstName)
-	changeFieldValue('primaryContact.lastName', primaryContactUser.lastName)
-	changeFieldValue('primaryContact.phone', primaryContactUser.phone)
-	changeFieldValue('primaryContact.email', primaryContactUser.email)
-	changeFieldValue('verified.primaryContact', verified.primaryContact)
+	changeFieldValue('primaryContact.firstName', _.get(primaryContactUser, 'firstName'))
+	changeFieldValue('primaryContact.lastName', _.get(primaryContactUser, 'lastName'))
+	changeFieldValue('primaryContact.phone', _.get(primaryContactUser, 'phone'))
+	changeFieldValue('primaryContact.email', _.get(primaryContactUser, 'email'))
+	changeFieldValue('verified.primaryContact', _.get(verified, 'primaryContact'))
 
 	_.each(services, service => {
 		changeFieldValue(`services.${service}`, 1)
