@@ -9,7 +9,6 @@
 // // eslint-disable-next-line no-unused-vars
 // const should = chai.should()
 // const Joi = require('joi')
-// const Log = require('log')
 // const mongoose = require('mongoose')
 // mongoose.Promise = require('bluebird')
 
@@ -18,15 +17,17 @@ const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-sc
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
 const server = require('../../server')
 const UserModel = require('../../users/schema/mongoose-schema')
+const PersonModel = require('../../persons/schema/mongoose-schema')
 
-PregnancyCenterHistoryModel
 PregnancyCenterModel
+PregnancyCenterHistoryModel
 pregnancyCenterSchemaJoi
 server
 UserModel
+PersonModel
 
+//
 // chai.use(chaiHttp)
-// const log = new Log('info')
 //
 // // Allows the middleware to think we're already authenticated.
 // function mockAuthenticate() {
@@ -69,6 +70,8 @@ UserModel
 // 		mockUnauthenticate()
 // 		await PregnancyCenterModel.remove({})
 // 		await UserModel.remove({})
+// 		await PregnancyCenterHistoryModel.remove({})
+// 		await PersonModel.remove({})
 // 		const me = new UserModel({
 // 			displayName: 'Kate Sills'
 // 		})
@@ -100,6 +103,14 @@ UserModel
 // 	describe('/GET /api/pregnancy-centers/open-now ', () => {
 // 		it('it should return one pregnancy center open at 10am on Mondays', async () => {
 //
+// 			const primaryContactPerson = new PersonModel({
+// 				firstName: 'Joanna',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson.save()
+//
 // 			// 1 is Monday
 //
 // 			await PregnancyCenterModel.create({
@@ -115,6 +126,7 @@ UserModel
 // 				},
 // 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
+// 				'primaryContactPerson':  primaryContactPerson,
 // 				'website': 'http://www.birthright.org',
 // 				'services': {},
 // 				'hours': {
@@ -169,6 +181,7 @@ UserModel
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(1)
 // 			res.body[0].prcName.should.equal('Birthright of Albany')
+// 			res.body[0].primaryContactPerson.firstName.should.equal('Joanna')
 // 		})
 // 	})
 //
@@ -236,6 +249,15 @@ UserModel
 // 	 */
 // 	describe('/POST /api/pregnancy-centers', () => {
 // 		it('it should create a new pregnancy center and return the data', async () => {
+//
+// 			const primaryContactPerson = new PersonModel({
+// 				firstName: 'Joanna',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson.save()
+//
 // 			const pregnancyCenter = {
 // 				address: {
 // 					line1:'586 Central Ave.\nAlbany, NY 12206',
@@ -246,14 +268,10 @@ UserModel
 // 				prcName:'Birthright of Albany',
 // 				phone:'+15184382978',
 // 				website:'http://www.birthright.org',
-// 				// primaryContactUser: {
-// 				// 	firstName: 'Joanna',
-// 				// 	lastName: 'Smith',
-// 				// 	email: 'email@email.org',
-// 				// 	phone: '+18884442222'
-// 				// },
+// 				primaryContactPerson: primaryContactPerson,
 // 				services:{},
 // 			}
+//
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.post('/api/pregnancy-centers')
@@ -266,11 +284,11 @@ UserModel
 // 			res.body.should.have.property('_id')
 // 			res.body.should.have.property('website')
 // 			res.body.should.have.property('phone')
-// 			// res.body.should.have.property('primaryContactUser')
-// 			// res.body.primaryContactUser.firstName.should.equal('Joanna')
-// 			// res.body.primaryContactUser.lastName.should.equal('Smith')
-// 			// res.body.primaryContactUser.email.should.equal('email@email.org')
-// 			// res.body.primaryContactUser.phone.should.equal('+18884442222')
+// 			res.body.should.have.property('primaryContactPerson')
+// 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
+// 			res.body.primaryContactPerson.lastName.should.equal('Smith')
+// 			res.body.primaryContactPerson.email.should.equal('email@email.org')
+// 			res.body.primaryContactPerson.phone.should.equal('+18884442222')
 // 			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
 // 			res.body.address.location.type.should.equal('Point')
 // 			res.body.address.location.coordinates.should.deep.equal(
@@ -302,6 +320,14 @@ UserModel
 // 	describe('/GET /api/pregnancy-centers/near-me', () => {
 // 		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
 //
+// 			const primaryContactPerson = new PersonModel({
+// 				firstName: 'Joanna',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson.save()
+//
 // 			await PregnancyCenterModel.create({
 // 				'address': {
 // 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -313,6 +339,7 @@ UserModel
 // 						]
 // 					},
 // 				},
+// 				'primaryContactPerson': primaryContactPerson,
 // 				'prcName': 'Birthright of Albany',
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
@@ -346,6 +373,7 @@ UserModel
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(1)
 // 			res.body[0].prcName.should.equal('Birthright of Albany')
+// 			res.body[0].primaryContactPerson.firstName.should.equal('Joanna')
 // 		})
 // 	})
 //
@@ -370,6 +398,14 @@ UserModel
 // 	describe('/GET /api/pregnancy-centers/verify', () => {
 // 		it('it should return a single pregnancy center were verified.address is null', async () => {
 //
+// 			const primaryContactPerson = new PersonModel({
+// 				firstName: 'Joanna',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson.save()
+//
 // 			await PregnancyCenterModel.create({
 // 				'address': {
 // 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -382,11 +418,20 @@ UserModel
 // 					},
 // 				},
 // 				'prcName': 'Birthright of Albany',
+// 				'primaryContactPerson': primaryContactPerson,
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
 // 				services:{},
 //
 // 			})
+//
+// 			const primaryContactPerson2 = new PersonModel({
+// 				firstName: 'Joanna2',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson2.save()
 //
 // 			await PregnancyCenterModel.create({
 // 				'address': {
@@ -401,6 +446,7 @@ UserModel
 // 				},
 // 				'prcName': 'The Bridge To Life, Inc.',
 // 				'phone': '+17182743577',
+// 				'primaryContactPerson': primaryContactPerson2,
 // 				'email': 'thebridgetolife@verizon.net',
 // 				'website': 'http://www.thebridgetolife.org',
 // 				'services':{},
@@ -419,6 +465,7 @@ UserModel
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('prcName')
 // 			res.body.prcName.should.equal('Birthright of Albany')
+// 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 // 			res.body.verified.should.deep.equal({})
 //
 // 		})
@@ -535,6 +582,16 @@ UserModel
 // 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 // 		it('it should return the updated pregnancyCenter record', async () => {
 //
+// 			mockAuthenticate()
+//
+// 			const primaryContactPerson = new PersonModel({
+// 				firstName: 'Joanna',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson.save()
+//
 // 			const oldValues = {
 // 				'address': {
 // 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -550,17 +607,20 @@ UserModel
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
 // 				'services':{},
-// 				// primaryContactUser: {
-// 				// 	firstName: 'Joanna',
-// 				// 	lastName: 'Smith',
-// 				// 	email: 'email@email.org',
-// 				// 	phone: '+18884442222'
-// 				// },
+// 				primaryContactPerson: primaryContactPerson,
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
 // 					}
 // 				}
+// 			}
+//
+// 			const primaryContactPerson2 = {
+// 				firstName: 'Joanna B',
+// 				lastName: 'Smith',
+// 				email: 'email2@email.org',
+// 				phone: '+18884442222',
+// 				_id: primaryContactPerson._id
 // 			}
 //
 // 			const newValues = {
@@ -578,12 +638,7 @@ UserModel
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
 // 				'services':{},
-// 				// primaryContactUser: {
-// 				// 	firstName: 'Joanna B',
-// 				// 	lastName: 'Smith',
-// 				// 	email: 'email2@email.org',
-// 				// 	phone: '+18884442222'
-// 				// },
+// 				primaryContactPerson: primaryContactPerson2,
 // 				'verified': {
 // 					'address': {
 // 						'date' : '2017-04-16T23:33:17.220Z'
@@ -595,19 +650,16 @@ UserModel
 //
 // 			const oldPCObj = await PregnancyCenterModel.create(oldValues)
 //
-// 			mockAuthenticate()
-//
 // 			const res = await chai.request(server)
 // 				.put('/api/pregnancy-centers/' + oldPCObj._id)
 // 				.set('origin', config.corsOriginWhitelist[0])
 // 				.send(newValues)
 //
 // 			res.should.have.status(200)
-// 			log.info(res.body)
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('_id')
 // 			res.body.should.have.property('prcName')
-// 			// res.body.should.have.property('primaryContactUser')
+// 			res.body.should.have.property('primaryContactPerson')
 // 			res.body._id.should.equal(String(oldPCObj._id))
 // 			res.body.prcName.should.equal('Birthright of Albany')
 // 			res.body.should.have.property('verified')
@@ -618,11 +670,18 @@ UserModel
 // 			res.body.verified.should.have.property('address')
 //
 // 			// check that the pregnancy center history is created as well.
-// 			const newPCObj = await PregnancyCenterHistoryModel.find({
+// 			const histories = await PregnancyCenterHistoryModel.find({
 // 				pregnancyCenterId: oldPCObj._id
 // 			})
-// 			log.info(newPCObj)
-// 			newPCObj.should.have.length(1)
+// 			histories.should.have.length(2) // we want the primary Contact history too.
+// 			for(const pc_history of histories){
+// 				if (pc_history.field == 'primaryContactPerson') {
+// 					pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
+// 				}
+// 			}
+//
+// 			const people = await PersonModel.find({})
+// 			people.should.have.length(1)
 // 		})
 // 	})
 //
@@ -667,6 +726,14 @@ UserModel
 // 	describe('/GET /api/pregnancy-centers/:pregnancyCenterId', () => {
 // 		it('it should return a single pregnancy center matching the id', async () => {
 //
+// 			const primaryContactPerson = new PersonModel({
+// 				firstName: 'Joanna',
+// 				lastName: 'Smith',
+// 				email: 'email@email.org',
+// 				phone: '+18884442222'
+// 			})
+// 			await primaryContactPerson.save()
+//
 // 			const pc = new PregnancyCenterModel({
 // 				'address': {
 // 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -679,6 +746,7 @@ UserModel
 // 					},
 // 				},
 // 				'prcName': 'Birthright of Albany',
+// 				'primaryContactPerson': primaryContactPerson,
 // 				'phone': '+15184382978',
 // 				'website': 'http://www.birthright.org',
 // 				'services':{}
@@ -697,6 +765,7 @@ UserModel
 // 			res.body.should.have.property('prcName')
 // 			res.body._id.should.equal(String(pc._id))
 // 			res.body.prcName.should.equal('Birthright of Albany')
+// 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 // 			res.body.verified.should.deep.equal({})
 //
 // 		})
@@ -780,24 +849,6 @@ UserModel
 // 			})
 // 			validationObj.error.name.should.equal('ValidationError')
 // 			validationObj.error.message.should.equal('child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]')
-// 		})
-// 	})
-//
-// 	/*
-// 	 * Test the Joi validation for pregnancy centers separately from the API routes
-// 	 */
-// 	describe('Test Joi validation for pregnancy centers dateCreated 4', () => {
-// 		it('validation should fail because the dateCreated provided is not a date ', async () => {
-//
-// 			const testPCObj4 = {
-// 				dateCreated: '3/3/2017'
-// 			}
-//
-// 			const validationObj = await Joi.validate(testPCObj4, pregnancyCenterSchemaJoi, {
-// 				abortEarly: false
-// 			})
-// 			validationObj.error.name.should.equal('ValidationError')
-// 			validationObj.error.message.should.equal('child "dateCreated" fails because ["dateCreated" must be a valid ISO 8601 date]')
 // 		})
 // 	})
 //

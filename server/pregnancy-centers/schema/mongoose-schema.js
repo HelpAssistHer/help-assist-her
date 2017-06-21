@@ -1,7 +1,7 @@
 'use strict'
 
-const mongoose = require('mongoose')
 const _ = require('lodash')
+const mongoose = require('mongoose')
 
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
@@ -29,7 +29,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	prcName: String,
 	notes: String,
 	phone: String,
-	primaryContactPersonId: mongoose.Schema.Types.ObjectId,
+	primaryContactPerson: { type: mongoose.Schema.Types.ObjectId, ref: 'Persons' },
 	services: {
 		default: {},
 		pregnancyTest: Boolean,
