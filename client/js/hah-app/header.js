@@ -1,12 +1,25 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import {
+	BrowserRouter as Router,
+	Route,
+	Link,
+	Redirect,
+	withRouter
+} from 'react-router-dom'
+
 
 import LoginButton from '../authentication/facebook-login-button'
 import LogoutButton from '../authentication/logout-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
+		<ul>
+			<li><Link to="/">Home</Link></li>
+			<li><Link to="/verification">Verification Portal</Link></li>
+		</ul>
 		<div className={classes.authenticationButtonDiv}>
+
 			<LoginButton />
 			<LogoutButton />
 		</div>
@@ -14,9 +27,11 @@ const Header = ({ classes }) => (
 	</div>
 )
 
+
+
 const styles = {
 	header: {
-		'background-image': 'linear-gradient(-90deg, #FCC582 0%, #F0649A 100%)',
+		'background-image': 'linear-gradient(-90deg, #F0649A 0%, #FCC582 100%)',
 		height: '200px',
 		position: 'relative',
 	},

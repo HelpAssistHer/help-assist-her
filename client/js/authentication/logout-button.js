@@ -1,13 +1,14 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
+import FlatButton from 'material-ui/FlatButton';
 import Spacer from '../components/spacer'
 import { logoutUser } from './action-creators'
 
 const LogoutButton = ({ classes }) => (
 	<div>
 		<Spacer height='10px' />
-		<button className={classes.button} onClick={logoutUser}>Logout</button>
+		<FlatButton label="Default" className={classes.button} onClick={logoutUser}>Logout</FlatButton>
 	</div>
 )
 

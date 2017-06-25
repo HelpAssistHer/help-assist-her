@@ -4,6 +4,10 @@ import FacebookLogin from 'react-facebook-login'
 import { authenticateUser } from '../action-creators'
 
 class FacebookLoginButton extends React.Component {
+	// getInitialState() {
+	// 	return { loggedIn : false }
+	// }
+
 	constructor(props) {
 		super(props)
 	}
@@ -12,21 +16,31 @@ class FacebookLoginButton extends React.Component {
 		authenticateUser(response.accessToken)
 	}
 
+	// onClick() {
+	// 	this.setState({ loggedIn: true})
+	// }
+
 	render() {
-		return (
-			<div>
-				{
-					this.props.fbAppId ?
-					<FacebookLogin
-						appId={this.props.fbAppId}
-						autoLoad={false}
-						fields='name,email,picture'
-						callback={this.facebookResponse}
-						textButton='FB Login'
-					/> : null
-				}
-			</div>
-		)
+
+		// if (this.state.loggedIn) {
+		// 	return (<div>Logged In</div>)
+		// } else {
+			return (
+				<div>
+					{
+						this.props.fbAppId ?
+							<FacebookLogin
+								appId={this.props.fbAppId}
+								autoLoad={false}
+								fields='name,email,picture'
+								onClick={this.onClick}
+								callback={this.facebookResponse}
+								textButton='FB Login'
+							/> : null
+					}
+				</div>
+			)
+		// }
 	}
 }
 

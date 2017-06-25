@@ -1,0 +1,10 @@
+
+.normal {
+    /* Button Background: */
+    text-align: center;
+    border: 1px solid #979797;
+    border-radius: 6px;
+}
+.disabled { /* all styles for Disabled */ }
+.error { /* all styles for Error */ }
+.inProgress { /* all styles for In Progress */ }
