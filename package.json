@@ -63,6 +63,7 @@
     "express": "^4.15.3",
     "express-boom": "^2.0.0",
     "express-session": "^1.15.2",
+    "fs": "^0.0.1-security",
     "history": "^4.4.0",
     "joi": "^10.4.1",
     "joi-phone-validator": "^1.0.0",
@@ -91,7 +92,7 @@
     "redux": "^3.6.0",
     "redux-form": "^6.7.0",
     "redux-thunk": "^2.2.0",
-    "webpack": "^2.5.1"
+    "webpack": "^3.0.0"
   },
   "devDependencies": {
     "babel-jest": "16.0.0",

@@ -8,10 +8,9 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
-import HahTheme from '../theme/hah-theme'
-import AppBar from 'material-ui/AppBar'
 
-const hahTheme = getMuiTheme(HahTheme)
+
+
 
 class VerificationPortal extends React.Component {
 	submit = (values) => {
@@ -21,14 +20,14 @@ class VerificationPortal extends React.Component {
 		const { classes, changeFieldValue } = this.props
 
 		return (
-			<MuiThemeProvider muiTheme={hahTheme}>
+
 				<div className="container-small">
 					<div className="container-fluid">
-						<div className="row">
-							<div className="col-sm-4" >.col-sm-4</div>
-							<div className="col-sm-4" >.col-sm-4</div>
-							<div className="col-sm-4" >.col-sm-4</div>
-						</div>
+						{/*<div className="row">*/}
+							{/*<div className="col-sm-4" >.col-sm-4</div>*/}
+							{/*<div className="col-sm-4" >.col-sm-4</div>*/}
+							{/*<div className="col-sm-4" >.col-sm-4</div>*/}
+						{/*</div>*/}
 						<div className={classes.verificationPortal}>
 						<h1>VERIFICATION PORTAL</h1>
 						<GetResourceToVerifyButton
@@ -42,7 +41,6 @@ class VerificationPortal extends React.Component {
 						</div>
 					</div>
 				</div>
-			</MuiThemeProvider>
 		)
 	}
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styles from './facebook-login-button.css';
 
 
 import FacebookLoginButton from './view'
@@ -17,7 +16,7 @@ class FacebookLoginButtonContainer extends React.Component {
 
 	render() {
 		const { classes, changeFieldValue } = this.props
-		return <FacebookLoginButton fbAppId={this.props.fbAppId} className={styles.normal}/>
+		return <FacebookLoginButton fbAppId={this.props.fbAppId} />
 	}
 }
 

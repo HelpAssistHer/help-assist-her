@@ -7,7 +7,6 @@ import {
 	withRouter,
 	Switch
 } from 'react-router-dom'
-
 import Landing from './Landing'
 import VerificationPortalContainer from '../verification-portal/index'
 

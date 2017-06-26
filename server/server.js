@@ -374,7 +374,7 @@ function createUpdateHistory(req, pregnancyCenterRawObj) {
 }
 
 server.get(
-	'/auth/facebook/token',
+	'/api/auth/facebook/token',
 	(req, res, next) => {
 		log.info(req.session)
 		passport.authenticate('facebook-token', (error, user) => {
@@ -391,7 +391,15 @@ server.get(
 	}
 )
 
-server.get('/logout', (req, res) => {
+server.get('/api/login/check/', (req, res) =>{
+	if (req.sessionID && req.user) {
+		res.status(200).json(true)
+	} else {
+		res.status(200).json(false)
+	}
+})
+
+server.get('/api/logout', (req, res) => {
 	req.logout()
 	res.send(200)
 })

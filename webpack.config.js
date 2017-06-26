@@ -93,12 +93,18 @@ const isProduction = false
 module.exports = {
 	entry: ['babel-polyfill', rootPath],
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'public'),
 		filename: 'bundle.js'
 	},
 	devServer: {
 		publicPath: '/',
 		contentBase: './public',
+		proxy: {
+			'/api': {
+				target: 'http://localhost:4000/',
+				secure: false
+			}
+		}
 	},
 	module: {
 		rules: [{
