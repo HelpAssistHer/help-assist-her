@@ -393,9 +393,9 @@ server.get(
 
 server.get('/api/login/check/', (req, res) =>{
 	if (req.sessionID && req.user) {
-		res.status(200).json(true)
+		return res.status(200).send('true')
 	} else {
-		res.status(200).json(false)
+		return res.status(200).send('false')
 	}
 })
 
@@ -412,5 +412,6 @@ function isLoggedInAPI(req, res, next) {
 	// if they aren't, return an http error
 	res.boom.unauthorized('User is not logged in.')
 }
+
 
 module.exports = server

@@ -14,6 +14,22 @@ const authenticationReducer = (state = {}, action) => {
 	}
 }
 
+const LOGIN = 'LOGIN'
+const LOGOUT = 'LOGOUT'
+
+
+const authReducer = (state = {}, action) => {
+	switch (action.type) {
+		case LOGIN:
+			return _.assign({}, state, { 'authed': true})
+		case LOGOUT:
+			return _.assign({}, state, { 'authed': false})
+		default:
+			return state
+	}
+}
+
+
 const resourceReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_RESOURCE_TO_VERIFY:

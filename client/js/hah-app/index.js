@@ -8,13 +8,15 @@ import { BrowserRouter } from 'react-router-dom'
 
 import App from './app'
 
-const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+// this is what is making the app error when redux devtools isn't installed
+//const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
 export const store = createStore(
 	reducer,
 	compose(
 		applyMiddleware(thunk),
-		devTools
+		//devTools
 	)
 )
 

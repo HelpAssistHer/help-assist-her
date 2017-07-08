@@ -10,16 +10,16 @@ import {
 
 class FacebookLoginButton extends React.Component {
 
-	asyncIsAuthenticated() {
-		isAuthenticated().then(res => console.log(res))
-	}
-
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			loggedIn : this.asyncIsAuthenticated()
+			loggedIn : false
 		}
+		isAuthenticated().then( (res) => {
+			this.state.loggedIn = res
+		})
+		console.log(this.state)
 	}
 
 	facebookResponse(response) {
@@ -37,9 +37,18 @@ class FacebookLoginButton extends React.Component {
 		})
 
 	}
+	updateState() {
+		isAuthenticated().then( (res) => {
+			this.state.loggedIn = res
+		})
+		console.log('this.state.loggedIn: '+this.state.loggedIn)
+	}
 
 	render() {
 		const { classes, changeFieldValue } = this.props
+
+		this.updateState()
+		console.log('this.state.loggedIn: '+this.state.loggedIn)
 
 		if (this.state.loggedIn) {
 			return (<button

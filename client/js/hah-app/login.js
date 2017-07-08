@@ -1,15 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import FacebookLoginButton from '../authentication/facebook-login-button/index'
-
-class Landing extends React.Component {
+class Login extends React.Component {
 	render() {
 		return (
-			<div className='landing'>
+			<div className='login-page'>
+				<p>Please login using Facebook to continue.</p>
 				<Link to='/verification'>Continue to Verification Portal</Link>
 			</div>
 		)
 	}
 }
 
-export default Landing
+export default Login

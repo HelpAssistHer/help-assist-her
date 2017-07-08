@@ -32,10 +32,11 @@ export async function isAuthenticated() {
 		console.log(err)
 		return false
 	}
-	const isAuthenticated = await response.ok
-	return isAuthenticated
-
-
-
-
+	const ok = await response.ok
+	if (ok) {
+		const text = await response.text()
+		return text === 'true'
+	} else {
+		return false
+	}
 }
