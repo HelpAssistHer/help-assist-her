@@ -2,13 +2,17 @@ import _ from 'lodash'
 import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
-import { GET_INITIAL_DATA } from './action-types'
+import { LOGIN, LOGOUT, GET_INITIAL_DATA } from './action-types'
 import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/action-types'
 
 const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_INITIAL_DATA:
 			return _.assign({}, state, action.initialData)
+		case LOGIN:
+			return _.assign({}, state, { 'isLoggedIn': true})
+		case LOGOUT:
+			return _.assign({}, state, { 'isLoggedIn': false})
 		default:
 			return state
 	}

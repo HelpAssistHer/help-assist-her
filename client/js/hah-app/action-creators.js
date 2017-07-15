@@ -1,4 +1,7 @@
-import { GET_INITIAL_DATA } from './action-types'
+'use strict'
+
+import { GET_INITIAL_DATA, LOGIN, LOGOUT } from './action-types'
+import { authenticateUser, logoutUser } from '../authentication/action-creators'
 
 async function getInitialData() {
 	const response = await fetch('/api/initial-data', {
@@ -14,11 +17,53 @@ function createInitialDataAction(initialData) {
 	}
 }
 
+export function createLoginAction() {
+	return {
+		type: LOGIN
+	}
+}
+
+export function createLogoutAction() {
+	return {
+		type: LOGOUT
+	}
+}
+
 export const getInitialAppData = () => {
 	return function(dispatch) {
 		return getInitialData()
 			.then(
 				result => dispatch(createInitialDataAction(result))
+			)
+	}
+}
+
+
+export const login = (accessToken) => {
+	return function(dispatch) {
+		return authenticateUser(accessToken)
+			.then(
+				(result) => {
+					console.log('result in login '+result)
+					if (result) {
+						dispatch(createLoginAction())
+					}
+						
+				}
+			)
+	}
+}
+
+export const logout = () => {
+	return function(dispatch) {
+		return logoutUser()
+			.then(
+				(result) => {
+					if (result) {
+						dispatch(createLogoutAction())
+					}
+
+				}
 			)
 	}
 }
