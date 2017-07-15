@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-
 import FacebookLoginButton from './view'
 import { getInitialAppData } from '../../hah-app/action-creators'
 
@@ -15,7 +14,6 @@ class FacebookLoginButtonContainer extends React.Component {
 	}
 
 	render() {
-		const { classes, changeFieldValue } = this.props
 		return <FacebookLoginButton fbAppId={this.props.fbAppId} />
 	}
 }
@@ -25,6 +23,5 @@ function mapStateToProps(state) {
 		fbAppId: state.initialData.facebookAppId,
 	}
 }
-
 
 export default connect(mapStateToProps)(FacebookLoginButtonContainer)
