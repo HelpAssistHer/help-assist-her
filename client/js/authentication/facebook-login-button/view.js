@@ -1,6 +1,7 @@
 import React from 'react'
 import FacebookLogin from 'react-facebook-login'
 import injectSheet from 'react-jss'
+import { connect } from 'react-redux'
 
 import {
 	authenticateUser,
@@ -8,49 +9,47 @@ import {
 	isAuthenticated
 } from '../action-creators'
 
+import { 
+	getInitialAppData,
+	createLoginAction,
+	createLogoutAction,
+	login,
+	logout
+} from '../../hah-app/action-creators'
+
 class FacebookLoginButton extends React.Component {
 
 
 	constructor(props) {
 		super(props)
-		this.state = {
-			loggedIn : false
-		}
+		
+		// make a call to the server to see if authenticated, and change the isLoggedIn state accordingly
+		
 		isAuthenticated().then( (res) => {
-			this.state.loggedIn = res
+			if (res) {
+				this.props.dispatch(createLoginAction())
+			} else {
+				this.props.dispatch(createLogoutAction())
+			}
 		})
 		console.log(this.state)
 	}
 
 	facebookResponse(response) {
-		const authenticated = authenticateUser(response.accessToken)
-		console.log('logged in')
-		this.setState({loggedIn: authenticated})
+		this.props.dispatch(login(response.accessToken))
 	}
 
 	logout() {
-		logoutUser().then(loggedOut => {
-			if (loggedOut) {
-				this.setState({loggedIn: false})
-				console.log('logged out')
-			}
-		})
+		this.props.dispatch(logout())
 
-	}
-	updateState() {
-		isAuthenticated().then( (res) => {
-			this.state.loggedIn = res
-		})
-		console.log('this.state.loggedIn: '+this.state.loggedIn)
 	}
 
 	render() {
 		const { classes, changeFieldValue } = this.props
+		
+		console.log('fb button this.state.isLoggedIn: '+this.props.isLoggedIn)
 
-		this.updateState()
-		console.log('this.state.loggedIn: '+this.state.loggedIn)
-
-		if (this.state.loggedIn) {
+		if (this.props.isLoggedIn) {
 			return (<button
 				type='button'
 				className={classes.facebookLoginButton}
@@ -93,6 +92,12 @@ const styles = {
 	}
 }
 
-FacebookLoginButton = injectSheet(styles)(FacebookLoginButton)
+function mapStateToProps(state) {
+	return {
+		isLoggedIn: state.initialData.isLoggedIn,
+	}
+}
 
-export default FacebookLoginButton
+FacebookLoginButton = injectSheet(styles)(FacebookLoginButton)
+export default connect(mapStateToProps)(FacebookLoginButton)
+

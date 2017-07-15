@@ -413,5 +413,4 @@ function isLoggedInAPI(req, res, next) {
 	res.boom.unauthorized('User is not logged in.')
 }
 
-
 module.exports = server
