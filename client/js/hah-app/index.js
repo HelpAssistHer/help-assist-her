@@ -9,12 +9,14 @@ import App from './app'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
+const enhancer = devTools ? compose(
+	applyMiddleware(thunk),
+	devTools
+) : applyMiddleware(thunk)
+
 export const store = createStore(
 	reducer,
-	compose(
-		applyMiddleware(thunk),
-		devTools
-	)
+	enhancer,
 )
 
 render (

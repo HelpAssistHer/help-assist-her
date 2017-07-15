@@ -9,8 +9,9 @@ const facebookTokenStrategy = require('passport-facebook-token')
 const Log = require('log')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
-const passport = require('passport')
 const P = require('bluebird')
+const passport = require('passport')
+const path = require('path')
 const session = require('express-session')
 
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
@@ -27,24 +28,29 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
-const whitelist = config.corsOriginWhitelist
-const corsOptions = {
-	origin: (origin, callback) => {
-		if (whitelist.indexOf(origin) !== -1) {
-			callback(null, true)
-		} else {
-			const err = new Error(`${origin} is not allowed by CORS`)
-			log.error(err)
-			callback(err)
-		}
-	},
-	credentials: true,
-}
+if (process.env.NODE_ENV === 'localhost') {
+	const whitelist = config.corsOriginWhitelist
 
-server.use(cors(corsOptions))
+	const corsOptions = {
+		origin: (origin, callback) => {
+			if (whitelist.indexOf(origin) !== -1) {
+				callback(null, true)
+			} else {
+				const err = new Error(`${origin} is not allowed by CORS`)
+				log.error(err)
+				callback(err)
+			}
+		},
+		credentials: true,
+	}
+
+	server.use(cors(corsOptions))
+}
 
 server.use(boom())
 server.use(express.static('public'))
+server.use(cors())
+server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
 server.use(morgan('combined'))
@@ -97,14 +103,23 @@ let handleRejectedPromise = fn => (...args) => fn(...args).catch((e) => {
 
 // TODO: Error handling
 const startDatabase = P.coroutine(function *startDatabase() {
-	const connectionString = `mongodb://${config.server.hostname}/${config.database.name}`
-
-	yield mongoose.connect(connectionString)
+	yield mongoose.connect(config.mongo.connectionString)
 
 	log.info('Connected to database')
 })
 
 startDatabase()
+
+server.get('/verification', (req, res) => {
+	res.sendFile(path.join(__dirname, '../public/index.html'))
+})
+
+server.get('/api/initial-data', (req, res) => {
+	const facebookAppId = config.facebook.appId
+	return res.status(200).json({
+		facebookAppId,
+	})
+})
 
 /*
 	Returns all pregnancy centers

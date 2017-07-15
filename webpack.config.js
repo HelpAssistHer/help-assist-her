@@ -1,6 +1,7 @@
 'use strict'
 
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
 	context: __dirname,
@@ -8,12 +9,19 @@ module.exports = {
 	devtool: 'eval',
 	output: {
 		path: path.join(__dirname, '/public'),
-		filename: 'bundle.js'
+		filename: 'bundle.js',
 	},
 	devServer: {
 		publicPath: '/public/',
 		historyApiFallback: true
 	},
+	plugins: [
+		new webpack.DefinePlugin({
+			'VERIFICATION_PORTAL_FACEBOOK_APP_ID': JSON.stringify(
+				process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID
+			)
+		})
+	],
 	resolve: {
 		extensions: ['.js', '.json']
 	},

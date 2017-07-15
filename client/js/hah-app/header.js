@@ -10,7 +10,7 @@ const Header = ({ classes }) => (
 			<LoginButton />
 			<LogoutButton />
 		</div>
-		<img className={classes.logo} src='../../public/img/logo-white.png' />
+		<img className={classes.logo} src='img/logo-white.png' />
 	</div>
 )
 

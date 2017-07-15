@@ -1,16 +1,16 @@
 'use strict'
 
 module.exports = {
-	corsOriginWhitelist: ['http://localhost:8080'],
-	database: {
-		name: 'hah-dev'
-	},
+	corsOriginWhitelist: ['http://localhost:8080', undefined],
 	facebook: {
-		appId: '1312011635554544',
-		appSecret: '2e89815b8b92f022100a2d8c65e877b2',
+		appId: '1601964419836286',
+		appSecret: 'bea155559b6f1ded719805047d0989d7',
 	},
 	mapbox: {
 		accessToken: 'pk.eyJ1Ijoia2FyZW5tcm9zZSIsImEiOiJjaXd6bWoyeXowMGg2MnRvNnlncWE0azZsIn0.R61g_76oVqY3Jg7ob4kSsA',
+	},
+	mongo: {
+		connectionString: 'mongodb://localhost/hah-dev',
 	},
 	server: {
 		hostname: 'localhost',
