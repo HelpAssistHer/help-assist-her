@@ -250,7 +250,7 @@ function handleError(res, err) {
 }
 
 server.get(
-	'/auth/facebook/token',
+	'/api/auth/facebook/token',
 	(req, res, next) => {
 		passport.authenticate('facebook-token', (error, user) => {
 			if (error || !user) {
@@ -266,7 +266,15 @@ server.get(
 	}
 )
 
-server.get('/logout', (req, res) => {
+server.get('/api/login/check/', (req, res) =>{
+	if (req.sessionID && req.user) {
+		return res.status(200).send('true')
+	} else {
+		return res.status(200).send('false')
+	}
+})
+
+server.get('/api/logout', (req, res) => {
 	req.logout()
 	res.send(200)
 })
