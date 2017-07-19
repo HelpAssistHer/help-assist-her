@@ -213,8 +213,8 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 				if row[4] and row[0] and processPhone(row[4], row[0]) is not None:
 					pregnancyCenter['phone'] = processPhone(row[4], row[0])
 
-				#if row[8]:
-				#	pregnancyCenter['email'] = row[8]
+				if row[8]:
+					pregnancyCenter['email'] = row[8]
 			
 				if len(services) > 0:
 					pregnancyCenter['services'] = services
