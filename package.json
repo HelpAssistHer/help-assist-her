@@ -18,7 +18,8 @@
     "n": "nvm use stable",
     "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
     "data": "NODE_ENV=localhost node ./server/data-import/data.js",
-    "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js"
+    "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js",
+    "clear-iv": "NODE_ENV=localhost node ./server/scripts/clear-in-verification-field.js"
   },
   "repository": {
     "type": "git",

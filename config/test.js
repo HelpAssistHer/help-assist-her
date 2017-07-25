@@ -9,7 +9,7 @@ module.exports = {
 		accessToken: 'pk.eyJ1Ijoia2FyZW5tcm9zZSIsImEiOiJjaXd6bWoyeXowMGg2MnRvNnlncWE0azZsIn0.R61g_76oVqY3Jg7ob4kSsA',
 	},
 	mongo: {
-		connectionString: process.env.MONGO_DB_CONNECTION,
+		connectionString: 'mongodb://localhost/hah-test',
 	},
 	server: {
 		hostname: 'localhost',
@@ -18,6 +18,6 @@ module.exports = {
 		url: 'http://localhost:4000'
 	},
 	session: {
-		secret:  process.env.SESSION_SECRET,
+		secret:  'rjH(GrYYgPNuMyvP8K6N^gnwAiefksRFWkxbLcznqVvpFmVnGP7QLE)WFuymjZ',
 	},
 }

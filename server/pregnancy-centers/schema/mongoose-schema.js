@@ -26,6 +26,7 @@ const userDateSchema = new mongoose.Schema({
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
 	hours: Object,
+	inVerification: Boolean,
 	prcName: String,
 	notes: String,
 	phone: String,

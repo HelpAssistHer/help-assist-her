@@ -25,7 +25,6 @@ pregnancyCenterSchemaJoi
 server
 UserModel
 PersonModel
-
 //
 // chai.use(chaiHttp)
 //
@@ -90,7 +89,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/open-now')
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -176,7 +175,6 @@ PersonModel
 //
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
-// 				.set('origin', config.corsOriginWhitelist[0])
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(1)
@@ -193,7 +191,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers')
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -221,7 +219,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.post('/api/pregnancy-centers')
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 					.send(pregnancyCenter)
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
@@ -237,7 +235,7 @@ PersonModel
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers')
-// 				.set('origin', config.corsOriginWhitelist[0])
+//				
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(0)
@@ -275,7 +273,7 @@ PersonModel
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.post('/api/pregnancy-centers')
-// 				.set('origin', config.corsOriginWhitelist[0])
+//				
 // 				.send(pregnancyCenter)
 // 			res.should.have.status(201)
 // 			res.body.should.be.a('object')
@@ -307,7 +305,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/near-me')
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -368,7 +366,7 @@ PersonModel
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
-// 				.set('origin', config.corsOriginWhitelist[0])
+//				
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('array')
 // 			res.body.length.should.be.eql(1)
@@ -385,7 +383,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/verify')
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -460,14 +458,43 @@ PersonModel
 //
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/verify')
-// 				.set('origin', config.corsOriginWhitelist[0])
+//				
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('prcName')
 // 			res.body.prcName.should.equal('Birthright of Albany')
 // 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 // 			res.body.verified.should.deep.equal({})
+//			
+// 			// another person also wants to verify - they shouldn't get the same one
+// 			const res2 = await chai.request(server)
+// 				.get('/api/pregnancy-centers/verify')
 //
+// 			res2.should.have.status(200)
+// 			res2.body.should.be.a('object')
+// 			res2.body.should.have.property('prcName')
+// 			res2.body.prcName.should.equal('The Bridge To Life, Inc.')
+// 			res2.body.primaryContactPerson.firstName.should.equal('Joanna2')
+// 			res2.body.verified.address.date.should.equal('2017-04-16T23:33:17.220Z')
+//			
+// 			// imitate the nightly cron job to clear verifications
+// 			const query = {}
+// 			const update = {inVerification: false}
+//
+// 			await PregnancyCenterModel.update(query, update)
+//			
+// 			// try verifying after the nightly cron job, should get same as res1
+//
+// 			const res3 = await chai.request(server)
+// 				.get('/api/pregnancy-centers/verify')
+//
+// 			res3.should.have.status(200)
+// 			res3.body.should.be.a('object')
+// 			res3.body.should.have.property('prcName')
+// 			res3.body.prcName.should.equal('Birthright of Albany')
+// 			res3.body.primaryContactPerson.firstName.should.equal('Joanna')
+// 			res3.body.verified.should.deep.equal({})
+//			
 // 		})
 // 	})
 //
@@ -528,7 +555,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/verify')
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 			} catch (err) {
 // 				assertError(err.response, 404, 'Not Found')
 // 			}
@@ -568,7 +595,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.put('/api/pregnancy-centers/'+pc._id)
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 					.send(pc)
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
@@ -652,7 +679,7 @@ PersonModel
 //
 // 			const res = await chai.request(server)
 // 				.put('/api/pregnancy-centers/' + oldPCObj._id)
-// 				.set('origin', config.corsOriginWhitelist[0])
+//				
 // 				.send(newValues)
 //
 // 			res.should.have.status(200)
@@ -713,7 +740,7 @@ PersonModel
 // 			try {
 // 				await chai.request(server)
 // 					.get('/api/pregnancy-centers/'+pc._id)
-// 					.set('origin', config.corsOriginWhitelist[0])
+//					
 // 			} catch (err) {
 // 				assertUnauthenticatedError(err.response)
 // 			}
@@ -758,7 +785,7 @@ PersonModel
 // 			mockAuthenticate()
 // 			const res = await chai.request(server)
 // 				.get('/api/pregnancy-centers/'+pc._id)
-// 				.set('origin', config.corsOriginWhitelist[0])
+//				
 // 			res.should.have.status(200)
 // 			res.body.should.be.a('object')
 // 			res.body.should.have.property('_id')
