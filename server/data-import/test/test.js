@@ -5,7 +5,6 @@ const moment = require('moment')
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const config = require('config')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
