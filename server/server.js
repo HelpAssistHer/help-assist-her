@@ -17,10 +17,12 @@ const session = require('express-session')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
-const databaseHelpers = require('./util/database-helpers')
-const checkPregnancyCenterId = databaseHelpers.checkPregnancyCenterId
-const createPregnancyCenter = databaseHelpers.createPregnancyCenter
-const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
+const {
+	checkPregnancyCenterId,
+	createPregnancyCenter,
+	updatePregnancyCenter,
+	releaseDocuments,
+} = require('./util/database-helpers')
 
 const port = config.server.port
 const server = express()
@@ -165,8 +167,8 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const query = {inVerification:{$in: [null, false]}}
-	const update = {inVerification: true}
+	const query = {inVerification: {$in: [false, null]}}
+	const update = {inVerification: req.user._id}
 	const options = {new: true} // returns updated object back
 	const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate(query, update, options).populate('primaryContactPerson').lean()
 
@@ -194,9 +196,10 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
  */
 server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPregnancyCenterId, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
-
+	const pregnancyCenterData = req.body
+	pregnancyCenterData['inVerification'] = null
 	try {
-		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, req.body)
+		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, pregnancyCenterData)
 		res.status(200).json(updatedPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
@@ -269,10 +272,11 @@ server.get(
 	}
 )
 
-server.get('/logout', (req, res) => {
+server.get('/logout', handleRejectedPromise(async (req, res) => {
 	req.logout()
+	await releaseDocuments(req.user._id)
 	res.send(200)
-})
+}))
 
 function isLoggedInAPI(req, res, next) {
 	// if user is authenticated in the session, carry on

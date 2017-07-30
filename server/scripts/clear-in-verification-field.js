@@ -16,7 +16,7 @@ startDatabase()
 
 async function clearInVerificationField() {
 	const query = {}
-	const update = {inVerification: false}
+	const update = {inVerification: null}
 	await PregnancyCenterModel.update(query, update)
 	process.exit()
 }
