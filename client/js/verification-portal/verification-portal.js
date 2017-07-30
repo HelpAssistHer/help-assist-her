@@ -1,6 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
+import ContainerFluid from '../components/container-fluid'
 import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
@@ -12,24 +13,21 @@ class VerificationPortal extends React.Component {
 	}
 	render() {
 		const { classes, changeFieldValue } = this.props
-
 		return (
+			<ContainerFluid content={
+				<div className={classes.verificationPortal}>
+					<h1>VERIFICATION PORTAL</h1>
+					<GetResourceToVerifyButton
+						changeFieldValue={changeFieldValue}
+					/>
 
-				<div className="container-small">
-					<div className="container-fluid">
-						<div className={classes.verificationPortal}>
-						<h1>VERIFICATION PORTAL</h1>
-						<GetResourceToVerifyButton
-							changeFieldValue={changeFieldValue}
-						/>
-
-						<VerificationPortalForm
-							onSubmit={this.submit}
-						/>
-						<Spacer height='100px'/>
-						</div>
-					</div>
+					<VerificationPortalForm
+						onSubmit={this.submit}
+					/>
+					<Spacer height='100px'/>
 				</div>
+			} />
+			
 		)
 	}
 }
@@ -38,7 +36,8 @@ class VerificationPortal extends React.Component {
 const styles = {
 	verificationPortal: {
 		'text-align': 'center',
-	},
+		
+	}
 }
 
 VerificationPortal = injectSheet(styles)(VerificationPortal)

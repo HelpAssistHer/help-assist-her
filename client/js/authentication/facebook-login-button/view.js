@@ -48,13 +48,13 @@ class FacebookLoginButton extends React.Component {
 		const { classes, changeFieldValue } = this.props
 		return ( <div>
 			{
-				this.props.isLoggedIn ? 
+				this.props.fbAppId && this.props.isLoggedIn ? 
 				<button
 					type='button'
 					className={classes.facebookLoginButton}
 					onClick={this.logout.bind(this)}>Logout</button> 
 				: <FacebookLogin
-					appId='1601964419836286'
+					appId={this.props.fbAppId}
 					autoLoad={false}
 					fields='name,email,picture'
 					callback={this.facebookResponse.bind(this)}
