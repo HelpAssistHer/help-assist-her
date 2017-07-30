@@ -115,9 +115,8 @@ server.get('/verification', (req, res) => {
 })
 
 server.get('/api/initial-data', (req, res) => {
-	const facebookAppId = config.facebook.appId
 	return res.status(200).json({
-		facebookAppId,
+		'facebookAppId': config.facebook.appId,
 	})
 })
 
@@ -258,7 +257,7 @@ server.get(
 			}
 			if (req.sessionID && user) {
 				req.logIn(user, () => {
-					res.status(200).json('Authentication successful.')
+					res.status(200).json({ 'status': 'success'})
 				})
 			}
 			next()
@@ -268,9 +267,9 @@ server.get(
 
 server.get('/api/login/check/', (req, res) =>{
 	if (req.sessionID && req.user) {
-		return res.status(200).send('true')
+		return res.status(200).json({ 'isLoggedIn': true})
 	} else {
-		return res.status(200).send('false')
+		return res.status(200).json({ 'isLoggedIn': false})
 	}
 })
 

@@ -7,18 +7,18 @@ export async function authenticateUser(accessToken) {
 		},
 	})
 
-	const loggedIn = await response.ok
-	console.log('loggedIn ' + loggedIn)
-	return loggedIn
+	return await response.ok // if we received a 200, it was successful
 }
 
 export async function logoutUser() {
 	const response = await fetch('/api/logout', {
 		method: 'GET',
 		credentials: 'include',
+		headers: {
+			'Accept': 'application/json',
+		},
 	})
-	const logoutSuccessful = await response.ok
-	return logoutSuccessful
+	return await response.ok // if we received a 200, it was successful
 }
 
 export async function isAuthenticated() {
@@ -26,17 +26,18 @@ export async function isAuthenticated() {
 	try {
 		response = await fetch('/api/login/check/', {
 			method: 'GET',
-			credentials: 'include'
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+			},
 		})
 	} catch (err) {
-		console.log(err)
-		return false
+		return false // we want to always default to not being authenticated even if the server fails, isn't up yet
 	}
 	const ok = await response.ok
-	if (ok) {
-		const text = await response.text()
-		return text === 'true'
-	} else {
-		return false
+	if (!ok) {
+		return false // return false if server error
 	}
+	const {isLoggedIn} = await response.json()
+	return isLoggedIn
 }

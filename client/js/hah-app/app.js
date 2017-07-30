@@ -5,7 +5,7 @@ import HahRouter from './router'
 import '../../assets/css/app.css'
 
 const App = () => (
-	<div id='root'>
+	<div id='app'>
 		<Header />
 		<HahRouter />
 	</div>

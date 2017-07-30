@@ -13,12 +13,7 @@ import LoginButton from '../authentication/facebook-login-button/view'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
-		{/*<ul>*/}
-			{/*<li><Link to="/">Home</Link></li>*/}
-			{/*<li><Link to="/verification">Verification Portal</Link></li>*/}
-		{/*</ul>*/}
 		<div className={classes.authenticationButtonDiv}>
-
 			<LoginButton />
 		</div>
 		<img className={classes.logo} src='img/logo-white.png' />

@@ -6,8 +6,12 @@ import { authenticateUser, logoutUser } from '../authentication/action-creators'
 async function getInitialData() {
 	const response = await fetch('/api/initial-data', {
 		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+		},
 	})
-	return await response.json()
+	const {facebookAppId} = await response.json()
+	return facebookAppId
 }
 
 function createInitialDataAction(initialData) {

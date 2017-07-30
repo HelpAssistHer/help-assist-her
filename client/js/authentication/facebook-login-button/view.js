@@ -46,31 +46,25 @@ class FacebookLoginButton extends React.Component {
 
 	render() {
 		const { classes, changeFieldValue } = this.props
-		
-		console.log('fb button this.state.isLoggedIn: '+this.props.isLoggedIn)
-
-		if (this.props.isLoggedIn) {
-			return (<button
-				type='button'
-				className={classes.facebookLoginButton}
-				onClick={this.logout.bind(this)}
-			>Logout</button>)
-		} else {
-			return (
-
-				<FacebookLogin
-								appId='1601964419836286'
-								autoLoad={false}
-								fields='name,email,picture'
-								callback={this.facebookResponse.bind(this)}
-								cssClass={classes.facebookLoginButton}
-								textButton=' Login'
-								icon='fa-facebook'
-							/>
+		return ( <div>
+			{
+				this.props.isLoggedIn ? 
+				<button
+					type='button'
+					className={classes.facebookLoginButton}
+					onClick={this.logout.bind(this)}>Logout</button> 
+				: <FacebookLogin
+					appId='1601964419836286'
+					autoLoad={false}
+					fields='name,email,picture'
+					callback={this.facebookResponse.bind(this)}
+					cssClass={classes.facebookLoginButton}
+					textButton=' Login'
+					icon='fa-facebook'
+				/>
+			} </div>
 			)
-		}
-
-
+		
 	}
 }
 
