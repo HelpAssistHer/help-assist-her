@@ -80,9 +80,12 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/GET /api/pregnancy-centers/open-now no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
-			await chai.request(server)
-				.get('/api/pregnancy-centers/open-now')
-			assertUnauthenticatedError(err.response)
+			try {
+				await chai.request(server)
+					.get('/api/pregnancy-centers/open-now')
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
 		})
 	})
 
