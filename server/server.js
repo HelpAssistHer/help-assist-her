@@ -222,12 +222,16 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 			close: {$gte: time}
 		}
 	}
-	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query).populate('primaryContactPerson').lean()
-	if (pregnancyCentersOpenNow.length <= 0) {
-		return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
+	try {
+		const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query).populate('primaryContactPerson').lean()
+		if (pregnancyCentersOpenNow.length <= 0) {
+			return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
+		}
+	
+		res.status(200).json(pregnancyCentersOpenNow)
+	} catch (err) {
+		log.error(err)
 	}
-
-	res.status(200).json(pregnancyCentersOpenNow)
 }))
 
 /*

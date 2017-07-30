@@ -8,6 +8,7 @@ const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
+const Log = require('log')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
@@ -18,14 +19,8 @@ const server = require('../../server')
 const UserModel = require('../../users/schema/mongoose-schema')
 const PersonModel = require('../../persons/schema/mongoose-schema')
 
-// PregnancyCenterModel
-// PregnancyCenterHistoryModel
-// pregnancyCenterSchemaJoi
-// server
-// UserModel
-// PersonModel
-
 chai.use(chaiHttp)
+const log = new Log('info')
 
 // Allows the middleware to think we're already authenticated.
 function mockAuthenticate() {
@@ -90,6 +85,7 @@ describe('PregnancyCenters', () => {
 					.get('/api/pregnancy-centers/open-now')
 
 			} catch (err) {
+				log.error(err)
 				assertUnauthenticatedError(err.response)
 			}
 		})

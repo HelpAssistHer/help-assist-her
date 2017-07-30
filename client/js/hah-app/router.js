@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import Landing from './Landing'
+import Landing from './landing'
 import VerificationPortalContainer from '../verification-portal/index'
 
 const HahRouter = () => {
