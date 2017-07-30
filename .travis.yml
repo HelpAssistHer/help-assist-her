@@ -20,5 +20,5 @@ script:
   - mongo --eval 'db.getName()'
   - yarn test
   - mongo --eval 'db.getName()'
-  - yarn wds &
+  - webpack
 
