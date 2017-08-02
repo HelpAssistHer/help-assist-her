@@ -1,17 +1,11 @@
-'use strict'
-
 import { GET_INITIAL_DATA, LOGIN, LOGOUT } from './action-types'
 import { authenticateUser, logoutUser } from '../authentication/action-creators'
 
 async function getInitialData() {
 	const response = await fetch('/api/initial-data', {
 		method: 'GET',
-		headers: {
-			'Accept': 'application/json',
-		},
 	})
-	const {facebookAppId} = await response.json()
-	return facebookAppId
+	return await response.json()
 }
 
 function createInitialDataAction(initialData) {
@@ -42,7 +36,6 @@ export const getInitialAppData = () => {
 	}
 }
 
-
 export const login = (accessToken) => {
 	return function(dispatch) {
 		return authenticateUser(accessToken)
@@ -52,7 +45,7 @@ export const login = (accessToken) => {
 					if (result) {
 						dispatch(createLoginAction())
 					}
-						
+
 				}
 			)
 	}
