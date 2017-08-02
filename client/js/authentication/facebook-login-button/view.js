@@ -4,13 +4,10 @@ import injectSheet from 'react-jss'
 import { connect } from 'react-redux'
 
 import {
-	authenticateUser,
-	logoutUser,
 	isAuthenticated
 } from '../action-creators'
 
-import { 
-	getInitialAppData,
+import {
 	createLoginAction,
 	createLogoutAction,
 	login,
@@ -18,13 +15,11 @@ import {
 } from '../../hah-app/action-creators'
 
 class FacebookLoginButton extends React.Component {
-
-
 	constructor(props) {
 		super(props)
-		
+
 		// make a call to the server to see if authenticated, and change the isLoggedIn state accordingly
-		
+
 		isAuthenticated().then( (res) => {
 			if (res) {
 				this.props.dispatch(createLoginAction())
@@ -32,7 +27,6 @@ class FacebookLoginButton extends React.Component {
 				this.props.dispatch(createLogoutAction())
 			}
 		})
-		console.log(this.state)
 	}
 
 	facebookResponse(response) {
@@ -46,30 +40,35 @@ class FacebookLoginButton extends React.Component {
 
 	render() {
 		const { classes, changeFieldValue } = this.props
-		return ( <div>
-			{
-				this.props.fbAppId && this.props.isLoggedIn ? 
-				<button
-					type='button'
-					className={classes.facebookLoginButton}
-					onClick={this.logout.bind(this)}>Logout</button> 
-				: <FacebookLogin
-					appId={this.props.fbAppId}
-					autoLoad={false}
-					fields='name,email,picture'
-					callback={this.facebookResponse.bind(this)}
-					cssClass={classes.facebookLoginButton}
-					textButton=' Login'
-					icon='fa-facebook'
-				/>
-			} </div>
-			)
-		
+
+		if (!this.props.fbAppId) {
+			return null
+		}
+
+		return (
+			<div>
+				{
+					this.props.isLoggedIn ?
+					<button
+						type='button'
+						className={classes.facebookLoginButton}
+						onClick={this.logout.bind(this)}>Logout</button>
+					: <FacebookLogin
+						appId={this.props.fbAppId}
+						autoLoad={false}
+						fields='name,email,picture'
+						callback={this.facebookResponse.bind(this)}
+						cssClass={classes.facebookLoginButton}
+						textButton=' Login'
+						icon='fa-facebook'
+					/>
+				}
+			</div>
+		)
 	}
 }
 
 const styles = {
-
 	facebookLoginButton: {
 		'color': '#FFFFFF !important',
 		'border': '2px solid #FFFFFF !important',
@@ -81,8 +80,6 @@ const styles = {
 		'min-width': '145px !important',
 		'letter-spacing': '0 !important',
 		'text-shadow': '0 1px 0 rgba(255,254,255,0.50) !important',
-
-
 	}
 }
 
