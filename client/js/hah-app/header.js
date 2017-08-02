@@ -1,15 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import {
-	BrowserRouter as Router,
-	Route,
-	Link,
-	Redirect,
-	withRouter
-} from 'react-router-dom'
-
-
-import LoginButton from '../authentication/facebook-login-button/view'
+import LoginButton from '../authentication/facebook-login-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
@@ -19,8 +10,6 @@ const Header = ({ classes }) => (
 		<img className={classes.logo} src='img/logo-white.png' />
 	</div>
 )
-
-
 
 const styles = {
 	header: {
