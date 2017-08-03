@@ -39,7 +39,7 @@ class FacebookLoginButton extends React.Component {
 	}
 
 	render() {
-		const { classes, changeFieldValue } = this.props
+		const { classes } = this.props
 
 		if (!this.props.fbAppId) {
 			return null
@@ -91,4 +91,3 @@ function mapStateToProps(state) {
 
 FacebookLoginButton = injectSheet(styles)(FacebookLoginButton)
 export default connect(mapStateToProps)(FacebookLoginButton)
-
