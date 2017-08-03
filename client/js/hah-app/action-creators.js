@@ -1,4 +1,4 @@
-import { GET_INITIAL_DATA, LOGIN, LOGOUT } from './action-types'
+import { GET_INITIAL_DATA, UPDATE_LOGIN_STATE } from './action-types'
 import { authenticateUser, logoutUser } from '../authentication/action-creators'
 
 async function getInitialData() {
@@ -17,13 +17,15 @@ function createInitialDataAction(initialData) {
 
 export function createLoginAction() {
 	return {
-		type: LOGIN
+		type: UPDATE_LOGIN_STATE,
+		isLoggedIn: true,
 	}
 }
 
 export function createLogoutAction() {
 	return {
-		type: LOGOUT
+		type: UPDATE_LOGIN_STATE,
+		isLoggedIn: false,
 	}
 }
 
@@ -41,7 +43,6 @@ export const login = (accessToken) => {
 		return authenticateUser(accessToken)
 			.then(
 				(result) => {
-					console.log('result in login '+result)
 					if (result) {
 						dispatch(createLoginAction())
 					}
