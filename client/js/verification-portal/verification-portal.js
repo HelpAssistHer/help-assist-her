@@ -34,9 +34,13 @@ const styles = {
 		'text-align': 'center',
 		'font-family': 'sans-serif',
 		color: '#4A4A4A',
+		'max-width': '903px',
+		'background-color': '#ffffff',
+		'margin-right': 'auto',
+		'margin-left': 'auto',
+		'padding-left': '15px',
+		'padding-right': '15px',
 	},
 }
 
-VerificationPortal = injectSheet(styles)(VerificationPortal)
-
-export default VerificationPortal
+export default injectSheet(styles)(VerificationPortal)
