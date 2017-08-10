@@ -14,13 +14,14 @@ const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema
 mongoose.Promise = require('bluebird')
 const log = new Log('info')
 
-const loadData = P.coroutine(function *startDatabase() {
-	const connectionString = `mongodb://${config.server.hostname}/${config.database.name}`
+// TODO: Error handling
+const startDatabase = P.coroutine(function *startDatabase() {
+	yield mongoose.connect(config.mongo.connectionString)
 
-	yield mongoose.connect(connectionString)
+	log.info('Connected to database')
 })
 
-loadData()
+startDatabase()
 
 // note that exports are 'mongoexport --db hah-dev --collection pregnancycenters --jsonArray --out cessilye_nypc_geocoded.json'
 
