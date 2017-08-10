@@ -1,34 +1,34 @@
 module.exports = [
 	{
-		id: 'STD_TESTING',
+		id: 'stdTesting',
 		name: 'STD Testing',
 	},
 	{
-		id: 'ULTRASOUND',
+		id: 'ultrasound',
 		name: 'Ultrasound',
 	},
 	{
-		id: 'PREGNANCY_TEST',
+		id: 'pregnancyTest',
 		name: 'Medical Quality Pregnancy Tests',
 	},
 	{
-		id: 'MATERIAL_ASSISTANCE',
+		id: 'materialAssistance',
 		name: 'Material Assistance',
 	},
 	{
-		id: 'POST_ABORTION_HEALING',
+		id: 'postAbortionHealing',
 		name: 'Post-Abortion Healing',
 	},
 	{
-		id: 'PARENTING_CLASSES',
+		id: 'parentingClasses',
 		name: 'Parenting Classes',
 	},
 	{
-		id: 'PROFESSIONAL_COUNSELING',
+		id: 'professionalCounseling',
 		name: 'Professional Counseling',
 	},
 	{
-		id: 'OTHER',
+		id: 'other',
 		name: 'Other Services',
 	},
 ]
