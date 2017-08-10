@@ -1,14 +1,11 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-
 import LoginButton from '../authentication/facebook-login-button'
-import LogoutButton from '../authentication/logout-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
 		<div className={classes.authenticationButtonDiv}>
 			<LoginButton />
-			<LogoutButton />
 		</div>
 		<img className={classes.logo} src='img/logo-white.png' />
 	</div>
@@ -16,7 +13,7 @@ const Header = ({ classes }) => (
 
 const styles = {
 	header: {
-		'background-image': 'linear-gradient(-90deg, #FCC582 0%, #F0649A 100%)',
+		'background-image': 'linear-gradient(-90deg, #F0649A 0%, #FCC582 100%)',
 		height: '200px',
 		position: 'relative',
 	},
@@ -33,9 +30,10 @@ const styles = {
 		margin: 'auto',
 	},
 	authenticationButtonDiv: {
-		width: '11%',
-		float: 'right',
 		padding: '10px',
+		position: 'absolute',
+		top: '30px',
+		right: '30px'
 	},
 }
 
