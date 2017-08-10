@@ -40,9 +40,8 @@ export async function updateResource(updatedResource) {
 			...updatedResource.hours,
 		},
 	}
-	console.log('TRANSFORMED RESOURCE', transformedResource)
 
-	fetch(`/api/pregnancy-centers`, {
+	fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {
 		method: 'PUT',
 		credentials: 'include',
 		headers: {
