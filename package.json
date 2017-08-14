@@ -76,6 +76,7 @@
     "mongodb-extended-json": "^1.9.0",
     "mongoose": "^4.7.5",
     "morgan": "^1.8.1",
+    "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-facebook-token": "^3.3.0",
     "preact": "^6.4.0",
