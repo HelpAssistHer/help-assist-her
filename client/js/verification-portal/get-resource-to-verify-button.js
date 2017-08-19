@@ -1,11 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
+import moment from 'moment'
+import 'moment-duration-format'
 
 import { getResourceToVerify } from './action-creators'
 import Button from '../components/button'
 import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
+
+const convertNumberToTimeFormat = number => {
+	const result = moment.duration(number, 'minutes').format('hh:mm')
+	return number ? result : null
+}
 
 const updateForm = ({ changeFieldValue, resource }) => {
 	let {
@@ -51,21 +58,20 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	})
 	changeFieldValue('verified.services', _.get(verified, 'services'))
 
-	hours = hours || []
-	changeFieldValue('hours[0].open', _.get(hours[0], 'open'))
-	changeFieldValue('hours[0].close', _.get(hours[0], 'close'))
-	changeFieldValue('hours[1].open', _.get(hours[1], 'open'))
-	changeFieldValue('hours[1].close', _.get(hours[1], 'close'))
-	changeFieldValue('hours[2].open', _.get(hours[2], 'open'))
-	changeFieldValue('hours[2].close', _.get(hours[2], 'close'))
-	changeFieldValue('hours[3].open', _.get(hours[3], 'open'))
-	changeFieldValue('hours[3].close', _.get(hours[3], 'close'))
-	changeFieldValue('hours[4].open', _.get(hours[4], 'open'))
-	changeFieldValue('hours[4].close', _.get(hours[4], 'close'))
-	changeFieldValue('hours[5].open', _.get(hours[5], 'open'))
-	changeFieldValue('hours[5].close', _.get(hours[5], 'close'))
-	changeFieldValue('hours[6].open', _.get(hours[6], 'open'))
-	changeFieldValue('hours[6].close', _.get(hours[6], 'close'))
+	changeFieldValue('hours.sunday.open', convertNumberToTimeFormat(_.get(hours, 'sunday.open')))
+	changeFieldValue('hours.sunday.close', convertNumberToTimeFormat(_.get(hours, 'sunday.close')))
+	changeFieldValue('hours.monday.open', convertNumberToTimeFormat(_.get(hours, 'monday.open')))
+	changeFieldValue('hours.monday.close', convertNumberToTimeFormat(_.get(hours, 'monday.close')))
+	changeFieldValue('hours.tuesday.open', convertNumberToTimeFormat(_.get(hours, 'tuesday.open')))
+	changeFieldValue('hours.tuesday.close', convertNumberToTimeFormat(_.get(hours, 'tuesday.close')))
+	changeFieldValue('hours.wednesday.open', convertNumberToTimeFormat(_.get(hours, 'wednesday.open')))
+	changeFieldValue('hours.wednesday.close', convertNumberToTimeFormat(_.get(hours, 'wednesday.close')))
+	changeFieldValue('hours.thursday.open', convertNumberToTimeFormat(_.get(hours, 'thursday.open')))
+	changeFieldValue('hours.thursday.close', convertNumberToTimeFormat(_.get(hours, 'thursday.close')))
+	changeFieldValue('hours.friday.open', convertNumberToTimeFormat(_.get(hours, 'friday.open')))
+	changeFieldValue('hours.friday.close', convertNumberToTimeFormat(_.get(hours, 'friday.close')))
+	changeFieldValue('hours.saturday.open', convertNumberToTimeFormat(_.get(hours, 'saturday.open')))
+	changeFieldValue('hours.saturday.close', convertNumberToTimeFormat(_.get(hours, 'saturday.close')))
 	changeFieldValue('verified.hours', _.get(verified, 'hours'))
 
 	changeFieldValue('notes', notes)

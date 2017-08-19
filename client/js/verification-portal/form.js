@@ -180,84 +180,84 @@ class VerificationPortalForm extends Component {
 
 					<label>Sunday Hours</label>
 					<Field
-						name='hours[0].open'
+						name='hours.sunday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[0].close'
+						name='hours.sunday.close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Monday Hours</label>
 					<Field
-						name='hours[1].open'
+						name='hours.monday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[1].close'
+						name='hours.monday.close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Tuesday Hours</label>
 					<Field
-						name='hours[2].open'
+						name='hours.tuesday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[2].close'
+						name='hours.tuesday.close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Wednesday Hours</label>
 					<Field
-						name='hours[3].open'
+						name='hours.wednesday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[3].close'
+						name='hours.wednesday.close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Thursday Hours</label>
 					<Field
-						name='hours[4].open'
+						name='hours.thursday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[4].close'
+						name='hours.thursday.close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Friday Hours</label>
 					<Field
-						name='hours[5].open'
+						name='hours.friday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[5].close'
+						name='hours.friday.close'
 						component={Input}
 						type='time'
 					/>
 
 					<label>Saturday Hours</label>
 					<Field
-						name='hours[6].open'
+						name='hours.saturday.open'
 						component={Input}
 						type='time'
 					/>
 					<Field
-						name='hours[6].close'
+						name='hours.saturday.close'
 						component={Input}
 						type='time'
 					/>
