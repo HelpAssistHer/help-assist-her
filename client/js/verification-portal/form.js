@@ -19,7 +19,7 @@ class VerificationPortalForm extends Component {
 					<h3>General Info</h3>
 					<div className={classes.parent}>
 						<Field
-							label='Name'
+							label='PRC Name'
 							name='name'
 							component={Input}
 							type='text'
