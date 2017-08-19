@@ -23,16 +23,20 @@ const updateForm = ({ changeFieldValue, resource }) => {
 
 	changeFieldValue('prcName', prcName)
 	changeFieldValue('verified.prcName', _.get(verified, 'prcName'))
+
 	changeFieldValue('address.line1', _.get(address, 'line1'))
-	changeFieldValue('address.line2', _.get(address, 'address.line2'))
-	changeFieldValue('address.city', _.get(address, 'address.city'))
-	changeFieldValue('address.state', _.get(address, 'address.state'))
-	changeFieldValue('address.zip', _.get(address, 'address.zip'))
+	changeFieldValue('address.line2', _.get(address, 'line2'))
+	changeFieldValue('address.city', _.get(address, 'city'))
+	changeFieldValue('address.state', _.get(address, 'state'))
+	changeFieldValue('address.zip', _.get(address, 'zip'))
 	changeFieldValue('verified.address', _.get(verified, 'address'))
+
 	changeFieldValue('phone', phone)
 	changeFieldValue('verified.phone', _.get(verified, 'phone'))
+
 	changeFieldValue('email', email)
 	changeFieldValue('verified.email', _.get(verified, 'email'))
+
 	changeFieldValue('website', website)
 	changeFieldValue('verified.website', _.get(verified, 'website'))
 
@@ -42,8 +46,8 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('primaryContact.email', _.get(primaryContactUser, 'email'))
 	changeFieldValue('verified.primaryContact', _.get(verified, 'primaryContact'))
 
-	_.each(services, service => {
-		changeFieldValue(`services.${service}`, 1)
+	_.forEach(services, (value, key) => {
+		changeFieldValue(`services.${key}`, 1)
 	})
 	changeFieldValue('verified.services', _.get(verified, 'services'))
 
