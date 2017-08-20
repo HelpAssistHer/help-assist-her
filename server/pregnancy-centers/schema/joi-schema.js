@@ -46,14 +46,7 @@ const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunda
 	6: dayHoursSchemaJoi,
 })
 
-const dateUserActionSchemaJoi = Joi.object().keys({
-	date: Joi.date().iso(),
-	userId: Joi.string(),
-	_id: Joi.string()
-})
-
 const pregnancyCenterSchemaJoi = Joi.object().keys({
-	__v: Joi.number().min(0),
 	_id: Joi.string(),
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
@@ -83,20 +76,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		services: Joi.boolean(),
 		website: Joi.boolean(),
 	},
-	updated: {
-		address: dateUserActionSchemaJoi,
-		email: dateUserActionSchemaJoi,
-		hours: dateUserActionSchemaJoi,
-		prcName: dateUserActionSchemaJoi,
-		notes: dateUserActionSchemaJoi,
-		phone: dateUserActionSchemaJoi,
-		primaryContact: dateUserActionSchemaJoi,
-		services: dateUserActionSchemaJoi,
-		website: dateUserActionSchemaJoi
-	},
-	updatedAt: Joi.date().iso(),
 	website: Joi.string()
 })
 
 module.exports = pregnancyCenterSchemaJoi
-
