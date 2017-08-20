@@ -74,14 +74,14 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		other: Joi.boolean()
 	},
 	verified: {
-		address: dateUserActionSchemaJoi,
-		email: dateUserActionSchemaJoi,
-		hours: dateUserActionSchemaJoi,
-		prcName: dateUserActionSchemaJoi,
-		phone: dateUserActionSchemaJoi,
-		primaryContact: dateUserActionSchemaJoi,
-		services: dateUserActionSchemaJoi,
-		website: dateUserActionSchemaJoi
+		address: Joi.boolean(),
+		email: Joi.boolean(),
+		hours: Joi.boolean(),
+		prcName: Joi.boolean(),
+		phone: Joi.boolean(),
+		primaryContact: Joi.boolean(),
+		services: Joi.boolean(),
+		website: Joi.boolean(),
 	},
 	updated: {
 		address: dateUserActionSchemaJoi,
