@@ -1,17 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import moment from 'moment'
-import 'moment-duration-format'
 
 import { getResourceToVerify } from './action-creators'
 import Button from '../components/button'
 import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
 
-const convertNumberToTimeFormat = number => {
-	const result = moment.duration(number, 'minutes').format('hh:mm')
-	return number ? result : null
+const convertNumberToTimeFormat = timeNumber => {
+	if (!timeNumber) {
+		return null
+	}
+
+	const timeString = String(timeNumber).padStart(4, '0')
+
+	return `${timeString.slice(0,2)}:${timeString.slice(2,4)}`
 }
 
 const updateForm = ({ changeFieldValue, resource }) => {
