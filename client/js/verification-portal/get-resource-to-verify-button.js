@@ -8,8 +8,9 @@ import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
 
 const updateForm = ({ changeFieldValue, resource }) => {
-	const {
-		name,
+	let {
+		prcName,
+		email,
 		address,
 		hours,
 		notes,
@@ -20,18 +21,24 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		website
 	} = resource
 
-	changeFieldValue('name', name)
-	changeFieldValue('verified.name', verified.name)
-	changeFieldValue('address.line1', address.line1)
-	changeFieldValue('address.line2', address.line2)
-	changeFieldValue('address.city', address.city)
-	changeFieldValue('address.state', address.state)
-	changeFieldValue('address.zip', address.zip)
-	changeFieldValue('verified.address', verified.address)
+	changeFieldValue('prcName', prcName)
+	changeFieldValue('verified.prcName', _.get(verified, 'prcName'))
+
+	changeFieldValue('address.line1', _.get(address, 'line1'))
+	changeFieldValue('address.line2', _.get(address, 'line2'))
+	changeFieldValue('address.city', _.get(address, 'city'))
+	changeFieldValue('address.state', _.get(address, 'state'))
+	changeFieldValue('address.zip', _.get(address, 'zip'))
+	changeFieldValue('verified.address', _.get(verified, 'address'))
+
 	changeFieldValue('phone', phone)
-	changeFieldValue('verified.phone', verified.phone)
+	changeFieldValue('verified.phone', _.get(verified, 'phone'))
+
+	changeFieldValue('email', email)
+	changeFieldValue('verified.email', _.get(verified, 'email'))
+
 	changeFieldValue('website', website)
-	changeFieldValue('verified.website', verified.website)
+	changeFieldValue('verified.website', _.get(verified, 'website'))
 
 	changeFieldValue('primaryContact.firstName', _.get(primaryContactUser, 'firstName'))
 	changeFieldValue('primaryContact.lastName', _.get(primaryContactUser, 'lastName'))
@@ -39,26 +46,27 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('primaryContact.email', _.get(primaryContactUser, 'email'))
 	changeFieldValue('verified.primaryContact', _.get(verified, 'primaryContact'))
 
-	_.each(services, service => {
-		changeFieldValue(`services.${service}`, 1)
+	_.forEach(services, (value, key) => {
+		changeFieldValue(`services.${key}`, 1)
 	})
-	changeFieldValue('verified.services', verified.services)
+	changeFieldValue('verified.services', _.get(verified, 'services'))
 
-	changeFieldValue('hours[0].open', hours[0].open)
-	changeFieldValue('hours[0].close', hours[0].close)
-	changeFieldValue('hours[1].open', hours[1].open)
-	changeFieldValue('hours[1].close', hours[1].close)
-	changeFieldValue('hours[2].open', hours[2].open)
-	changeFieldValue('hours[2].close', hours[2].close)
-	changeFieldValue('hours[3].open', hours[3].open)
-	changeFieldValue('hours[3].close', hours[3].close)
-	changeFieldValue('hours[4].open', hours[4].open)
-	changeFieldValue('hours[4].close', hours[4].close)
-	changeFieldValue('hours[5].open', hours[5].open)
-	changeFieldValue('hours[5].close', hours[5].close)
-	changeFieldValue('hours[6].open', hours[6].open)
-	changeFieldValue('hours[6].close', hours[6].close)
-	changeFieldValue('verified.hours', verified.hours)
+	hours = hours || []
+	changeFieldValue('hours[0].open', _.get(hours[0], 'open'))
+	changeFieldValue('hours[0].close', _.get(hours[0], 'close'))
+	changeFieldValue('hours[1].open', _.get(hours[1], 'open'))
+	changeFieldValue('hours[1].close', _.get(hours[1], 'close'))
+	changeFieldValue('hours[2].open', _.get(hours[2], 'open'))
+	changeFieldValue('hours[2].close', _.get(hours[2], 'close'))
+	changeFieldValue('hours[3].open', _.get(hours[3], 'open'))
+	changeFieldValue('hours[3].close', _.get(hours[3], 'close'))
+	changeFieldValue('hours[4].open', _.get(hours[4], 'open'))
+	changeFieldValue('hours[4].close', _.get(hours[4], 'close'))
+	changeFieldValue('hours[5].open', _.get(hours[5], 'open'))
+	changeFieldValue('hours[5].close', _.get(hours[5], 'close'))
+	changeFieldValue('hours[6].open', _.get(hours[6], 'open'))
+	changeFieldValue('hours[6].close', _.get(hours[6], 'close'))
+	changeFieldValue('verified.hours', _.get(verified, 'hours'))
 
 	changeFieldValue('notes', notes)
 }

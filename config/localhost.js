@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-	corsOriginWhitelist: ['http://localhost:8080', undefined],
+	corsOriginWhitelist: ['http://localhost:8080', 'http://localhost:4000', undefined],
 	facebook: {
 		appId: '1601964419836286',
 		appSecret: 'bea155559b6f1ded719805047d0989d7',

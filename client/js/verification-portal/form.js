@@ -19,14 +19,14 @@ class VerificationPortalForm extends Component {
 					<h3>General Info</h3>
 					<div className={classes.parent}>
 						<Field
-							label='Name'
-							name='name'
+							label='PRC Name'
+							name='prcName'
 							component={Input}
 							type='text'
 						/>
 						<Field
 							label='Name Verified'
-							name='verified.name'
+							name='verified.prcName'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -80,6 +80,20 @@ class VerificationPortalForm extends Component {
 						<Field
 							label='Phone Number Verified'
 							name='verified.phone'
+							component={VerifiedCheckbox}
+						/>
+					</div>
+
+					<div className={classes.parent}>
+						<Field
+							label='Email'
+							name='email'
+							component={Input}
+							type='text'
+						/>
+						<Field
+							label='Email Verified'
+							name='verified.email'
 							component={VerifiedCheckbox}
 						/>
 					</div>

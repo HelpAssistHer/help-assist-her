@@ -48,7 +48,8 @@ const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunda
 
 const dateUserActionSchemaJoi = Joi.object().keys({
 	date: Joi.date().iso(),
-	userId: Joi.string()
+	userId: Joi.string(),
+	_id: Joi.string()
 })
 
 const pregnancyCenterSchemaJoi = Joi.object().keys({

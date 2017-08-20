@@ -31,18 +31,15 @@ export const getResourceToVerify = () => {
 }
 
 export async function updateResource(updatedResource) {
-	const services = _.keys(updatedResource.services)
 	const transformedResource = {
 		...updatedResource,
 		primaryContactUserId: store.getState().resource.primaryContactUserId,
-		services,
 		hours: {
 			...updatedResource.hours,
 		},
 	}
-	console.log('TRANSFORMED RESOURCE', transformedResource)
 
-	fetch(`/api/pregnancy-centers`, {
+	fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {
 		method: 'PUT',
 		credentials: 'include',
 		headers: {
