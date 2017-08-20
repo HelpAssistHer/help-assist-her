@@ -1,4 +1,4 @@
-# Getting Started with Development
+# Getting Started with Development on Mac OS X
 
 ## Install Homebrew (Or Update)
 ````
@@ -15,7 +15,7 @@ brew update
 brew install git
 ````
 ## Install Node
-We are using versions: node v6.9.4 (npm v3.10.10)
+We are using versions: node v7.9.0
 
 ````
 brew install node
@@ -59,3 +59,66 @@ mongod --dbpath ~/.hah/data
 ````
 npm start
 ````
+
+
+# Getting Started with Development on Ubuntu or GalliumOS (Linux for Chromebooks)
+
+## Install Git
+`sudo apt-get install git` 
+
+## Clone the Repo
+`git clone https://github.com/HelpAssistHer/help-assist-her.git`
+
+`cd help-assist-her`
+
+## Install Node
+~~~~
+sudo apt-get install build-essential checkinstall
+sudo apt-get install libssl-dev
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
+nvm install 7.9.0
+nvm use 7.9.0
+nvm alias default node
+~~~~
+
+## Install Yarn
+`npm install -g yarn`
+
+## Install Node Packages with Yarn
+`yarn install` 
+
+`yarn global add nodemon`
+
+## Install MongoDB
+`sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927`
+
+`echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list`
+
+`sudo apt-get update`
+
+`sudo apt-get install -y mongodb-org`
+
+## Add configs
+
+`export NODE_CONFIG_DIR=/home/katelynsills/help-assist-her/config`
+
+`export NODE_ENV='localhost'`
+
+## Start MongoDB
+`mkdir -p ~/.hah/data`
+
+`yarn startdb`
+
+## Populate MongoDB
+`yarn data`
+
+`yarn geocode`
+
+## Start Server
+In a new tab, run `yarn start`
+
+## Rebuild front-end if necessary
+`yarn webpack`
+
+## View website
+Go to `http://127.0.0.1:4000/` in your browser
