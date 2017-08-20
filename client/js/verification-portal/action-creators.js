@@ -30,13 +30,28 @@ export const getResourceToVerify = () => {
 	}
 }
 
+const convertTimeToNumber = timeString => {
+	if (!timeString) {
+		return null
+	}
+
+	return Number(timeString.replace(/:/, ''))
+}
+
 export async function updateResource(updatedResource) {
+	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
+		return {
+			open: convertTimeToNumber(dayOfWeek.open),
+			close: convertTimeToNumber(dayOfWeek.close),
+			closedAllDay: dayOfWeek.closedAllDay,
+		}
+	})
+
 	const transformedResource = {
 		...updatedResource,
 		primaryContactUserId: store.getState().resource.primaryContactUserId,
-		hours: {
-			...updatedResource.hours,
-		},
+		hours: convertedHours,
+		services: _.mapValues(updatedResource.services, value => !!value),
 	}
 
 	fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {

@@ -27,8 +27,8 @@ const addressSchemaJoi = Joi.object().keys({
 })
 
 const dayHoursSchemaJoi = Joi.object().keys({
-	open: Joi.number().min(0).max(2359), // corresponds to 00:00 to 23:59 24-hour hhmm format.
-	close: Joi.number().min(0).max(2359) // corresponds to 00:00 to 23:59 24-hour hhmm format.
+	open: Joi.number().min(0).max(2359).allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
+	close: Joi.number().min(0).max(2359).allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
 })
 
 // key: a number from 0–6, corresponding to the days of the week, starting on Sunday. For example, 2 means Tuesday.
@@ -37,13 +37,13 @@ const dayHoursSchemaJoi = Joi.object().keys({
 // as much as possible, we are matching Google's Business hours https://developers.google.com/places/web-service/details
 
 const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunday.
-	0: Joi.array().items(dayHoursSchemaJoi),
-	1: Joi.array().items(dayHoursSchemaJoi),
-	2: Joi.array().items(dayHoursSchemaJoi),
-	3: Joi.array().items(dayHoursSchemaJoi),
-	4: Joi.array().items(dayHoursSchemaJoi),
-	5: Joi.array().items(dayHoursSchemaJoi),
-	6: Joi.array().items(dayHoursSchemaJoi)
+	0: dayHoursSchemaJoi,
+	1: dayHoursSchemaJoi,
+	2: dayHoursSchemaJoi,
+	3: dayHoursSchemaJoi,
+	4: dayHoursSchemaJoi,
+	5: dayHoursSchemaJoi,
+	6: dayHoursSchemaJoi,
 })
 
 const dateUserActionSchemaJoi = Joi.object().keys({
