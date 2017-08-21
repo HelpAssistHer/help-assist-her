@@ -8,17 +8,20 @@ cache:
   - directories:
     - node_modules
 
+sudo: false
 services:
-  - mongodb
-
-before_script:
-  - sleep 15
-  - mongo --eval 'db.getName()'
+- mongodb
+addons:
+  apt:
+    sources:
+    - mongodb-3.0-precise
+    packages:
+    - mongodb-org-server
 
 script:
   - yarn lint
-  - mongo --eval 'db.getName()'
   - yarn test
-  - mongo --eval 'db.getName()'
-  - yarn wds &
+  - webpack
+
+
 
