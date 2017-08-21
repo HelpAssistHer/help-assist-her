@@ -100,11 +100,11 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 }
 
 function getVerifiedDateUserId(verifiedData, userId) {
-	return new P( async (resolve, reject) => {
+	return new P( async (resolve) => {
 		const verifiedDataWithDateUserId = {}
 		_.forOwn(verifiedData, (value, key) => {
 			verifiedDataWithDateUserId[key] = {
-				verified: verifiedData[key][verified],
+				verified: verifiedData[key]['verified'],
 				userId: userId,
 				date: new Date().toISOString(),
 			}

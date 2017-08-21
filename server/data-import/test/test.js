@@ -266,6 +266,7 @@ describe('PregnancyCenters', () => {
 						}
 					}
 				}
+				const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
 
 				mockAuthenticate()
 				const res = await chai.request(server)
@@ -1055,6 +1056,6 @@ describe('PregnancyCenters', () => {
 				}
 				const validatedData = validationObj.value
 				validatedData.verifiedData.address.userId.should.equal('58e46a8d210140d7e47bf58b')
-		})
+			})
 	})
 })
