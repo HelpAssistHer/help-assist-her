@@ -209,12 +209,13 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 	const dayOfWeek = parseInt(req.query.day)
 	const query = {}
 
-	query['hours.' + dayOfWeek] = {
-		$elemMatch: {
-			open: {$lte: time},
-			close: {$gte: time}
-		}
+	query['hours.' + dayOfWeek + '.open'] = {
+		$lte: time
 	}
+	query['hours.' + dayOfWeek + '.close'] = {
+		$gte: time
+	}
+	
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query).populate('primaryContactPerson').lean()
 	if (pregnancyCentersOpenNow.length <= 0) {
 		return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
