@@ -20,7 +20,8 @@ const addressSchema = new mongoose.Schema({
 
 const userDateSchema = new mongoose.Schema({
 	date: Date,
-	userId: mongoose.Schema.Types.ObjectId
+	userId: mongoose.Schema.Types.ObjectId,
+	verified: Boolean,
 })
 
 const pregnancyCenterSchema = mongoose.Schema({
@@ -42,7 +43,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 		professionalCounseling: Boolean,
 		other: Boolean
 	},
-	verified: {
+	verifiedData: {
 		address: userDateSchema,
 		email: userDateSchema,
 		hours: userDateSchema,
