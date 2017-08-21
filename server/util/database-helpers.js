@@ -82,8 +82,8 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 		}
 
 		const validatedPrimaryContactPerson = personValidationObj.value
-
-		if ('_id' in primaryContactPerson) {
+		
+		if (primaryContactPerson && '_id' in primaryContactPerson) {
 			createdPrimaryContactPerson = await PersonModel.findByIdAndUpdate(validatedPrimaryContactPerson._id, {
 				$set: primaryContactPerson
 			}, {new: true})
@@ -173,7 +173,9 @@ module.exports = {
 			const tempPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenter)
 			tempPregnancyCenter.populate('primaryContactPerson')
 			const validatedDataWithUpdatedHistory = await createUpdateHistory(userId, oldPregnancyCenterObj, tempPregnancyCenter.toObject())
-			validatedDataWithUpdatedHistory.primaryContactPerson = validatedDataWithUpdatedHistory.primaryContactPerson._id
+			if (primaryContactPerson) {
+				validatedDataWithUpdatedHistory.primaryContactPerson = validatedDataWithUpdatedHistory.primaryContactPerson._id
+			}
 			const updatedPregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(pregnancyCenterId, {
 				$set: validatedDataWithUpdatedHistory
 			}, {new: true})
