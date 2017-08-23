@@ -99,6 +99,20 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 	})
 }
 
+function getVerifiedDateUserId(verifiedData, userId) {
+	return new P( async (resolve) => {
+		const verifiedDataWithDateUserId = {}
+		_.forOwn(verifiedData, (value, key) => {
+			verifiedDataWithDateUserId[key] = {
+				verified: verifiedData[key]['verified'],
+				userId: userId,
+				date: new Date().toISOString(),
+			}
+		})
+		resolve(verifiedDataWithDateUserId)
+	})
+}
+
 module.exports = {
 
 	createPregnancyCenter: (pregnancyCenter) => {
@@ -114,6 +128,8 @@ module.exports = {
 			}
 
 			const validatedPregnancyCenter = pregnancyCenterValidationObj.value
+			
+			validatedPregnancyCenter.verifiedData = getVerifiedDateUserId(validatedPregnancyCenter.verifiedData)
 
 			const primaryContactPerson = validatedPregnancyCenter.primaryContactPerson
 			delete validatedPregnancyCenter.primaryContactPerson
@@ -150,6 +166,8 @@ module.exports = {
 				reject(pregnancyCenterValidationObj.error)
 			}
 			const validatedPregnancyCenter = pregnancyCenterValidationObj.value
+
+			validatedPregnancyCenter.verifiedData = getVerifiedDateUserId(validatedPregnancyCenter.verifiedData)
 
 			const primaryContactPerson = validatedPregnancyCenter.primaryContactPerson
 			delete validatedPregnancyCenter.primaryContactPerson

@@ -26,7 +26,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Name Verified'
-							name='verified.prcName'
+							name='verifiedData.prcName.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -65,7 +65,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Address Verified'
-							name='verified.address'
+							name='verifiedData.address.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -79,7 +79,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Phone Number Verified'
-							name='verified.phone'
+							name='verifiedData.phone.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -93,7 +93,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Email Verified'
-							name='verified.email'
+							name='verifiedData.email.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -107,7 +107,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Website Verified'
-							name='verified.website'
+							name='verifiedData.website.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -145,7 +145,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Primary Contact Verified'
-							name='verified.primaryContact'
+							name='verifiedData.primaryContact.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -169,7 +169,7 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							label='Services Verified'
-							name='verified.services'
+							name='verifiedData.services.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -266,7 +266,7 @@ class VerificationPortalForm extends Component {
 				<div className={classes.parent}>
 					<Field
 						label='Hours Verified'
-						name='verified.hours'
+						name='verifiedData.hours.verified'
 						component={VerifiedCheckbox}
 					/>
 				</div>

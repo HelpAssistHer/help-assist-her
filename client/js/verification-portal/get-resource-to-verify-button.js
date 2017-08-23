@@ -27,39 +27,39 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		phone,
 		primaryContactUser,
 		services,
-		verified,
+		verifiedData,
 		website
 	} = resource
 
 	changeFieldValue('prcName', prcName)
-	changeFieldValue('verified.prcName', _.get(verified, 'prcName'))
+	changeFieldValue('verifiedData.prcName.verified', _.get(verifiedData, 'prcName.verified'))
 
 	changeFieldValue('address.line1', _.get(address, 'line1'))
 	changeFieldValue('address.line2', _.get(address, 'line2'))
 	changeFieldValue('address.city', _.get(address, 'city'))
 	changeFieldValue('address.state', _.get(address, 'state'))
 	changeFieldValue('address.zip', _.get(address, 'zip'))
-	changeFieldValue('verified.address', _.get(verified, 'address'))
+	changeFieldValue('verifiedData.address.verified', _.get(verifiedData, 'address.verified'))
 
 	changeFieldValue('phone', phone)
-	changeFieldValue('verified.phone', _.get(verified, 'phone'))
+	changeFieldValue('verifiedData.phone.verified', _.get(verifiedData, 'phone.verified'))
 
 	changeFieldValue('email', email)
-	changeFieldValue('verified.email', _.get(verified, 'email'))
+	changeFieldValue('verifiedData.email.verified', _.get(verifiedData, 'email.verified'))
 
 	changeFieldValue('website', website)
-	changeFieldValue('verified.website', _.get(verified, 'website'))
+	changeFieldValue('verifiedData.website.verified', _.get(verifiedData, 'website.verified'))
 
 	changeFieldValue('primaryContact.firstName', _.get(primaryContactUser, 'firstName'))
 	changeFieldValue('primaryContact.lastName', _.get(primaryContactUser, 'lastName'))
 	changeFieldValue('primaryContact.phone', _.get(primaryContactUser, 'phone'))
 	changeFieldValue('primaryContact.email', _.get(primaryContactUser, 'email'))
-	changeFieldValue('verified.primaryContact', _.get(verified, 'primaryContact'))
+	changeFieldValue('verifiedData.primaryContact.verified', _.get(verifiedData, 'primaryContact.verified'))
 
 	_.forEach(services, (value, key) => {
 		changeFieldValue(`services.${key}`, 1)
 	})
-	changeFieldValue('verified.services', _.get(verified, 'services'))
+	changeFieldValue('verifiedData.services.verified', _.get(verifiedData, 'services.verified'))
 
 	changeFieldValue('hours[0].open', convertNumberToTimeFormat(_.get(hours, '[0].open')))
 	changeFieldValue('hours[0].close', convertNumberToTimeFormat(_.get(hours, '[0].close')))
@@ -75,7 +75,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('hours[5].close', convertNumberToTimeFormat(_.get(hours, '[5].close')))
 	changeFieldValue('hours[6].open', convertNumberToTimeFormat(_.get(hours, '[6].open')))
 	changeFieldValue('hours[6].close', convertNumberToTimeFormat(_.get(hours, '[6].close')))
-	changeFieldValue('verified.hours', _.get(verified, 'hours'))
+	changeFieldValue('verifiedData.hours.verified', _.get(verifiedData, 'hours.verified'))
 
 	changeFieldValue('notes', notes)
 }

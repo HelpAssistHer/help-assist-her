@@ -54,22 +54,33 @@ export async function updateResource(updatedResource) {
 		services: _.mapValues(updatedResource.services, value => !!value),
 	}
 
-	fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {
-		method: 'PUT',
-		credentials: 'include',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(transformedResource),
-	})
-		.then(function (response) {
-			return response.json()
+	try {
+		const response = await fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(transformedResource),
 		})
-		.then(function (result) {
-			alert(JSON.stringify(result))
-		})
-		.catch(function (error) {
-			console.log('Request failed', error)
-		})
+
+		const result = await response.json()
+
+		if (result.statusCode >= 400) {
+			const alertMessage = 'There was an error saving this resource. Please take a screenshot ' +
+				'of this message and attach using the Help button in the lower right corner.' +
+				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(result.message)}`
+			alert(alertMessage)
+		} else {
+			alert('Updates saved successfully!')
+		}
+
+		return result
+	} catch (error) {
+		const alertMessage = 'There was an unexpected error saving this resource. Please take a screenshot ' +
+			'of this message and attach using the Help button in the lower right corner.' +
+			`\n\nError: ${error}`
+		alert(alertMessage)
+	}
 }

@@ -259,7 +259,14 @@ describe('PregnancyCenters', () => {
 					website: 'http://www.birthright.org',
 					primaryContactPerson: primaryContactPerson,
 					services: {},
+					verifiedData: {
+						phone: {
+							verified: true,
+							'date': '2017-04-16T23:33:17.220Z'
+						}
+					}
 				}
+				const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
 
 				mockAuthenticate()
 				const res = await chai.request(server)
@@ -285,6 +292,9 @@ describe('PregnancyCenters', () => {
 				res.body.prcName.should.equal('Birthright of Albany')
 				res.body.phone.should.equal('+15184382978')
 				res.body.website.should.equal('http://www.birthright.org')
+				res.body.verifiedData.phone.verified.should.equal(true)
+				res.body.verifiedData.phone.date.should.not.equal('2017-04-16T23:33:17.220Z')
+				res.body.verifiedData.phone.userId.should.equal(testUser._id.toString())
 			} catch (err) {
 				log.error(err.error)
 			}
@@ -388,7 +398,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it('it should return a single pregnancy center were verified.address is null', async () => {
+		it('it should return a single pregnancy center were verifiedData.address is null', async () => {
 
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
@@ -442,7 +452,7 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services':{},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date': '2017-04-16T23:33:17.220Z'
 					}
@@ -458,7 +468,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('prcName')
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
-			res.body.verified.should.deep.equal({})
+			res.body.verifiedData.should.deep.equal({})
 
 		})
 	})
@@ -484,7 +494,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
@@ -508,7 +518,7 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services': {},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
@@ -548,7 +558,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services': {},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
@@ -602,8 +612,9 @@ describe('PregnancyCenters', () => {
 					'website': 'http://www.birthright.org',
 					'services': {},
 					primaryContactPerson: primaryContactPerson,
-					'verified': {
+					'verifiedData': {
 						'address': {
+							'verified':true,
 							'date': '2017-04-16T23:33:17.220Z'
 						}
 					}
@@ -633,8 +644,9 @@ describe('PregnancyCenters', () => {
 					'website': 'http://www.birthright.org',
 					'services': {},
 					primaryContactPerson: primaryContactPerson2,
-					'verified': {
+					'verifiedData': {
 						'address': {
+							'verified': true,
 							'date': '2017-04-16T23:33:17.220Z'
 						}
 					}
@@ -656,12 +668,13 @@ describe('PregnancyCenters', () => {
 				res.body.should.have.property('primaryContactPerson')
 				res.body._id.should.equal(String(oldPCObj._id))
 				res.body.prcName.should.equal('Birthright of Albany')
-				res.body.should.have.property('verified')
+				res.body.should.have.property('verifiedData')
 				res.body.should.have.property('updated')
 				res.body.updated.should.have.property('address')
 				res.body.updated.address.should.have.property('userId')
 				res.body.updated.address.userId.should.equal(testUser._id.toString())
-				res.body.verified.should.have.property('address')
+				res.body.verifiedData.should.have.property('address')
+				res.body.verifiedData.address.userId.should.equal(testUser._id.toString())
 
 				// check that the pregnancy center history is created as well.
 				const histories = await PregnancyCenterHistoryModel.find({
@@ -669,7 +682,7 @@ describe('PregnancyCenters', () => {
 				})
 				histories.should.have.length(2) // we want the primary Contact history too.
 				for (const pc_history of histories) {
-					if (pc_history.field == 'primaryContactPerson') {
+					if (pc_history.field === 'primaryContactPerson') {
 						pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
 					}
 				}
@@ -763,7 +776,7 @@ describe('PregnancyCenters', () => {
 			res.body._id.should.equal(String(pc._id))
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
-			res.body.verified.should.deep.equal({})
+			res.body.verifiedData.should.deep.equal({})
 
 		})
 	})
@@ -999,10 +1012,10 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers verified 13', () => {
-		it('validation should fail because each verified field object only has keys date and userId', async () => {
+		it('validation should fail because each verifiedData field object only has keys date and userId', async () => {
 
 			const testPCObj13 = {
-				verified: {
+				verifiedData: {
 					address: {
 						dateVerified: moment()
 					}
@@ -1013,33 +1026,36 @@ describe('PregnancyCenters', () => {
 				abortEarly: false
 			})
 			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal('child "verified" fails because [child "address" fails because ["dateVerified" is not allowed]]')
+			validationObj.error.message.should.equal('child "verifiedData" fails because [child "address" fails ' +
+				'because [child "verified" fails because ["verified" is required], "dateVerified" is not allowed]]')
 		})
 	})
 
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers verified 13', () => {
-		it('validation should pass because the verified field for address has date and userId', async () => {
+	describe('Test Joi validation for pregnancy centers verifiedData 13', () => {
+		it('validation should pass because the verifiedData field for address has date and userId and verified',
+			async () => {
 
-			const testPCObj13 = {
-				verified: {
-					address: {
-						date: moment().toISOString(),
-						userId: '58e46a8d210140d7e47bf58b'
+				const testPCObj13 = {
+					verifiedData: {
+						address: {
+							date: moment().toISOString(),
+							userId: '58e46a8d210140d7e47bf58b',
+							verified: true,
+						}
 					}
 				}
-			}
-
-			const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
-				abortEarly: false
+	
+				const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
+					abortEarly: false
+				})
+				if (validationObj.error) {
+					throw validationObj.error
+				}
+				const validatedData = validationObj.value
+				validatedData.verifiedData.address.userId.should.equal('58e46a8d210140d7e47bf58b')
 			})
-			if (validationObj.error) {
-				throw validationObj.error
-			}
-			const validatedData = validationObj.value
-			validatedData.verified.address.userId.should.equal('58e46a8d210140d7e47bf58b')
-		})
 	})
 })
