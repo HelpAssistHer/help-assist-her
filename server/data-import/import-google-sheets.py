@@ -11,19 +11,19 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 			headers = next(importfilereader)
 
 			valid_services = {
-				'Medical Quality Pregnancy Test':'pregnancyTest',
+				'Medical Quality Pregnancy Test':'medicalQualityPregnancyTest',
 				'Ultrasound':'ultrasound',
 				'Material Assistance':'materialAssistance',
-				'Post-Abortion Healing':'postAbortionHealing',
+				'Post-Abortion Healing':'postAbortionCounseling',
 				'Parenting Classes':'parentingClasses',
 				'STD Testing':'stdTesting',
-				'Counseling':'professionalCounseling',
+				'Counseling':'licensedProfessionalCounseling',
 				#'other'
 			}
-							
+
 			data = []
 			for row in importfilereader:
-				
+
 				services = {}
 				for i in range(11, 18):
 					if row[i] == 'Yes':
@@ -48,7 +48,7 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 						hour = '0'+str(hour)
 					return "{}{}".format(hour, minute)
 
-				
+
 
 				def processOpenClose(openclose):
 					if openclose.lower().strip() == 'closed':
@@ -123,7 +123,7 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 
 				if row[8]:
 					pregnancyCenter['email'] = row[8]
-			
+
 				if len(services) > 0:
 					pregnancyCenter['services'] = services
 
@@ -135,7 +135,7 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 						pregnancyCenter['verifiedData'] = {}
 					pregnancyCenter['verifiedData']['address'] = dateVerifiedObj
 
-				if len(hours) > 0: 
+				if len(hours) > 0:
 					if 'verifiedData' not in pregnancyCenter:
 						pregnancyCenter['verifiedData'] = {}
 					pregnancyCenter['verifiedData']['hours'] = dateVerifiedObj

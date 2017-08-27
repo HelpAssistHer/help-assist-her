@@ -3,6 +3,8 @@
 const _ = require('lodash')
 const mongoose = require('mongoose')
 
+const helpers = require('./helpers')
+
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
 	coordinates: [Number]
@@ -30,19 +32,10 @@ const pregnancyCenterSchema = mongoose.Schema({
 	hours: Object,
 	prcName: String,
 	notes: String,
+	otherServices: String,
 	phone: String,
 	primaryContactPerson: { type: mongoose.Schema.Types.ObjectId, ref: 'Persons' },
-	services: {
-		default: {},
-		pregnancyTest: Boolean,
-		ultrasound: Boolean,
-		materialAssistance: Boolean,
-		postAbortionHealing: Boolean,
-		parentingClasses: Boolean,
-		stdTesting: Boolean,
-		professionalCounseling: Boolean,
-		other: Boolean
-	},
+	services: helpers.getPregnancyCenterServicesSchema(Boolean),
 	verifiedData: {
 		address: userDateSchema,
 		email: userDateSchema,
