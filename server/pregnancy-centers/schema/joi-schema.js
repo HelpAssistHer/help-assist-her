@@ -3,6 +3,7 @@
 const Joi = require('joi')
 const phoneValidator = require('joi-phone-validator')
 
+const helpers = require('./helpers')
 const personSchemaJoi = require('../../persons/schema/joi-schema')
 
 const pointSchemaJoi = Joi.object().keys({
@@ -63,18 +64,10 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	hours: hoursSchemaJoi,
 	prcName: Joi.string(),
 	notes: Joi.string(),
+	otherServices: Joi.string(),
 	phone: phoneValidator.phone().validate(),
 	primaryContactPerson: personSchemaJoi,
-	services: {
-		pregnancyTest: Joi.boolean(),
-		ultrasound: Joi.boolean(),
-		materialAssistance: Joi.boolean(),
-		postAbortionHealing: Joi.boolean(),
-		parentingClasses: Joi.boolean(),
-		stdTesting: Joi.boolean(),
-		professionalCounseling: Joi.boolean(),
-		other: Joi.boolean()
-	},
+	services: helpers.getPregnancyCenterServicesSchema(Joi.boolean()),
 	verifiedData: {
 		address: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,

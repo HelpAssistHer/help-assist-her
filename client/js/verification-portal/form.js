@@ -7,7 +7,7 @@ import Input from '../components/input'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
-import services from './pregnancy-center-services'
+import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 class VerificationPortalForm extends Component {
 	render() {
@@ -166,6 +166,13 @@ class VerificationPortalForm extends Component {
 							)
 						})
 					}
+					<Field
+						name='otherServices'
+						component='textarea'
+						placeholder='List other services here...'
+						rows='4'
+						cols='50'
+					/>
 					<div className={classes.parent}>
 						<Field
 							label='Services Verified'
