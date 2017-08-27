@@ -177,7 +177,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 	const newPregnancyCenter = req.body
 
 	try {
-		const createdPregnancyCenter = await createPregnancyCenter(newPregnancyCenter)
+		const createdPregnancyCenter = await createPregnancyCenter(req.user._id, newPregnancyCenter)
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)

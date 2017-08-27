@@ -25,7 +25,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		hours,
 		notes,
 		phone,
-		primaryContactUser,
+		primaryContactPerson,
 		services,
 		verifiedData,
 		website
@@ -50,11 +50,11 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('website', website)
 	changeFieldValue('verifiedData.website.verified', _.get(verifiedData, 'website.verified'))
 
-	changeFieldValue('primaryContact.firstName', _.get(primaryContactUser, 'firstName'))
-	changeFieldValue('primaryContact.lastName', _.get(primaryContactUser, 'lastName'))
-	changeFieldValue('primaryContact.phone', _.get(primaryContactUser, 'phone'))
-	changeFieldValue('primaryContact.email', _.get(primaryContactUser, 'email'))
-	changeFieldValue('verifiedData.primaryContact.verified', _.get(verifiedData, 'primaryContact.verified'))
+	changeFieldValue('primaryContactPerson.firstName', _.get(primaryContactPerson, 'firstName'))
+	changeFieldValue('primaryContactPerson.lastName', _.get(primaryContactPerson, 'lastName'))
+	changeFieldValue('primaryContactPerson.phone', _.get(primaryContactPerson, 'phone'))
+	changeFieldValue('primaryContactPerson.email', _.get(primaryContactPerson, 'email'))
+	changeFieldValue('verifiedData.primaryContactPerson.verified', _.get(verifiedData, 'primaryContactPerson.verified'))
 
 	_.forEach(services, (value, key) => {
 		changeFieldValue(`services.${key}`, 1)

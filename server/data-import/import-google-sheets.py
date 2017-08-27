@@ -32,7 +32,8 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 				if len(dateVerifiedSplit) == 3:
 					dateVerified = datetime(month=int(dateVerifiedSplit[0]),day=int(dateVerifiedSplit[1]),year=int('20'+dateVerifiedSplit[2])).isoformat()
 					dateVerifiedObj = {
-						'date': dateVerified
+						'date': dateVerified,
+						'verified': True
 					}
 
 				def processTime(rawtime, close=False):
@@ -51,12 +52,12 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 
 				def processOpenClose(openclose):
 					if openclose.lower().strip() == 'closed':
-						return []
+						return {'closedAllDay': True}
 					else:
 						rawopentime, rawclosetime = openclose.split('-')
 						opentime = processTime(rawopentime)
 						closetime = processTime(rawclosetime, close=True)
-					return [{ 'open': opentime, 'close': closetime}]
+					return { 'open': opentime, 'close': closetime}
 
 
 				hours = {}
@@ -130,34 +131,34 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 					pregnancyCenter['website'] = row[6]
 
 				if row[3] == 'Yes': # address
-					if 'verified' not in pregnancyCenter:
-						pregnancyCenter['verified'] = {}
-					pregnancyCenter['verified']['address'] = dateVerifiedObj
+					if 'verifiedData' not in pregnancyCenter:
+						pregnancyCenter['verifiedData'] = {}
+					pregnancyCenter['verifiedData']['address'] = dateVerifiedObj
 
 				if len(hours) > 0: 
-					if 'verified' not in pregnancyCenter:
-						pregnancyCenter['verified'] = {}
-					pregnancyCenter['verified']['hours'] = dateVerifiedObj
+					if 'verifiedData' not in pregnancyCenter:
+						pregnancyCenter['verifiedData'] = {}
+					pregnancyCenter['verifiedData']['hours'] = dateVerifiedObj
 
 				if row[1] == 'Yes': # name
-					if 'verified' not in pregnancyCenter:
-						pregnancyCenter['verified'] = {}
-					pregnancyCenter['verified']['prcName'] = dateVerifiedObj
+					if 'verifiedData' not in pregnancyCenter:
+						pregnancyCenter['verifiedData'] = {}
+					pregnancyCenter['verifiedData']['prcName'] = dateVerifiedObj
 
 				if row[5] == 'Yes': # phone
-					if 'verified' not in pregnancyCenter:
-						pregnancyCenter['verified'] = {}
-					pregnancyCenter['verified']['phone'] = dateVerifiedObj
+					if 'verifiedData' not in pregnancyCenter:
+						pregnancyCenter['verifiedData'] = {}
+					pregnancyCenter['verifiedData']['phone'] = dateVerifiedObj
 
 				if row[7] == 'Yes': #website
-					if 'verified' not in pregnancyCenter:
-						pregnancyCenter['verified'] = {}
-					pregnancyCenter['verified']['website'] = dateVerifiedObj
+					if 'verifiedData' not in pregnancyCenter:
+						pregnancyCenter['verifiedData'] = {}
+					pregnancyCenter['verifiedData']['website'] = dateVerifiedObj
 
 				# if row[9] == 'Yes': #email
-				# 	if 'verified' not in pregnancyCenter:
-				# 		pregnancyCenter['verified'] = {}
-				# 	pregnancyCenter['verified']['email'] = dateVerifiedObj
+				# 	if 'verifiedData' not in pregnancyCenter:
+				# 		pregnancyCenter['verifiedData'] = {}
+				# 	pregnancyCenter['verifiedData']['email'] = dateVerifiedObj
 
 				data.append(pregnancyCenter)
 			json.dump(data, outfile)
