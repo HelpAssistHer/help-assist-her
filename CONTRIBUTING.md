@@ -17,7 +17,7 @@ brew install git
 
 ## Install Python
 ````
-brew install python
+brew install python3
 ````
 
 ## Install Node
