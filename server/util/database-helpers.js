@@ -70,8 +70,9 @@ function createUpdateHistory(userId, oldPregnancyCenterObj, pregnancyCenterRawOb
 
 function updateCreatePrimaryContactPerson(primaryContactPerson) {
 	return new P( async (resolve, reject) => {
+		
 		if (!primaryContactPerson) {
-			resolve(null)
+			return resolve(null)
 		}
 		
 		let createdPrimaryContactPerson
@@ -82,7 +83,7 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 
 		// Joi.validate() returns an obj of form { error: null, value: validatedData}
 		if (personValidationObj.error) {
-			reject(personValidationObj.error)
+			return reject(personValidationObj.error)
 		}
 
 		const validatedPrimaryContactPerson = personValidationObj.value
@@ -96,7 +97,7 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 				createdPrimaryContactPerson = new PersonModel(primaryContactPerson)
 				await createdPrimaryContactPerson.save()
 			} catch (err) {
-				reject(err)
+				return reject(err)
 			}
 		}
 		log.info('createdPrimaryContactPerson', createdPrimaryContactPerson)
@@ -126,7 +127,7 @@ function validatePregnancyCenter(pregnancyCenterObj) {
 		// await Joi.validate() returns an obj of form { error: null, value: validatedData}
 		if (pregnancyCenterValidationObj.error) {
 			log.error(pregnancyCenterValidationObj.error)
-			reject(pregnancyCenterValidationObj.error)
+			return reject(pregnancyCenterValidationObj.error)
 		}
 		resolve(pregnancyCenterValidationObj.value)
 	})
@@ -139,7 +140,7 @@ function validateAndFillPregnancyCenter(userId, pregnancyCenterObj) {
 			// validate the incoming data
 			validatedPregnancyCenterObj = await validatePregnancyCenter(pregnancyCenterObj)
 		} catch (err) {
-			reject(err)
+			return reject(err)
 		}
 		
 		try {
@@ -165,7 +166,7 @@ function getOldPregnancyCenter(pregnancyCenterId) {
 		const oldPregnancyCenter = await PregnancyCenterModel.findById(pregnancyCenterId)
 			.populate('primaryContactPerson')
 		if (!oldPregnancyCenter) {
-			reject()
+			return reject()
 		}
 		resolve(oldPregnancyCenter)
 	})
@@ -202,7 +203,7 @@ module.exports = {
 					$set: validatedPregnancyCenterObj
 				}, {new: true})
 				if (!updatedPregnancyCenter) {
-					reject()
+					return reject()
 				}
 				await PregnancyCenterModel.populate(updatedPregnancyCenter, 'primaryContactPerson')
 				resolve(updatedPregnancyCenter)
