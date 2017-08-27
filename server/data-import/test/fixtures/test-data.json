@@ -1,0 +1,148 @@
+[
+  {
+    "address": {
+      "line1": "518 Clinton Ave.",
+      "line2": "Line 2 test",
+      "city": "Albany",
+      "state": "NY",
+      "zip": "12206"
+    },
+    "createdAt": "2017-03-03T00:00:00",
+    "email": "info@alphacare.org",
+    "hours" : {
+      "0": {
+        "open": 800,
+        "close":1700,
+        "closedAllDay": false
+        },
+      "1": {
+        "open": 800,
+        "close":1700,
+        "closedAllDay": false
+      },
+      "2": {
+        "open": 800,
+        "close":1700,
+        "closedAllDay": false
+      },
+      "3": {
+        "open": 800,
+        "close":1700,
+        "closedAllDay": false
+      },
+      "4": {
+        "open": 800,
+        "close":1700,
+        "closedAllDay": false
+      },
+      "5": {
+        "open": 800,
+        "close":1700,
+        "closedAllDay": false
+      },
+      "6": {
+        "closedAllDay": true
+      }
+    },
+    "prcName": "Alpha Pregnancy Care Center",
+    "notes": "They have ongoing CBE classes.\nPlease change website to ORG.\nSocial worker and peer counseling.",
+    "phone": "+15184622188",
+    "primaryContactPerson": {
+      "createdAt": "2017-03-03T00:00:00",
+      "email": "katelynsills@gmail.com",
+      "firstName": "Kate",
+      "lastName": "Sills",
+      "phone": "+19167163024",
+      "updatedAt": "2017-03-03T00:00:00"
+    },
+    "services": {
+      "pregnancyTest": true,
+      "ultrasound": true,
+      "materialAssistance": true,
+      "postAbortionHealing": true,
+      "parentingClasses": true,
+      "stdTesting": true,
+      "professionalCounseling": true,
+      "other": true
+    },
+    
+    "verifiedData": {
+      "address": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "email": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "hours": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "prcName": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "phone": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "primaryContactPerson": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "services": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "website": {
+        "date": "2017-03-03T00:00:00",
+        "verified": true,
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      }
+    },
+    "updated": {
+      "address": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "email": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "hours": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "prcName": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "phone": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "primaryContactPerson": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "services": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      },
+      "website": {
+        "date": "2017-03-03T00:00:00",
+        "userId": "59a1e49cdc7561e1d5493c6e"
+      }
+    },
+    "updatedAt":"2017-03-03T00:00:00",
+    "website": "http://www.alphacare.com"
+  }
+]

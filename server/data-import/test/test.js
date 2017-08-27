@@ -1026,8 +1026,7 @@ describe('PregnancyCenters', () => {
 				abortEarly: false
 			})
 			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal('child "verifiedData" fails because [child "address" fails ' +
-				'because [child "verified" fails because ["verified" is required], "dateVerified" is not allowed]]')
+			validationObj.error.message.should.equal('child "verifiedData" fails because [child "address" fails because ["dateVerified" is not allowed]]')
 		})
 	})
 

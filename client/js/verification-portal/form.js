@@ -117,21 +117,21 @@ class VerificationPortalForm extends Component {
 					<h3>Primary Contact</h3>
 					<Field
 						label='First Name'
-						name='primaryContact.firstName'
+						name='primaryContactPerson.firstName'
 						component={Input}
 						type='text'
 					/>
 
 					<Field
 						label='Last Name'
-						name='primaryContact.lastName'
+						name='primaryContactPerson.lastName'
 						component={Input}
 						type='text'
 					/>
 
 					<Field
 						label='Email'
-						name='primaryContact.email'
+						name='primaryContactPerson.email'
 						component={Input}
 						type='text'
 					/>
@@ -139,13 +139,13 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							label='Phone Number'
-							name='primaryContact.phone'
+							name='primaryContactPerson.phone'
 							component={Input}
 							type='text'
 						/>
 						<Field
 							label='Primary Contact Verified'
-							name='verifiedData.primaryContact.verified'
+							name='verifiedData.primaryContactPerson.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>

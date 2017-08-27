@@ -18,6 +18,7 @@
     "n": "nvm use stable",
     "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
     "data": "NODE_ENV=localhost node ./server/data-import/data.js",
+    "test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
     "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js"
   },
   "repository": {

@@ -49,7 +49,6 @@ export async function updateResource(updatedResource) {
 
 	const transformedResource = {
 		...updatedResource,
-		primaryContactUserId: store.getState().resource.primaryContactUserId,
 		hours: convertedHours,
 		services: _.mapValues(updatedResource.services, value => !!value),
 	}

@@ -29,6 +29,7 @@ const addressSchemaJoi = Joi.object().keys({
 const dayHoursSchemaJoi = Joi.object().keys({
 	open: Joi.number().min(0).max(2359).allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
 	close: Joi.number().min(0).max(2359).allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
+	closedAllDay: Joi.boolean().allow(null),
 })
 
 // key: a number from 0–6, corresponding to the days of the week, starting on Sunday. For example, 2 means Tuesday.
@@ -50,7 +51,7 @@ const dateUserActionSchemaJoi = Joi.object().keys({
 	_id: Joi.string(),
 	date: Joi.date().iso(),
 	userId: Joi.string(),
-	verified: Joi.boolean().required(),
+	verified: Joi.boolean().default(false)
 })
 
 const pregnancyCenterSchemaJoi = Joi.object().keys({
@@ -80,7 +81,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		hours: dateUserActionSchemaJoi,
 		prcName: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
-		primaryContact: dateUserActionSchemaJoi,
+		primaryContactPerson: dateUserActionSchemaJoi,
 		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
@@ -91,7 +92,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		prcName: dateUserActionSchemaJoi,
 		notes: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
-		primaryContact: dateUserActionSchemaJoi,
+		primaryContactPerson: dateUserActionSchemaJoi,
 		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi
 	},
