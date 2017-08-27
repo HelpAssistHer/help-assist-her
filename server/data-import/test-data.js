@@ -31,7 +31,7 @@ async function reimport() {
 	await UserModel.collection.drop()
 	await PregnancyCenterHistoryModel.collection.drop()
 	await PersonModel.collection.drop()
-	
+
 	const user = await UserModel.create({
 		'providerId':'10155647416405110',
 		'updatedAt': '2017-08-26 14:14:03.553',
@@ -40,7 +40,7 @@ async function reimport() {
 		'__v':0,
 		'createdAt':'2017-08-26 14:14:03.553'
 	})
-	
+
 	const primaryContactPerson = await PersonModel.create({
 		'createdAt': '2017-03-03T00:00:00',
 		'email': 'katelynsills@gmail.com',
@@ -51,7 +51,7 @@ async function reimport() {
 	})
 	const primaryContactPersonObj = primaryContactPerson.toObject()
 	primaryContactPersonObj._id = primaryContactPersonObj._id.toString()
-	
+
 	const pregnancyCenter = {
 		'address': {
 			'line1': '518 Clinton Ave.',
@@ -102,13 +102,13 @@ async function reimport() {
 		'phone': '+15184622188',
 		'primaryContactPerson': primaryContactPersonObj,
 		'services': {
-			'pregnancyTest': true,
+			'medicalQualityPregnancyTest': true,
 			'ultrasound': true,
 			'materialAssistance': true,
-			'postAbortionHealing': true,
+			'postAbortionCounseling': true,
 			'parentingClasses': true,
 			'stdTesting': true,
-			'professionalCounseling': true,
+			'licensedProfessionalCounseling': true,
 			'other': true
 		},
 		'verifiedData': {
@@ -190,7 +190,7 @@ async function reimport() {
 		'updatedAt':'2017-03-03T00:00:00',
 		'website': 'http://www.alphacare.com'
 	}
-	
+
 	const validationObj = await Joi.validate(pregnancyCenter, pregnancyCenterSchemaJoi, {
 		abortEarly: false
 	})
@@ -201,7 +201,7 @@ async function reimport() {
 		const newPregnancyCenter = await PregnancyCenterModel.create(validatedPregnancyCenter)
 		log.info(newPregnancyCenter._id)
 	}
-	
+
 	process.exit()
 }
 
