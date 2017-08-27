@@ -14,6 +14,12 @@ brew update
 ````
 brew install git
 ````
+
+## Install Python
+````
+brew install python
+````
+
 ## Install Node
 We are using versions: node v7.9.0
 
