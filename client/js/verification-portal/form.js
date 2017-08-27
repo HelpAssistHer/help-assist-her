@@ -75,6 +75,7 @@ class VerificationPortalForm extends Component {
 							label='Phone Number'
 							name='phone'
 							component={Input}
+							placeholder='Format must be +19998887777'
 							type='tel'
 						/>
 						<Field
@@ -140,6 +141,7 @@ class VerificationPortalForm extends Component {
 						<Field
 							label='Phone Number'
 							name='primaryContactPerson.phone'
+							placeholder='Format must be +19998887777'
 							component={Input}
 							type='text'
 						/>
