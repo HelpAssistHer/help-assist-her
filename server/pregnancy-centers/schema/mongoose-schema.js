@@ -30,6 +30,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	hours: Object,
 	prcName: String,
 	notes: String,
+	otherServices: String,
 	phone: String,
 	primaryContactPerson: { type: mongoose.Schema.Types.ObjectId, ref: 'Persons' },
 	services: {

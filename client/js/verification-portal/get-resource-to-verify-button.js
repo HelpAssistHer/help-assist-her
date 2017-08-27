@@ -24,6 +24,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		address,
 		hours,
 		notes,
+		otherServices,
 		phone,
 		primaryContactPerson,
 		services,
@@ -59,6 +60,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	_.forEach(services, (value, key) => {
 		changeFieldValue(`services.${key}`, 1)
 	})
+	changeFieldValue('otherServices', otherServices)
 	changeFieldValue('verifiedData.services.verified', _.get(verifiedData, 'services.verified'))
 
 	changeFieldValue('hours[0].open', convertNumberToTimeFormat(_.get(hours, '[0].open')))

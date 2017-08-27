@@ -166,6 +166,13 @@ class VerificationPortalForm extends Component {
 							)
 						})
 					}
+					<Field
+						name='otherServices'
+						component='textarea'
+						placeholder='List other services here...'
+						rows='4'
+						cols='50'
+					/>
 					<div className={classes.parent}>
 						<Field
 							label='Services Verified'
