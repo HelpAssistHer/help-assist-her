@@ -2,7 +2,6 @@
 
 const _ = require('lodash')
 const Joi = require('joi')
-const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 
@@ -11,8 +10,6 @@ const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schem
 const PersonModel = require('../persons/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
 const personSchemaJoi = require('../persons/schema/joi-schema')
-
-const log = new Log('info')
 
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt']
 
@@ -34,6 +31,7 @@ function isEqualMongoose(a, b){
 function createUpdateHistory(userId, oldPregnancyCenterObj, pregnancyCenterRawObj) {
 
 	return new P( async (resolve) => {
+		
 		const pregnancyCenterRawObjWithStamps = removeMongooseKeys(_.clone(pregnancyCenterRawObj))
 
 		if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
@@ -70,29 +68,40 @@ function createUpdateHistory(userId, oldPregnancyCenterObj, pregnancyCenterRawOb
 
 function updateCreatePrimaryContactPerson(primaryContactPerson) {
 	return new P( async (resolve, reject) => {
-		
+
+		// CASE 1: If the _id is undefined && there is no other data, then do nothing with Person
 		if (!primaryContactPerson) {
 			return resolve(null)
 		}
-		
-		let createdPrimaryContactPerson
+		if (_.isEmpty(primaryContactPerson)) {
+			return resolve(null)
+		} 
+		if (primaryContactPerson.constructor === Object && 
+			Object.keys(primaryContactPerson).length === 1 &&
+			_.has(primaryContactPerson, '_id') &&
+				_.isNil(primaryContactPerson._id)) {
+			return resolve(null)
+		}
 
+		// Validate for both creating and updating
 		const personValidationObj = await Joi.validate(primaryContactPerson, personSchemaJoi, {
 			abortEarly: false
 		})
-
 		// Joi.validate() returns an obj of form { error: null, value: validatedData}
 		if (personValidationObj.error) {
 			return reject(personValidationObj.error)
 		}
-
 		const validatedPrimaryContactPerson = personValidationObj.value
+
+		let createdPrimaryContactPerson
 		
-		if (primaryContactPerson && '_id' in primaryContactPerson) {
+		// 2. If there is an _id, then update the existing Person record
+		if ('_id' in primaryContactPerson && typeof primaryContactPerson._id !== 'undefined') {
 			createdPrimaryContactPerson = await PersonModel.findByIdAndUpdate(validatedPrimaryContactPerson._id, {
 				$set: primaryContactPerson
 			}, {new: true})
-		} else {
+			
+		} else { // 3. If the _id is undefined && there is data in any of the fields, create a new Person
 			try {
 				createdPrimaryContactPerson = new PersonModel(primaryContactPerson)
 				await createdPrimaryContactPerson.save()
@@ -100,7 +109,7 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 				return reject(err)
 			}
 		}
-		log.info('createdPrimaryContactPerson', createdPrimaryContactPerson)
+
 		resolve(createdPrimaryContactPerson)
 	})
 }
@@ -126,7 +135,6 @@ function validatePregnancyCenter(pregnancyCenterObj) {
 		})
 		// await Joi.validate() returns an obj of form { error: null, value: validatedData}
 		if (pregnancyCenterValidationObj.error) {
-			log.error(pregnancyCenterValidationObj.error)
 			return reject(pregnancyCenterValidationObj.error)
 		}
 		resolve(pregnancyCenterValidationObj.value)
@@ -151,7 +159,12 @@ function validateAndFillPregnancyCenter(userId, pregnancyCenterObj) {
 				userId
 			)
 			// handle the primaryContactPerson
-			validatedPregnancyCenterObj.primaryContactPerson = await updateCreatePrimaryContactPerson(validatedPregnancyCenterObj.primaryContactPerson)
+			const primaryContactPerson = await updateCreatePrimaryContactPerson(validatedPregnancyCenterObj.primaryContactPerson)
+			if (primaryContactPerson) {
+				validatedPregnancyCenterObj.primaryContactPerson = primaryContactPerson
+			} else {
+				delete validatedPregnancyCenterObj.primaryContactPerson
+			}
 			
 			resolve(validatedPregnancyCenterObj)
 		} catch (err) {
@@ -181,18 +194,17 @@ module.exports = {
 				const createdPregnancyCenter = PregnancyCenterModel(validatedPregnancyCenterObj)
 				await createdPregnancyCenter.save()
 				await PregnancyCenterModel.populate(createdPregnancyCenter, 'primaryContactPerson')
-				resolve(createdPregnancyCenter)
+				return resolve(createdPregnancyCenter)
 			} catch (err) {
-				reject(err)
+				return reject(err)
 			}
 		})
 	},
 	updatePregnancyCenter: (userId, pregnancyCenterId, pregnancyCenterObj) => {
 		return new P(async(resolve, reject) => {
 			try {
-				const validatedPregnancyCenterObj = await validateAndFillPregnancyCenter(userId, pregnancyCenterObj)
 				const oldPregnancyCenter = await getOldPregnancyCenter(pregnancyCenterId) // primaryContactPerson is populated
-
+				const validatedPregnancyCenterObj = await validateAndFillPregnancyCenter(userId, pregnancyCenterObj)
 				// compare the old object to the new object and create PregnancyCenterHistory documents and `updated` objects
 				const validatedPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenterObj)
 				validatedPregnancyCenter.populate('primaryContactPerson')
@@ -208,7 +220,7 @@ module.exports = {
 				await PregnancyCenterModel.populate(updatedPregnancyCenter, 'primaryContactPerson')
 				resolve(updatedPregnancyCenter)
 			} catch (err) {
-				reject(err)
+				return reject(err)
 			}
 		})
 	},
