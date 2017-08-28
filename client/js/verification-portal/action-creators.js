@@ -51,7 +51,7 @@ export async function updateResource(updatedResource) {
 		...updatedResource,
 		hours: convertedHours,
 		primaryContactPerson: {
-			_id: store.getState().resource.primaryContactPerson._id,
+			_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
 			...updatedResource.primaryContactPerson
 		},
 		services: _.mapValues(updatedResource.services, value => !!value),
