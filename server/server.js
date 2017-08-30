@@ -251,7 +251,9 @@ server.listen(port, function () {
 })
 
 function handleError(res, err) {
-	log.error(err)
+	if (err.name === 'ValidationError') {
+		return res.boom.badRequest(err.message)
+	}
 	return res.boom.badImplementation(err)
 }
 
