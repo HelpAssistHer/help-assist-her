@@ -164,7 +164,13 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const pregnancyCenter = await PregnancyCenterModel.findOne({}).populate('primaryContactPerson').lean()
+	const pregnancyCenter = await PregnancyCenterModel.findOne({
+		// $or: [
+		//
+		// ]
+		// 'verifiedData.hours.verified': false,
+
+	}).populate('primaryContactPerson').lean()
 
 	if (!pregnancyCenter) {
 		return res.boom.notFound('No pregnancy centers to verify')
@@ -215,7 +221,7 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 	query['hours.' + dayOfWeek + '.close'] = {
 		$gte: time
 	}
-	
+
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query).populate('primaryContactPerson').lean()
 	if (pregnancyCentersOpenNow.length <= 0) {
 		return res.boom.notFound(`No pregnancy centers open now ${dayOfWeek} ${time}`)
@@ -254,9 +260,13 @@ server.get(
 	(req, res, next) => {
 		passport.authenticate('facebook-token', (error, user) => {
 			if (error || !user) {
-				res.boom.unauthorized('User is not logged in.')
+				log.info('USER', user)
+				log.error(error)
+				// res.boom.unauthorized('User is not logged in.')
 			}
-			if (req.sessionID && user) {
+			else if (req.sessionID && user) {
+				log.info('SESSION ID', req.sessionID)
+				log.info('USER', user)
 				req.logIn(user, () => {
 					res.status(200).json({ 'status': 'success'})
 				})
