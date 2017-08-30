@@ -255,28 +255,22 @@ function handleError(res, err) {
 	return res.boom.badImplementation(err)
 }
 
-server.get(
-	'/api/auth/facebook/token',
-	(req, res, next) => {
-		passport.authenticate('facebook-token', (error, user) => {
-			if (error || !user) {
-				log.info('USER', user)
-				log.error(error)
-				// res.boom.unauthorized('User is not logged in.')
-			}
-			else if (req.sessionID && user) {
-				log.info('SESSION ID', req.sessionID)
-				log.info('USER', user)
-				req.logIn(user, () => {
-					res.status(200).json({ 'status': 'success'})
-				})
-			}
-			next()
-		})(req, res, next)
-	}
-)
+server.get('/api/auth/facebook/token', (req, res, next) => {
+	passport.authenticate('facebook-token', (error, user) => {
+		if (error || !user) {
+			log.error(error)
+			return res.boom.unauthorized('User is not logged in.')
+		}
 
-server.get('/api/login/check/', (req, res) =>{
+		if (req.sessionID && user) {
+			req.logIn(user, () => {
+				return res.status(200).json({ 'status': 'success' })
+			})
+		}
+	})(req, res, next)
+})
+
+server.get('/api/login/check/', (req, res) => {
 	if (req.sessionID && req.user) {
 		return res.status(200).json({ 'isLoggedIn': true})
 	} else {
