@@ -461,13 +461,13 @@ describe('PregnancyCenters', () => {
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
 
+			// note that verification is randomized, so there is no guarantee of the resulting object
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
-			res.body.prcName.should.equal('Birthright of Albany')
-			res.body.primaryContactPerson.firstName.should.equal('Joanna')
+			res.body.primaryContactPerson.should.have.property('firstName')
 			res.body.verifiedData.should.deep.equal({})
-
+ 
 		})
 	})
 
