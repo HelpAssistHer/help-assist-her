@@ -467,7 +467,6 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
 			res.body.primaryContactPerson.should.have.property('firstName')
-			res.body.verifiedData.should.deep.equal({})
  
 		})
 	})
