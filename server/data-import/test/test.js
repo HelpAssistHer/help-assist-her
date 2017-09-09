@@ -35,6 +35,7 @@ function mockUnauthenticate () {
 	server.request.isAuthenticated = function () {
 		return false
 	}
+	server.request.user = null
 }
 
 function assertError(res, statusCode, error, message=null, data=null) {
@@ -75,7 +76,7 @@ describe('PregnancyCenters', () => {
 		const someoneElse = new UserModel({
 			displayName: 'Someone Else'
 		})
-		return someoneElse.save()
+		await someoneElse.save()
 	})
 
 	/*
