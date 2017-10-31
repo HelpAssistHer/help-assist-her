@@ -35,6 +35,7 @@ function mockUnauthenticate () {
 	server.request.isAuthenticated = function () {
 		return false
 	}
+	server.request.user = null
 }
 
 function assertError(res, statusCode, error, message=null, data=null) {
@@ -75,7 +76,7 @@ describe('PregnancyCenters', () => {
 		const someoneElse = new UserModel({
 			displayName: 'Someone Else'
 		})
-		return someoneElse.save()
+		await someoneElse.save()
 	})
 
 	/*
@@ -461,13 +462,12 @@ describe('PregnancyCenters', () => {
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
 
+			// note that verification is randomized, so there is no guarantee of the resulting object
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
-			res.body.prcName.should.equal('Birthright of Albany')
-			res.body.primaryContactPerson.firstName.should.equal('Joanna')
-			res.body.verifiedData.should.deep.equal({})
-
+			res.body.primaryContactPerson.should.have.property('firstName')
+ 
 		})
 	})
 

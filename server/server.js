@@ -22,6 +22,8 @@ const checkPregnancyCenterId = databaseHelpers.checkPregnancyCenterId
 const createPregnancyCenter = databaseHelpers.createPregnancyCenter
 const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
 
+const queries = require('./pregnancy-centers/queries')
+
 const port = config.server.port
 const server = express()
 mongoose.Promise = require('bluebird')
@@ -98,6 +100,7 @@ passport.deserializeUser((objectId, done) => {
 
 // adapted from https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
 let handleRejectedPromise = fn => (...args) => fn(...args).catch((e) => {
+	log.error(e)
 	handleError(args[1], e)
 })
 
@@ -164,17 +167,21 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const pregnancyCenter = await PregnancyCenterModel.findOne({
-		// $or: [
-		//
-		// ]
-		// 'verifiedData.hours.verified': false,
-
-	}).populate('primaryContactPerson').lean()
-
-	if (!pregnancyCenter) {
+	// an array of javascript objects
+	const pregnancyCenters = await PregnancyCenterModel.aggregate([
+		{ $match: queries.verificationNotComplete, },
+		{ $sample: { size: 1 } },
+	])
+	
+	if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
 		return res.boom.notFound('No pregnancy centers to verify')
 	}
+	
+	// a second lookup is necessary to get a mongoose object to populate 
+	const pregnancyCenterId = pregnancyCenters[0]._id
+	const pregnancyCenter = await PregnancyCenterModel.findOne({
+		_id: pregnancyCenterId
+	}).populate('primaryContactPerson').lean()
 
 	res.status(200).json(pregnancyCenter)
 }))
