@@ -122,7 +122,7 @@ with open('cessilye-nypc.csv', 'rU') as importfile:
 					pregnancyCenter['phone'] = processPhone(row[4], row[0])
 
 				if row[8]:
-					pregnancyCenter['email'] = row[8]
+					pregnancyCenter['email'] = row[8].strip()
 
 				if len(services) > 0:
 					pregnancyCenter['services'] = services
