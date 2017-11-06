@@ -4,7 +4,7 @@
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
   "engines": {
-    "node": "7.9.0"
+    "node": "9.0.0"
   },
   "scripts": {
     "build": "NODE_ENV=production babel-node client/tools/build.js",

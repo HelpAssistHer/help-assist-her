@@ -20,31 +20,28 @@ brew install git
 brew install python3
 ````
 
-## Install Node
-We are using versions: node v7.9.0
-
-````
-brew install node
-````
-
-## Install n
-````
-sudo npm install -g n
-````
-
 ## Install Yarn
+````
+brew install yarn --without-node
+````
+
+## Install NVM
 
 ````
-npm install -g yarn
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+````
+
+## Install Node
+We are using node v9.0.0
+
+````
+nvm install 9.0.0
 ````
 
 ## Install Node Modules and Global Dependencies
 ````
 yarn
-yarn global add jest@v16.0.2
 yarn global add nodemon
-yarn global add webpack@v2.1.0-beta.25
-yarn global add body-parser
 ````
 
 ## Install Mongo
@@ -82,8 +79,8 @@ npm start
 sudo apt-get install build-essential checkinstall
 sudo apt-get install libssl-dev
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-nvm install 7.9.0
-nvm use 7.9.0
+nvm install 9.0.0
+nvm use 9.0.0
 nvm alias default node
 ~~~~
 
