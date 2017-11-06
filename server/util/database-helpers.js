@@ -234,15 +234,15 @@ module.exports = {
 	},
 	releaseDocuments: (userId) => {
 		return new P(async (resolve, reject) => {
-
-			const query = {inVerification: userId}
+			
+			const query = { inVerification:  userId}
 			const update = {inVerification: null}
-			const result = await PregnancyCenterModel.findAndUpdate(query, update)
-
-			if (!result) {
-				reject()
+			try {
+				const result = await PregnancyCenterModel.update(query, update, {multi: true})
+				return resolve(result)
+			} catch (err) {
+				return reject(err)
 			}
-			resolve(result)
 		})
 	}
 }

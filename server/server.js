@@ -297,8 +297,8 @@ server.get('/api/login/check/', (req, res) => {
 })
 
 server.get('/api/logout', handleRejectedPromise(async (req, res) => {
-	req.logout()
 	await releaseDocuments(req.user._id)
+	req.logout()
 	res.send(200)
 }))
 
