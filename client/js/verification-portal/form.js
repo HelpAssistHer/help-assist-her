@@ -4,10 +4,12 @@ import injectSheet from 'react-jss'
 import _ from 'lodash'
 
 import Input from '../components/input'
+import MapContainer from './google-maps-container'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
+import { store } from '../hah-app/index'
 
 class VerificationPortalForm extends Component {
 	render() {
@@ -68,6 +70,10 @@ class VerificationPortalForm extends Component {
 							name='verifiedData.address.verified'
 							component={VerifiedCheckbox}
 						/>
+					</div>
+
+					<div>
+						<MapContainer resource={store.getState().resource} />
 					</div>
 
 					<div className={classes.parent}>
