@@ -3,6 +3,7 @@
 const moment = require('moment')
 
 //Require the dev-dependencies
+const _ = require('lodash')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
@@ -656,7 +657,6 @@ describe('PregnancyCenters', () => {
 
 			const res = await chai.request(server)
 				.put('/api/pregnancy-centers/' + oldPCObj._id)
-
 				.send(newValues)
 
 			res.should.have.status(200)
@@ -678,7 +678,8 @@ describe('PregnancyCenters', () => {
 			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			histories.should.have.length(3) // we want the primary Contact history too.
+			const fields = _.map(histories, 'field')
+			fields.should.have.members([ 'address', 'primaryContactPerson', 'verifiedData' ])
 			for (const pc_history of histories) {
 				if (pc_history.field === 'primaryContactPerson') {
 					pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
