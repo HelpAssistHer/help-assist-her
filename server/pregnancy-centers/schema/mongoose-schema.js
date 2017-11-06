@@ -3,6 +3,8 @@
 const _ = require('lodash')
 const mongoose = require('mongoose')
 
+const helpers = require('./helpers')
+
 const pointSchema = new mongoose.Schema({
 	type: {type: String},
 	coordinates: [Number]
@@ -20,44 +22,39 @@ const addressSchema = new mongoose.Schema({
 
 const userDateSchema = new mongoose.Schema({
 	date: Date,
-	userId: mongoose.Schema.Types.ObjectId
+	userId: mongoose.Schema.Types.ObjectId,
+	verified: Boolean,
 })
 
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
+	email: String,
 	hours: Object,
 	inVerification: String,
 	prcName: String,
 	notes: String,
+	otherServices: String,
 	phone: String,
 	primaryContactPerson: { type: mongoose.Schema.Types.ObjectId, ref: 'Persons' },
-	services: {
-		default: {},
-		pregnancyTest: Boolean,
-		ultrasound: Boolean,
-		materialAssistance: Boolean,
-		postAbortionHealing: Boolean,
-		parentingClasses: Boolean,
-		stdTesting: Boolean,
-		professionalCounseling: Boolean,
-		other: Boolean
-	},
-	verified: {
+	services: helpers.getPregnancyCenterServicesSchema(Boolean),
+	verifiedData: {
 		address: userDateSchema,
+		email: userDateSchema,
 		hours: userDateSchema,
-		name: userDateSchema,
+		prcName: userDateSchema,
 		phone: userDateSchema,
-		primaryContact: userDateSchema,
+		primaryContactPerson: userDateSchema,
 		services: userDateSchema,
 		website: userDateSchema,
 	},
 	updated: {
 		address: userDateSchema,
+		email: userDateSchema,
 		hours: userDateSchema,
-		name: userDateSchema,
+		prcName: userDateSchema,
 		notes: userDateSchema,
 		phone: userDateSchema,
-		primaryContact: userDateSchema,
+		primaryContactPerson: userDateSchema,
 		services: userDateSchema,
 		website: userDateSchema,
 	},

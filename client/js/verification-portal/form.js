@@ -7,11 +7,11 @@ import Input from '../components/input'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
-import services from './pregnancy-center-services'
+import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit } = this.props
+		const { classes, handleSubmit, pristine, reset, submitting } = this.props
 
 		return (
 			<form onSubmit={handleSubmit}>
@@ -19,14 +19,14 @@ class VerificationPortalForm extends Component {
 					<h3>General Info</h3>
 					<div className={classes.parent}>
 						<Field
-							label='Name'
-							name='name'
+							label='PRC Name'
+							name='prcName'
 							component={Input}
 							type='text'
 						/>
 						<Field
 							label='Name Verified'
-							name='verified.name'
+							name='verifiedData.prcName.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -65,7 +65,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Address Verified'
-							name='verified.address'
+							name='verifiedData.address.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -75,11 +75,26 @@ class VerificationPortalForm extends Component {
 							label='Phone Number'
 							name='phone'
 							component={Input}
+							placeholder='Format must be +19998887777'
 							type='tel'
 						/>
 						<Field
 							label='Phone Number Verified'
-							name='verified.phone'
+							name='verifiedData.phone.verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
+
+					<div className={classes.parent}>
+						<Field
+							label='Email'
+							name='email'
+							component={Input}
+							type='text'
+						/>
+						<Field
+							label='Email Verified'
+							name='verifiedData.email.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -93,7 +108,7 @@ class VerificationPortalForm extends Component {
 						/>
 						<Field
 							label='Website Verified'
-							name='verified.website'
+							name='verifiedData.website.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -103,21 +118,21 @@ class VerificationPortalForm extends Component {
 					<h3>Primary Contact</h3>
 					<Field
 						label='First Name'
-						name='primaryContact.firstName'
+						name='primaryContactPerson.firstName'
 						component={Input}
 						type='text'
 					/>
 
 					<Field
 						label='Last Name'
-						name='primaryContact.lastName'
+						name='primaryContactPerson.lastName'
 						component={Input}
 						type='text'
 					/>
 
 					<Field
 						label='Email'
-						name='primaryContact.email'
+						name='primaryContactPerson.email'
 						component={Input}
 						type='text'
 					/>
@@ -125,13 +140,14 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							label='Phone Number'
-							name='primaryContact.phone'
+							name='primaryContactPerson.phone'
+							placeholder='Format must be +19998887777'
 							component={Input}
 							type='text'
 						/>
 						<Field
 							label='Primary Contact Verified'
-							name='verified.primaryContact'
+							name='verifiedData.primaryContactPerson.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -152,10 +168,17 @@ class VerificationPortalForm extends Component {
 							)
 						})
 					}
+					<Field
+						name='otherServices'
+						component='textarea'
+						placeholder='List other services here...'
+						rows='4'
+						cols='50'
+					/>
 					<div className={classes.parent}>
 						<Field
 							label='Services Verified'
-							name='verified.services'
+							name='verifiedData.services.verified'
 							component={VerifiedCheckbox}
 						/>
 					</div>
@@ -252,7 +275,7 @@ class VerificationPortalForm extends Component {
 				<div className={classes.parent}>
 					<Field
 						label='Hours Verified'
-						name='verified.hours'
+						name='verifiedData.hours.verified'
 						component={VerifiedCheckbox}
 					/>
 				</div>
@@ -269,6 +292,9 @@ class VerificationPortalForm extends Component {
 				<Spacer height='50px'/>
 
 				<button type="submit">Submit</button>
+				<button type="button" disabled={pristine || submitting} onClick={reset}>
+					Clear Values
+				</button>
 			</form>
 		)
 	}

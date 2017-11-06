@@ -7,58 +7,77 @@ import Button from '../components/button'
 import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
 
+const convertNumberToTimeFormat = timeNumber => {
+	if (!timeNumber) {
+		return null
+	}
+
+	const timeString = String(timeNumber).padStart(4, '0')
+
+	return `${timeString.slice(0,2)}:${timeString.slice(2,4)}`
+}
+
 const updateForm = ({ changeFieldValue, resource }) => {
-	const {
-		name,
+	let {
+		prcName,
+		email,
 		address,
 		hours,
 		notes,
+		otherServices,
 		phone,
-		primaryContactUser,
+		primaryContactPerson,
 		services,
-		verified,
+		verifiedData,
 		website
 	} = resource
 
-	changeFieldValue('name', name)
-	changeFieldValue('verified.name', verified.name)
-	changeFieldValue('address.line1', address.line1)
-	changeFieldValue('address.line2', address.line2)
-	changeFieldValue('address.city', address.city)
-	changeFieldValue('address.state', address.state)
-	changeFieldValue('address.zip', address.zip)
-	changeFieldValue('verified.address', verified.address)
+	changeFieldValue('prcName', prcName)
+	changeFieldValue('verifiedData.prcName.verified', _.get(verifiedData, 'prcName.verified'))
+
+	changeFieldValue('address.line1', _.get(address, 'line1'))
+	changeFieldValue('address.line2', _.get(address, 'line2'))
+	changeFieldValue('address.city', _.get(address, 'city'))
+	changeFieldValue('address.state', _.get(address, 'state'))
+	changeFieldValue('address.zip', _.get(address, 'zip'))
+	changeFieldValue('verifiedData.address.verified', _.get(verifiedData, 'address.verified'))
+
 	changeFieldValue('phone', phone)
-	changeFieldValue('verified.phone', verified.phone)
+	changeFieldValue('verifiedData.phone.verified', _.get(verifiedData, 'phone.verified'))
+
+	changeFieldValue('email', email)
+	changeFieldValue('verifiedData.email.verified', _.get(verifiedData, 'email.verified'))
+
 	changeFieldValue('website', website)
-	changeFieldValue('verified.website', verified.website)
+	changeFieldValue('verifiedData.website.verified', _.get(verifiedData, 'website.verified'))
 
-	changeFieldValue('primaryContact.firstName', _.get(primaryContactUser, 'firstName'))
-	changeFieldValue('primaryContact.lastName', _.get(primaryContactUser, 'lastName'))
-	changeFieldValue('primaryContact.phone', _.get(primaryContactUser, 'phone'))
-	changeFieldValue('primaryContact.email', _.get(primaryContactUser, 'email'))
-	changeFieldValue('verified.primaryContact', _.get(verified, 'primaryContact'))
+	changeFieldValue('primaryContactPerson.firstName', _.get(primaryContactPerson, 'firstName'))
+	changeFieldValue('primaryContactPerson.lastName', _.get(primaryContactPerson, 'lastName'))
+	changeFieldValue('primaryContactPerson.phone', _.get(primaryContactPerson, 'phone'))
+	changeFieldValue('primaryContactPerson.email', _.get(primaryContactPerson, 'email'))
+	changeFieldValue('verifiedData.primaryContactPerson.verified', _.get(verifiedData, 'primaryContactPerson.verified'))
 
-	_.each(services, service => {
-		changeFieldValue(`services.${service}`, 1)
+	_.forEach(services, (value, key) => {
+		changeFieldValue(`services.${key}`, 1)
 	})
-	changeFieldValue('verified.services', verified.services)
+	changeFieldValue('otherServices', otherServices)
+	changeFieldValue('verifiedData.services.verified', _.get(verifiedData, 'services.verified'))
 
-	changeFieldValue('hours[0].open', hours[0].open)
-	changeFieldValue('hours[0].close', hours[0].close)
-	changeFieldValue('hours[1].open', hours[1].open)
-	changeFieldValue('hours[1].close', hours[1].close)
-	changeFieldValue('hours[2].open', hours[2].open)
-	changeFieldValue('hours[2].close', hours[2].close)
-	changeFieldValue('hours[3].open', hours[3].open)
-	changeFieldValue('hours[3].close', hours[3].close)
-	changeFieldValue('hours[4].open', hours[4].open)
-	changeFieldValue('hours[4].close', hours[4].close)
-	changeFieldValue('hours[5].open', hours[5].open)
-	changeFieldValue('hours[5].close', hours[5].close)
-	changeFieldValue('hours[6].open', hours[6].open)
-	changeFieldValue('hours[6].close', hours[6].close)
-	changeFieldValue('verified.hours', verified.hours)
+	changeFieldValue('hours[0].open', convertNumberToTimeFormat(_.get(hours, '[0].open')))
+	changeFieldValue('hours[0].close', convertNumberToTimeFormat(_.get(hours, '[0].close')))
+	changeFieldValue('hours[1].open', convertNumberToTimeFormat(_.get(hours, '[1].open')))
+	changeFieldValue('hours[1].close', convertNumberToTimeFormat(_.get(hours, '[1].close')))
+	changeFieldValue('hours[2].open', convertNumberToTimeFormat(_.get(hours, '[2].open')))
+	changeFieldValue('hours[2].close', convertNumberToTimeFormat(_.get(hours, '[2].close')))
+	changeFieldValue('hours[3].open', convertNumberToTimeFormat(_.get(hours, '[3].open')))
+	changeFieldValue('hours[3].close', convertNumberToTimeFormat(_.get(hours, '[3].close')))
+	changeFieldValue('hours[4].open', convertNumberToTimeFormat(_.get(hours, '[4].open')))
+	changeFieldValue('hours[4].close', convertNumberToTimeFormat(_.get(hours, '[4].close')))
+	changeFieldValue('hours[5].open', convertNumberToTimeFormat(_.get(hours, '[5].open')))
+	changeFieldValue('hours[5].close', convertNumberToTimeFormat(_.get(hours, '[5].close')))
+	changeFieldValue('hours[6].open', convertNumberToTimeFormat(_.get(hours, '[6].open')))
+	changeFieldValue('hours[6].close', convertNumberToTimeFormat(_.get(hours, '[6].close')))
+	changeFieldValue('verifiedData.hours.verified', _.get(verifiedData, 'hours.verified'))
 
 	changeFieldValue('notes', notes)
 }

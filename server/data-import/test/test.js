@@ -23,13 +23,15 @@ chai.use(chaiHttp)
 const log = new Log('info')
 
 // Allows the middleware to think we're already authenticated.
-function mockAuthenticate() {
+async function mockAuthenticate() {
 	server.request.isAuthenticated = function () {
 		return true
 	}
-	UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
-		server.request.user =  found
-	})
+	try {
+		server.request.user = await UserModel.findOne({displayName: 'Kate Sills'})
+	} catch (err) {
+		log.error('ERROR IN MOCKAUTHENTICATE', err)
+	}
 }
 
 // Allows the middleware to think we are *not* authenticated
@@ -37,9 +39,10 @@ function mockUnauthenticate () {
 	server.request.isAuthenticated = function () {
 		return false
 	}
+	server.request.user = null
 }
 
-function assertError(res, statusCode, error, message=null) {
+function assertError(res, statusCode, error, message=null, data=null) {
 	res.should.have.status(statusCode)
 	res.body.should.have.property('statusCode')
 	res.body.should.have.property('error')
@@ -47,6 +50,11 @@ function assertError(res, statusCode, error, message=null) {
 	if (message) {
 		res.body.should.have.property('message')
 		res.body.message.should.equal(message)
+	}
+	
+	if (data) {
+		res.body.should.have.property('data')
+		res.body.data.should.equal(data)
 	}
 
 	res.body.statusCode.should.equal(statusCode)
@@ -72,7 +80,7 @@ describe('PregnancyCenters', () => {
 		const someoneElse = new UserModel({
 			displayName: 'Someone Else'
 		})
-		return someoneElse.save()
+		await someoneElse.save()
 	})
 
 	/*
@@ -122,12 +130,10 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.birthright.org',
 				'services': {},
 				'hours': {
-					1: [
-						{
-							open: 800, // 8am
-							close: 1500 // 3pm
-						}
-					] // 1 is Monday
+					1: {
+						open: 800, // 8am
+						close: 1500 // 3pm
+					}// 1 is Monday
 				}
 
 			})
@@ -149,23 +155,20 @@ describe('PregnancyCenters', () => {
 				'website': 'http://www.thebridgetolife.org',
 				'services': {},
 				'hours': {
-					1: [
-						{
-							open: 1300, // 1pm
-							close: 1500 // 3pm
-						}
-					], // monday
-					2: [
-						{
-							open: 1300, // 1pm
-							close: 1500 // 3pm
-						}
-					],  // tuesday
+					1: {
+						open: 1300, // 1pm
+						close: 1500 // 3pm
+					}, // monday
+					2: 
+					{
+						open: 1300, // 1pm
+						close: 1500 // 3pm
+					} // tuesday
 				}
 			})
 
 			mockAuthenticate()
-
+			
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
 			res.should.have.status(200)
@@ -241,58 +244,62 @@ describe('PregnancyCenters', () => {
 	describe('/POST /api/pregnancy-centers', () => {
 		it('it should create a new pregnancy center and return the data', async () => {
 			
-			try {
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
 
-				const primaryContactPerson = new PersonModel({
-					firstName: 'Joanna',
-					lastName: 'Smith',
-					email: 'email@email.org',
-					phone: '+18884442222'
-				})
-				await primaryContactPerson.save()
-
-				const pregnancyCenter = {
-					address: {
-						line1: '586 Central Ave.\nAlbany, NY 12206',
-						location: {
-							'type': 'Point',
-							'coordinates': [-73.7814005, 42.6722152]
-						}
-					},
-					prcName: 'Birthright of Albany',
-					phone: '+15184382978',
-					website: 'http://www.birthright.org',
-					primaryContactPerson: primaryContactPerson,
-					services: {},
+			const pregnancyCenter = {
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						'type': 'Point',
+						'coordinates': [-73.7814005, 42.6722152]
+					}
+				},
+				prcName: 'Birthright of Albany',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				primaryContactPerson: primaryContactPerson,
+				services: {},
+				verifiedData: {
+					phone: {
+						verified: true,
+						'date': '2017-04-16T23:33:17.220Z'
+					}
 				}
-
-				mockAuthenticate()
-				const res = await chai.request(server)
-					.post('/api/pregnancy-centers')
-
-					.send(pregnancyCenter)
-				res.should.have.status(201)
-				res.body.should.be.a('object')
-				res.body.should.have.property('address')
-				res.body.should.have.property('prcName')
-				res.body.should.have.property('_id')
-				res.body.should.have.property('website')
-				res.body.should.have.property('phone')
-				res.body.should.have.property('primaryContactPerson')
-				res.body.primaryContactPerson.firstName.should.equal('Joanna')
-				res.body.primaryContactPerson.lastName.should.equal('Smith')
-				res.body.primaryContactPerson.email.should.equal('email@email.org')
-				res.body.primaryContactPerson.phone.should.equal('+18884442222')
-				res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
-				res.body.address.location.type.should.equal('Point')
-				res.body.address.location.coordinates.should.deep.equal(
-					[-73.7814005, 42.6722152])
-				res.body.prcName.should.equal('Birthright of Albany')
-				res.body.phone.should.equal('+15184382978')
-				res.body.website.should.equal('http://www.birthright.org')
-			} catch (err) {
-				log.error(err.error)
 			}
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+			await mockAuthenticate()
+			const res = await chai.request(server)
+				.post('/api/pregnancy-centers')
+				.send(pregnancyCenter)
+			res.should.have.status(201)
+			res.body.should.be.a('object')
+			res.body.should.have.property('address')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('website')
+			res.body.should.have.property('phone')
+			res.body.should.have.property('primaryContactPerson')
+			res.body.primaryContactPerson.firstName.should.equal('Joanna')
+			res.body.primaryContactPerson.lastName.should.equal('Smith')
+			res.body.primaryContactPerson.email.should.equal('email@email.org')
+			res.body.primaryContactPerson.phone.should.equal('+18884442222')
+			res.body.address.line1.should.equal('586 Central Ave.\nAlbany, NY 12206')
+			res.body.address.location.type.should.equal('Point')
+			res.body.address.location.coordinates.should.deep.equal(
+				[-73.7814005, 42.6722152])
+			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.phone.should.equal('+15184382978')
+			res.body.website.should.equal('http://www.birthright.org')
+			res.body.verifiedData.phone.verified.should.equal(true)
+			res.body.verifiedData.phone.date.should.not.equal('2017-04-16T23:33:17.220Z')
+			res.body.verifiedData.phone.userId.should.equal(testUser._id.toString())
 		})
 	})
 
@@ -362,7 +369,7 @@ describe('PregnancyCenters', () => {
 				services:{},
 			})
 
-			mockAuthenticate()
+			await mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
 
@@ -393,7 +400,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it('it should return a single pregnancy center were verified.address is null', async () => {
+		it('it should return a single pregnancy center were verifiedData.address is null', async () => {
 
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
@@ -447,53 +454,23 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services':{},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date': '2017-04-16T23:33:17.220Z'
 					}
 				}
 			})
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
 
+			// note that verification is randomized, so there is no guarantee of the resulting object
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
-			res.body.prcName.should.equal('Birthright of Albany')
-			res.body.primaryContactPerson.firstName.should.equal('Joanna')
-			res.body.verified.should.deep.equal({})
-
-			// another person also wants to verify - they shouldn't get the same one
-			const res2 = await chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-
-			res2.should.have.status(200)
-			res2.body.should.be.a('object')
-			res2.body.should.have.property('prcName')
-			res2.body.prcName.should.equal('The Bridge To Life, Inc.')
-			res2.body.primaryContactPerson.firstName.should.equal('Joanna2')
-			res2.body.verified.address.date.should.equal('2017-04-16T23:33:17.220Z')
-
-			// imitate the nightly cron job to clear verifications
-			const query = {}
-			const update = {inVerification: false}
-
-			await PregnancyCenterModel.update(query, update)
-
-			// try verifying after the nightly cron job, should get same as res1
-
-			const res3 = await chai.request(server)
-				.get('/api/pregnancy-centers/verify')
-
-			res3.should.have.status(200)
-			res3.body.should.be.a('object')
-			res3.body.should.have.property('prcName')
-			res3.body.prcName.should.equal('Birthright of Albany')
-			res3.body.primaryContactPerson.firstName.should.equal('Joanna')
-			res3.body.verified.should.deep.equal({})
-
+			res.body.primaryContactPerson.should.have.property('firstName')
+ 
 		})
 	})
 
@@ -518,7 +495,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services':{},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
@@ -542,14 +519,14 @@ describe('PregnancyCenters', () => {
 				'email': 'thebridgetolife@verizon.net',
 				'website': 'http://www.thebridgetolife.org',
 				'services': {},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
 				}
 			})
 
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			try {
 				await chai.request(server)
@@ -582,7 +559,7 @@ describe('PregnancyCenters', () => {
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services': {},
-				'verified': {
+				'verifiedData': {
 					'address': {
 						'date' : '2017-04-16T23:33:17.220Z'
 					}
@@ -607,112 +584,396 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', async () => {
-			
-			try {
+			await mockAuthenticate()
 
-				mockAuthenticate()
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
 
-				const primaryContactPerson = new PersonModel({
-					firstName: 'Joanna',
-					lastName: 'Smith',
-					email: 'email@email.org',
-					phone: '+18884442222'
-				})
-				await primaryContactPerson.save()
-
-				const oldValues = {
-					'address': {
-						'line1': '586 Central Ave.\nAlbany, NY 12206',
-						'location': {
-							'type': 'Point',
-							'coordinates': [
-								-73.7814005,
-								42.6722152
-							]
-						},
+			const oldValues = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
 					},
-					'prcName': 'Birthright of Albany',
-					'phone': '+15184382978',
-					'website': 'http://www.birthright.org',
-					'services': {},
-					primaryContactPerson: primaryContactPerson,
-					'verified': {
-						'address': {
-							'date': '2017-04-16T23:33:17.220Z'
-						}
-					}
-				}
-
-				const primaryContactPerson2 = {
-					firstName: 'Joanna B',
-					lastName: 'Smith',
-					email: 'email2@email.org',
-					phone: '+18884442222',
-					_id: primaryContactPerson._id
-				}
-
-				const newValues = {
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+				primaryContactPerson: primaryContactPerson,
+				'verifiedData': {
 					'address': {
-						'line1': 'New Address',
-						'location': {
-							'type': 'Point',
-							'coordinates': [
-								-73.7814005,
-								42.6722152
-							]
-						},
-					},
-					'prcName': 'Birthright of Albany',
-					'phone': '+15184382978',
-					'website': 'http://www.birthright.org',
-					'services': {},
-					primaryContactPerson: primaryContactPerson2,
-					'verified': {
-						'address': {
-							'date': '2017-04-16T23:33:17.220Z'
-						}
+						'verified':true,
+						'date': '2017-04-16T23:33:17.220Z'
 					}
 				}
-
-				const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
-
-				const oldPCObj = await PregnancyCenterModel.create(oldValues)
-
-				const res = await chai.request(server)
-					.put('/api/pregnancy-centers/' + oldPCObj._id)
-
-					.send(newValues)
-
-				res.should.have.status(200)
-				res.body.should.be.a('object')
-				res.body.should.have.property('_id')
-				res.body.should.have.property('prcName')
-				res.body.should.have.property('primaryContactPerson')
-				res.body._id.should.equal(String(oldPCObj._id))
-				res.body.prcName.should.equal('Birthright of Albany')
-				res.body.should.have.property('verified')
-				res.body.should.have.property('updated')
-				res.body.updated.should.have.property('address')
-				res.body.updated.address.should.have.property('userId')
-				res.body.updated.address.userId.should.equal(testUser._id.toString())
-				res.body.verified.should.have.property('address')
-
-				// check that the pregnancy center history is created as well.
-				const histories = await PregnancyCenterHistoryModel.find({
-					pregnancyCenterId: oldPCObj._id
-				})
-				histories.should.have.length(2) // we want the primary Contact history too.
-				for (const pc_history of histories) {
-					if (pc_history.field == 'primaryContactPerson') {
-						pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
-					}
-				}
-
-				const people = await PersonModel.find({})
-				people.should.have.length(1)
-			} catch (err) {
-				log.error(err.error)
 			}
+
+			const primaryContactPerson2 = {
+				firstName: 'Joanna B',
+				lastName: 'Smith',
+				email: 'email2@email.org',
+				phone: '+18884442222',
+				_id: primaryContactPerson._id
+			}
+
+			const newValues = {
+				'address': {
+					'line1': 'New Address',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+				primaryContactPerson: primaryContactPerson2,
+				'verifiedData': {
+					'address': {
+						'verified': true,
+						'date': '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
+
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+			const oldPCObj = await PregnancyCenterModel.create(oldValues)
+
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+
+				.send(newValues)
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('primaryContactPerson')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.should.have.property('verifiedData')
+			res.body.should.have.property('updated')
+			res.body.updated.should.have.property('address')
+			res.body.updated.address.should.have.property('userId')
+			res.body.updated.address.userId.should.equal(testUser._id.toString())
+			res.body.verifiedData.should.have.property('address')
+			res.body.verifiedData.address.userId.should.equal(testUser._id.toString())
+
+			// check that the pregnancy center history is created as well.
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
+			})
+			histories.should.have.length(3) // we want the primary Contact history too.
+			for (const pc_history of histories) {
+				if (pc_history.field === 'primaryContactPerson') {
+					pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
+				}
+			}
+
+			const people = await PersonModel.find({})
+			people.should.have.length(1)
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route where PrimaryContactPerson is {}
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
+		it('it should return no new person for PrimaryContactPerson = {}', async () => {
+
+			await mockAuthenticate()
+			
+			const initialPRCData = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+			}
+			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+			oldPCObj = oldPCObj.toObject()
+			
+			// --------- try updating PrimaryContactPerson with an empty object {}
+			
+			oldPCObj.primaryContactPerson = {}
+			
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(oldPCObj)
+			
+			// make sure no person was created due to the empty obj
+			const people = await PersonModel.find({})
+			people.should.have.length(0)
+
+			// check that that no histories were created
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
+			})
+			histories.should.have.length(0)
+			
+			// make sure result is what is expected
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.updated.should.deep.equal({})
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route where PrimaryContactPerson is {_id: undefined}
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
+		it('it should return no new person for PrimaryContactPerson = {_id: undefined}', async () => {
+			await mockAuthenticate()
+
+			const initialPRCData = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+			}
+			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+			oldPCObj = oldPCObj.toObject()
+			
+			// --------- try updating PrimaryContactPerson with an undefined id and nothing else
+			
+			oldPCObj.primaryContactPerson = {_id: undefined}
+
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(oldPCObj)
+
+			// make sure no person was created due to the empty obj
+			const people = await PersonModel.find({})
+			people.should.have.length(0)
+
+			// check that that no histories were created
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
+			})
+			histories.should.have.length(0)
+
+			// make sure result is what is expected
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.updated.should.deep.equal({})
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route where PrimaryContactPerson is a null _id and nothing else
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
+		it('it should return no new person for PrimaryContactPerson = {_id: null}', async () => {
+			await mockAuthenticate()
+
+			const initialPRCData = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+			}
+			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+			oldPCObj = oldPCObj.toObject()
+			
+			// ---------- try updating PrimaryContactPerson with a null _id and nothing else
+
+			oldPCObj.primaryContactPerson = {_id: null}
+			try {
+				await chai.request(server)
+					.put('/api/pregnancy-centers/' + oldPCObj._id)
+					.send(oldPCObj)
+			} catch(err) {
+				assertError(err.response, 400, 'Bad Request', 'child "primaryContactPerson" fails because [child "_id" fails because ["_id" must be a string]]')
+			}
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route where PrimaryContactPerson has no _id (create)
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
+		it('it should return 1 new PrimaryContactPerson with firstName = Kate', async () => {
+			await mockAuthenticate()
+
+			const initialPRCData = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+			}
+			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+			oldPCObj = oldPCObj.toObject()
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+			// ---------- try updating PrimaryContactPerson with no _id but firstName: Kate
+			oldPCObj.primaryContactPerson = {firstName: 'Kate'}
+
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(oldPCObj)
+
+			// make sure one person was created
+			const people = await PersonModel.find({})
+			people.should.have.length(1)
+
+			// check that one history was created
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
+			})
+			histories.should.have.length(1)
+			for (const pc_history of histories) {
+				if (pc_history.field === 'primaryContactPerson') {
+					pc_history.newValue.firstName.should.equal('Kate')
+				}
+			}
+
+			// make sure result is what is expected
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('primaryContactPerson')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.updated.primaryContactPerson.userId.should.equal(testUser._id.toString())
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route where PrimaryContactPerson has id (update)
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
+		it('it should return 1 updated PrimaryContactPerson with firstName = Kate2, lastName = Sills2', async () => {
+			await mockAuthenticate()
+
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Kate',
+				lastName: 'Sills',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
+			const initialPRCData = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'primaryContactPerson': primaryContactPerson,
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+			}
+			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+
+			// make sure one person was created
+			const people = await PersonModel.find({})
+			people.should.have.length(1)
+			
+			oldPCObj = oldPCObj.toObject()
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+			// ---------- try updating PrimaryContactPerson with full
+			oldPCObj.primaryContactPerson = {
+				_id: oldPCObj.primaryContactPerson._id,
+				firstName: 'Kate2',
+				lastName: 'Sills2'
+			}
+
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(oldPCObj)
+
+			// make sure we still only have one person
+			const people2 = await PersonModel.find({})
+			people2.should.have.length(1)
+
+			// check that one history was created
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id
+			})
+			histories.should.have.length(1)
+			for (const pc_history of histories) {
+				if (pc_history.field === 'primaryContactPerson') {
+					pc_history.newValue.firstName.should.equal('Kate2')
+					pc_history.newValue.lastName.should.equal('Sills2')
+				}
+			}
+
+			// make sure result is what is expected
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('primaryContactPerson')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.updated.primaryContactPerson.userId.should.equal(testUser._id.toString())
 		})
 	})
 
@@ -786,7 +1047,7 @@ describe('PregnancyCenters', () => {
 
 			await pc.save()
 
-			mockAuthenticate()
+			await mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/'+pc._id)
 
@@ -797,7 +1058,7 @@ describe('PregnancyCenters', () => {
 			res.body._id.should.equal(String(pc._id))
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
-			res.body.verified.should.deep.equal({})
+			res.body.verifiedData.should.deep.equal({})
 
 		})
 	})
@@ -891,10 +1152,10 @@ describe('PregnancyCenters', () => {
 
 			const testPCObj6 = {
 				hours: {
-					2: [{
+					2: {
 						open: 800,
 						close: 1700
-					}]
+					}
 				}
 			}
 
@@ -906,10 +1167,10 @@ describe('PregnancyCenters', () => {
 			}
 			const validatedData = validationObj.value
 			validatedData.hours.should.deep.equal({
-				2: [{
+				2: {
 					open: 800,
 					close: 1700
-				}]
+				}
 			})
 		})
 	})
@@ -922,10 +1183,10 @@ describe('PregnancyCenters', () => {
 
 			const testPCObj7 = {
 				hours: {
-					tues: [{
+					tues: {
 						open: '800',
 						close: '1700'
-					}]
+					}
 				}
 			}
 
@@ -945,10 +1206,10 @@ describe('PregnancyCenters', () => {
 
 			const testPCObj8 = {
 				hours: {
-					1: [{
+					1: {
 						open: 800,
 						close: 1600,
-					}]
+					}
 				}
 			}
 
@@ -961,10 +1222,10 @@ describe('PregnancyCenters', () => {
 			const validatedData = validationObj.value
 
 			validatedData.hours.should.deep.equal({
-				1: [{
+				1: {
 					open: 800,
 					close: 1600,
-				}]
+				}
 			})
 		})
 	})
@@ -1033,10 +1294,10 @@ describe('PregnancyCenters', () => {
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers verified 13', () => {
-		it('validation should fail because each verified field object only has keys date and userId', async () => {
+		it('validation should fail because each verifiedData field object only has keys date and userId', async () => {
 
 			const testPCObj13 = {
-				verified: {
+				verifiedData: {
 					address: {
 						dateVerified: moment()
 					}
@@ -1047,33 +1308,35 @@ describe('PregnancyCenters', () => {
 				abortEarly: false
 			})
 			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal('child "verified" fails because [child "address" fails because ["dateVerified" is not allowed]]')
+			validationObj.error.message.should.equal('child "verifiedData" fails because [child "address" fails because ["dateVerified" is not allowed]]')
 		})
 	})
 
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers verified 13', () => {
-		it('validation should pass because the verified field for address has date and userId', async () => {
+	describe('Test Joi validation for pregnancy centers verifiedData 13', () => {
+		it('validation should pass because the verifiedData field for address has date and userId and verified',
+			async () => {
 
-			const testPCObj13 = {
-				verified: {
-					address: {
-						date: moment().toISOString(),
-						userId: '58e46a8d210140d7e47bf58b'
+				const testPCObj13 = {
+					verifiedData: {
+						address: {
+							date: moment().toISOString(),
+							userId: '58e46a8d210140d7e47bf58b',
+							verified: true,
+						}
 					}
 				}
-			}
-
-			const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
-				abortEarly: false
+	
+				const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
+					abortEarly: false
+				})
+				if (validationObj.error) {
+					throw validationObj.error
+				}
+				const validatedData = validationObj.value
+				validatedData.verifiedData.address.userId.should.equal('58e46a8d210140d7e47bf58b')
 			})
-			if (validationObj.error) {
-				throw validationObj.error
-			}
-			const validatedData = validationObj.value
-			validatedData.verified.address.userId.should.equal('58e46a8d210140d7e47bf58b')
-		})
 	})
 })

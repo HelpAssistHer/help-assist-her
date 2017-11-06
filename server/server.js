@@ -1,5 +1,6 @@
 'use strict'
 
+const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const config = require('config')
@@ -17,12 +18,13 @@ const session = require('express-session')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
-const {
-	checkPregnancyCenterId,
-	createPregnancyCenter,
-	updatePregnancyCenter,
-	releaseDocuments,
-} = require('./util/database-helpers')
+const databaseHelpers = require('./util/database-helpers')
+const checkPregnancyCenterId = databaseHelpers.checkPregnancyCenterId
+const createPregnancyCenter = databaseHelpers.createPregnancyCenter
+const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
+const releaseDocuments = databaseHelpers.releaseDocuments
+
+const queries = require('./pregnancy-centers/queries')
 
 const port = config.server.port
 const server = express()
@@ -100,6 +102,7 @@ passport.deserializeUser((objectId, done) => {
 
 // adapted from https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
 let handleRejectedPromise = fn => (...args) => fn(...args).catch((e) => {
+	log.error(e)
 	handleError(args[1], e)
 })
 
@@ -117,9 +120,8 @@ server.get('/verification', (req, res) => {
 })
 
 server.get('/api/initial-data', (req, res) => {
-	const facebookAppId = config.facebook.appId
 	return res.status(200).json({
-		facebookAppId,
+		'facebookAppId': config.facebook.appId,
 	})
 })
 
@@ -167,14 +169,26 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const query = {inVerification: {$in: [false, null]}}
-	const update = {inVerification: req.user._id}
-	const options = {new: true} // returns updated object back
-	const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate(query, update, options).populate('primaryContactPerson').lean()
 
-	if (!pregnancyCenter) {
+	const notInVerification = {inVerification: {$in: [false, null]}}
+	
+	// an array of javascript objects
+	const pregnancyCenters = await PregnancyCenterModel.aggregate([
+		{ $match: _.merge(queries.verificationNotComplete, notInVerification) },
+		{ $sample: { size: 1 } },
+	])
+	
+	if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
 		return res.boom.notFound('No pregnancy centers to verify')
 	}
+	
+	// a second lookup is necessary to get a mongoose object to populate 
+	const pregnancyCenterId = pregnancyCenters[0]._id
+	const update = {inVerification: req.user._id}
+	const options = {new: true} // returns updated object back
+	const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate({
+		_id: pregnancyCenterId,
+	}, update, options).populate('primaryContactPerson').lean()
 
 	res.status(200).json(pregnancyCenter)
 }))
@@ -183,9 +197,10 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 	const newPregnancyCenter = req.body
 
 	try {
-		const createdPregnancyCenter = await createPregnancyCenter(newPregnancyCenter)
+		const createdPregnancyCenter = await createPregnancyCenter(req.user._id, newPregnancyCenter)
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
+		log.error(err)
 		return handleError(res, err)
 	}
 }))
@@ -216,11 +231,11 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 	const dayOfWeek = parseInt(req.query.day)
 	const query = {}
 
-	query['hours.' + dayOfWeek] = {
-		$elemMatch: {
-			open: {$lte: time},
-			close: {$gte: time}
-		}
+	query['hours.' + dayOfWeek + '.open'] = {
+		$lte: time
+	}
+	query['hours.' + dayOfWeek + '.close'] = {
+		$gte: time
 	}
 
 	const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query).populate('primaryContactPerson').lean()
@@ -229,7 +244,6 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 	}
 
 	res.status(200).json(pregnancyCentersOpenNow)
-	
 }))
 
 /*
@@ -253,28 +267,36 @@ server.listen(port, function () {
 })
 
 function handleError(res, err) {
-	log.error(err)
+	if (err.name === 'ValidationError') {
+		return res.boom.badRequest(err.message)
+	}
 	return res.boom.badImplementation(err)
 }
 
-server.get(
-	'/auth/facebook/token',
-	(req, res, next) => {
-		passport.authenticate('facebook-token', (error, user) => {
-			if (error || !user) {
-				res.boom.unauthorized('User is not logged in.')
-			}
-			if (req.sessionID && user) {
-				req.logIn(user, () => {
-					res.status(200).json('Authentication successful.')
-				})
-			}
-			next()
-		})(req, res, next)
-	}
-)
+server.get('/api/auth/facebook/token', (req, res, next) => {
+	passport.authenticate('facebook-token', (error, user) => {
+		if (error || !user) {
+			log.error(error)
+			return res.boom.unauthorized('User is not logged in.')
+		}
 
-server.get('/logout', handleRejectedPromise(async (req, res) => {
+		if (req.sessionID && user) {
+			req.logIn(user, () => {
+				return res.status(200).json({ 'status': 'success' })
+			})
+		}
+	})(req, res, next)
+})
+
+server.get('/api/login/check/', (req, res) => {
+	if (req.sessionID && req.user) {
+		return res.status(200).json({ 'isLoggedIn': true})
+	} else {
+		return res.status(200).json({ 'isLoggedIn': false})
+	}
+})
+
+server.get('/api/logout', handleRejectedPromise(async (req, res) => {
 	req.logout()
 	await releaseDocuments(req.user._id)
 	res.send(200)

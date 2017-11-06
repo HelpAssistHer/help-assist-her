@@ -30,34 +30,60 @@ export const getResourceToVerify = () => {
 	}
 }
 
+const convertTimeToNumber = timeString => {
+	if (!timeString) {
+		return null
+	}
+
+	return Number(timeString.replace(/:/, ''))
+}
+
 export async function updateResource(updatedResource) {
-	const services = _.keys(updatedResource.services)
+	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
+		return {
+			open: convertTimeToNumber(dayOfWeek.open),
+			close: convertTimeToNumber(dayOfWeek.close),
+			closedAllDay: dayOfWeek.closedAllDay,
+		}
+	})
+
 	const transformedResource = {
 		...updatedResource,
-		primaryContactUserId: store.getState().resource.primaryContactUserId,
-		services,
-		hours: {
-			...updatedResource.hours,
+		hours: convertedHours,
+		primaryContactPerson: {
+			_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
+			...updatedResource.primaryContactPerson
 		},
+		services: _.mapValues(updatedResource.services, value => !!value),
 	}
-	console.log('TRANSFORMED RESOURCE', transformedResource)
 
-	fetch(`/api/pregnancy-centers`, {
-		method: 'PUT',
-		credentials: 'include',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(transformedResource),
-	})
-		.then(function (response) {
-			return response.json()
+	try {
+		const response = await fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {
+			method: 'PUT',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(transformedResource),
 		})
-		.then(function (result) {
-			alert(JSON.stringify(result))
-		})
-		.catch(function (error) {
-			console.log('Request failed', error)
-		})
+
+		const result = await response.json()
+
+		if (result.statusCode >= 400) {
+			const alertMessage = 'There was an error saving this resource. Please take a screenshot ' +
+				'of this message and attach using the Help button in the lower right corner.' +
+				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(result.message)}`
+			alert(alertMessage)
+		} else {
+			alert('Updates saved successfully!')
+		}
+
+		return result
+	} catch (error) {
+		const alertMessage = 'There was an unexpected error saving this resource. Please take a screenshot ' +
+			'of this message and attach using the Help button in the lower right corner.' +
+			`\n\nError: ${error}`
+		alert(alertMessage)
+	}
 }
