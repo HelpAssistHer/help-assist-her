@@ -15,8 +15,7 @@
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
     "test": "NODE_ENV=test mocha 'server/data-import/test/test.js'",
-    "n": "nvm use stable",
-    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
+    "n": "nvm use default",
     "data": "NODE_ENV=localhost node ./server/data-import/data.js",
     "test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
     "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js"
@@ -64,7 +63,6 @@
     "express": "^4.15.3",
     "express-boom": "^2.0.0",
     "express-session": "^1.15.2",
-    "global": "^4.3.2",
     "history": "^4.4.0",
     "joi": "^10.4.1",
     "joi-phone-validator": "^1.0.0",
@@ -91,7 +89,7 @@
     "redux": "^3.6.0",
     "redux-form": "^7.1.2",
     "redux-thunk": "^2.2.0",
-    "webpack": "^3.8.1"
+    "webpack": "^2.5.1"
   },
   "devDependencies": {
     "babel-jest": "16.0.0",
