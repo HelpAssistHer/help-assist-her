@@ -13,12 +13,12 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
-const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
-const server = require('../../server')
-const UserModel = require('../../users/schema/mongoose-schema')
-const PersonModel = require('../../persons/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
+const server = require('../server')
+const UserModel = require('../users/schema/mongoose-schema')
+const PersonModel = require('../persons/schema/mongoose-schema')
 
 chai.use(chaiHttp)
 
@@ -51,7 +51,7 @@ function assertError(res, statusCode, error, message=null, data=null) {
 		res.body.should.have.property('message')
 		res.body.message.should.equal(message)
 	}
-	
+
 	if (data) {
 		res.body.should.have.property('data')
 		res.body.data.should.equal(data)
@@ -159,16 +159,16 @@ describe('PregnancyCenters', () => {
 						open: 1300, // 1pm
 						close: 1500 // 3pm
 					}, // monday
-					2: 
-					{
-						open: 1300, // 1pm
-						close: 1500 // 3pm
-					} // tuesday
+					2:
+						{
+							open: 1300, // 1pm
+							close: 1500 // 3pm
+						} // tuesday
 				}
 			})
 
 			await mockAuthenticate()
-			
+
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
 			res.should.have.status(200)
@@ -243,14 +243,14 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/POST /api/pregnancy-centers', () => {
 		it('it should create a new pregnancy center and return the data', async () => {
-			
+
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
 				lastName: 'Smith',
 				email: 'email@email.org',
 				phone: '+18884442222'
 			})
-			
+
 			try {
 				await primaryContactPerson.save()
 			} catch (err) {
@@ -278,7 +278,6 @@ describe('PregnancyCenters', () => {
 				}
 			}
 			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
-			
 			await mockAuthenticate()
 			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
@@ -476,7 +475,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
 			res.body.primaryContactPerson.should.have.property('firstName')
- 
+
 		})
 	})
 
@@ -703,7 +702,7 @@ describe('PregnancyCenters', () => {
 		it('it should return no new person for PrimaryContactPerson = {}', async () => {
 
 			await mockAuthenticate()
-			
+
 			const initialPRCData = {
 				'address': {
 					'line1': '586 Central Ave.\nAlbany, NY 12206',
@@ -722,15 +721,15 @@ describe('PregnancyCenters', () => {
 			}
 			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
 			oldPCObj = oldPCObj.toObject()
-			
+
 			// --------- try updating PrimaryContactPerson with an empty object {}
-			
+
 			oldPCObj.primaryContactPerson = {}
-			
+
 			const res = await chai.request(server)
 				.put('/api/pregnancy-centers/' + oldPCObj._id)
 				.send(oldPCObj)
-			
+
 			// make sure no person was created due to the empty obj
 			const people = await PersonModel.find({})
 			people.should.have.length(0)
@@ -740,7 +739,7 @@ describe('PregnancyCenters', () => {
 				pregnancyCenterId: oldPCObj._id
 			})
 			histories.should.have.length(0)
-			
+
 			// make sure result is what is expected
 			res.should.have.status(200)
 			res.body.should.be.a('object')
@@ -776,9 +775,9 @@ describe('PregnancyCenters', () => {
 			}
 			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
 			oldPCObj = oldPCObj.toObject()
-			
+
 			// --------- try updating PrimaryContactPerson with an undefined id and nothing else
-			
+
 			oldPCObj.primaryContactPerson = {_id: undefined}
 
 			const res = await chai.request(server)
@@ -830,7 +829,7 @@ describe('PregnancyCenters', () => {
 			}
 			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
 			oldPCObj = oldPCObj.toObject()
-			
+
 			// ---------- try updating PrimaryContactPerson with a null _id and nothing else
 
 			oldPCObj.primaryContactPerson = {_id: null}
@@ -941,7 +940,7 @@ describe('PregnancyCenters', () => {
 			// make sure one person was created
 			const people = await PersonModel.find({})
 			people.should.have.length(1)
-			
+
 			oldPCObj = oldPCObj.toObject()
 			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
 
@@ -1334,7 +1333,7 @@ describe('PregnancyCenters', () => {
 						}
 					}
 				}
-	
+
 				const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
 					abortEarly: false
 				})

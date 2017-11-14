@@ -14,7 +14,7 @@
     "wds": "webpack-dev-server --content-base public/",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
-    "test": "NODE_ENV=test mocha 'server/data-import/test/test.js'",
+    "test": "NODE_ENV=test mocha 'server/test/test.js'",
     "n": "nvm use default",
     "data": "NODE_ENV=localhost node ./server/data-import/data.js",
     "test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
