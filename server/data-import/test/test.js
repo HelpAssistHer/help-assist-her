@@ -5,12 +5,14 @@ const moment = require('moment')
 //Require the dev-dependencies
 const chai = require('chai')
 const chaiHttp = require('chai-http')
+const Log = require('log')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
+const log = new Log('info')
 const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
@@ -21,13 +23,15 @@ const PersonModel = require('../../persons/schema/mongoose-schema')
 chai.use(chaiHttp)
 
 // Allows the middleware to think we're already authenticated.
-function mockAuthenticate() {
+async function mockAuthenticate() {
 	server.request.isAuthenticated = function () {
 		return true
 	}
-	UserModel.findOne({displayName: 'Kate Sills'}, (err, found) => {
-		server.request.user =  found
-	})
+	try {
+		server.request.user = await UserModel.findOne({displayName: 'Kate Sills'})
+	} catch (err) {
+		log.err(err)
+	}
 }
 
 // Allows the middleware to think we are *not* authenticated
@@ -163,7 +167,7 @@ describe('PregnancyCenters', () => {
 				}
 			})
 
-			mockAuthenticate()
+			await mockAuthenticate()
 			
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/open-now?time=1000&day=1')
@@ -224,7 +228,7 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/GET /api/pregnancy-centers', () => {
 		it('it should return an empty array because there are no pregnancy centers yet', async () => {
-			mockAuthenticate()
+			await mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers')
 
@@ -246,7 +250,12 @@ describe('PregnancyCenters', () => {
 				email: 'email@email.org',
 				phone: '+18884442222'
 			})
-			await primaryContactPerson.save()
+			
+			try {
+				await primaryContactPerson.save()
+			} catch (err) {
+				log.error(err)
+			}
 
 			const pregnancyCenter = {
 				address: {
@@ -269,8 +278,8 @@ describe('PregnancyCenters', () => {
 				}
 			}
 			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
-
-			mockAuthenticate()
+			
+			await mockAuthenticate()
 			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
 
@@ -366,7 +375,7 @@ describe('PregnancyCenters', () => {
 				services:{},
 			})
 
-			mockAuthenticate()
+			await mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5')
 
@@ -457,7 +466,7 @@ describe('PregnancyCenters', () => {
 					}
 				}
 			})
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/verify')
@@ -523,7 +532,7 @@ describe('PregnancyCenters', () => {
 				}
 			})
 
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			try {
 				await chai.request(server)
@@ -581,7 +590,7 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return the updated pregnancyCenter record', async () => {
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
@@ -693,7 +702,7 @@ describe('PregnancyCenters', () => {
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return no new person for PrimaryContactPerson = {}', async () => {
 
-			mockAuthenticate()
+			await mockAuthenticate()
 			
 			const initialPRCData = {
 				'address': {
@@ -747,7 +756,7 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return no new person for PrimaryContactPerson = {_id: undefined}', async () => {
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const initialPRCData = {
 				'address': {
@@ -801,7 +810,7 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return no new person for PrimaryContactPerson = {_id: null}', async () => {
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const initialPRCData = {
 				'address': {
@@ -840,7 +849,7 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return 1 new PrimaryContactPerson with firstName = Kate', async () => {
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const initialPRCData = {
 				'address': {
@@ -900,7 +909,7 @@ describe('PregnancyCenters', () => {
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
 		it('it should return 1 updated PrimaryContactPerson with firstName = Kate2, lastName = Sills2', async () => {
-			mockAuthenticate()
+			await mockAuthenticate()
 
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Kate',
@@ -1044,7 +1053,7 @@ describe('PregnancyCenters', () => {
 
 			await pc.save()
 
-			mockAuthenticate()
+			await mockAuthenticate()
 			const res = await chai.request(server)
 				.get('/api/pregnancy-centers/'+pc._id)
 
