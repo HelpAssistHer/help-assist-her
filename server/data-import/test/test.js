@@ -1316,11 +1316,11 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers verifiedData 13', () => {
+	describe('Test Joi validation for pregnancy centers verifiedData 14', () => {
 		it('validation should pass because the verifiedData field for address has date and userId and verified',
 			async () => {
 
-				const testPCObj13 = {
+				const testPCObj14 = {
 					verifiedData: {
 						address: {
 							date: moment().toISOString(),
@@ -1330,7 +1330,7 @@ describe('PregnancyCenters', () => {
 					}
 				}
 	
-				const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
+				const validationObj = await Joi.validate(testPCObj14, pregnancyCenterSchemaJoi, {
 					abortEarly: false
 				})
 				if (validationObj.error) {
@@ -1338,6 +1338,46 @@ describe('PregnancyCenters', () => {
 				}
 				const validatedData = validationObj.value
 				validatedData.verifiedData.address.userId.should.equal('58e46a8d210140d7e47bf58b')
+			})
+	})
+
+	/*
+	 * Test the Joi validation for pregnancy centers separately from the API routes
+	 */
+	describe('Test Joi validation for pregnancy centers verifiedData 15', () => {
+		it('validation should fail because inVerification should be a user objectId',
+			async () => {
+
+				const testPCObj15 = {
+					'inVerification': 'dwdss',
+				}
+				
+				const validationObj = await Joi.validate(testPCObj15, pregnancyCenterSchemaJoi, {
+					abortEarly: false
+				})
+				validationObj.error.name.should.equal('ValidationError')
+				validationObj.error.message.should.equal('child "inVerification" fails because ["inVerification" needs to be a valid MongoDB ObjectId]')
+			})
+	})
+
+	/*
+	 * Test the Joi validation for pregnancy centers separately from the API routes
+	 */
+	describe('Test Joi validation for pregnancy centers verifiedData 16', () => {
+		it('validation should pass because inVerification is a user objectId',
+			async () => {
+
+				const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+				const testPCObj16 = {
+					'inVerification': testUser._id,
+				}
+
+				const validationObj = await Joi.validate(testPCObj16, pregnancyCenterSchemaJoi, {
+					abortEarly: false
+				})
+				const validatedData = validationObj.value
+				validatedData.inVerification.should.equal(testUser._id)
 			})
 	})
 })
