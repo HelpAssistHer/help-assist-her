@@ -15,6 +15,7 @@ const passport = require('passport')
 const path = require('path')
 const session = require('express-session')
 
+const FQHCModel = require('./fqhcs/schema/mongoose-schema')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
@@ -166,7 +167,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 }))
 
 /*
-	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
+	Returns one pregnancy center that needs verification 
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 
@@ -260,6 +261,23 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPreg
 	}
 
 	res.status(200).json(pregnancyCenter)
+}))
+
+/*
+ Returns one fqhc that needs verification 
+ */
+server.get('/api/fqhcs/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	// an array of javascript objects
+	const fqhcs = await FQHCModel.aggregate([
+		{ $match: queries.verificationNotComplete, },
+		{ $sample: { size: 1 } },
+	])
+
+	if (fqhcs.length === 0 || !fqhcs[0]) {
+		return res.boom.notFound('No federally qualified health centers to verify')
+	}
+	
+	res.status(200).json(fqhcs[0])
 }))
 
 server.listen(port, function () {
