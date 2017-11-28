@@ -11,7 +11,7 @@ const PersonModel = require('../persons/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
 const personSchemaJoi = require('../persons/schema/joi-schema')
 
-const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt']
+const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt', 'inVerification']
 
 function removeMongooseKeys(obj) {
 	for (const key in obj) {
@@ -231,5 +231,18 @@ module.exports = {
 			return res.boom.badRequest(`Invalid pregnancyCenterId ${pregnancyCenterId}`)
 		}
 		next()
+	},
+	releaseDocuments: (userId) => {
+		return new P(async (resolve, reject) => {
+			
+			const query = { inVerification:  userId}
+			const update = {inVerification: null}
+			try {
+				const result = await PregnancyCenterModel.update(query, update, {multi: true})
+				return resolve(result)
+			} catch (err) {
+				return reject(err)
+			}
+		})
 	}
 }

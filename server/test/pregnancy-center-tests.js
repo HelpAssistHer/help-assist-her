@@ -3,12 +3,13 @@
 const moment = require('moment')
 
 //Require the dev-dependencies
+const _ = require('lodash')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const Log = require('log')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Joi = require('joi')
+const Log = require('log')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
@@ -30,7 +31,7 @@ async function mockAuthenticate() {
 	try {
 		server.request.user = await UserModel.findOne({displayName: 'Kate Sills'})
 	} catch (err) {
-		log.err(err)
+		log.error('ERROR IN MOCKAUTHENTICATE', err)
 	}
 }
 
@@ -281,7 +282,6 @@ describe('PregnancyCenters', () => {
 			await mockAuthenticate()
 			const res = await chai.request(server)
 				.post('/api/pregnancy-centers')
-
 				.send(pregnancyCenter)
 			res.should.have.status(201)
 			res.body.should.be.a('object')
@@ -661,7 +661,6 @@ describe('PregnancyCenters', () => {
 
 			const res = await chai.request(server)
 				.put('/api/pregnancy-centers/' + oldPCObj._id)
-
 				.send(newValues)
 
 			res.should.have.status(200)
@@ -683,7 +682,8 @@ describe('PregnancyCenters', () => {
 			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			histories.should.have.length(3) // we want the primary Contact history too.
+			const fields = _.map(histories, 'field')
+			fields.should.have.members(['address', 'primaryContactPerson', 'verifiedData'])
 			for (const pc_history of histories) {
 				if (pc_history.field === 'primaryContactPerson') {
 					pc_history.newValue.firstName.should.equal(primaryContactPerson2.firstName)
@@ -1320,11 +1320,11 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers verifiedData 13', () => {
+	describe('Test Joi validation for pregnancy centers verifiedData 14', () => {
 		it('validation should pass because the verifiedData field for address has date and userId and verified',
 			async () => {
 
-				const testPCObj13 = {
+				const testPCObj14 = {
 					verifiedData: {
 						address: {
 							date: moment().toISOString(),
@@ -1334,7 +1334,7 @@ describe('PregnancyCenters', () => {
 					}
 				}
 
-				const validationObj = await Joi.validate(testPCObj13, pregnancyCenterSchemaJoi, {
+				const validationObj = await Joi.validate(testPCObj14, pregnancyCenterSchemaJoi, {
 					abortEarly: false
 				})
 				if (validationObj.error) {
@@ -1342,6 +1342,46 @@ describe('PregnancyCenters', () => {
 				}
 				const validatedData = validationObj.value
 				validatedData.verifiedData.address.userId.should.equal('58e46a8d210140d7e47bf58b')
+			})
+	})
+
+	/*
+	 * Test the Joi validation for pregnancy centers separately from the API routes
+	 */
+	describe('Test Joi validation for pregnancy centers verifiedData 15', () => {
+		it('validation should fail because inVerification should be a user objectId',
+			async () => {
+
+				const testPCObj15 = {
+					'inVerification': 'dwdss',
+				}
+
+				const validationObj = await Joi.validate(testPCObj15, pregnancyCenterSchemaJoi, {
+					abortEarly: false
+				})
+				validationObj.error.name.should.equal('ValidationError')
+				validationObj.error.message.should.equal('child "inVerification" fails because ["inVerification" needs to be a valid MongoDB ObjectId]')
+			})
+	})
+
+	/*
+	 * Test the Joi validation for pregnancy centers separately from the API routes
+	 */
+	describe('Test Joi validation for pregnancy centers verifiedData 16', () => {
+		it('validation should pass because inVerification is a user objectId',
+			async () => {
+
+				const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+				const testPCObj16 = {
+					'inVerification': testUser._id,
+				}
+
+				const validationObj = await Joi.validate(testPCObj16, pregnancyCenterSchemaJoi, {
+					abortEarly: false
+				})
+				const validatedData = validationObj.value
+				validatedData.inVerification.should.equal(testUser._id)
 			})
 	})
 })
