@@ -2,12 +2,13 @@
 
 const Joi = require('joi')
 const phoneValidator = require('joi-phone-validator')
+const objectIdValidator = require('../../util/object-id-validator.js')
 
 const helpers = require('./helpers')
 const personSchemaJoi = require('../../persons/schema/joi-schema')
 
 const pointSchemaJoi = Joi.object().keys({
-	_id: Joi.string(),
+	_id: objectIdValidator.objectId().isValid().allow(null),
 	type: Joi.string().valid('Point').required(),
 	coordinates: Joi.array().ordered(
 		Joi.number().max(-66).min(-128).required(), // general continental US longitude parameters
@@ -17,7 +18,7 @@ const pointSchemaJoi = Joi.object().keys({
 })
 
 const addressSchemaJoi = Joi.object().keys({
-	_id: Joi.string(),
+	_id: objectIdValidator.objectId().isValid().allow(null),
 	city: Joi.string(),
 	googlePlaceId: Joi.string(), // we can store the google place ID according to TOS
 	line1: Joi.string(),
@@ -49,19 +50,20 @@ const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunda
 })
 
 const dateUserActionSchemaJoi = Joi.object().keys({
-	_id: Joi.string(),
+	_id: objectIdValidator.objectId().isValid().allow(null),
 	date: Joi.date().iso(),
-	userId: Joi.string(),
+	userId: objectIdValidator.objectId().isValid().allow(null),
 	verified: Joi.boolean().default(false)
 })
 
 const pregnancyCenterSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
-	_id: Joi.string(),
+	_id: objectIdValidator.objectId().isValid().allow(null),
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
 	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
+	inVerification: objectIdValidator.objectId().isValid().allow(null),
 	prcName: Joi.string(),
 	notes: Joi.string(),
 	otherServices: Joi.string(),
