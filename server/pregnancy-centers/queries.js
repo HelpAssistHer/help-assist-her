@@ -12,7 +12,6 @@ module.exports = {
 			{'verifiedData.hours': {$exists: false}},
 			{'verifiedData.prcName': {$exists: false}},
 			{'verifiedData.phone': {$exists: false}},
-			{'verifiedData.primaryContactPerson': {$exists: false}},
 			{'verifiedData.services': {$exists: false}},
 			{'verifiedData.website': {$exists: false}},
 		]
