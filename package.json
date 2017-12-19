@@ -81,6 +81,7 @@
     "passport-facebook-token": "^3.3.0",
     "preact": "^6.4.0",
     "preact-compat": "^3.9.3",
+    "ramda": "^0.25.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-facebook-login": "^3.6.1",

@@ -20,10 +20,10 @@ const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema
 const UserModel = require('./users/schema/mongoose-schema')
 
 const databaseHelpers = require('./util/database-helpers')
-const checkPregnancyCenterId = databaseHelpers.checkPregnancyCenterId
 const createPregnancyCenter = databaseHelpers.createPregnancyCenter
-const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
 const releaseDocuments = databaseHelpers.releaseDocuments
+const updateFqhc = databaseHelpers.updateFqhc
+const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -210,7 +210,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
 	Returns the updated pregnancy center
  */
-server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPregnancyCenterId, handleRejectedPromise(async (req, res) => {
+server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 	const pregnancyCenterData = req.body
 	pregnancyCenterData['inVerification'] = null
@@ -251,7 +251,7 @@ server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromi
 	Returns the pregnancy center that matches the id
  */
 
-server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPregnancyCenterId, handleRejectedPromise(async (req, res) => {
+server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 
 	const pregnancyCenter = await PregnancyCenterModel.findById(pregnancyCenterId).populate('primaryContactPerson').lean()
@@ -278,6 +278,22 @@ server.get('/api/fqhcs/verify', isLoggedInAPI, handleRejectedPromise(async (req,
 	}
 	
 	res.status(200).json(fqhcs[0])
+}))
+
+/*
+ Updates an existing fqhc, validates data first, adds 'updated' attribute and history model
+ Returns the updated fqhc
+ */
+server.put('/api/fqhcs/:fqhcId', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const fqhcId = req.params.fqhcId
+	const fqhcData = req.body
+	fqhcData['inVerification'] = null
+	try {
+		const updatedFqhc = await updateFqhc(req.user._id, fqhcId, fqhcData)
+		res.status(200).json(updatedFqhc)
+	} catch (err) {
+		return handleError(res, err)
+	}
 }))
 
 server.listen(port, function () {
