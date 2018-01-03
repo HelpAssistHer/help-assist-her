@@ -16,7 +16,7 @@ class VerificationPortalForm extends Component {
 		const { classes, handleSubmit, pristine, reset, submitting } = this.props
 
 		return (
-			<form onSubmit={handleSubmit}>
+			<form className={classes.root} onSubmit={handleSubmit}>
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
@@ -72,10 +72,6 @@ class VerificationPortalForm extends Component {
 						/>
 					</div>
 
-					<div>
-						<MapContainer resource={store.getState().resource} />
-					</div>
-
 					<div className={classes.parent}>
 						<Field
 							label='Phone Number'
@@ -117,6 +113,13 @@ class VerificationPortalForm extends Component {
 							name='verifiedData.website.verified'
 							component={VerifiedCheckbox}
 						/>
+					</div>
+				</div>
+
+				<div>
+					<h3>Location on Map</h3>
+					<div className={classes.map}>
+						<MapContainer resource={store.getState().resource} />
 					</div>
 				</div>
 
@@ -311,9 +314,17 @@ VerificationPortalForm = reduxForm({
 })(VerificationPortalForm)
 
 const styles = {
+	root: {
+		display: 'flex',
+		'flex-direction': 'column',
+	},
 	parent: {
 		display: 'flex',
 		'align-items': 'baseline',
+	},
+	map: {
+		height: '500px',
+		width: '500px',
 	},
 }
 

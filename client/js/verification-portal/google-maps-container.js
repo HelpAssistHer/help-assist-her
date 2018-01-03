@@ -20,7 +20,7 @@ export class MapContainer extends Component {
 				google={this.props.google}
 				initialCenter={{lat: coordinates[1], lng: coordinates[0]}}
 				zoom={20}
-				style={{width: '50%', height: '50%', position: 'absolute'}}
+				style={{width: '50%', height: '50%', margin: '0 auto'}}
 			>
 				<Marker
 					title={prcName}
