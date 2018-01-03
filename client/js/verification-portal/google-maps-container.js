@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react'
 
 export class MapContainer extends Component {
 	render() {
@@ -29,5 +29,5 @@ export class MapContainer extends Component {
 }
 
 export default connect()(GoogleApiWrapper({
-	apiKey: 'AIzaSyDcdO_wAguQsbU1BJbeNIblfylyUNho7us',
+	apiKey: 'AIzaSyCGWmo2kYWWm0fCsI3oLXJpqBC9Ub1fSkM',
 })(MapContainer))
