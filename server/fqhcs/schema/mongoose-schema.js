@@ -2,31 +2,30 @@
 
 const mongoose = require('mongoose')
 
-const helpers = require('./helpers')
+const helpers = require('../../pregnancy-centers/schema/helpers.js')
 const {
-	addressSchema, 
-	userDateSchema, 
+	addressSchema,
+	userDateSchema,
 	getFullAddress
 } = require('../../locations/schema/mongoose-schema')
 
-const pregnancyCenterSchema = mongoose.Schema({
+const fqhcSchema = mongoose.Schema({
 	address: addressSchema,
+	classification: String,
 	email: String,
 	hours: Object,
-	inVerification: mongoose.Schema.Types.ObjectId,
-	prcName: String,
+	inVerification: String,
+	fqhcName: String,
 	notes: String,
 	otherServices: String,
 	phone: String,
-	primaryContactPerson: { type: mongoose.Schema.Types.ObjectId, ref: 'Persons' },
 	services: helpers.getPregnancyCenterServicesSchema(Boolean),
 	verifiedData: {
 		address: userDateSchema,
 		email: userDateSchema,
 		hours: userDateSchema,
-		prcName: userDateSchema,
+		fqhcName: userDateSchema,
 		phone: userDateSchema,
-		primaryContactPerson: userDateSchema,
 		services: userDateSchema,
 		website: userDateSchema,
 	},
@@ -34,10 +33,9 @@ const pregnancyCenterSchema = mongoose.Schema({
 		address: userDateSchema,
 		email: userDateSchema,
 		hours: userDateSchema,
-		prcName: userDateSchema,
+		fqhcName: userDateSchema,
 		notes: userDateSchema,
 		phone: userDateSchema,
-		primaryContactPerson: userDateSchema,
 		services: userDateSchema,
 		website: userDateSchema,
 	},
@@ -47,11 +45,11 @@ const pregnancyCenterSchema = mongoose.Schema({
 	minimize: false // services will have a default of {}
 })
 
-pregnancyCenterSchema.index({'address.location': '2dsphere'})
+fqhcSchema.index({'address.location': '2dsphere'})
 
-pregnancyCenterSchema.methods.getFullAddress = getFullAddress
+fqhcSchema.methods.getFullAddress = getFullAddress
 
 // create model using the schema
-const PregnancyCenterModel = mongoose.model('PregnancyCenters', pregnancyCenterSchema)
+const FQHCModel = mongoose.model('FQHCs', fqhcSchema)
 
-module.exports = PregnancyCenterModel
+module.exports = FQHCModel

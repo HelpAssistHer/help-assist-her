@@ -4,7 +4,7 @@
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
   "engines": {
-    "node": "7.9.0"
+    "node": "9.0.0"
   },
   "scripts": {
     "build": "NODE_ENV=production babel-node client/tools/build.js",
@@ -14,12 +14,12 @@
     "wds": "webpack-dev-server --content-base public/",
     "start": "NODE_ENV=localhost nodemon ./server/server.js",
     "startdb": "mongod --dbpath ~/.hah/data",
-    "test": "NODE_ENV=test mocha 'server/data-import/test/test.js'",
-    "n": "nvm use stable",
-    "c": "export NODE_CONFIG_DIR=~/Documents/code/help-assist-her/config",
+    "test": "NODE_ENV=test mocha 'server/test/test.js'",
+    "n": "nvm use default",
     "data": "NODE_ENV=localhost node ./server/data-import/data.js",
     "test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
-    "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js"
+    "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js",
+    "clear-iv": "NODE_ENV=localhost node ./server/scripts/clear-in-verification-field.js"
   },
   "repository": {
     "type": "git",

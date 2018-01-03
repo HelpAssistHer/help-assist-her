@@ -1,5 +1,6 @@
 'use strict'
 
+const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
 const config = require('config')
@@ -14,6 +15,7 @@ const passport = require('passport')
 const path = require('path')
 const session = require('express-session')
 
+const FQHCModel = require('./fqhcs/schema/mongoose-schema')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
@@ -21,6 +23,7 @@ const databaseHelpers = require('./util/database-helpers')
 const checkPregnancyCenterId = databaseHelpers.checkPregnancyCenterId
 const createPregnancyCenter = databaseHelpers.createPregnancyCenter
 const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
+const releaseDocuments = databaseHelpers.releaseDocuments
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -164,12 +167,15 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 }))
 
 /*
-	Returns one pregnancy center that needs verification (currently defined as not having a verified address)
+	Returns one pregnancy center that needs verification 
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+
+	const notInVerification = {inVerification: {$in: [false, null]}}
+	
 	// an array of javascript objects
 	const pregnancyCenters = await PregnancyCenterModel.aggregate([
-		{ $match: queries.verificationNotComplete, },
+		{ $match: _.merge(queries.verificationNotComplete, notInVerification) },
 		{ $sample: { size: 1 } },
 	])
 	
@@ -179,9 +185,11 @@ server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise
 	
 	// a second lookup is necessary to get a mongoose object to populate 
 	const pregnancyCenterId = pregnancyCenters[0]._id
-	const pregnancyCenter = await PregnancyCenterModel.findOne({
-		_id: pregnancyCenterId
-	}).populate('primaryContactPerson').lean()
+	const update = {inVerification: req.user._id}
+	const options = {new: true} // returns updated object back
+	const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate({
+		_id: pregnancyCenterId,
+	}, update, options).populate('primaryContactPerson').lean()
 
 	res.status(200).json(pregnancyCenter)
 }))
@@ -193,6 +201,7 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
 		const createdPregnancyCenter = await createPregnancyCenter(req.user._id, newPregnancyCenter)
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
+		log.error(err)
 		return handleError(res, err)
 	}
 }))
@@ -203,9 +212,10 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async
  */
 server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPregnancyCenterId, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
-
+	const pregnancyCenterData = req.body
+	pregnancyCenterData['inVerification'] = null
 	try {
-		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, req.body)
+		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, pregnancyCenterData)
 		res.status(200).json(updatedPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
@@ -253,6 +263,23 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, checkPreg
 	res.status(200).json(pregnancyCenter)
 }))
 
+/*
+ Returns one fqhc that needs verification 
+ */
+server.get('/api/fqhcs/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	// an array of javascript objects
+	const fqhcs = await FQHCModel.aggregate([
+		{ $match: queries.verificationNotComplete, },
+		{ $sample: { size: 1 } },
+	])
+
+	if (fqhcs.length === 0 || !fqhcs[0]) {
+		return res.boom.notFound('No federally qualified health centers to verify')
+	}
+	
+	res.status(200).json(fqhcs[0])
+}))
+
 server.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
@@ -287,10 +314,11 @@ server.get('/api/login/check/', (req, res) => {
 	}
 })
 
-server.get('/api/logout', (req, res) => {
+server.get('/api/logout', handleRejectedPromise(async (req, res) => {
+	await releaseDocuments(req.user._id)
 	req.logout()
 	res.send(200)
-})
+}))
 
 function isLoggedInAPI(req, res, next) {
 	// if user is authenticated in the session, carry on
