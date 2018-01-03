@@ -300,10 +300,12 @@ class VerificationPortalForm extends Component {
 				</div>
 				<Spacer height='50px'/>
 
-				<button type="submit">Submit</button>
-				<button type="button" disabled={pristine || submitting} onClick={reset}>
-					Clear Values
-				</button>
+				<div>
+					<button type="submit">Submit</button>
+					<button type="button" disabled={pristine || submitting} onClick={reset}>
+						Clear Values
+					</button>
+				</div>
 			</form>
 		)
 	}
