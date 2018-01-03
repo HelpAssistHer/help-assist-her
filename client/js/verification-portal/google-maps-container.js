@@ -13,11 +13,14 @@ export class MapContainer extends Component {
 			return null
 		}
 
+		console.log('Coordinates', coordinates)
+
 		return (
 			<Map
 				google={this.props.google}
 				initialCenter={{lat: coordinates[1], lng: coordinates[0]}}
 				zoom={20}
+				style={{width: '50%', height: '50%', position: 'absolute'}}
 			>
 				<Marker
 					title={prcName}
