@@ -19,7 +19,7 @@ export class MapContainer extends Component {
 			<Map
 				google={this.props.google}
 				initialCenter={{lat: coordinates[1], lng: coordinates[0]}}
-				zoom={20}
+				zoom={17}
 				style={{width: '50%', height: '50%', margin: '0 auto'}}
 			>
 				<Marker
