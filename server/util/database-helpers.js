@@ -335,9 +335,8 @@ module.exports = {
 	updateFqhc: (userId, fqhcId, fqhcObj) => {
 		return new P(async (resolve, reject) => {
 			try {
-
 				const validate = R.partial(validateAndFillFqhc, [userId])
-				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getOldFqhc(fqhcId).toObject()])
+				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getOldFqhc(fqhcId)])
 				const updateFqhc = R.partial(fqhcFindByIdAndUpdate, [fqhcId])
 	
 				const updateAndSaveFqhc = R.pipeP(
