@@ -1,6 +1,7 @@
 'use strict'
 
 //Require the dev-dependencies
+const _ = require('lodash')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const Log = require('log')
@@ -11,6 +12,7 @@ mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
+const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const server = require('../server')
 const UserModel = require('../users/schema/mongoose-schema')
 
@@ -29,14 +31,14 @@ async function mockAuthenticate() {
 }
 
 // Allows the middleware to think we are *not* authenticated
-function mockUnauthenticate () {
+function mockUnauthenticate() {
 	server.request.isAuthenticated = function () {
 		return false
 	}
 	server.request.user = null
 }
 
-function assertError(res, statusCode, error, message=null, data=null) {
+function assertError(res, statusCode, error, message = null, data = null) {
 	res.should.have.status(statusCode)
 	res.body.should.have.property('statusCode')
 	res.body.should.have.property('error')
@@ -61,7 +63,7 @@ function assertUnauthenticatedError(res) {
 
 //Our parent block
 describe('FQHCs', () => {
-	beforeEach( async () => { //Before each test we empty the database
+	beforeEach(async () => { //Before each test we empty the database
 		mockUnauthenticate()
 		await FQHCModel.remove({})
 		await UserModel.remove({})
@@ -95,7 +97,7 @@ describe('FQHCs', () => {
 	 */
 	describe('/GET /api/fqhcs/verify', () => {
 		it('it should return a single pregnancy center', async () => {
-			
+
 			await FQHCModel.create({
 				'address': {
 					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
@@ -110,10 +112,10 @@ describe('FQHCs', () => {
 				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				'phone': '+17185969800',
 				'website': 'www.brooklynplaza.org',
-				services:{},
+				services: {},
 
 			})
-			
+
 			await mockAuthenticate()
 
 			const res = await chai.request(server)
@@ -132,7 +134,7 @@ describe('FQHCs', () => {
 	 */
 	describe('/GET /api/fqhcs/verify', () => {
 		it('it should return a 404 not found ', async () => {
-			
+
 			await mockAuthenticate()
 
 			try {
@@ -142,6 +144,125 @@ describe('FQHCs', () => {
 			} catch (err) {
 				assertError(err.response, 404, 'Not Found')
 			}
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/fqhcs/:fqhcId route w/o authentication
+	 */
+	describe('/PUT /api/fqhcs/:fqhcId no-auth', () => {
+		it('it should return a 401 error because there is no authentication', async () => {
+
+			const fqhc = new FQHCModel({
+				'address': {
+					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005, // this is fake data
+							42.6722152
+						]
+					},
+				},
+				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				'phone': '+17185969800',
+				'website': 'www.brooklynplaza.org',
+				services: {},
+			})
+
+			await fqhc.save()
+
+			try {
+				await chai.request(server)
+					.put('/api/fqhcs/' + fqhc._id)
+					.send(fqhc)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/fqhcs/:fqhcId route with authentication
+	 */
+	describe('/PUT /api/fqhcs/:fqhcId', () => {
+		it('it should return the updated fqhc record', async () => {
+			await mockAuthenticate()
+
+			const oldValues = {
+				'address': {
+					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005, // this is fake data
+							42.6722152
+						]
+					},
+				},
+				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				'phone': '+17185969800',
+				'website': 'www.brooklynplaza.org',
+				services: {},
+			}
+
+			const newValues = {
+				'address': {
+					'line1': 'New Address',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.99, // this is fake data
+							42.6722152
+						]
+					},
+				},
+				'fqhcName': 'New Name',
+				'phone': '+17185969899',
+				'website': 'www.newurl.org',
+				services: {'wellWomanCare': true},
+				verifiedData: {
+					address: {
+						date: '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
+
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+			const oldFQHC = await FQHCModel.create(oldValues)
+
+			const res = await chai.request(server)
+				.put('/api/fqhcs/' + oldFQHC._id)
+				.send(newValues)
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('fqhcName')
+			res.body._id.should.equal(String(oldFQHC._id))
+			res.body.fqhcName.should.equal('New Name')
+			res.body.should.have.property('verifiedData')
+			res.body.should.have.property('updated')
+			res.body.updated.should.have.property('address')
+			res.body.updated.address.should.have.property('userId')
+			res.body.updated.address.userId.should.equal(testUser._id.toString())
+			res.body.verifiedData.should.have.property('address')
+			res.body.verifiedData.address.userId.should.equal(testUser._id.toString())
+
+			// check that the pregnancy center history is created as well.
+			const histories = await FQHCHistoryModel.find({
+				fqhcId: oldFQHC._id
+			})
+			const fields = _.map(histories, 'field')
+			log.info(fields)
+			fields.should.have.members([ 
+				'fqhcName',
+				'phone',
+				'website',
+				'services',
+				'verifiedData',
+				'address' ])
 		})
 	})
 })

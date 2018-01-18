@@ -2,9 +2,15 @@
 
 const _ = require('lodash')
 const Joi = require('joi')
-const mongoose = require('mongoose')
+const Log = require('log')
 const P = require('bluebird')
+const R = require('ramda')
 
+const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
+const FQHCModel = require('../fqhcs/schema/mongoose-schema')
+const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
+
+const log = new Log('info')
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
 const PersonModel = require('../persons/schema/mongoose-schema')
@@ -13,43 +19,35 @@ const personSchemaJoi = require('../persons/schema/joi-schema')
 
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt', 'inVerification']
 
-function removeMongooseKeys(obj) {
-	for (const key in obj) {
-		if (keysToIgnore.includes(key)) {
-			delete obj[key]
-		} else if (typeof obj[key] == 'object' && obj.hasOwnProperty(key)) {
-			removeMongooseKeys(obj[key])
-		}
-	}
-	return obj
+function isEqualOmit(obj1, obj2, omitKeysList){
+	return _.isEqual(
+		_.omit(obj1, omitKeysList),
+		_.omit(obj2, omitKeysList)
+	)
 }
 
-function isEqualMongoose(a, b){
-	return _.isEqual(removeMongooseKeys(a), removeMongooseKeys(b))
-}
+const objRemovingMongoKeys = obj => _.omit(obj, keysToIgnore)
 
-function createUpdateHistory(userId, oldPregnancyCenterObj, pregnancyCenterRawObj) {
-
+function createPregnancyCenterUpdateHistory(userId, oldPregnancyCenterObj, newPregnancyCenterObj) {
 	return new P( async (resolve) => {
 		
-		const pregnancyCenterRawObjWithStamps = removeMongooseKeys(_.clone(pregnancyCenterRawObj))
-
-		if (oldPregnancyCenterObj.hasOwnProperty('updated')) {
-			pregnancyCenterRawObjWithStamps['updated'] = oldPregnancyCenterObj['updated']
-		} else {
-			pregnancyCenterRawObjWithStamps['updated'] = {}
-		}
-
-		_.forOwn(pregnancyCenterRawObj, (value, key) => {
-
+		// transfer over `updated` info from previous updates
+		newPregnancyCenterObj.updated = _.get(oldPregnancyCenterObj, 'updated', {})
+		
+		// create updated object and history document
+		_.forOwn(objRemovingMongoKeys(_.clone(newPregnancyCenterObj)), function(value, key) {
+			
 			// check that the 'new' data isn't exactly the same as old
 			// this prevents us from creating histories for an update with same exact data
-			if (!keysToIgnore.includes(key) && !isEqualMongoose(oldPregnancyCenterObj[key],value)) {
-				pregnancyCenterRawObjWithStamps['updated'][key] = {
+			if (!isEqualOmit(oldPregnancyCenterObj[key],value)) {
+				
+				// `updated` object in PregnancyCenterModel
+				newPregnancyCenterObj['updated'][key] = {
 					userId: userId,
 					date: new Date().toISOString()
 				}
-
+				
+				// make a separate history document 
 				const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
 					pregnancyCenterId: oldPregnancyCenterObj._id,
 					field: key,
@@ -61,7 +59,43 @@ function createUpdateHistory(userId, oldPregnancyCenterObj, pregnancyCenterRawOb
 			}
 		})
 
-		resolve(pregnancyCenterRawObjWithStamps['updated'])
+		resolve(newPregnancyCenterObj)
+
+	})
+}
+
+function createFqhcUpdateHistory(userId, oldFqhcObj, newFqhcObj) {
+	return new P( async (resolve) => {
+
+		// transfer over `updated` info from previous updates
+		newFqhcObj.updated = _.get(oldFqhcObj, 'updated', {})
+
+		// create updated object and history document
+		_.forOwn(objRemovingMongoKeys(_.clone(newFqhcObj)), function(value, key) {
+
+			// check that the 'new' data isn't exactly the same as old
+			// this prevents us from creating histories for an update with same exact data
+			if (!isEqualOmit(oldFqhcObj[key],value)) {
+
+				// `updated` object in PregnancyCenterModel
+				newFqhcObj['updated'][key] = {
+					userId: userId,
+					date: new Date().toISOString()
+				}
+
+				// make a separate history document 
+				const fqhcHistoryObj = new FQHCHistoryModel({
+					fqhcId: oldFqhcObj._id,
+					field: key,
+					newValue: value,
+					oldValue: oldFqhcObj[key],
+					userId: userId,
+				})
+				fqhcHistoryObj.save()
+			}
+		})
+
+		resolve(newFqhcObj)
 
 	})
 }
@@ -128,30 +162,24 @@ function getVerifiedDateUserId(verifiedData, userId) {
 	})
 }
 
-function validatePregnancyCenter(pregnancyCenterObj) {
+function validateDocument(joiSchema, documentObj) {
 	return new P( async (resolve, reject) => {
-		const pregnancyCenterValidationObj = await Joi.validate(pregnancyCenterObj, pregnancyCenterSchemaJoi, {
+		const validationObj = await Joi.validate(documentObj, joiSchema, {
 			abortEarly: false
 		})
 		// await Joi.validate() returns an obj of form { error: null, value: validatedData}
-		if (pregnancyCenterValidationObj.error) {
-			return reject(pregnancyCenterValidationObj.error)
+		if (validationObj.error) {
+			return reject(validationObj.error)
 		}
-		resolve(pregnancyCenterValidationObj.value)
+		resolve(validationObj.value)
 	})
 }
 
 function validateAndFillPregnancyCenter(userId, pregnancyCenterObj) {
 	return new P( async (resolve, reject) => {
-		let validatedPregnancyCenterObj
 		try {
 			// validate the incoming data
-			validatedPregnancyCenterObj = await validatePregnancyCenter(pregnancyCenterObj)
-		} catch (err) {
-			return reject(err)
-		}
-		
-		try {
+			const validatedPregnancyCenterObj = await validateDocument(pregnancyCenterSchemaJoi, pregnancyCenterObj)
 
 			// fill out the `verifiedData` object with the userId and current date
 			validatedPregnancyCenterObj.verifiedData = await getVerifiedDateUserId(
@@ -165,7 +193,6 @@ function validateAndFillPregnancyCenter(userId, pregnancyCenterObj) {
 			} else {
 				delete validatedPregnancyCenterObj.primaryContactPerson
 			}
-			
 			resolve(validatedPregnancyCenterObj)
 		} catch (err) {
 			reject(err)
@@ -173,15 +200,94 @@ function validateAndFillPregnancyCenter(userId, pregnancyCenterObj) {
 	})
 }
 
-function getOldPregnancyCenter(pregnancyCenterId) {
+function validateAndFillFqhc(userId, fqhcObj) {
 	return new P( async (resolve, reject) => {
-		// get the current version of the pregnancy center, in order to compare to the new
-		const oldPregnancyCenter = await PregnancyCenterModel.findById(pregnancyCenterId)
+		try {
+			// validate the incoming data
+			const validatedFqhcObj = await validateDocument(fqhcSchemaJoi, fqhcObj)
+
+			// fill out the `verifiedData` object with the userId and current date
+			validatedFqhcObj.verifiedData = await getVerifiedDateUserId(
+				validatedFqhcObj.verifiedData,
+				userId
+			)
+			resolve(validatedFqhcObj)
+		} catch (err) {
+			reject(err)
+		}
+	})
+}
+
+function getPregnancyCenterObj(pregnancyCenterId) {
+	return new P( async (resolve, reject) => {
+		const pregnancyCenter = await PregnancyCenterModel.findById(pregnancyCenterId)
 			.populate('primaryContactPerson')
-		if (!oldPregnancyCenter) {
+		return pregnancyCenter ? resolve(pregnancyCenter.toObject()) : reject() 
+	})
+}
+
+function getOldFqhc(fqhcId) {
+	return new P( async (resolve, reject) => {
+		// get the current version of the fqhc, in order to compare to the new
+		const oldFqhc = await FQHCModel.findById(fqhcId)
+		if (!oldFqhc) {
 			return reject()
 		}
-		resolve(oldPregnancyCenter)
+		resolve(oldFqhc)
+	})
+}
+
+const findByIdAndUpdate = (model, id, obj) => {
+	return new P( async (resolve, reject) => {
+		try {
+			const updatedDoc = await model.findByIdAndUpdate(
+				id,
+				{$set: obj},
+				{new: true}
+			)
+			return updatedDoc ? resolve(updatedDoc) : reject()
+		} catch(err) {
+			log.error(err)
+			reject(err)
+		}
+	})
+}
+
+const pregnancyCenterFindByIdAndUpdate = R.partial(findByIdAndUpdate, [PregnancyCenterModel])
+const fqhcFindByIdAndUpdate = R.partial(findByIdAndUpdate, [FQHCModel])
+
+const makeModelAndPopulate = obj => {
+	return new P(async(resolve, reject) => {
+		try {
+			return resolve(_.omit(new PregnancyCenterModel(obj).populate('primaryContactPerson').toObject(), ['_id']))
+		} catch (err) {
+			log.error(err)
+			return reject(err)
+		}
+	})
+}
+
+const populatePrimaryContact = (pregnancyCenterMongooseObj) => {
+	return new P(async(resolve, reject) => {
+		try {
+			return resolve(await PregnancyCenterModel.populate(pregnancyCenterMongooseObj, 'primaryContactPerson'))
+		} catch (err) {
+			log.error(err)
+			return reject(err)
+		}
+	})
+}
+const createPregnancyCenterAndPopulate = obj => {
+	return new P(async(resolve, reject) => {
+		try {
+			const createdPregnancyCenter = new PregnancyCenterModel(obj)
+			await createdPregnancyCenter.save()
+			await PregnancyCenterModel.populate(createdPregnancyCenter, 'primaryContactPerson')
+			return resolve(createdPregnancyCenter)
+		} catch (err) {
+			log.error(err)
+			return reject(err)
+		}
 	})
 }
 
@@ -190,12 +296,14 @@ module.exports = {
 	createPregnancyCenter: (userId, pregnancyCenterObj) => {
 		return new P(async(resolve, reject) => {
 			try {
-				const validatedPregnancyCenterObj = await validateAndFillPregnancyCenter(userId, pregnancyCenterObj)
-				const createdPregnancyCenter = PregnancyCenterModel(validatedPregnancyCenterObj)
-				await createdPregnancyCenter.save()
-				await PregnancyCenterModel.populate(createdPregnancyCenter, 'primaryContactPerson')
-				return resolve(createdPregnancyCenter)
+				const validate = R.partial(validateAndFillPregnancyCenter, [userId])
+				const create = R.pipeP(
+					validate,
+					createPregnancyCenterAndPopulate,
+				)
+				return resolve(create(pregnancyCenterObj))
 			} catch (err) {
+				log.error(err)
 				return reject(err)
 			}
 		})
@@ -203,34 +311,45 @@ module.exports = {
 	updatePregnancyCenter: (userId, pregnancyCenterId, pregnancyCenterObj) => {
 		return new P(async(resolve, reject) => {
 			try {
-				const oldPregnancyCenter = await getOldPregnancyCenter(pregnancyCenterId) // primaryContactPerson is populated
-				const validatedPregnancyCenterObj = await validateAndFillPregnancyCenter(userId, pregnancyCenterObj)
-				// compare the old object to the new object and create PregnancyCenterHistory documents and `updated` objects
-				const validatedPregnancyCenter = new PregnancyCenterModel(validatedPregnancyCenterObj)
-				validatedPregnancyCenter.populate('primaryContactPerson')
-				validatedPregnancyCenterObj.updated = await createUpdateHistory(userId, oldPregnancyCenter.toObject(), validatedPregnancyCenter.toObject())
 				
-				// finally, save the new pregnancy center and return it
-				const updatedPregnancyCenter = await PregnancyCenterModel.findByIdAndUpdate(pregnancyCenterId, {
-					$set: validatedPregnancyCenterObj
-				}, {new: true})
-				if (!updatedPregnancyCenter) {
-					return reject()
-				}
-				await PregnancyCenterModel.populate(updatedPregnancyCenter, 'primaryContactPerson')
-				resolve(updatedPregnancyCenter)
+				const validate = R.partial(validateAndFillPregnancyCenter, [userId])
+				const createUpdateHistory = R.partial(createPregnancyCenterUpdateHistory, 
+					[userId, await getPregnancyCenterObj(pregnancyCenterId)])
+				const updatePregnancyCenter = R.partial(pregnancyCenterFindByIdAndUpdate, [pregnancyCenterId])
+
+				const updateAndSavePregnancyCenter = R.pipeP(
+					validate,
+					makeModelAndPopulate,
+					createUpdateHistory, // side effect of saving history records to the database
+					updatePregnancyCenter,
+					populatePrimaryContact,
+				)
+				
+				return resolve(updateAndSavePregnancyCenter(pregnancyCenterObj))
 			} catch (err) {
+				log.error(err)
 				return reject(err)
 			}
 		})
 	},
-	checkPregnancyCenterId : (req, res, next) => {
-		const pregnancyCenterId = req.params.pregnancyCenterId
-
-		if (!mongoose.Types.ObjectId.isValid(pregnancyCenterId)) {
-			return res.boom.badRequest(`Invalid pregnancyCenterId ${pregnancyCenterId}`)
-		}
-		next()
+	updateFqhc: (userId, fqhcId, fqhcObj) => {
+		return new P(async (resolve, reject) => {
+			try {
+				const validate = R.partial(validateAndFillFqhc, [userId])
+				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getOldFqhc(fqhcId)])
+				const updateFqhc = R.partial(fqhcFindByIdAndUpdate, [fqhcId])
+	
+				const updateAndSaveFqhc = R.pipeP(
+					validate,
+					createUpdateHistory, // side effect of saving update records to the database
+					updateFqhc
+				)
+				
+				return resolve(updateAndSaveFqhc(fqhcObj))
+			} catch (err) {
+				return reject(err)
+			}
+		})
 	},
 	releaseDocuments: (userId) => {
 		return new P(async (resolve, reject) => {
