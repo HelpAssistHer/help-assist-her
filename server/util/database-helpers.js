@@ -6,7 +6,7 @@ const Log = require('log')
 const P = require('bluebird')
 const R = require('ramda')
 
-const FQHCHistoryModel = require('../fqhcs-history/schema/mongoose-schema')
+const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
 const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
 

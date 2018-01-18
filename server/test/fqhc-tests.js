@@ -12,7 +12,7 @@ mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
-const FQHCHistoryModel = require('../fqhcs-history/schema/mongoose-schema')
+const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const server = require('../server')
 const UserModel = require('../users/schema/mongoose-schema')
 
