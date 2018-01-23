@@ -6,10 +6,10 @@ const Log = require('log')
 const P = require('bluebird')
 const R = require('ramda')
 
+const AppValidationError = require('../errors/app-validation-error')
 const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
 const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
-
 const log = new Log('info')
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
@@ -59,7 +59,7 @@ function createPregnancyCenterUpdateHistory(userId, oldPregnancyCenterObj, newPr
 			}
 		})
 
-		resolve(newPregnancyCenterObj)
+		return resolve(newPregnancyCenterObj)
 
 	})
 }
@@ -95,7 +95,7 @@ function createFqhcUpdateHistory(userId, oldFqhcObj, newFqhcObj) {
 			}
 		})
 
-		resolve(newFqhcObj)
+		return resolve(newFqhcObj)
 
 	})
 }
@@ -144,7 +144,7 @@ function updateCreatePrimaryContactPerson(primaryContactPerson) {
 			}
 		}
 
-		resolve(createdPrimaryContactPerson)
+		return resolve(createdPrimaryContactPerson)
 	})
 }
 
@@ -158,7 +158,7 @@ function getVerifiedDateUserId(verifiedData, userId) {
 				date: new Date().toISOString(),
 			}
 		})
-		resolve(verifiedDataWithDateUserId)
+		return resolve(verifiedDataWithDateUserId)
 	})
 }
 
@@ -171,7 +171,7 @@ function validateDocument(joiSchema, documentObj) {
 		if (validationObj.error) {
 			return reject(validationObj.error)
 		}
-		resolve(validationObj.value)
+		return resolve(validationObj.value)
 	})
 }
 
@@ -193,9 +193,9 @@ function validateAndFillPregnancyCenter(userId, pregnancyCenterObj) {
 			} else {
 				delete validatedPregnancyCenterObj.primaryContactPerson
 			}
-			resolve(validatedPregnancyCenterObj)
+			return resolve(validatedPregnancyCenterObj)
 		} catch (err) {
-			reject(err)
+			return reject(err)
 		}
 	})
 }
@@ -211,9 +211,42 @@ function validateAndFillFqhc(userId, fqhcObj) {
 				validatedFqhcObj.verifiedData,
 				userId
 			)
-			resolve(validatedFqhcObj)
+			return resolve(validatedFqhcObj)
 		} catch (err) {
-			reject(err)
+			return reject(err)
+		}
+	})
+}
+
+function checkIfPregnancyCenterClosed(pregnancyCenterId, newPregnancyCenterObj) {
+	return new P( async (resolve, reject) => {
+		try {
+			// if the original document is closed, do not allow updates unless closed is being set to false
+			const oldPregnancyCenter = await getPregnancyCenterObj(pregnancyCenterId)
+			
+			if (_.get(oldPregnancyCenter, 'closed') // if the original is closed
+				&& (!_.has(newPregnancyCenterObj.closed) || newPregnancyCenterObj.closed)) { // and new is not reopening
+				return reject(new AppValidationError('Cannot edit a closed Pregnancy Center'))
+			}
+			return resolve(newPregnancyCenterObj)
+		} catch (err) {
+			return reject(err)
+		}
+	})
+}
+
+function checkIfFqhcClosed(fqhcId, newFqhcObj) {
+	return new P( async (resolve, reject) => {
+		try {
+			// if the original document is closed, do not allow updates unless closed is being set to false
+			const oldFqhc = await getOldFqhc(fqhcId)
+			
+			if (_.get(oldFqhc, 'closed') && (!_.has(newFqhcObj.closed) || newFqhcObj.closed)) { 
+				return reject(new AppValidationError('Cannot edit a closed FQHC'))
+			}
+			return resolve(newFqhcObj)
+		} catch (err) {
+			return reject(err)
 		}
 	})
 }
@@ -233,7 +266,7 @@ function getOldFqhc(fqhcId) {
 		if (!oldFqhc) {
 			return reject()
 		}
-		resolve(oldFqhc)
+		return resolve(oldFqhc)
 	})
 }
 
@@ -248,7 +281,7 @@ const findByIdAndUpdate = (model, id, obj) => {
 			return updatedDoc ? resolve(updatedDoc) : reject()
 		} catch(err) {
 			log.error(err)
-			reject(err)
+			return reject(err)
 		}
 	})
 }
@@ -313,12 +346,14 @@ module.exports = {
 			try {
 				
 				const validate = R.partial(validateAndFillPregnancyCenter, [userId])
+				const checkIfClosed = R.partial(checkIfPregnancyCenterClosed, [pregnancyCenterId])
 				const createUpdateHistory = R.partial(createPregnancyCenterUpdateHistory, 
 					[userId, await getPregnancyCenterObj(pregnancyCenterId)])
 				const updatePregnancyCenter = R.partial(pregnancyCenterFindByIdAndUpdate, [pregnancyCenterId])
 
 				const updateAndSavePregnancyCenter = R.pipeP(
 					validate,
+					checkIfClosed,
 					makeModelAndPopulate,
 					createUpdateHistory, // side effect of saving history records to the database
 					updatePregnancyCenter,
@@ -336,11 +371,13 @@ module.exports = {
 		return new P(async (resolve, reject) => {
 			try {
 				const validate = R.partial(validateAndFillFqhc, [userId])
+				const checkIfClosed = R.partial(checkIfFqhcClosed, [fqhcId])
 				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getOldFqhc(fqhcId)])
 				const updateFqhc = R.partial(fqhcFindByIdAndUpdate, [fqhcId])
 	
 				const updateAndSaveFqhc = R.pipeP(
 					validate,
+					checkIfClosed,
 					createUpdateHistory, // side effect of saving update records to the database
 					updateFqhc
 				)
