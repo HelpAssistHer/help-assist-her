@@ -14,7 +14,7 @@ const fqhcSchemaJoi = Joi.object().keys({
 	_id: Joi.string(),
 	address: addressSchemaJoi,
 	classification: Joi.string(),
-	closed: Joi.boolean(),
+	outOfBusiness: Joi.boolean(),
 	createdAt: Joi.date().iso(),
 	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
@@ -35,7 +35,7 @@ const fqhcSchemaJoi = Joi.object().keys({
 	},
 	updated: {
 		address: dateUserActionSchemaJoi,
-		closed: dateUserActionSchemaJoi,
+		outOfBusiness: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		fqhcName: dateUserActionSchemaJoi,

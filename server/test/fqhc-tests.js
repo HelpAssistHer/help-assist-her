@@ -266,10 +266,10 @@ describe('FQHCs', () => {
 	})
 
 	/*
-	 * Test the /PUT /api/fqhcs/:fqhcId route with authentication - closed == True
+	 * Test the /PUT /api/fqhcs/:fqhcId route with authentication - outOfBusiness == True
 	 */
 	describe('/PUT /api/fqhcs/:fqhcId', () => {
-		it('it should return a validation error because the original was closed', async () => {
+		it('it should return a validation error because the original was outOfBusiness', async () => {
 			await mockAuthenticate()
 
 			const oldValues = {
@@ -283,7 +283,7 @@ describe('FQHCs', () => {
 						]
 					},
 				},
-				closed: true,
+				outOfBusiness: true,
 				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				'phone': '+17185969800',
 				'website': 'www.brooklynplaza.org',
@@ -313,15 +313,15 @@ describe('FQHCs', () => {
 			}
 
 			const oldFQHC = await FQHCModel.create(oldValues)
-			oldFQHC.closed.should.equal(true)
-			log.info('OLD CLOSED IS', oldFQHC.closed)
+			oldFQHC.outOfBusiness.should.equal(true)
+			log.info('OLD outOfBusiness IS', oldFQHC.outOfBusiness)
 			try {
 				await chai.request(server)
 					.put('/api/fqhcs/' + oldFQHC._id)
 					.send(newValues)
 				chai.assert.fail(0, 1, 'Error not thrown')	
 			} catch (err) {
-				assertError(err.response, 400, 'Bad Request', 'Cannot edit a closed FQHC')
+				assertError(err.response, 400, 'Bad Request', 'Cannot edit a outOfBusiness FQHC')
 			}
 		})
 	})

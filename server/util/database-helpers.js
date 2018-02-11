@@ -218,15 +218,15 @@ function validateAndFillFqhc(userId, fqhcObj) {
 	})
 }
 
-function checkIfPregnancyCenterClosed(pregnancyCenterId, newPregnancyCenterObj) {
+function checkIfPregnancyCenterOutOfBusiness(pregnancyCenterId, newPregnancyCenterObj) {
 	return new P( async (resolve, reject) => {
 		try {
-			// if the original document is closed, do not allow updates unless closed is being set to false
+			// if the original document is outOfBusiness, do not allow updates unless outOfBusiness is being set to false
 			const oldPregnancyCenter = await getPregnancyCenterObj(pregnancyCenterId)
 			
-			if (_.get(oldPregnancyCenter, 'closed') // if the original is closed
-				&& (!_.has(newPregnancyCenterObj.closed) || newPregnancyCenterObj.closed)) { // and new is not reopening
-				return reject(new AppValidationError('Cannot edit a closed Pregnancy Center'))
+			if (_.get(oldPregnancyCenter, 'outOfBusiness') // if the original is outOfBusiness
+				&& (!_.has(newPregnancyCenterObj.outOfBusiness) || newPregnancyCenterObj.outOfBusiness)) { // and new is not reopening
+				return reject(new AppValidationError('Cannot edit a outOfBusiness Pregnancy Center'))
 			}
 			return resolve(newPregnancyCenterObj)
 		} catch (err) {
@@ -235,14 +235,14 @@ function checkIfPregnancyCenterClosed(pregnancyCenterId, newPregnancyCenterObj) 
 	})
 }
 
-function checkIfFqhcClosed(fqhcId, newFqhcObj) {
+function checkIfFqhcOutOfBusiness(fqhcId, newFqhcObj) {
 	return new P( async (resolve, reject) => {
 		try {
-			// if the original document is closed, do not allow updates unless closed is being set to false
+			// if the original document is outOfBusiness, do not allow updates unless outOfBusiness is being set to false
 			const oldFqhc = await getOldFqhc(fqhcId)
 			
-			if (_.get(oldFqhc, 'closed') && (!_.has(newFqhcObj.closed) || newFqhcObj.closed)) { 
-				return reject(new AppValidationError('Cannot edit a closed FQHC'))
+			if (_.get(oldFqhc, 'outOfBusiness') && (!_.has(newFqhcObj.outOfBusiness) || newFqhcObj.outOfBusiness)) { 
+				return reject(new AppValidationError('Cannot edit a outOfBusiness FQHC'))
 			}
 			return resolve(newFqhcObj)
 		} catch (err) {
@@ -346,14 +346,14 @@ module.exports = {
 			try {
 				
 				const validate = R.partial(validateAndFillPregnancyCenter, [userId])
-				const checkIfClosed = R.partial(checkIfPregnancyCenterClosed, [pregnancyCenterId])
+				const checkIfOutOfBusiness = R.partial(checkIfPregnancyCenterOutOfBusiness, [pregnancyCenterId])
 				const createUpdateHistory = R.partial(createPregnancyCenterUpdateHistory, 
 					[userId, await getPregnancyCenterObj(pregnancyCenterId)])
 				const updatePregnancyCenter = R.partial(pregnancyCenterFindByIdAndUpdate, [pregnancyCenterId])
 
 				const updateAndSavePregnancyCenter = R.pipeP(
 					validate,
-					checkIfClosed,
+					checkIfOutOfBusiness,
 					makeModelAndPopulate,
 					createUpdateHistory, // side effect of saving history records to the database
 					updatePregnancyCenter,
@@ -371,13 +371,13 @@ module.exports = {
 		return new P(async (resolve, reject) => {
 			try {
 				const validate = R.partial(validateAndFillFqhc, [userId])
-				const checkIfClosed = R.partial(checkIfFqhcClosed, [fqhcId])
+				const checkIfOutOfBusiness = R.partial(checkIfFqhcOutOfBusiness, [fqhcId])
 				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getOldFqhc(fqhcId)])
 				const updateFqhc = R.partial(fqhcFindByIdAndUpdate, [fqhcId])
 	
 				const updateAndSaveFqhc = R.pipeP(
 					validate,
-					checkIfClosed,
+					checkIfOutOfBusiness,
 					createUpdateHistory, // side effect of saving update records to the database
 					updateFqhc
 				)

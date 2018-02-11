@@ -131,7 +131,7 @@ server.get('/api/initial-data', (req, res) => {
 	TODO: limits and paging, if necessary
  */
 server.get('/api/pregnancy-centers', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
-	const allPregnancyCenters = await PregnancyCenterModel.find({closed:{$in: [null, false]}}).populate('primaryContactPerson').lean()
+	const allPregnancyCenters = await PregnancyCenterModel.find({outOfBusiness:{$in: [null, false]}}).populate('primaryContactPerson').lean()
 	if (allPregnancyCenters) {
 		res.status(200).json(allPregnancyCenters)
 	}
@@ -157,7 +157,7 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 				$maxDistance: miles * METERS_PER_MILE
 			}
 		},
-		closed: {$in: [null, false]}
+		outOfBusiness: {$in: [null, false]}
 	}).populate('primaryContactPerson').lean()
 
 	if (pregnancyCentersNearMe.length <= 0) {
@@ -231,7 +231,7 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 server.get('/api/pregnancy-centers/open-now', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const time = parseInt(req.query.time)
 	const dayOfWeek = parseInt(req.query.day)
-	const query = { closed: {$in: [null, false]}}
+	const query = { outOfBusiness: {$in: [null, false]}}
 
 	query['hours.' + dayOfWeek + '.open'] = {
 		$lte: time

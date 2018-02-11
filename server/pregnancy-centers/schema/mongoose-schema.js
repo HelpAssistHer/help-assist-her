@@ -11,7 +11,7 @@ const {
 
 const pregnancyCenterSchema = mongoose.Schema({
 	address: addressSchema,
-	closed: Boolean,
+	outOfBusiness: Boolean,
 	email: String,
 	hours: Object,
 	inVerification: mongoose.Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const pregnancyCenterSchema = mongoose.Schema({
 	},
 	updated: {
 		address: userDateSchema,
-		closed: userDateSchema,
+		outOfBusiness: userDateSchema,
 		email: userDateSchema,
 		hours: userDateSchema,
 		prcName: userDateSchema,
