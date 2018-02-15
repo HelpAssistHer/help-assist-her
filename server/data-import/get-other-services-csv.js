@@ -23,9 +23,9 @@ const startDatabase = P.coroutine(function *startDatabase() {
 
 startDatabase()
 
-const mapYesNo = (b) => {
-	if (_.isUndefined(b)) return ''
-	return b ? 'Yes' : 'No'
+const mapYesNo = (booleanValue) => {
+	if (_.isUndefined(booleanValue)) return ''
+	return booleanValue ? 'Yes' : 'No'
 }
 
 async function getOtherServicesPregnancyCenters() {
