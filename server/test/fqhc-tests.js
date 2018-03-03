@@ -255,7 +255,6 @@ describe('FQHCs', () => {
 				fqhcId: oldFQHC._id
 			})
 			const fields = _.map(histories, 'field')
-			log.info(fields)
 			fields.should.have.members([ 
 				'fqhcName',
 				'phone',
@@ -263,6 +262,67 @@ describe('FQHCs', () => {
 				'services',
 				'verifiedData',
 				'address' ])
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/fqhcs/:fqhcId route with authentication - outOfBusiness == True
+	 */
+	describe('/PUT /api/fqhcs/:fqhcId', () => {
+		it('it should return a validation error because the original was outOfBusiness', async () => {
+			await mockAuthenticate()
+
+			const oldValues = {
+				'address': {
+					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005, // this is fake data
+							42.6722152
+						]
+					},
+				},
+				outOfBusiness: true,
+				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				'phone': '+17185969800',
+				'website': 'www.brooklynplaza.org',
+				services: {},
+			}
+
+			const newValues = {
+				'address': {
+					'line1': 'New Address',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.99, // this is fake data
+							42.6722152
+						]
+					},
+				},
+				'fqhcName': 'New Name',
+				'phone': '+17185969899',
+				'website': 'www.newurl.org',
+				services: {'wellWomanCare': true},
+				verifiedData: {
+					address: {
+						date: '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
+
+			const oldFQHC = await FQHCModel.create(oldValues)
+			oldFQHC.outOfBusiness.should.equal(true)
+			log.info('OLD outOfBusiness IS', oldFQHC.outOfBusiness)
+			try {
+				await chai.request(server)
+					.put('/api/fqhcs/' + oldFQHC._id)
+					.send(newValues)
+				chai.assert.fail(0, 1, 'Error not thrown')	
+			} catch (err) {
+				assertError(err.response, 400, 'Bad Request', 'Cannot edit a outOfBusiness FQHC')
+			}
 		})
 	})
 })

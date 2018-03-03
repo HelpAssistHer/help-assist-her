@@ -12,6 +12,7 @@ const {
 const fqhcSchema = mongoose.Schema({
 	address: addressSchema,
 	classification: String,
+	outOfBusiness: Boolean,
 	email: String,
 	hours: Object,
 	inVerification: String,
@@ -31,6 +32,7 @@ const fqhcSchema = mongoose.Schema({
 	},
 	updated: {
 		address: userDateSchema,
+		outOfBusiness: userDateSchema,
 		email: userDateSchema,
 		hours: userDateSchema,
 		fqhcName: userDateSchema,

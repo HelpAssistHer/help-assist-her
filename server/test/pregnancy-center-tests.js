@@ -139,6 +139,33 @@ describe('PregnancyCenters', () => {
 
 			})
 
+			// copy of the above model, but with outOfBusiness = True - should not be returned
+			await PregnancyCenterModel.create({
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				outOfBusiness: true,
+				'prcName': 'Birthright of Albany - outOfBusiness',
+				'phone': '+15184382978',
+				'primaryContactPerson': primaryContactPerson,
+				'website': 'http://www.birthright.org',
+				'services': {},
+				'hours': {
+					1: {
+						open: 800, // 8am
+						close: 1500 // 3pm
+					}// 1 is Monday
+				}
+
+			})
+
 			await PregnancyCenterModel.create({
 				'address': {
 					'line1': '23-40 Astoria Boulevard\nAstoria, NY 11102',
@@ -266,6 +293,7 @@ describe('PregnancyCenters', () => {
 						'coordinates': [-73.7814005, 42.6722152]
 					}
 				},
+				outOfBusiness: true, // this shouldn't affect anything
 				prcName: 'Birthright of Albany',
 				phone: '+15184382978',
 				website: 'http://www.birthright.org',
@@ -286,6 +314,7 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(201)
 			res.body.should.be.a('object')
 			res.body.should.have.property('address')
+			res.body.should.have.property('outOfBusiness')
 			res.body.should.have.property('prcName')
 			res.body.should.have.property('_id')
 			res.body.should.have.property('website')
@@ -350,6 +379,27 @@ describe('PregnancyCenters', () => {
 				},
 				'primaryContactPerson': primaryContactPerson,
 				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {}
+
+			})
+
+			// copy of above, but outOfBusiness
+			await PregnancyCenterModel.create({
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				outOfBusiness: true,
+				'primaryContactPerson': primaryContactPerson,
+				'prcName': 'Birthright of Albany - outOfBusiness',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
 				'services': {}
@@ -426,6 +476,7 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
+				'outOfBusiness': true, // should not affect things
 				'prcName': 'Birthright of Albany',
 				'primaryContactPerson': primaryContactPerson,
 				'phone': '+15184382978',
@@ -453,6 +504,7 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
+				outOfBusiness: true, // should not affect things
 				'prcName': 'The Bridge To Life, Inc.',
 				'phone': '+17182743577',
 				'primaryContactPerson': primaryContactPerson2,
@@ -474,6 +526,7 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('prcName')
+			res.body.should.have.property('outOfBusiness')
 			res.body.primaryContactPerson.should.have.property('firstName')
 
 		})
@@ -496,6 +549,7 @@ describe('PregnancyCenters', () => {
 						]
 					},
 				},
+				outOfBusiness: true,
 				'prcName': 'Birthright of Albany',
 				'phone': '+15184382978',
 				'website': 'http://www.birthright.org',
@@ -692,6 +746,90 @@ describe('PregnancyCenters', () => {
 
 			const people = await PersonModel.find({})
 			people.should.have.length(1)
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route with authentication and outOfBusiness = True
+	 * original pc has been outOfBusiness, trying to edit it without re-opening should be an error
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
+		it('original pc has been outOfBusiness, trying to edit it without re-opening should be an error', async () => {
+			await mockAuthenticate()
+
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
+			const oldValues = {
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'outOfBusiness': true,
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+				primaryContactPerson: primaryContactPerson,
+				'verifiedData': {
+					'address': {
+						'verified': true,
+						'date': '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
+
+			const primaryContactPerson2 = {
+				firstName: 'Joanna B',
+				lastName: 'Smith',
+				email: 'email2@email.org',
+				phone: '+18884442222',
+				_id: primaryContactPerson._id
+			}
+
+			const newValues = {
+				'address': {
+					'line1': 'New Address',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+				primaryContactPerson: primaryContactPerson2,
+				'verifiedData': {
+					'address': {
+						'verified': true,
+						'date': '2017-04-16T23:33:17.220Z'
+					}
+				}
+			}
+			
+			const oldPCObj = await PregnancyCenterModel.create(oldValues)
+			try {
+				await chai.request(server)
+					.put('/api/pregnancy-centers/' + oldPCObj._id)
+					.send(newValues)
+			} catch (err) {
+				assertError(err.response, 400, 'Bad Request', 'Cannot edit a outOfBusiness Pregnancy Center')
+			}
 		})
 	})
 
