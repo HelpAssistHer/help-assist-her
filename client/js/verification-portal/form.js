@@ -4,17 +4,19 @@ import injectSheet from 'react-jss'
 import _ from 'lodash'
 
 import Input from '../components/input'
+import MapContainer from './google-maps-container'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
+import { store } from '../hah-app/index'
 
 class VerificationPortalForm extends Component {
 	render() {
 		const { classes, handleSubmit, pristine, reset, submitting } = this.props
 
 		return (
-			<form onSubmit={handleSubmit}>
+			<form className={classes.root} onSubmit={handleSubmit}>
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
@@ -111,6 +113,13 @@ class VerificationPortalForm extends Component {
 							name='verifiedData.website.verified'
 							component={VerifiedCheckbox}
 						/>
+					</div>
+				</div>
+
+				<div>
+					<h3>Location on Map</h3>
+					<div className={classes.map}>
+						<MapContainer resource={store.getState().resource} />
 					</div>
 				</div>
 
@@ -291,10 +300,12 @@ class VerificationPortalForm extends Component {
 				</div>
 				<Spacer height='50px'/>
 
-				<button type="submit">Submit</button>
-				<button type="button" disabled={pristine || submitting} onClick={reset}>
-					Clear Values
-				</button>
+				<div>
+					<button type="submit">Submit</button>
+					<button type="button" disabled={pristine || submitting} onClick={reset}>
+						Clear Values
+					</button>
+				</div>
 			</form>
 		)
 	}
@@ -305,9 +316,17 @@ VerificationPortalForm = reduxForm({
 })(VerificationPortalForm)
 
 const styles = {
+	root: {
+		display: 'flex',
+		'flex-direction': 'column',
+	},
 	parent: {
 		display: 'flex',
 		'align-items': 'baseline',
+	},
+	map: {
+		height: '500px',
+		width: '500px',
 	},
 }
 

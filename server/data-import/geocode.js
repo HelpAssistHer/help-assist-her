@@ -42,15 +42,17 @@ async function geocodePregnancyCenters() {
 
 		// Geocode an address.
 		const response = await googleMapsClient.geocode({ 'address': pregnancyCenter.getFullAddress() }).asPromise()
-		const location = response.json.results[0].geometry.location
-		
-		log.info(location)
+		if (response.json.results[0]) {
+			const location = response.json.results[0].geometry.location
 
-		pregnancyCenter.address.location = {
-			'type': 'Point',
-			'coordinates': [location.lng, location.lat]
+			log.info(location)
+
+			pregnancyCenter.address.location = {
+				'type': 'Point',
+				'coordinates': [location.lng, location.lat]
+			}
+			await pregnancyCenter.save()
 		}
-		await pregnancyCenter.save()
 	}
 	process.exit()
 }
