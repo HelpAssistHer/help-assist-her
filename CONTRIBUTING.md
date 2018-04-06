@@ -102,7 +102,7 @@ nvm alias default node
 `sudo apt-get install -y mongodb-org`
 
 ## Add configs
-
+Add the following configurations to your bash profile (make sure to change the path appropriately):
 `export NODE_CONFIG_DIR=/home/katelynsills/help-assist-her/config`
 
 `export NODE_ENV='localhost'`
