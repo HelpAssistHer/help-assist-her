@@ -18,7 +18,7 @@ const styles = {
      'font-weight': 'bold;',
      'border-radius': '25px;',
      'position' : 'absolute;',
-		 'border': '2px solid #000',
+     'border': '2px solid #000',
      'right' : '15%;',
 	},
 	blackAndWhite:{ // this class will be applied to button which will have props btnType == balckAndWhite
