@@ -7,12 +7,12 @@ const NewButton = ({ classes, onClick, buttonText, btnType }) => (
 
 // TODO cleanup
 const styles = {
-	'@global': {
+	'@global': { //to remove default browser styling
 		'button':{
 			outline: 'none;',
 		}
 	},
-	basic: {
+	basic: {  // this class will be applied to all button
      'padding': '1% 2%;',
      'font-size': '.75em;',
      'font-weight': 'bold;',
@@ -20,7 +20,7 @@ const styles = {
      'position' : 'absolute;',
      'right' : '15%;',
 	},
-	blackAndWhite:{
+	blackAndWhite:{ // this class will be applied to button which will have props btnType == balckAndWhite
      'color': '#000;',
      'border': '2px solid #000',
      'background-color': '#fff;',
@@ -30,13 +30,15 @@ const styles = {
         'background-color': '#f28274;',
     }
 	},
-	orange: {
+	orange: { // this class will be applied to button which will have props btnType == orange
 		'color': '#fff;',
 		'border-color': '#f28274;',
 		'background-color': '#f28274;',
 	}
 }
-
+/* This function getClasses will all classes that needs to be
+applyed on the button on the bassis of input btnType
+and available classes. */
 function getClasses(btnType, classes){
 	switch(btnType){
 	case 'blackAndWhite' :

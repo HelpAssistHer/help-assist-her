@@ -11,11 +11,11 @@ class VerificationPortal extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			outOfBiz: false
+			outOfBiz: false // addition of variable to keep track of out of business status.
 		}
 		this.handleClick = this.handleClick.bind(this)
 	}
-	handleClick = () => {
+	handleClick = () => { // toggling out of business status
 		let {outOfBiz} = this.state
 		this.setState({ outOfBiz: !outOfBiz })
 	}
@@ -31,6 +31,7 @@ class VerificationPortal extends React.Component {
 				<GetResourceToVerifyButton
 					changeFieldValue={changeFieldValue}
 				/>
+				// Addition of new Component newButton which will toggle class on the basis of outOfBiz variable.
 				<NewButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
 								buttonText='Out of Business'
 								onClick={this.handleClick}></NewButton>
