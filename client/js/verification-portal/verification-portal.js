@@ -5,8 +5,20 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
+import NewButton from '../components/custombutton'
 
 class VerificationPortal extends React.Component {
+	constructor(props){
+		super(props)
+		this.state = {
+			outOfBiz: false
+		}
+		this.handleClick = this.handleClick.bind(this)
+	}
+	handleClick = () => {
+		let {outOfBiz} = this.state
+		this.setState({ outOfBiz: !outOfBiz })
+	}
 	submit = (values) => {
 		updateResource(values)
 	}
@@ -19,6 +31,9 @@ class VerificationPortal extends React.Component {
 				<GetResourceToVerifyButton
 					changeFieldValue={changeFieldValue}
 				/>
+				<NewButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+								buttonText='Out of Business'
+								onClick={this.handleClick}></NewButton>
 
 				<VerificationPortalForm
 					onSubmit={this.submit}
@@ -40,6 +55,7 @@ const styles = {
 		'margin-left': 'auto',
 		'padding-left': '15px',
 		'padding-right': '15px',
+		'position': 'relative;',
 	},
 }
 
