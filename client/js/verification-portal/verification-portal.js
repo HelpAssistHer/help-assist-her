@@ -5,7 +5,7 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
-import NewButton from '../components/custombutton'
+import NewButton from '../components/custombutton' // importing bewBUtton Component
 
 class VerificationPortal extends React.Component {
 	constructor(props){
@@ -31,7 +31,6 @@ class VerificationPortal extends React.Component {
 				<GetResourceToVerifyButton
 					changeFieldValue={changeFieldValue}
 				/>
-				// Addition of new Component newButton which will toggle class on the basis of outOfBiz variable.
 				<NewButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
 								buttonText='Out of Business'
 								onClick={this.handleClick}></NewButton>
