@@ -13,22 +13,22 @@ const styles = {
 		}
 	},
 	basic: {
-		'padding': '1% 2%;',
+    'padding': '1% 2%;',
     'font-size': '.75em;',
     'font-weight': 'bold;',
-		'border-radius': '25px;',
-		'position' : 'absolute;',
-		'right' : '15%;',
+    'border-radius': '25px;',
+    'position' : 'absolute;',
+    'right' : '15%;',
 	},
 	blackAndWhite:{
     'color': '#000;',
     'border': '2px solid #000',
     'background-color': '#fff;',
-		'&:hover': {
-			'color': '#fff;',
-			'border-color': '#f28274;',
-			'background-color': '#f28274;',
-		}
+  	'&:hover': {
+  		'color': '#fff;',
+  		'border-color': '#f28274;',
+  		'background-color': '#f28274;',
+  	}
 	},
 	orange: {
 		'color': '#fff;',
