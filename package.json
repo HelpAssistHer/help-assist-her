@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Women's Healthcare resources in the palm of your hand.",
   "main": "server.js",
+  "private": true,
   "engines": {
     "node": "9.0.0"
   },
