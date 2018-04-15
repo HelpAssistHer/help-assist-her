@@ -23,7 +23,7 @@ class FacebookLoginButton extends React.Component {
 		isAuthenticated().then( (res) => {
 			const userDisplayName = res.userDisplayName
 
-			if (res) {
+			if (res.isLoggedIn) {
 				this.props.dispatch(createLoginAction(userDisplayName))
 			} else {
 				this.props.dispatch(createLogoutAction())
