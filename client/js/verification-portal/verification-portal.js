@@ -6,6 +6,7 @@ import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import NewButton from '../components/custombutton'
+import { shouldShowFeature } from '../hah-app/helpers'
 
 class VerificationPortal extends React.Component {
 	constructor(props){
@@ -23,17 +24,23 @@ class VerificationPortal extends React.Component {
 		updateResource(values)
 	}
 	render() {
+		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue } = this.props
-
 		return (
 			<div className={classes.verificationPortal}>
 				<h1>VERIFICATION PORTAL</h1>
 				<GetResourceToVerifyButton
 					changeFieldValue={changeFieldValue}
 				/>
-				<NewButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
-								buttonText='Out of Business'
-								onClick={this.handleClick}></NewButton>
+				{
+					shouldShowFeature(userDisplayName) && (
+						<NewButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+								   buttonText='Out of Business'
+								   onClick={this.handleClick}>
+						</NewButton>
+					)
+
+				}
 
 				<VerificationPortalForm
 					onSubmit={this.submit}
