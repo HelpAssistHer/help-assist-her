@@ -17,6 +17,11 @@ const PersonModel = require('../persons/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
 const personSchemaJoi = require('../persons/schema/joi-schema')
 
+const googleMapsClient = require('@google/maps').createClient({
+	key: 'AIzaSyDcdO_wAguQsbU1BJbeNIblfylyUNho7us',
+	Promise: P
+})
+
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt', 'inVerification']
 
 function isEqualOmit(obj1, obj2, omitKeysList){
@@ -324,6 +329,31 @@ const createPregnancyCenterAndPopulate = obj => {
 	})
 }
 
+const getFullAddress = location => {
+	return _.get(location, 'address.line1', '') + ' ' + _.get(location, 'address.line2', '') + ' '
+		+ _.get(location, 'address.city', '') + ' ' + _.get(location, 'address.state', '') + ' ' +
+		_.get(location, 'address.zip', '')
+}
+
+const geocodeLocation = rawObj => {
+	return new P( async (resolve) => {
+		try {
+			const address = getFullAddress(rawObj)
+			const response = await googleMapsClient.geocode({ 'address': address }).asPromise()
+			const location = response.json.results[0].geometry.location
+
+			rawObj.address.location = {
+				'type': 'Point',
+				'coordinates': [location.lng, location.lat]
+			}
+			return resolve(rawObj)
+		} catch (err) {
+			log.error(err)
+			return resolve(rawObj)
+		}
+	})
+}
+
 module.exports = {
 
 	createPregnancyCenter: (userId, pregnancyCenterObj) => {
@@ -332,6 +362,7 @@ module.exports = {
 				const validate = R.partial(validateAndFillPregnancyCenter, [userId])
 				const create = R.pipeP(
 					validate,
+					geocodeLocation,
 					createPregnancyCenterAndPopulate,
 				)
 				return resolve(create(pregnancyCenterObj))
@@ -354,6 +385,7 @@ module.exports = {
 				const updateAndSavePregnancyCenter = R.pipeP(
 					validate,
 					checkIfOutOfBusiness,
+					geocodeLocation,
 					makeModelAndPopulate,
 					createUpdateHistory, // side effect of saving history records to the database
 					updatePregnancyCenter,
@@ -378,6 +410,7 @@ module.exports = {
 				const updateAndSaveFqhc = R.pipeP(
 					validate,
 					checkIfOutOfBusiness,
+					geocodeLocation,
 					createUpdateHistory, // side effect of saving update records to the database
 					updateFqhc
 				)
