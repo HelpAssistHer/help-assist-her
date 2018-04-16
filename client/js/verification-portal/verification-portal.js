@@ -28,18 +28,20 @@ class VerificationPortal extends React.Component {
 		return (
 			<div className={classes.verificationPortal}>
 				<h1>VERIFICATION PORTAL</h1>
-				<GetResourceToVerifyButton
-					changeFieldValue={changeFieldValue}
-				/>
-			 <div className={classes.leftPositionButton}>
-			  	<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
-								buttonText='Out of Business'
-								onClick={this.handleClick}></MediumButton>
+        <GetResourceToVerifyButton
+           changeFieldValue={changeFieldValue}
+					 />
+
+        <div className={classes.leftPositionButton}>
+            <MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+                buttonText='Out of Business'
+                onClick={this.handleClick}></MediumButton>
 			 </div>
 
-				<VerificationPortalForm
-					onSubmit={this.submit}
-				/>
+       <VerificationPortalForm
+			    outOfBiz={this.state.outOfBiz}
+          onSubmit={this.submit}
+        />
 				<Spacer height='100px'/>
 			</div>
 		)
@@ -61,7 +63,8 @@ const styles = {
 	leftPositionButton:{
 		'width': '100%',
 		'position': 'absolute',
-		'left': '30%'
+		'left': '30%',
+		'z-index':'100',
 	}
 }
 
