@@ -33,7 +33,6 @@ const styles = {
 applyed on the button on the bassis of input btnType
 and available classes. */
 function getClasses(btnType, classes){
-	console.log(btnType)
 	switch(btnType){
 	default :
 		  return classes[btnType] + ' ' + classes.basic
