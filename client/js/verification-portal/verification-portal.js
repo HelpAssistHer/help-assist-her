@@ -5,7 +5,7 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
-import NewButton from '../components/custombutton' // importing bewBUtton Component
+import MediumButton from '../components/medium-button' // importing bewBUtton Component
 
 class VerificationPortal extends React.Component {
 	constructor(props){
@@ -31,9 +31,11 @@ class VerificationPortal extends React.Component {
 				<GetResourceToVerifyButton
 					changeFieldValue={changeFieldValue}
 				/>
-				<NewButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+			 <div className={classes.leftPositionButton}>
+			  	<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
 								buttonText='Out of Business'
-								onClick={this.handleClick}></NewButton>
+								onClick={this.handleClick}></MediumButton>
+			 </div>
 
 				<VerificationPortalForm
 					onSubmit={this.submit}
@@ -48,15 +50,19 @@ const styles = {
 	verificationPortal: {
 		'text-align': 'center',
 		'font-family': 'sans-serif',
-		color: '#4A4A4A',
+		'color': '#4A4A4A',
 		'max-width': '903px',
+		'margin-left': 'calc(50% - 451.5px)',
 		'background-color': '#ffffff',
-		'margin-right': 'auto',
-		'margin-left': 'auto',
 		'padding-left': '15px',
 		'padding-right': '15px',
-		'position': 'relative;',
+		'position': 'relative',
 	},
+	leftPositionButton:{
+		'width': '100%',
+		'position': 'absolute',
+		'left': '30%'
+	}
 }
 
 export default injectSheet(styles)(VerificationPortal)
