@@ -45,7 +45,7 @@ const fqhcSchemaJoi = Joi.object().keys({
 		website: dateUserActionSchemaJoi
 	},
 	updatedAt: Joi.date().iso(),
-	website: Joi.string()
+	website: Joi.string().allow(null),
 })
 
 module.exports = fqhcSchemaJoi
