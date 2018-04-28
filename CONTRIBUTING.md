@@ -26,13 +26,14 @@ brew install yarn --without-node
 ````
 
 ## Install NVM
+Make sure that you have a .bash_profile file already, the script will write to it
 
 ````
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
 ````
 
 ## Install Node
-We are using node v9.0.0
+We are using node v9.0.0, but will update to 9.11.1 soon
 
 ````
 nvm install 9.0.0
@@ -42,25 +43,28 @@ nvm install 9.0.0
 ````
 yarn
 yarn global add nodemon
+yarn install
 ````
 
 ## Install Mongo
 ````
-brew link makedepend
 brew install mongodb
-export NODE_CONFIG_DIR=[INSERT PATH]
+export NODE_CONFIG_DIR=[insert local path for help-assist-her/config]
 export NODE_ENV='localhost'
 ````
 
 ## Start Mongo
 ````
 mkdir -p ~/.hah/data
-mongod --dbpath ~/.hah/data
+````
+Make sure you are in the help-assist-her directory
+````
+yarn startdb
 ````
 
 ## Start Server
 ````
-npm start
+yarn start
 ````
 
 
