@@ -31,7 +31,7 @@ async function reimport() {
 	await PregnancyCenterModel.collection.drop()
 
 	try {
-		const dataToImport = fs.readFileSync('server/data-import/test/fixtures/cessilye_nypc.json', 'utf8')
+		const dataToImport = fs.readFileSync('server/data-import/fixtures/cessilye_nypc.json', 'utf8')
 		docs = EJSON.parse(dataToImport)
 	} catch (err) {
 		log.error(err)
