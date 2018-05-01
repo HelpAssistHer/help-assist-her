@@ -15,6 +15,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(getResourceToVerify)
 		},
 		changeFieldValue: (field, value) => {
+			value? value = value : value = ""
 			dispatch(change('verificationPortal', field, value))
 		}
 	}
