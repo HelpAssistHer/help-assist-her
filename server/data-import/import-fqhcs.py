@@ -6,11 +6,13 @@ import re
 # #,Site Name,Site Telephone Number,Site URL,Site Address,Site City,Site State ,Site ZIP Code,Clinic Type,Classification 1
 
 def processPhone(number):
-    number = number[:10]
     number = number.replace('(', '')
     number = number.replace(')', '')
     number = number.replace('-', '')
-    return '+1'+number
+    number = number[:10]
+    number = '+1'+number
+    print(number)
+    return number
 
 def isNotEmptyAfterStrip(data):
     data = data.strip()
