@@ -11,10 +11,11 @@ import services from '../../../server/pregnancy-centers/pregnancy-center-service
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, pristine, reset, submitting } = this.props
+		const { classes, handleSubmit, pristine, reset, submitting, outOfBiz } = this.props
 
 		return (
-			<form onSubmit={handleSubmit}>
+			<form className={classes.form} onSubmit={handleSubmit}>
+			  <div className={outOfBiz? classes.outOfBiz : classes.inBiz}></div>
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
@@ -309,6 +310,22 @@ const styles = {
 		display: 'flex',
 		'align-items': 'baseline',
 	},
+	form:{
+		'position': 'relative',
+	},
+	outOfBiz:{
+		'background-color': 'rgba(242,130,116,0.3)',
+		'width': '104%',
+	  'height': '100%',
+		'z-index': '1',
+		'display': 'block',
+		'position': 'absolute',
+		'top': '1%',
+		'left':'-2%',
+	},
+	inBiz:{
+	  'display': 'none'
+	}
 }
 
 export default injectSheet(styles)(VerificationPortalForm)
