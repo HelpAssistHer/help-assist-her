@@ -168,23 +168,23 @@ server.get('/api/pregnancy-centers/near-me', isLoggedInAPI, handleRejectedPromis
 }))
 
 /*
-	Returns one pregnancy center that needs verification 
+	Returns one pregnancy center that needs verification
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 
 	const notInVerification = {inVerification: {$in: [false, null]}}
-	
+
 	// an array of javascript objects
 	const pregnancyCenters = await PregnancyCenterModel.aggregate([
 		{ $match: _.merge(queries.verificationNotComplete, notInVerification) },
 		{ $sample: { size: 1 } },
 	])
-	
+
 	if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
 		return res.boom.notFound('No pregnancy centers to verify')
 	}
-	
-	// a second lookup is necessary to get a mongoose object to populate 
+
+	// a second lookup is necessary to get a mongoose object to populate
 	const pregnancyCenterId = pregnancyCenters[0]._id
 	const update = {inVerification: req.user._id}
 	const options = {new: true} // returns updated object back
@@ -265,7 +265,7 @@ server.get('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 }))
 
 /*
- Returns one fqhc that needs verification 
+ Returns one fqhc that needs verification
  */
 server.get('/api/fqhcs/verify', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	// an array of javascript objects
@@ -277,7 +277,7 @@ server.get('/api/fqhcs/verify', isLoggedInAPI, handleRejectedPromise(async (req,
 	if (fqhcs.length === 0 || !fqhcs[0]) {
 		return res.boom.notFound('No federally qualified health centers to verify')
 	}
-	
+
 	res.status(200).json(fqhcs[0])
 }))
 
@@ -325,7 +325,10 @@ server.get('/api/auth/facebook/token', (req, res, next) => {
 
 server.get('/api/login/check/', (req, res) => {
 	if (req.sessionID && req.user) {
-		return res.status(200).json({ 'isLoggedIn': true})
+		return res.status(200).json({
+			'isLoggedIn': true,
+			'userDisplayName': req.user.displayName,
+		})
 	} else {
 		return res.status(200).json({ 'isLoggedIn': false})
 	}

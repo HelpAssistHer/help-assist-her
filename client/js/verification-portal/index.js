@@ -4,8 +4,11 @@ import { change } from 'redux-form'
 import VerificationPortal from './verification-portal'
 
 const mapStateToProps = state => {
+	const { initialData, resource } = state
+
 	return {
-		resource: state.resource,
+		initialData,
+		resource,
 	}
 }
 
