@@ -11,7 +11,7 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 
 const googleMapsClient = require('@google/maps').createClient({
-	key: 'AIzaSyDcdO_wAguQsbU1BJbeNIblfylyUNho7us',
+	key: config.googleMaps.key,
 	Promise: P
 })
 

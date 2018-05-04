@@ -9,7 +9,7 @@ const PregnancyCenterModel = require('../app/models/pregnancy-center')
 mongoose.Promise = require('bluebird')
 
 var googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyDcdO_wAguQsbU1BJbeNIblfylyUNho7us'
+    key: config.googleMaps.key,
 })
 
 // TODO: Error handling

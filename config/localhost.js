@@ -6,6 +6,9 @@ module.exports = {
 		appId: '1601964419836286',
 		appSecret: 'bea155559b6f1ded719805047d0989d7',
 	},
+	googleMaps: {
+		key: process.env.VERIFICATION_PORTAL_GOOGLE_MAPS_KEY,
+	},
 	mapbox: {
 		accessToken: 'pk.eyJ1Ijoia2FyZW5tcm9zZSIsImEiOiJjaXd6bWoyeXowMGg2MnRvNnlncWE0azZsIn0.R61g_76oVqY3Jg7ob4kSsA',
 	},
