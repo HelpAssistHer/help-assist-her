@@ -11,7 +11,7 @@ import services from '../../../server/pregnancy-centers/pregnancy-center-service
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, pristine, reset, submitting, outOfBiz } = this.props
+		const { classes, handleSubmit, outOfBiz } = this.props
 
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
@@ -293,9 +293,6 @@ class VerificationPortalForm extends Component {
 				<Spacer height='50px'/>
 
 				<button type="submit">Submit</button>
-				<button type="button" disabled={pristine || submitting} onClick={reset}>
-					Clear Values
-				</button>
 			</form>
 		)
 	}
