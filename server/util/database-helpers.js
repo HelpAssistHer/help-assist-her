@@ -7,6 +7,7 @@ const P = require('bluebird')
 const R = require('ramda')
 
 const AppValidationError = require('../errors/app-validation-error')
+const config = require('config')
 const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
 const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
@@ -18,7 +19,7 @@ const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema
 const personSchemaJoi = require('../persons/schema/joi-schema')
 
 const googleMapsClient = require('@google/maps').createClient({
-	key: 'AIzaSyDcdO_wAguQsbU1BJbeNIblfylyUNho7us',
+	key: config.googleMaps.key,
 	Promise: P
 })
 

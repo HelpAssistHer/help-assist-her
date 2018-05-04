@@ -5,6 +5,9 @@ module.exports = {
 		appId: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
 		appSecret: process.env.VERIFICATION_PORTAL_FACEBOOK_APP_SECRET,
 	},
+	googleMaps: {
+		key: process.env.VERIFICATION_PORTAL_GOOGLE_MAPS_KEY,
+	},
 	mongo: {
 		connectionString: process.env.MONGO_DB_CONNECTION,
 	},
