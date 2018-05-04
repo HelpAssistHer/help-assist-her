@@ -11,6 +11,7 @@ const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
 const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
 const log = new Log('info')
+const locationSchemaJoi = require('../locations/schema/joi-schema')
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
 const PersonModel = require('../persons/schema/mongoose-schema')
@@ -39,7 +40,7 @@ function createPregnancyCenterUpdateHistory(userId, oldPregnancyCenterObj, newPr
 			
 			// check that the 'new' data isn't exactly the same as old
 			// this prevents us from creating histories for an update with same exact data
-			if (!isEqualOmit(oldPregnancyCenterObj[key],value)) {
+			if (!isEqualOmit(oldPregnancyCenterObj[key],value, keysToIgnore)) {
 				
 				// `updated` object in PregnancyCenterModel
 				newPregnancyCenterObj['updated'][key] = {
@@ -218,6 +219,7 @@ function validateAndFillFqhc(userId, fqhcObj) {
 	})
 }
 
+
 function checkIfPregnancyCenterOutOfBusiness(pregnancyCenterId, newPregnancyCenterObj) {
 	return new P( async (resolve, reject) => {
 		try {
@@ -324,6 +326,42 @@ const createPregnancyCenterAndPopulate = obj => {
 	})
 }
 
+const createPregnancyCenterOutOfBusinessUpdateHistory =  async (userId, oldPregnancyCenterObj, outOfBusinessObj) => {
+
+
+
+}
+
+const createPregnancyCenterHistory = async (_id, field, newValue, oldValue, userId) => {
+	// check if newValue == oldValue, if so, return early and do not create
+	if (isEqualOmit(newValue, oldValue, keysToIgnore)) return
+
+	// make a separate history document
+	const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
+		pregnancyCenterId: _id,
+		field: field,
+		newValue: newValue,
+		oldValue: oldValue,
+		userId: userId,
+	})
+	await pregnancyCenterHistoryObj.save()
+}
+
+const createFqhcHistory = async (_id, field, newValue, oldValue, userId) => {
+	// check if newValue == oldValue, if so, return early and do not create
+	if (isEqualOmit(newValue, oldValue, keysToIgnore)) return
+
+	// make a separate history document
+	const fqhcHistoryObj = new FQHCHistoryModel({
+		fqhcId: _id,
+		field: field,
+		newValue: newValue,
+		oldValue: oldValue,
+		userId: userId,
+	})
+	await fqhcHistoryObj.save()
+}
+
 module.exports = {
 
 	createPregnancyCenter: (userId, pregnancyCenterObj) => {
@@ -366,6 +404,34 @@ module.exports = {
 				return reject(err)
 			}
 		})
+	},
+	updatePregnancyCenterIsOutOfBusiness: async (userId, pregnancyCenterId, outOfBusinessObj) => {
+		// validate isOutOfBusiness as true or false
+		const validatedOutOfBusinessObj = await validateDocument(locationSchemaJoi.outOfBusinessSchemaJoi, outOfBusinessObj)
+		const newValue = validatedOutOfBusinessObj.outOfBusiness
+
+		// get pregnancyCenter to get oldValue
+		const oldPregnancyCenterObj = await getPregnancyCenterObj(pregnancyCenterId)
+		const oldValue = oldPregnancyCenterObj.outOfBusiness
+
+		// if no change, return early with the current pregnancyCenter obj
+		if (isEqualOmit(oldPregnancyCenterObj.outOfBusiness, newValue, keysToIgnore)) {
+			return oldPregnancyCenterObj
+		}
+
+		const newPregnancyCenterObj = { updated : oldPregnancyCenterObj.updated }
+
+		// `updated` object in PregnancyCenterModel
+		newPregnancyCenterObj['updated']['outOfBusiness'] = {
+			userId: userId,
+			date: new Date().toISOString()
+		}
+
+		// create separate history document
+		await createPregnancyCenterHistory(pregnancyCenterId, 'outOfBusiness', newValue, oldValue, userId)
+
+		// update
+		return findByIdAndUpdate(PregnancyCenterModel, pregnancyCenterId, newPregnancyCenterObj)
 	},
 	updateFqhc: (userId, fqhcId, fqhcObj) => {
 		return new P(async (resolve, reject) => {

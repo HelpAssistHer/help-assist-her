@@ -24,6 +24,7 @@ const createPregnancyCenter = databaseHelpers.createPregnancyCenter
 const releaseDocuments = databaseHelpers.releaseDocuments
 const updateFqhc = databaseHelpers.updateFqhc
 const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
+const updatePregnancyCenterIsOutOfBusiness = databaseHelpers.updatePregnancyCenterIsOutOfBusiness
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -217,6 +218,22 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 	pregnancyCenterData['inVerification'] = null
 	try {
 		const updatedPregnancyCenter = await updatePregnancyCenter(req.user._id, pregnancyCenterId, pregnancyCenterData)
+		res.status(200).json(updatedPregnancyCenter)
+	} catch (err) {
+		return handleError(res, err)
+	}
+}))
+
+/*
+	Updates an existing pregnancy center's out-of-business boolean, adds 'updated' attribute and history model
+	Returns the updated pregnancy center
+ */
+server.put('/api/pregnancy-centers/:pregnancyCenterId/out-of-business', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const pregnancyCenterId = req.params.pregnancyCenterId
+	// expected: { outOfBusiness: true | false }
+	const outOfBusiness = req.body.outOfBusiness
+	try {
+		const updatedPregnancyCenter = await updatePregnancyCenterOutOfBusiness(req.user._id, pregnancyCenterId, isOutOfBusinessObj)
 		res.status(200).json(updatedPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)

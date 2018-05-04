@@ -52,4 +52,8 @@ const dateUserActionSchemaJoi = Joi.object().keys({
 	verified: Joi.boolean().default(false)
 })
 
-module.exports = { pointSchemaJoi, addressSchemaJoi, dayHoursSchemaJoi, hoursSchemaJoi, dateUserActionSchemaJoi }
+const outOfBusinessSchemaJoi = Joi.object().keys({
+	outOfBusiness: Joi.boolean()
+})
+
+module.exports = { pointSchemaJoi, addressSchemaJoi, dayHoursSchemaJoi, hoursSchemaJoi, dateUserActionSchemaJoi, outOfBusinessSchemaJoi }
