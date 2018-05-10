@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(getResourceToVerify)
 		},
 		changeFieldValue: (field, value) => {
-			dispatch(change('verificationPortal', field, value))
+			dispatch(change('verificationPortal', field, value || ''))
 		}
 	}
 }
