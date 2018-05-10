@@ -9,6 +9,28 @@ import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
+const formatPhoneDigits = (digits) => {
+	if (!digits) {
+		return "";
+	}
+
+	let phoneNumber = digits.substr(2,10);
+
+	if (phoneNumber.length < 4) {
+		phoneNumber = "(" + phoneNumber + ")";
+	} else if (phoneNumber.length < 7) {
+		phoneNumber = "(" + phoneNumber.substring(0,3) + ")" + "-" + `${phoneNumber.substring(3)}`;
+	} else if (phoneNumber.length <= 10) {
+		phoneNumber = "(" + phoneNumber.substring(0,3) + ")" + "-" + `${phoneNumber.substring(3,6)}` + "-" + `${phoneNumber.substring(6)}`;
+	}
+	return phoneNumber;
+}
+
+const parsePhoneNumber = (phoneNumber) => {
+	//replaces every part of phone number that's not a digit with an empty string
+	return "+1" + phoneNumber.replace(/([\D])/g, "").substr(0,10)
+}
+
 class VerificationPortalForm extends Component {
 	render() {
 		const { classes, handleSubmit, outOfBiz } = this.props
@@ -78,6 +100,22 @@ class VerificationPortalForm extends Component {
 							component={Input}
 							placeholder='Format must be +19998887777'
 							type='tel'
+						/>
+						<Field
+							label='Phone Number Verified'
+							name='verifiedData.phone.verified'
+							component={VerifiedCheckbox}
+						/>
+					</div>
+
+					<div className={classes.parent}>
+						<Field
+							name='phone'
+							component={Input}
+							placeholder='Phone Number'
+							type='tel'
+							format={formatPhoneDigits}
+							parse={parsePhoneNumber}
 						/>
 						<Field
 							label='Phone Number Verified'
