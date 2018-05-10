@@ -7,14 +7,13 @@ const Header = ({ classes }) => (
 		<div className={classes.authenticationButtonDiv}>
 			<LoginButton />
 		</div>
-		<img className={classes.logo} src='img/logo-white.png' />
 	</div>
 )
 
 const styles = {
 	header: {
 		'background-image': 'linear-gradient(-90deg, #F0649A 0%, #FCC582 100%)',
-		height: '200px',
+		height: '100px',
 		position: 'relative',
 	},
 	logo: {
