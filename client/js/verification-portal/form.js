@@ -15,7 +15,7 @@ class VerificationPortalForm extends Component {
 
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
-			  <div className={(outOfBiz || doNotList)? classes.inActiveState : classes.activeState }></div>
+			  <div className={(outOfBiz || doNotList)? classes.inactiveState : classes.activeState }></div>
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
@@ -310,7 +310,7 @@ const styles = {
 	form:{
 		'position': 'relative',
 	},
-	inActiveState:{
+	inactiveState:{
 		'background-color': 'rgba(242,130,116,0.3)',
 		'width': '104%',
 	  'height': '100%',
