@@ -7,6 +7,7 @@ const MediumButton = ({ classes, onClick, buttonText, btnType }) => (
 
 const styles = {
 	basic: {  // this class will be applied to all button
+     'min-width': '14em',
 		 'outline': 'none',
      'padding': '1% 2%',
      'font-size': '.75em',

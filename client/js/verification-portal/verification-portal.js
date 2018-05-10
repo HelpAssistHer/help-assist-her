@@ -12,13 +12,13 @@ class VerificationPortal extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {
-			outOfBiz: false // addition of variable to keep track of out of business status.
+			outOfBiz: false, // addition of variable to keep track of out of business status.
+			doNotList: false,
 		}
-		this.handleClick = this.handleClick.bind(this)
 	}
-	handleClick = () => { // toggling out of business status
-		let {outOfBiz} = this.state
-		this.setState({ outOfBiz: !outOfBiz })
+	toggleState = (key) => { // toggling state
+			let currentState = this.state[key]
+			this.setState({ [key]: !currentState })
 	}
 	submit = (values) => {
 		updateResource(values)
@@ -34,18 +34,25 @@ class VerificationPortal extends React.Component {
 				/>
 				{
 					shouldShowFeature(userDisplayName) && (
+						<div>
 						<div className={classes.leftPositionButton}>
 							<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
 										  buttonText='Out of Business'
-										  onClick={this.handleClick}>
+										  onClick={() => this.toggleState('outOfBiz')}>
 							</MediumButton>
-						</div>
+				   </div>
+					 <div className={classes.leftPositionButton + ' ' + classes.moveDown}>
+							<MediumButton btnType={this.state.doNotList? 'orange':'blackAndWhite'}
+										  buttonText='Do Not List'
+										  onClick={() => this.toggleState('doNotList')}>
+							</MediumButton>
+					 </div>
+					 </div>
 					)
 				}
-
-
        <VerificationPortalForm
 			    outOfBiz={this.state.outOfBiz}
+					doNotList={this.state.doNotList}
           onSubmit={this.submit}
         />
 				<Spacer height='100px'/>
@@ -71,6 +78,9 @@ const styles = {
 		'position': 'absolute',
 		'left': '30%',
 		'z-index':'100',
+	},
+	moveDown:{
+		'top': '3.75%'
 	}
 }
 

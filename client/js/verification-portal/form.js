@@ -11,11 +11,11 @@ import services from '../../../server/pregnancy-centers/pregnancy-center-service
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBiz } = this.props
+		const { classes, handleSubmit, outOfBiz, doNotList } = this.props
 
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
-			  <div className={outOfBiz? classes.outOfBiz : classes.inBiz}></div>
+			  <div className={(outOfBiz || doNotList)? classes.inActiveState : classes.activeState }></div>
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
@@ -310,7 +310,7 @@ const styles = {
 	form:{
 		'position': 'relative',
 	},
-	outOfBiz:{
+	inActiveState:{
 		'background-color': 'rgba(242,130,116,0.3)',
 		'width': '104%',
 	  'height': '100%',
@@ -320,7 +320,7 @@ const styles = {
 		'top': '1%',
 		'left':'-2%',
 	},
-	inBiz:{
+	activeState:{
 	  'display': 'none'
 	}
 }
