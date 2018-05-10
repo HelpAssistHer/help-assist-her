@@ -13,7 +13,7 @@ class VerificationPortal extends React.Component {
 		super(props)
 		this.state = {
 			outOfBiz: false, // addition of variable to keep track of out of business status.
-			doNotList: false,
+			doNotList: false,// addition of variable to keep track of doNotList status.
 		}
 	}
 	toggleState = (key) => { // toggling state
@@ -53,7 +53,7 @@ class VerificationPortal extends React.Component {
        <VerificationPortalForm
 			    outOfBiz={this.state.outOfBiz}
 					doNotList={this.state.doNotList}
-          onSubmit={this.submit}
+					onSubmit={this.submit}
         />
 				<Spacer height='100px'/>
 			</div>
