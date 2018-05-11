@@ -876,7 +876,8 @@ describe('PregnancyCenters', () => {
 			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			histories.should.have.length(0)
+			histories.should.have.length(1)
+			histories[0].field.should.equal('address')
 
 			// make sure result is what is expected
 			res.should.have.status(200)
@@ -884,7 +885,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(oldPCObj._id))
-			res.body.updated.should.deep.equal({})
+			res.body.updated.address.should.have.property('userId')
 		})
 	})
 
@@ -930,7 +931,8 @@ describe('PregnancyCenters', () => {
 			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			histories.should.have.length(0)
+			histories.should.have.length(1)
+			histories[0].field.should.equal('address')
 
 			// make sure result is what is expected
 			res.should.have.status(200)
@@ -938,7 +940,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(oldPCObj._id))
-			res.body.updated.should.deep.equal({})
+			res.body.updated.address.should.have.property('userId')
 		})
 	})
 
@@ -1023,10 +1025,12 @@ describe('PregnancyCenters', () => {
 			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			histories.should.have.length(1)
+			histories.should.have.length(2)
 			for (const pc_history of histories) {
 				if (pc_history.field === 'primaryContactPerson') {
 					pc_history.newValue.firstName.should.equal('Kate')
+				} else {
+					pc_history.field.should.equal('address')
 				}
 			}
 
@@ -1101,11 +1105,13 @@ describe('PregnancyCenters', () => {
 			const histories = await PregnancyCenterHistoryModel.find({
 				pregnancyCenterId: oldPCObj._id
 			})
-			histories.should.have.length(1)
+			histories.should.have.length(2)
 			for (const pc_history of histories) {
 				if (pc_history.field === 'primaryContactPerson') {
 					pc_history.newValue.firstName.should.equal('Kate2')
 					pc_history.newValue.lastName.should.equal('Sills2')
+				} else {
+					pc_history.field.should.equal('address')
 				}
 			}
 
@@ -1115,6 +1121,8 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
 			res.body.should.have.property('primaryContactPerson')
+			res.body.should.have.property('address')
+			res.body.address.location.should.have.property('coordinates')
 			res.body._id.should.equal(String(oldPCObj._id))
 			res.body.updated.primaryContactPerson.userId.should.equal(testUser._id.toString())
 		})
