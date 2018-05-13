@@ -20,7 +20,7 @@ class VerificationPortalForm extends Component {
 					<h3>General Info</h3>
 					<div className={classes.parent}>
 						<Field
-							label='PRC Name'
+							placeholder='Name of Pregnancy Resource Center'
 							name='prcName'
 							component={Input}
 							type='text'
@@ -33,25 +33,25 @@ class VerificationPortalForm extends Component {
 					</div>
 
 					<Field
-						label='Address 1'
+						placeholder='Address 1'
 						name='address.line1'
 						component={Input}
 						type='text'
 					/>
 					<Field
-						label='Address 2'
+						placeholder='Address 2'
 						name='address.line2'
 						component={Input}
 						type='text'
 					/>
 					<Field
-						label='City'
+						placeholder='City'
 						name='address.city'
 						component={Input}
 						type='text'
 					/>
 					<Field
-						label='State'
+						placeholder='State'
 						name='address.state'
 						component={Input}
 						type='text'
@@ -59,7 +59,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Zip Code'
+							placeholder='Zip Code'
 							name='address.zip'
 							component={Input}
 							type='number'
@@ -88,7 +88,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Email'
+							placeholder='Email'
 							name='email'
 							component={Input}
 							type='text'
@@ -102,7 +102,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Website'
+							placeholder='Website'
 							name='website'
 							component={Input}
 							type='url'
