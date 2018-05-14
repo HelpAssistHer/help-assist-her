@@ -38,6 +38,9 @@ export async function isAuthenticated() {
 	if (!ok) {
 		return false // return false if server error
 	}
-	const {isLoggedIn} = await response.json()
-	return isLoggedIn
+	const { isLoggedIn, userDisplayName } = await response.json()
+	return {
+		isLoggedIn,
+		userDisplayName,
+	}
 }

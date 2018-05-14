@@ -4,8 +4,11 @@ import { change } from 'redux-form'
 import VerificationPortal from './verification-portal'
 
 const mapStateToProps = state => {
+	const { initialData, resource } = state
+
 	return {
-		resource: state.resource,
+		initialData,
+		resource,
 	}
 }
 
@@ -15,7 +18,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(getResourceToVerify)
 		},
 		changeFieldValue: (field, value) => {
-			dispatch(change('verificationPortal', field, value))
+			dispatch(change('verificationPortal', field, value || ''))
 		}
 	}
 }

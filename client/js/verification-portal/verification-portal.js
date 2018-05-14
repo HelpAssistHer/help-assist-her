@@ -6,6 +6,7 @@ import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import MediumButton from '../components/medium-button' // importing bewBUtton Component
+import { shouldShowFeature } from '../hah-app/helpers'
 
 class VerificationPortal extends React.Component {
 	constructor(props){
@@ -23,20 +24,25 @@ class VerificationPortal extends React.Component {
 		updateResource(values)
 	}
 	render() {
+		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue } = this.props
-
 		return (
 			<div className={classes.verificationPortal}>
 				<h1>VERIFICATION PORTAL</h1>
-        <GetResourceToVerifyButton
-           changeFieldValue={changeFieldValue}
-					 />
+				<GetResourceToVerifyButton
+				   changeFieldValue={changeFieldValue}
+				/>
+				{
+					shouldShowFeature(userDisplayName) && (
+						<div className={classes.leftPositionButton}>
+							<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+										  buttonText='Out of Business'
+										  onClick={this.handleClick}>
+							</MediumButton>
+						</div>
+					)
+				}
 
-        <div className={classes.leftPositionButton}>
-            <MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
-                buttonText='Out of Business'
-                onClick={this.handleClick}></MediumButton>
-			 </div>
 
        <VerificationPortalForm
 			    outOfBiz={this.state.outOfBiz}

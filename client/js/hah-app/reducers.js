@@ -13,6 +13,7 @@ const authenticationReducer = (state = {}, action) => {
 		case UPDATE_LOGIN_STATE:
 			return _.assign({}, state, {
 				isLoggedIn: action.isLoggedIn,
+				userDisplayName: action.userDisplayName,
 			})
 
 		default:
