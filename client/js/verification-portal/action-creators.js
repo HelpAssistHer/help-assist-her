@@ -50,12 +50,14 @@ export async function updateResource(updatedResource) {
 	const transformedResource = {
 		...updatedResource,
 		hours: convertedHours,
-		primaryContactPerson: {
-			_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
-			...updatedResource.primaryContactPerson
-		},
 		services: _.mapValues(updatedResource.services, value => !!value),
 	}
+	// 5-12-18, I am commenting this out for now, as we want to keep the
+	// data verification simple for now. We will eventually add this back.
+	// primaryContactPerson: {
+	// 	_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
+	// 	...updatedResource.primaryContactPerson
+	// },
 
 	try {
 		const response = await fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {

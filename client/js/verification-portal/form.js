@@ -115,44 +115,46 @@ class VerificationPortalForm extends Component {
 					</div>
 				</div>
 
-				<div>
-					<h3>Primary Contact</h3>
-					<Field
-						label='First Name'
-						name='primaryContactPerson.firstName'
-						component={Input}
-						type='text'
-					/>
+				{/* 5-12-18, I am commenting this out for now, as we want to keep the
+				data verification simple for now. We will eventually add this back. */}
+				{/*<div>*/}
+					{/*<h3>Primary Contact</h3>*/}
+					{/*<Field*/}
+						{/*label='First Name'*/}
+						{/*name='primaryContactPerson.firstName'*/}
+						{/*component={Input}*/}
+						{/*type='text'*/}
+					{/*/>*/}
 
-					<Field
-						label='Last Name'
-						name='primaryContactPerson.lastName'
-						component={Input}
-						type='text'
-					/>
+					{/*<Field*/}
+						{/*label='Last Name'*/}
+						{/*name='primaryContactPerson.lastName'*/}
+						{/*component={Input}*/}
+						{/*type='text'*/}
+					{/*/>*/}
 
-					<Field
-						label='Email'
-						name='primaryContactPerson.email'
-						component={Input}
-						type='text'
-					/>
+					{/*<Field*/}
+						{/*label='Email'*/}
+						{/*name='primaryContactPerson.email'*/}
+						{/*component={Input}*/}
+						{/*type='text'*/}
+					{/*/>*/}
 
-					<div className={classes.parent}>
-						<Field
-							label='Phone Number'
-							name='primaryContactPerson.phone'
-							placeholder='Format must be +19998887777'
-							component={Input}
-							type='text'
-						/>
-						<Field
-							label='Primary Contact Verified'
-							name='verifiedData.primaryContactPerson.verified'
-							component={VerifiedCheckbox}
-						/>
-					</div>
-				</div>
+					{/*<div className={classes.parent}>*/}
+						{/*<Field*/}
+							{/*label='Phone Number'*/}
+							{/*name='primaryContactPerson.phone'*/}
+							{/*placeholder='Format must be +19998887777'*/}
+							{/*component={Input}*/}
+							{/*type='text'*/}
+						{/*/>*/}
+						{/*<Field*/}
+							{/*label='Primary Contact Verified'*/}
+							{/*name='verifiedData.primaryContactPerson.verified'*/}
+							{/*component={VerifiedCheckbox}*/}
+						{/*/>*/}
+					{/*</div>*/}
+				{/*</div>*/}
 
 				<div>
 					<h3>Services</h3>
