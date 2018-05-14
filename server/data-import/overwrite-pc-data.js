@@ -61,7 +61,10 @@ const importDocs = async (getDataFunction, schemaJoi, model) => {
 async function reimport() {
 	try {
 		await connectToDatabase()
-		await clearDatabase()
+		const clear = process.argv[2]
+		if(clear === '--clear'){
+			await clearDatabase()
+		}
 		await importDocs(getPregnancyCenterData, pregnancyCenterSchemaJoi, PregnancyCenterModel)
 		log.info('pc data added')
 		process.exit()

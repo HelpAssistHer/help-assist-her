@@ -24,7 +24,7 @@ const connectToDatabase = async () => {
 const clearDatabase = async () => {
 	try {
 		await FqhcModel.collection.drop()
-		log.info('Pregnancy Center and FQHC collections cleared')
+		log.info('FQHC collections cleared')
 	} catch (err) {
 		log.error(err)
 	}
@@ -63,7 +63,11 @@ const importDocs = async (getDataFunction, schemaJoi, model) => {
 async function reimport() {
 	try {
 		await connectToDatabase()
-		await clearDatabase()
+
+		const clear = process.argv[2]
+		if(clear === '--clear'){
+			await clearDatabase()
+		}
 		await importDocs(getFqhcData, fqhcSchemaJoi, FqhcModel)
 		log.info('fqhc data added')
 		process.exit()
