@@ -23,8 +23,9 @@ const databaseHelpers = require('./util/database-helpers')
 const createPregnancyCenter = databaseHelpers.createPregnancyCenter
 const releaseDocuments = databaseHelpers.releaseDocuments
 const updateFqhc = databaseHelpers.updateFqhc
+const updateFqhcOutOfBusiness = databaseHelpers.updateFqhcOutOfBusiness
 const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
-const updatePregnancyCenterIsOutOfBusiness = databaseHelpers.updatePregnancyCenterIsOutOfBusiness
+const updatePregnancyCenterOutOfBusiness = databaseHelpers.updatePregnancyCenterOutOfBusiness
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -230,10 +231,11 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
  */
 server.put('/api/pregnancy-centers/:pregnancyCenterId/out-of-business', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
-	// expected: { outOfBusiness: true | false }
-	const outOfBusiness = req.body.outOfBusiness
+	// expected: req.body = { outOfBusiness: true | false }
+	const outOfBusinessObj = req.body 
+	log.info(outOfBusinessObj)
 	try {
-		const updatedPregnancyCenter = await updatePregnancyCenterOutOfBusiness(req.user._id, pregnancyCenterId, isOutOfBusinessObj)
+		const updatedPregnancyCenter = await updatePregnancyCenterOutOfBusiness(req.user._id, pregnancyCenterId, outOfBusinessObj)
 		res.status(200).json(updatedPregnancyCenter)
 	} catch (err) {
 		return handleError(res, err)
@@ -308,6 +310,22 @@ server.put('/api/fqhcs/:fqhcId', isLoggedInAPI, handleRejectedPromise(async (req
 	fqhcData['inVerification'] = null
 	try {
 		const updatedFqhc = await updateFqhc(req.user._id, fqhcId, fqhcData)
+		res.status(200).json(updatedFqhc)
+	} catch (err) {
+		return handleError(res, err)
+	}
+}))
+
+/*
+	Updates an existing fqhc's out-of-business boolean, adds 'updated' attribute and history model
+	Returns the updated fqhc
+ */
+server.put('/api/fqhcs/:fqhcId/out-of-business', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const fqhcId = req.params.fqhcId
+	// expected: req.body = { outOfBusiness: true | false }
+	const outOfBusinessObj = req.body
+	try {
+		const updatedFqhc = await updateFqhcOutOfBusiness(req.user._id, fqhcId, outOfBusinessObj)
 		res.status(200).json(updatedFqhc)
 	} catch (err) {
 		return handleError(res, err)
