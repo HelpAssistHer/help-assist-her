@@ -232,8 +232,7 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 server.put('/api/pregnancy-centers/:pregnancyCenterId/out-of-business', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
 	const pregnancyCenterId = req.params.pregnancyCenterId
 	// expected: req.body = { outOfBusiness: true | false }
-	const outOfBusinessObj = req.body 
-	log.info(outOfBusinessObj)
+	const outOfBusinessObj = req.body
 	try {
 		const updatedPregnancyCenter = await updatePregnancyCenterOutOfBusiness(req.user._id, pregnancyCenterId, outOfBusinessObj)
 		res.status(200).json(updatedPregnancyCenter)
