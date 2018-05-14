@@ -15,10 +15,11 @@ function createInitialDataAction(initialData) {
 	}
 }
 
-export function createLoginAction() {
+export function createLoginAction(userDisplayName) {
 	return {
 		type: UPDATE_LOGIN_STATE,
 		isLoggedIn: true,
+		userDisplayName,
 	}
 }
 
