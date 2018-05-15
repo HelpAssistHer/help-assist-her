@@ -112,7 +112,6 @@ class VerificationPortalForm extends Component {
 					<div className={classes.parent}>
 						<Field
 							name='phone'
-							label='Phone Number'
 							component={Input}
 							placeholder='Phone Number'
 							type='tel'
