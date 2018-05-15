@@ -31,7 +31,7 @@ const styles = {
 		margin: '8px 0',
 		'font-size': '90%',
 		'border': 'none',
-		'border-bottom': '1px solid black'
+		'border-bottom': '1px solid #979797'
 	},
 }
 
