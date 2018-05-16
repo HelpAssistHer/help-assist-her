@@ -12,8 +12,6 @@ const Header = ({ classes }) => (
 
 const styles = {
 	header: {
-		'background-image': 'linear-gradient(-90deg, #F0649A 0%, #FCC582 100%)',
-		height: '100px',
 		position: 'relative',
 	},
 	logo: {
@@ -28,12 +26,7 @@ const styles = {
 		right: '0',
 		margin: 'auto',
 	},
-	authenticationButtonDiv: {
-		padding: '10px',
-		position: 'absolute',
-		top: '30px',
-		right: '30px'
-	},
+	authenticationButtonDiv: {},
 }
 
 export default injectSheet(styles)(Header)
