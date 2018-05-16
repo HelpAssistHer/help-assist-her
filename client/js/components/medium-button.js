@@ -30,7 +30,7 @@ const styles = {
 		'background-color': '#f28274',
 	},
 	largeButton:{
-		'min-width': '20em', // large button
+		'min-width': '20em', // large button class need to be added to make button large
 		'padding': '2% 5%',
 		'font-size': '1.25em',
     'border-radius': '30px',
@@ -40,7 +40,7 @@ const styles = {
 applyed on the button on the bassis of input btnType
 and available classes. */
 function getClasses(btnType, classes){
-	btnType = btnType.split(' ').map((ele) => {	return classes[ele] }).join(' ')
+	btnType = btnType.split(' ').map((ele) => classes[ele] ).join(' ')
 	switch(btnType){
 	default :
 		  return btnType + ' ' + classes.basic
