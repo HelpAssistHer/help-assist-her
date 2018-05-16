@@ -80,7 +80,7 @@ const styles = {
 		'z-index':'100',
 	},
 	moveDown:{
-		'top': '3.75%'
+		'top': '4.15%'
 	}
 }
 
