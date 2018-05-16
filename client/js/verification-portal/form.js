@@ -7,6 +7,7 @@ import Input from '../components/input'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
+import MediumButton from '../components/medium-button' // importing bewBUtton Component
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 class VerificationPortalForm extends Component {
@@ -293,8 +294,11 @@ class VerificationPortalForm extends Component {
 					/>
 				</div>
 				<Spacer height='50px'/>
-
-				<button type="submit">Submit</button>
+				<MediumButton
+				        type='submit'
+								buttonText='Save Progress'
+								btnType={'blackAndWhite largeButton'}>
+				</MediumButton>
 			</form>
 		)
 	}
