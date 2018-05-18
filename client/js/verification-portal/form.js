@@ -9,6 +9,44 @@ import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
+const formatPhoneDigits = (digits) => {
+	if (!digits) {
+		return ''
+	}
+
+	const phoneNumber = digits.substr(2,10)
+	const areaCode = phoneNumber.substring(0,3)
+	const prefix = phoneNumber.substring(3,6)
+	const lineNumber = phoneNumber.substring(6,10)
+
+	if (phoneNumber.length === 0) {
+		return ''
+	}
+
+	if (phoneNumber.length < 3) {
+		return phoneNumber
+	}
+
+	if (phoneNumber.length < 4) {
+		return `(${areaCode})`
+	}
+
+	if (phoneNumber.length < 7) {
+		return `(${areaCode})-${prefix}`
+	}
+
+	if (phoneNumber.length <= 10) {
+		return `(${areaCode})-${prefix}-${lineNumber}`
+	}
+
+	throw new Error('Invalid Phone Number')
+}
+
+const parsePhoneNumber = (phoneNumber) => {
+	//replaces every part of phone number that's not a digit with an empty string
+	return "+1" + phoneNumber.replace(/([\D])/g, "").substr(0,10)
+}
+
 class VerificationPortalForm extends Component {
 	render() {
 		const { classes, handleSubmit, outOfBiz } = this.props
@@ -20,7 +58,7 @@ class VerificationPortalForm extends Component {
 					<h3>General Info</h3>
 					<div className={classes.parent}>
 						<Field
-							label='PRC Name'
+							placeholder='Name of Pregnancy Resource Center'
 							name='prcName'
 							component={Input}
 							type='text'
@@ -33,25 +71,25 @@ class VerificationPortalForm extends Component {
 					</div>
 
 					<Field
-						label='Address 1'
+						placeholder='Address 1'
 						name='address.line1'
 						component={Input}
 						type='text'
 					/>
 					<Field
-						label='Address 2'
+						placeholder='Address 2'
 						name='address.line2'
 						component={Input}
 						type='text'
 					/>
 					<Field
-						label='City'
+						placeholder='City'
 						name='address.city'
 						component={Input}
 						type='text'
 					/>
 					<Field
-						label='State'
+						placeholder='State'
 						name='address.state'
 						component={Input}
 						type='text'
@@ -59,7 +97,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Zip Code'
+							placeholder='Zip Code'
 							name='address.zip'
 							component={Input}
 							type='number'
@@ -73,11 +111,12 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Phone Number'
 							name='phone'
 							component={Input}
-							placeholder='Format must be +19998887777'
+							placeholder='Phone Number'
 							type='tel'
+							format={formatPhoneDigits}
+							parse={parsePhoneNumber}
 						/>
 						<Field
 							label='Phone Number Verified'
@@ -88,7 +127,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Email'
+							placeholder='Email'
 							name='email'
 							component={Input}
 							type='text'
@@ -102,7 +141,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.parent}>
 						<Field
-							label='Website'
+							placeholder='Website'
 							name='website'
 							component={Input}
 							type='url'
@@ -115,44 +154,46 @@ class VerificationPortalForm extends Component {
 					</div>
 				</div>
 
-				<div>
-					<h3>Primary Contact</h3>
-					<Field
-						label='First Name'
-						name='primaryContactPerson.firstName'
-						component={Input}
-						type='text'
-					/>
+				{/* 5-12-18, I am commenting this out for now, as we want to keep the
+				data verification simple for now. We will eventually add this back. */}
+				{/*<div>*/}
+					{/*<h3>Primary Contact</h3>*/}
+					{/*<Field*/}
+						{/*label='First Name'*/}
+						{/*name='primaryContactPerson.firstName'*/}
+						{/*component={Input}*/}
+						{/*type='text'*/}
+					{/*/>*/}
 
-					<Field
-						label='Last Name'
-						name='primaryContactPerson.lastName'
-						component={Input}
-						type='text'
-					/>
+					{/*<Field*/}
+						{/*label='Last Name'*/}
+						{/*name='primaryContactPerson.lastName'*/}
+						{/*component={Input}*/}
+						{/*type='text'*/}
+					{/*/>*/}
 
-					<Field
-						label='Email'
-						name='primaryContactPerson.email'
-						component={Input}
-						type='text'
-					/>
+					{/*<Field*/}
+						{/*label='Email'*/}
+						{/*name='primaryContactPerson.email'*/}
+						{/*component={Input}*/}
+						{/*type='text'*/}
+					{/*/>*/}
 
-					<div className={classes.parent}>
-						<Field
-							label='Phone Number'
-							name='primaryContactPerson.phone'
-							placeholder='Format must be +19998887777'
-							component={Input}
-							type='text'
-						/>
-						<Field
-							label='Primary Contact Verified'
-							name='verifiedData.primaryContactPerson.verified'
-							component={VerifiedCheckbox}
-						/>
-					</div>
-				</div>
+					{/*<div className={classes.parent}>*/}
+						{/*<Field*/}
+							{/*label='Phone Number'*/}
+							{/*name='primaryContactPerson.phone'*/}
+							{/*placeholder='Format must be +19998887777'*/}
+							{/*component={Input}*/}
+							{/*type='text'*/}
+						{/*/>*/}
+						{/*<Field*/}
+							{/*label='Primary Contact Verified'*/}
+							{/*name='verifiedData.primaryContactPerson.verified'*/}
+							{/*component={VerifiedCheckbox}*/}
+						{/*/>*/}
+					{/*</div>*/}
+				{/*</div>*/}
 
 				<div>
 					<h3>Services</h3>

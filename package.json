@@ -17,7 +17,8 @@
     "startdb": "mongod --dbpath ~/.hah/data",
     "test": "NODE_ENV=test mocha 'server/test/test.js'",
     "n": "nvm use default",
-    "data": "NODE_ENV=localhost node ./server/data-import/data.js",
+    "overwrite-pc-data": "NODE_ENV=localhost node ./server/data-import/overwrite-pc-data.js",
+    "overwrite-fqhc-data": "NODE_ENV=localhost node ./server/data-import/overwrite-fqhc-data.js",
     "test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
     "geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js",
     "clear-iv": "NODE_ENV=localhost node ./server/scripts/clear-in-verification-field.js"
@@ -75,7 +76,7 @@
     "moment": "^2.18.1",
     "mongodb": "^2.2.16",
     "mongodb-extended-json": "^1.9.0",
-    "mongoose": "^4.7.5",
+    "mongoose": "^5.0.16",
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-facebook-token": "^3.3.0",
