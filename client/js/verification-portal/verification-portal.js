@@ -27,28 +27,32 @@ class VerificationPortal extends React.Component {
 		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue } = this.props
 		return (
-			<div className={classes.verificationPortal}>
-				<h1>VERIFICATION PORTAL</h1>
-				<GetResourceToVerifyButton
-				   changeFieldValue={changeFieldValue}
-				/>
-				{
-					shouldShowFeature(userDisplayName) && (
-						<div className={classes.leftPositionButton}>
-							<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
-										  buttonText='Out of Business'
-										  onClick={this.handleClick}>
-							</MediumButton>
-						</div>
-					)
-				}
+			<div>
+				<div className={classes.leftPositionButton}>
+					<GetResourceToVerifyButton
+						 changeFieldValue={changeFieldValue}
+					/>
+				</div>
 
+				<div className={classes.verificationPortal}>
+					<h1>VERIFICATION PORTAL</h1>
+					{
+						shouldShowFeature(userDisplayName) && (
+							<div className={classes.leftPositionButton}>
+								<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+											  buttonText='Out of Business'
+											  onClick={this.handleClick}>
+								</MediumButton>
+							</div>
+						)
+					}
 
-       <VerificationPortalForm
-			    outOfBiz={this.state.outOfBiz}
-          onSubmit={this.submit}
-        />
-				<Spacer height='100px'/>
+	       <VerificationPortalForm
+				    outOfBiz={this.state.outOfBiz}
+	          onSubmit={this.submit}
+	        />
+					<Spacer height='100px'/>
+				</div>
 			</div>
 		)
 	}
@@ -69,7 +73,7 @@ const styles = {
 	leftPositionButton:{
 		'width': '100%',
 		'position': 'absolute',
-		'left': '30%',
+		'left': '10%',
 		'z-index':'100',
 	}
 }
