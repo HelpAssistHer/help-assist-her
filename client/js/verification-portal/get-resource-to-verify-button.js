@@ -82,7 +82,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('notes', notes)
 }
 
-const GetResourceToVerifyButton = ({ dispatch, changeFieldValue}) => {
+const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	return (
 		<div>
 			<MediumButton
