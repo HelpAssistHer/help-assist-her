@@ -28,7 +28,6 @@ class VerificationPortal extends React.Component {
 		const { classes, changeFieldValue } = this.props
 		return (
 			<div className={classes.verificationPortal}>
-				<h1>VERIFICATION PORTAL</h1>
 				<GetResourceToVerifyButton
 				   changeFieldValue={changeFieldValue}
 				/>
