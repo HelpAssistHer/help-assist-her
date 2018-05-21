@@ -27,12 +27,20 @@ class VerificationPortal extends React.Component {
 		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue } = this.props
 		return (
-			<div>
-				<div className={classes.leftPositionButton}>
-					<GetResourceToVerifyButton
-						 changeFieldValue={changeFieldValue}
-					/>
-				</div>
+			<div className={classes.verificationPortal}>
+				<GetResourceToVerifyButton
+				   changeFieldValue={changeFieldValue}
+				/>
+				{
+					shouldShowFeature(userDisplayName) && (
+						<div className={classes.leftPositionButton}>
+							<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
+										  buttonText='Out of Business'
+										  onClick={this.handleClick}>
+							</MediumButton>
+						</div>
+					)
+				}
 
 				<div className={classes.verificationPortal}>
 					<h1>VERIFICATION PORTAL</h1>
