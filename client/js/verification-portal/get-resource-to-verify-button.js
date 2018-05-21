@@ -86,7 +86,7 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	return (
 		<div>
 			<MediumButton
-				btnType='orange'
+				btnType='white'
 				buttonText='Verify Next Resource'
 				onClick={() => {
 					dispatch(getResourceToVerify())
