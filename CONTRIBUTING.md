@@ -44,6 +44,5 @@ computer.
     it is also a good idea to give the _why_ so that reviewers have the full picture of the change you are making.
 1.  In the Test Plan section, list the manual steps to test that your change is working. Again, being detailed here is
     valuable for two reasons:
-
-* It forces you to actually go through the testing steps and verify yourself that the change is working
-* It helps the reviewer to test that your change is working without them needing to figure it out on their own
+    - It forces you to actually go through the testing steps and verify yourself that the change is working
+    - It helps the reviewer to test that your change is working without them needing to figure it out on their own
