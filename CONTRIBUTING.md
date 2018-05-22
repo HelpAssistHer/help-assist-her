@@ -1,19 +1,17 @@
 # Create a Branch
 
-## Request access to this repo
+1.  Request access to this repo
 
-## Pull the latest master
+1.  Pull the latest master
+    On the `master` branch: `git pull`
 
-On the `master` branch: `git pull`
+1.  Create a new branch
+    `git checkout -b new-unique-branch-name`
 
-## Create a new branch
+1.  Commit your changes
+    `git add .` or `git add path-to-file-to-stage`
+    `git commit -m 'Message that details what commit entails'`
 
-`git checkout -b new-unique-branch-name`
-
-## Commit your changes
-
-`git add .` or `git add path-to-file-to-stage`
-`git commit -m 'Message that details what commit entails'`
 Ideally, your commits will be small, have similar or related changes in each commit, and your commit message will be detailed
 enough that the reviewer knows what specific change was made in each commit.
 
