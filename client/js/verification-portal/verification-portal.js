@@ -45,28 +45,13 @@ class VerificationPortal extends React.Component {
 							</div>
 						)
 					}
-
-					<div className={classes.verificationPortal}>
-						<h1>VERIFICATION PORTAL</h1>
-						{
-							shouldShowFeature(userDisplayName) && (
-								<div className={classes.leftPositionButton}>
-									<MediumButton btnType={this.state.outOfBiz? 'orange':'blackAndWhite'}
-												  buttonText='Out of Business'
-												  onClick={this.handleClick}>
-									</MediumButton>
-								</div>
-							)
-						}
-
 		       <VerificationPortalForm
 					    outOfBiz={this.state.outOfBiz}
 		          onSubmit={this.submit}
 		        />
 						<Spacer height='100px'/>
-					</div>
 				</div>
-		</div>
+			</div>
 		)
 	}
 }

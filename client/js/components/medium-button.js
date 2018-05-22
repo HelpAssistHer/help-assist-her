@@ -27,14 +27,6 @@ const styles = {
 		'color': '#fff',
 		'border-color': '#f28274',
 		'background-color': '#f28274',
-	},
-	white: {
-		'background-color': '#ffffff',
-		'&:hover': {
-			'color': '#fff',
-			'border-color': '#f28274',
-			'background-color': '#f28274',
-		}
 	}
 }
 /* This function getClasses will all classes that needs to be
