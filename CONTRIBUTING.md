@@ -3,13 +3,13 @@
 1.  Request access to this repo
 
 1.  Pull the latest master
-    On the `master` branch: `git pull`
+    - On the `master` branch: `git pull`
 
 1.  Create a new branch
     `git checkout -b new-unique-branch-name`
 
 1.  Commit your changes
-    `git add .` or `git add path-to-file-to-stage`
+    `git add .` to add all changed files or `git add path-to-file-to-stage` to add specific files
     `git commit -m 'Message that details what commit entails'`
 
 Ideally, your commits will be small, have similar or related changes in each commit, and your commit message will be detailed
