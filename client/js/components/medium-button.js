@@ -27,7 +27,7 @@ const styles = {
 		'color': '#fff',
 		'border-color': '#f28274',
 		'background-color': '#f28274',
-	},
+	}
 }
 /* This function getClasses will all classes that needs to be
 applyed on the button on the bassis of input btnType

@@ -27,10 +27,13 @@ class VerificationPortal extends React.Component {
 		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue } = this.props
 		return (
-			<div className={classes.verificationPortal}>
+		<div>
+			<div className={classes.leftPositionButton}>
 				<GetResourceToVerifyButton
-				   changeFieldValue={changeFieldValue}
-				/>
+					changeFieldValue={changeFieldValue}
+					/>
+			</div>
+			<div className={classes.verificationPortal}>
 				{
 					shouldShowFeature(userDisplayName) && (
 						<div className={classes.leftPositionButton}>
@@ -49,6 +52,7 @@ class VerificationPortal extends React.Component {
         />
 				<Spacer height='100px'/>
 			</div>
+		</div>
 		)
 	}
 }
@@ -68,7 +72,7 @@ const styles = {
 	leftPositionButton:{
 		'width': '100%',
 		'position': 'absolute',
-		'left': '30%',
+		'left': '1%',
 		'z-index':'100',
 	}
 }
