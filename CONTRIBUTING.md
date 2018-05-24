@@ -1,131 +1,48 @@
-# Getting Started with Development on Mac OS X
+# Create a Branch
 
-## Install Homebrew (Or Update)
-````
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-````
+1.  Request access to this repo
 
-````
-brew update
-````
+1.  Pull the latest master
+    - On the `master` branch: `git pull`
 
-## Install Git
+1.  Create a new branch
+    `git checkout -b new-unique-branch-name`
 
-````
-brew install git
-````
+1.  Commit your changes
+    `git add .` to add all changed files or `git add path-to-file-to-stage` to add specific files
+    `git commit -m 'Message that details what commit entails'`
 
-## Install Python
-````
-brew install python3
-````
+Ideally, your commits will be small, have similar or related changes in each commit, and your commit message will be detailed
+enough that the reviewer knows what specific change was made in each commit.
 
-## Install Yarn
-````
-brew install yarn --without-node
-````
+## Prettier
 
-## Install NVM
-Make sure that you have a .bash_profile file already, the script will write to it
+[Why Prettier?](https://prettier.io/docs/en/why-prettier.html)
+We are using Prettier in order to have a consistent code style and formatting and also to avoid the need to have discussions
+about styling in PRs, as this is generally not a useful way to spend time. I would encourage you to read the above documentation,
+as they go more into detail on why using Prettier is so beneficial.
 
-````
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | bash
-````
+Note: When you commit, Prettier will run automatically on all files that you're committing. Prettier _will_ make the
+necessary formatting changes. If you would like to run Prettier outside of the commit step, you can run `yarn precommit`
+and Prettier will run on all staged files.
 
-## Install Node
-We are using node v9.0.0, but will update to 9.11.1 soon
+# Create a Pull Request
 
-````
-nvm install 9.0.0
-````
+Once you have finished adding commits to your branch, you can push it to the origin branch in GitHub. It is actually
+highly encouraged to do this sooner, rather than later, as it is then stored on GitHub and not just your local
+computer.
+`git push origin branch-name`
 
-## Install Node Modules and Global Dependencies
-````
-yarn
-yarn global add nodemon
-yarn install
-````
+## Creating the PR
 
-## Install Mongo
-````
-brew install mongodb
-export NODE_CONFIG_DIR=[insert local path for help-assist-her/config]
-export NODE_ENV='localhost'
-````
-
-## Start Mongo
-````
-mkdir -p ~/.hah/data
-````
-Make sure you are in the help-assist-her directory
-````
-yarn startdb
-````
-
-## Start Server
-````
-yarn start
-````
-
-
-# Getting Started with Development on Ubuntu or GalliumOS (Linux for Chromebooks)
-
-## Install Git
-`sudo apt-get install git` 
-
-## Clone the Repo
-`git clone https://github.com/HelpAssistHer/help-assist-her.git`
-
-`cd help-assist-her`
-
-## Install Node
-~~~~
-sudo apt-get install build-essential checkinstall
-sudo apt-get install libssl-dev
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-nvm install 9.0.0
-nvm use 9.0.0
-nvm alias default node
-~~~~
-
-## Install Yarn
-`npm install -g yarn`
-
-## Install Node Packages with Yarn
-`yarn install` 
-
-`yarn global add nodemon`
-
-## Install MongoDB
-`sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927`
-
-`echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list`
-
-`sudo apt-get update`
-
-`sudo apt-get install -y mongodb-org`
-
-## Add configs
-Add the following configurations to your bash profile (make sure to change the path appropriately):
-`export NODE_CONFIG_DIR=/home/katelynsills/help-assist-her/config`
-
-`export NODE_ENV='localhost'`
-
-## Start MongoDB
-`mkdir -p ~/.hah/data`
-
-`yarn startdb`
-
-## Populate MongoDB
-`yarn data`
-
-`yarn geocode`
-
-## Start Server
-In a new tab, run `yarn start`
-
-## Rebuild front-end if necessary
-`yarn webpack`
-
-## View website
-Go to `http://127.0.0.1:4000/` in your browser
+1.  In GitHub, go to the main repo page.
+1.  You should see a new banner with the option to create a Pull Request from the
+    branch you just pushed to GitHub.
+1.  Click the button
+1.  On the next screen, give the PR a good, descriptive title
+1.  In the Description section, give a detailed description of the change you introduced with this PR. In most cases,
+    it is also a good idea to give the _why_ so that reviewers have the full picture of the change you are making.
+1.  In the Test Plan section, list the manual steps to test that your change is working. Again, being detailed here is
+    valuable for two reasons:
+    - It forces you to actually go through the testing steps and verify yourself that the change is working
+    - It helps the reviewer to test that your change is working without them needing to figure it out on their own
