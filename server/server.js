@@ -23,7 +23,11 @@ const databaseHelpers = require('./util/database-helpers')
 const createPregnancyCenter = databaseHelpers.createPregnancyCenter
 const releaseDocuments = databaseHelpers.releaseDocuments
 const updateFqhc = databaseHelpers.updateFqhc
+const updateFqhcDoNotList = databaseHelpers.updateFqhcDoNotList
+const updateFqhcOutOfBusiness = databaseHelpers.updateFqhcOutOfBusiness
 const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
+const updatePregnancyCenterDoNotList = databaseHelpers.updatePregnancyCenterDoNotList
+const updatePregnancyCenterOutOfBusiness = databaseHelpers.updatePregnancyCenterOutOfBusiness
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -224,6 +228,38 @@ server.put('/api/pregnancy-centers/:pregnancyCenterId', isLoggedInAPI, handleRej
 }))
 
 /*
+	Updates an existing pregnancy center's out-of-business boolean, adds 'updated' attribute and history model
+	Returns the updated pregnancy center
+ */
+server.put('/api/pregnancy-centers/:pregnancyCenterId/out-of-business', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const pregnancyCenterId = req.params.pregnancyCenterId
+	// expected: req.body = { outOfBusiness: true | false }
+	const outOfBusinessObj = req.body
+	try {
+		const updatedPregnancyCenter = await updatePregnancyCenterOutOfBusiness(req.user._id, pregnancyCenterId, outOfBusinessObj)
+		res.status(200).json(updatedPregnancyCenter)
+	} catch (err) {
+		return handleError(res, err)
+	}
+}))
+
+/*
+	Updates an existing pregnancy center's do-not-list boolean, adds 'updated' attribute and history model
+	Returns the updated pregnancy center
+ */
+server.put('/api/pregnancy-centers/:pregnancyCenterId/do-not-list', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const pregnancyCenterId = req.params.pregnancyCenterId
+	// expected: req.body = { doNotList: true | false }
+	const doNotListObj = req.body
+	try {
+		const updatedPregnancyCenter = await updatePregnancyCenterDoNotList(req.user._id, pregnancyCenterId, doNotListObj)
+		res.status(200).json(updatedPregnancyCenter)
+	} catch (err) {
+		return handleError(res, err)
+	}
+}))
+
+/*
 	Takes in a query var time, which is in the format 'hhmm',
 	and a query var day which is an integer where Monday is 1 and Sunday is 7
 	Returns a list of pregnancy centers open now
@@ -291,6 +327,38 @@ server.put('/api/fqhcs/:fqhcId', isLoggedInAPI, handleRejectedPromise(async (req
 	fqhcData['inVerification'] = null
 	try {
 		const updatedFqhc = await updateFqhc(req.user._id, fqhcId, fqhcData)
+		res.status(200).json(updatedFqhc)
+	} catch (err) {
+		return handleError(res, err)
+	}
+}))
+
+/*
+	Updates an existing fqhc's out-of-business boolean, adds 'updated' attribute and history model
+	Returns the updated fqhc
+ */
+server.put('/api/fqhcs/:fqhcId/out-of-business', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const fqhcId = req.params.fqhcId
+	// expected: req.body = { outOfBusiness: true | false }
+	const outOfBusinessObj = req.body
+	try {
+		const updatedFqhc = await updateFqhcOutOfBusiness(req.user._id, fqhcId, outOfBusinessObj)
+		res.status(200).json(updatedFqhc)
+	} catch (err) {
+		return handleError(res, err)
+	}
+}))
+
+/*
+	Updates an existing fqhc's do-not-list boolean, adds 'updated' attribute and history model
+	Returns the updated fqhc
+ */
+server.put('/api/fqhcs/:fqhcId/do-not-list', isLoggedInAPI, handleRejectedPromise(async (req, res) => {
+	const fqhcId = req.params.fqhcId
+	// expected: req.body = { doNotList: true | false }
+	const doNotListObj = req.body
+	try {
+		const updatedFqhc = await updateFqhcDoNotList(req.user._id, fqhcId, doNotListObj)
 		res.status(200).json(updatedFqhc)
 	} catch (err) {
 		return handleError(res, err)
