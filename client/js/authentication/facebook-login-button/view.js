@@ -72,8 +72,8 @@ class FacebookLoginButton extends React.Component {
 
 const styles = {
 	facebookLoginButton: {
-		'color': '#FFFFFF !important',
-		'border': '2px solid #FFFFFF !important',
+		'color': '#000 !important',
+		'border': '2px solid #000 !important',
 		'font-family': 'Century Gothic, san-serif !important',
 		'font-size': '18px !important',
 		'border-radius': '6px !important',

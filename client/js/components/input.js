@@ -30,6 +30,8 @@ const styles = {
 		padding: '12px 20px',
 		margin: '8px 0',
 		'font-size': '90%',
+		'border': 'none',
+		'border-bottom': '1px solid #979797'
 	},
 }
 
