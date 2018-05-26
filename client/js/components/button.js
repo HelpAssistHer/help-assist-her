@@ -17,13 +17,13 @@ const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
 
 const styles = {
 	default: {
-		// this class will be applied to all button
 		outline: 'none',
-		'font-size': '.75em',
 		'font-weight': 'bold',
+		border: '2px solid #000000',
+		'border-radius': '100px',
+		'text-align': 'center',
 	},
 	inactive: {
-		// this class will be applied to button which will have props btnType == balckAndWhite
 		color: '#000',
 		'background-color': '#fff',
 		'&:hover': {
@@ -33,23 +33,23 @@ const styles = {
 		},
 	},
 	active: {
-		// this class will be applied to button which will have props btnType == orange
 		color: '#fff',
 		'border-color': '#f28274',
 		'background-color': '#f28274',
 	},
 	medium: {
+		'font-size': '15px',
 		height: '49.69px',
 		width: '153.18px',
-		border: '2px solid #000000',
-		'border-radius': '100px',
+		'letter-spacing': '0.23px',
+		'line-height': '18px',
 	},
 	large: {
-		'font-size': '1.25em',
+		'font-size': '18px',
 		height: '48.84px',
 		width: '280px',
-		border: '2px solid #000000',
-		'border-radius': '100px',
+		'letter-spacing': '0.3px',
+		'line-height': '22px',
 	},
 }
 
