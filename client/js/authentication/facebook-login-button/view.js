@@ -3,16 +3,9 @@ import FacebookLogin from 'react-facebook-login'
 import injectSheet from 'react-jss'
 import { connect } from 'react-redux'
 
-import {
-	isAuthenticated
-} from '../action-creators'
+import { isAuthenticated } from '../action-creators'
 
-import {
-	createLoginAction,
-	createLogoutAction,
-	login,
-	logout
-} from '../../hah-app/action-creators'
+import { createLoginAction, createLogoutAction, login, logout } from '../../hah-app/action-creators'
 
 class FacebookLoginButton extends React.Component {
 	constructor(props) {
@@ -20,7 +13,7 @@ class FacebookLoginButton extends React.Component {
 
 		// make a call to the server to see if authenticated, and change the isLoggedIn state accordingly
 
-		isAuthenticated().then( (res) => {
+		isAuthenticated().then(res => {
 			const userDisplayName = res.userDisplayName
 
 			if (res.isLoggedIn) {
@@ -37,7 +30,6 @@ class FacebookLoginButton extends React.Component {
 
 	logout() {
 		this.props.dispatch(logout())
-
 	}
 
 	render() {
@@ -49,22 +41,25 @@ class FacebookLoginButton extends React.Component {
 
 		return (
 			<div>
-				{
-					this.props.isLoggedIn ?
+				{this.props.isLoggedIn ? (
 					<button
-						type='button'
+						type="button"
 						className={classes.facebookLoginButton}
-						onClick={this.logout.bind(this)}>Logout</button>
-					: <FacebookLogin
+						onClick={this.logout.bind(this)}
+					>
+						Logout
+					</button>
+				) : (
+					<FacebookLogin
 						appId={this.props.fbAppId}
 						autoLoad={false}
-						fields='name,email,picture'
+						fields="name,email,picture"
 						callback={this.facebookResponse.bind(this)}
 						cssClass={classes.facebookLoginButton}
-						textButton=' Login'
-						icon='fa-facebook'
+						textButton=" Login"
+						icon="fa-facebook"
 					/>
-				}
+				)}
 			</div>
 		)
 	}
@@ -72,8 +67,8 @@ class FacebookLoginButton extends React.Component {
 
 const styles = {
 	facebookLoginButton: {
-		'color': '#000 !important',
-		'border': '2px solid #000 !important',
+		color: '#000 !important',
+		border: '2px solid #000 !important',
 		'font-family': 'Century Gothic, san-serif !important',
 		'font-size': '18px !important',
 		'border-radius': '6px !important',
@@ -82,7 +77,7 @@ const styles = {
 		'min-width': '145px !important',
 		'letter-spacing': '0 !important',
 		'text-shadow': '0 1px 0 rgba(255,254,255,0.50) !important',
-	}
+	},
 }
 
 function mapStateToProps(state) {

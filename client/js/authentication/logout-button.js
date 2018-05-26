@@ -6,8 +6,10 @@ import { logoutUser } from './action-creators'
 
 const LogoutButton = ({ classes }) => (
 	<div>
-		<Spacer height='10px' />
-		<button className={classes.button} onClick={logoutUser}>Logout</button>
+		<Spacer height="10px" />
+		<button className={classes.button} onClick={logoutUser}>
+			Logout
+		</button>
 	</div>
 )
 
@@ -30,7 +32,7 @@ const styles = {
 		outline: 'rgb(255, 255, 255) none 0px',
 		padding: '14.938px 19.938px',
 		transition: 'background-color 0.3s ease 0s, border-color 0.3s ease 0s',
-	}
+	},
 }
 
 export default injectSheet(styles)(LogoutButton)

@@ -3,7 +3,7 @@ export async function authenticateUser(accessToken) {
 		method: 'GET',
 		credentials: 'include',
 		headers: {
-			'Accept': 'application/json',
+			Accept: 'application/json',
 		},
 	})
 
@@ -15,7 +15,7 @@ export async function logoutUser() {
 		method: 'GET',
 		credentials: 'include',
 		headers: {
-			'Accept': 'application/json',
+			Accept: 'application/json',
 		},
 	})
 	return await response.ok // if we received a 200, it was successful
@@ -28,7 +28,7 @@ export async function isAuthenticated() {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
-				'Accept': 'application/json',
+				Accept: 'application/json',
 			},
 		})
 	} catch (err) {
