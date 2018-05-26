@@ -6,7 +6,6 @@ import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import Button from '../components/button'
-import { shouldShowFeature } from '../hah-app/helpers'
 import { updateOutOfBusiness } from './out-of-business/action-creators'
 
 class VerificationPortal extends React.Component {
@@ -17,7 +16,6 @@ class VerificationPortal extends React.Component {
 		updateResource(values)
 	}
 	render() {
-		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue, resource } = this.props
 		const { outOfBusiness } = resource
 
@@ -26,16 +24,14 @@ class VerificationPortal extends React.Component {
 				<div className={classes.leftPositionButton}>
 					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
 				</div>
-				{shouldShowFeature(userDisplayName) && (
-					<div className={classes.rightPositionButton}>
-						<Button
-							activeState={!!outOfBusiness}
-							buttonText="Out of Business"
-							size="medium"
-							onClick={() => updateOutOfBusiness(!outOfBusiness)}
-						/>
-					</div>
-				)}
+				<div className={classes.rightPositionButton}>
+					<Button
+						activeState={!!outOfBusiness}
+						buttonText="Out of Business"
+						size="medium"
+						onClick={() => updateOutOfBusiness(!outOfBusiness)}
+					/>
+				</div>
 				<div className={classes.verificationPortal}>
 					<VerificationPortalForm
 						outOfBusiness={!!outOfBusiness}
