@@ -17,7 +17,7 @@ const convertNumberToTimeFormat = timeNumber => {
 	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
 }
 
-const updateForm = ({ changeFieldValue, resource }) => {
+const populateForm = ({ changeFieldValue, resource }) => {
 	let {
 		prcName,
 		email,
@@ -168,7 +168,7 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 				buttonText="Verify Next Resource"
 				onClick={() => {
 					dispatch(getResourceToVerify()).then(() => {
-						updateForm({
+						populateForm({
 							changeFieldValue,
 							resource: store.getState().resource,
 						})
