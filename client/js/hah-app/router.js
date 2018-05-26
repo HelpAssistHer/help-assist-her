@@ -8,8 +8,8 @@ const HahRouter = () => {
 	return (
 		<Router>
 			<div>
-				<Route exact path='/' component={Landing} />
-				<Route exact path='/verification' component={VerificationPortalContainer} />
+				<Route exact path="/" component={Landing} />
+				<Route exact path="/verification" component={VerificationPortalContainer} />
 			</div>
 		</Router>
 	)

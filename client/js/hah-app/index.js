@@ -9,19 +9,13 @@ import App from './app'
 
 const devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 
-const enhancer = devTools ? compose(
-	applyMiddleware(thunk),
-	devTools
-) : applyMiddleware(thunk)
+const enhancer = devTools ? compose(applyMiddleware(thunk), devTools) : applyMiddleware(thunk)
 
-export const store = createStore(
-	reducer,
-	enhancer,
-)
+export const store = createStore(reducer, enhancer)
 
-render (
+render(
 	<Provider store={store}>
 		<App />
 	</Provider>,
-	document.getElementById('root')
+	document.getElementById('root'),
 )

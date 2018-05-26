@@ -4,7 +4,7 @@ import LoginButton from '../authentication/facebook-login-button'
 
 const Header = ({ classes }) => (
 	<div className={classes.header}>
-			<LoginButton />
+		<LoginButton />
 	</div>
 )
 
