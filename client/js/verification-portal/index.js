@@ -23,6 +23,9 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const VerificationPortalContainer = connect(mapStateToProps, mapDispatchToProps)(VerificationPortal)
+const VerificationPortalContainer = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(VerificationPortal)
 
 export default VerificationPortalContainer
