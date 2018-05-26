@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import { getResourceToVerify } from './action-creators'
-import MediumButton from '../components/medium-button'
+import Button from '../components/button'
 import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
 
@@ -85,8 +85,8 @@ const updateForm = ({ changeFieldValue, resource }) => {
 const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	return (
 		<div>
-			<MediumButton
-				btnType='blackAndWhite'
+			<Button
+			  size='large'
 				buttonText='Verify Next Resource'
 				onClick={() => {
 					dispatch(getResourceToVerify())

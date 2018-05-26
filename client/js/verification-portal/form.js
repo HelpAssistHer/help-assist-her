@@ -7,6 +7,7 @@ import Input from '../components/input'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
+import Button from '../components/button' // importing bewBUtton Component
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = (digits) => {
@@ -332,8 +333,12 @@ class VerificationPortalForm extends Component {
 					/>
 				</div>
 				<Spacer height='50px'/>
-
-				<button type="submit">Submit</button>
+				<Button
+				        type='submit'
+								buttonText='Save Progress'
+								activeState={false}
+								size='large'>
+				</Button>
 			</form>
 		)
 	}

@@ -5,7 +5,7 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
-import MediumButton from '../components/medium-button' // importing bewBUtton Component
+import Button from '../components/button' // importing bewBUtton Component
 import { shouldShowFeature } from '../hah-app/helpers'
 
 class VerificationPortal extends React.Component {
@@ -35,10 +35,11 @@ class VerificationPortal extends React.Component {
 				<div className={classes.verificationPortal}>
 					{shouldShowFeature(userDisplayName) && (
 						<div className={classes.leftPositionButton}>
-							<MediumButton
-								btnType={this.state.outOfBiz ? 'orange' : 'blackAndWhite'}
+							<Button
+								activeState={this.state.outOfBiz}
 								buttonText="Out of Business"
 								onClick={this.handleClick}
+								size='medium'
 							/>
 						</div>
 					)}

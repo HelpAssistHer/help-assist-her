@@ -1,20 +1,55 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import classNames from 'classnames'
 
-const Button = ({ classes, onClick, buttonText }) => (
-	<button className={classes.button} onClick={onClick}>{ buttonText }</button>
-)
+const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
+	const activeClass = activeState ? classes.active : classes.inactive
+	return (
+		<button
+			type={type}
+			className={classNames(activeClass, classes[size], classes.default)}
+			onClick={onClick}
+		>
+			{buttonText}
+		</button>
+	)
+}
 
-// TODO cleanup
 const styles = {
-	button: {
-		border: '1px solid #ff2596; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: 0px 0px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;',
-		'background-color': '#ff5db1; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff5db1), to(#ef007c));',
-		'background-image': '-webkit-linear-gradient(top, #ff5db1, #ef007c);',
+	default: {
+		// this class will be applied to all button
+		'outline': 'none',
+		'font-size': '.75em',
+		'font-weight': 'bold',
+	},
+	inactive: {
+		// this class will be applied to button which will have props btnType == balckAndWhite
+		color: '#000',
+		'background-color': '#fff',
 		'&:hover': {
-			'border': '1px solid #f60080;',
-			'background-color': '#ff2a98; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff2a98), to(#bc0062));',
-		}
+			color: '#fff',
+			'border-color': '#f28274',
+			'background-color': '#f28274',
+		},
+	},
+	active: {
+		// this class will be applied to button which will have props btnType == orange
+		color: '#fff',
+		'border-color': '#f28274',
+		'background-color': '#f28274',
+	},
+	medium: {
+		'height': '49.69px',
+		'width': '153.18px',
+		'border': '2px solid #000000',
+		'border-radius': '100px'
+	},
+	large: {
+		'font-size': '1.25em',
+		'height': '48.84px',
+		'width': '280px',
+		'border': '2px solid #000000',
+		'border-radius': '100px'
 	},
 }
 
