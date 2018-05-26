@@ -12,6 +12,7 @@ const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
 const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
 const log = new Log('info')
+const locationSchemaJoi = require('../locations/schema/joi-schema')
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
 const PersonModel = require('../persons/schema/mongoose-schema')
@@ -45,7 +46,7 @@ function createPregnancyCenterUpdateHistory(userId, oldPregnancyCenterObj, newPr
 			
 			// check that the 'new' data isn't exactly the same as old
 			// this prevents us from creating histories for an update with same exact data
-			if (!isEqualOmit(oldPregnancyCenterObj[key],value)) {
+			if (!isEqualOmit(oldPregnancyCenterObj[key],value, keysToIgnore)) {
 				
 				// `updated` object in PregnancyCenterModel
 				newPregnancyCenterObj['updated'][key] = {
@@ -245,7 +246,7 @@ function checkIfFqhcOutOfBusiness(fqhcId, newFqhcObj) {
 	return new P( async (resolve, reject) => {
 		try {
 			// if the original document is outOfBusiness, do not allow updates unless outOfBusiness is being set to false
-			const oldFqhc = await getOldFqhc(fqhcId)
+			const oldFqhc = await getFqhcObj(fqhcId)
 			
 			if (_.get(oldFqhc, 'outOfBusiness') && (!_.has(newFqhcObj.outOfBusiness) || newFqhcObj.outOfBusiness)) { 
 				return reject(new AppValidationError('Cannot edit a outOfBusiness FQHC'))
@@ -265,14 +266,10 @@ function getPregnancyCenterObj(pregnancyCenterId) {
 	})
 }
 
-function getOldFqhc(fqhcId) {
+function getFqhcObj(fqhcId) {
 	return new P( async (resolve, reject) => {
-		// get the current version of the fqhc, in order to compare to the new
-		const oldFqhc = await FQHCModel.findById(fqhcId)
-		if (!oldFqhc) {
-			return reject()
-		}
-		return resolve(oldFqhc)
+		const fqhc = await FQHCModel.findById(fqhcId)
+		return fqhc ? resolve(fqhc) : reject()
 	})
 }
 
@@ -328,6 +325,32 @@ const createPregnancyCenterAndPopulate = obj => {
 			return reject(err)
 		}
 	})
+}
+
+const createPregnancyCenterHistory = async (_id, field, newValue, oldValue, userId) => {
+
+	// make a separate history document
+	const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
+		pregnancyCenterId: _id,
+		field: field,
+		newValue: newValue,
+		oldValue: oldValue,
+		userId: userId,
+	})
+	await pregnancyCenterHistoryObj.save()
+}
+
+const createFqhcHistory = async (_id, field, newValue, oldValue, userId) => {
+
+	// make a separate history document
+	const fqhcHistoryObj = new FQHCHistoryModel({
+		fqhcId: _id,
+		field: field,
+		newValue: newValue,
+		oldValue: oldValue,
+		userId: userId,
+	})
+	await fqhcHistoryObj.save()
 }
 
 const getFullAddress = location => {
@@ -400,12 +423,43 @@ module.exports = {
 			}
 		})
 	},
+	updatePregnancyCenterOutOfBusiness: async (userId, pregnancyCenterId, outOfBusinessObj) => {
+		// validate outOfBusinessObj as true or false
+		const validatedOutOfBusinessObj = await validateDocument(locationSchemaJoi.outOfBusinessSchemaJoi, outOfBusinessObj)
+		const newValue = validatedOutOfBusinessObj.outOfBusiness
+
+		// get pregnancyCenter to get oldValue
+		const oldPregnancyCenterObj = await getPregnancyCenterObj(pregnancyCenterId)
+		const oldValue = oldPregnancyCenterObj.outOfBusiness
+
+		// if no change, return early with the current pregnancyCenter obj
+		if (oldValue === newValue) {
+			return oldPregnancyCenterObj
+		}
+		
+		const newPregnancyCenterObj = { 
+			outOfBusiness: newValue, 
+			updated: {
+				outOfBusiness: {
+					userId: userId,
+					date: new Date().toISOString()
+				}
+			} 
+		}
+
+		// create separate history document
+		await createPregnancyCenterHistory(pregnancyCenterId, 'outOfBusiness', newValue, oldValue, userId)
+
+		// update
+		const newPregnancyCenterMongooseObj = await findByIdAndUpdate(PregnancyCenterModel, pregnancyCenterId, newPregnancyCenterObj)
+		return populatePrimaryContact(newPregnancyCenterMongooseObj)
+	},
 	updateFqhc: (userId, fqhcId, fqhcObj) => {
 		return new P(async (resolve, reject) => {
 			try {
 				const validate = R.partial(validateAndFillFqhc, [userId])
 				const checkIfOutOfBusiness = R.partial(checkIfFqhcOutOfBusiness, [fqhcId])
-				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getOldFqhc(fqhcId)])
+				const createUpdateHistory = R.partial(createFqhcUpdateHistory, [userId, await getFqhcObj(fqhcId)])
 				const updateFqhc = R.partial(fqhcFindByIdAndUpdate, [fqhcId])
 	
 				const updateAndSaveFqhc = R.pipeP(
@@ -421,6 +475,36 @@ module.exports = {
 				return reject(err)
 			}
 		})
+	},
+	updateFqhcOutOfBusiness: async (userId, fqhcId, outOfBusinessObj) => {
+		// validate outOfBusinessObj as true or false
+		const validatedOutOfBusinessObj = await validateDocument(locationSchemaJoi.outOfBusinessSchemaJoi, outOfBusinessObj)
+		const newValue = validatedOutOfBusinessObj.outOfBusiness
+
+		// get fqhc to get oldValue
+		const oldFqhcObj = await getFqhcObj(fqhcId)
+		const oldValue = oldFqhcObj.outOfBusiness
+
+		// if no change, return early with the current fqhc obj
+		if (oldValue === newValue) {
+			return oldFqhcObj
+		}
+
+		const newFqhcObj = {
+			outOfBusiness: newValue,
+			updated: {
+				outOfBusiness: {
+					userId: userId,
+					date: new Date().toISOString()
+				}
+			}
+		}
+
+		// create separate history document
+		await createFqhcHistory(fqhcId, 'outOfBusiness', newValue, oldValue, userId)
+
+		// update
+		return findByIdAndUpdate(FQHCModel, fqhcId, newFqhcObj)
 	},
 	releaseDocuments: (userId) => {
 		return new P(async (resolve, reject) => {
