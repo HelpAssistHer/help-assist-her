@@ -50,11 +50,11 @@ const parsePhoneNumber = (phoneNumber) => {
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBiz } = this.props
+		const { classes, handleSubmit, outOfBiz, doNotList } = this.props
 
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
-			  <div className={outOfBiz? classes.outOfBiz : classes.inBiz}></div>
+			  <div className={(outOfBiz || doNotList)? classes.outOfBiz : classes.inBiz}></div>
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
