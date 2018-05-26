@@ -86,7 +86,7 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	return (
 		<div>
 			<Button
-				btnType='blackAndWhite'
+			  size='large'
 				buttonText='Verify Next Resource'
 				onClick={() => {
 					dispatch(getResourceToVerify())
