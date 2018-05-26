@@ -1,21 +1,52 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-const Button = ({ classes, onClick, buttonText }) => (
-	<button className={classes.button} onClick={onClick}>{ buttonText }</button>
+const Button = ({ classes, onClick, buttonText, activeState, type, size }) => (
+	<button type={type} {className(activeState, size)} onClick={onClick}>{ buttonText }</button>
 )
 
-// TODO cleanup
 const styles = {
-	button: {
-		border: '1px solid #ff2596; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:12px;font-family:arial, helvetica, sans-serif; padding: 10px 10px 10px 10px; text-decoration:none; display:inline-block;text-shadow: 0px 0px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;',
-		'background-color': '#ff5db1; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff5db1), to(#ef007c));',
-		'background-image': '-webkit-linear-gradient(top, #ff5db1, #ef007c);',
-		'&:hover': {
-			'border': '1px solid #f60080;',
-			'background-color': '#ff2a98; background-image: -webkit-gradient(linear, left top, left bottom, from(#ff2a98), to(#bc0062));',
-		}
+	default: {  // this class will be applied to all button
+		 'min-width': '14em', // default button will be medium button size
+		 'outline': 'none',
+     'padding': '1% 2%',
+     'font-size': '.75em',
+     'font-weight': 'bold',
+     'border-radius': '25px',
+     'border': '2px solid #000',
 	},
-}
+	inactive:{ // this class will be applied to button which will have props btnType == balckAndWhite
+     'color': '#000',
+     'background-color': '#fff',
+     '&:hover': {
+        'color': '#fff',
+        'border-color': '#f28274',
+        'background-color': '#f28274',
+    }
+	},
+	active: { // this class will be applied to button which will have props btnType == orange
+		'color': '#fff',
+		'border-color': '#f28274',
+		'background-color': '#f28274',
+	},
+	mediumButton:{
 
+	},
+	largeButton:{
+		'min-width': '20em', // large button class need to be added to make button large
+		'padding': '2% 5%',
+		'font-size': '1.25em',
+    'border-radius': '30px',
+	}
+}
+/* This function getClasses will all classes that needs to be
+applyed on the button on the bassis of input btnType
+and available classes. */
+function getClasses(btnType, classes){
+	btnType = btnType.split(' ').map((ele) => classes[ele] ).join(' ')
+	switch(btnType){
+	default :
+		  return btnType + ' ' + classes.default
+	}
+}
 export default injectSheet(styles)(Button)
