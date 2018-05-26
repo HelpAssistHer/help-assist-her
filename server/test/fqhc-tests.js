@@ -20,11 +20,11 @@ chai.use(chaiHttp)
 
 // Allows the middleware to think we're already authenticated.
 async function mockAuthenticate() {
-	server.request.isAuthenticated = function () {
+	server.request.isAuthenticated = function() {
 		return true
 	}
 	try {
-		server.request.user = await UserModel.findOne({displayName: 'Kate Sills'})
+		server.request.user = await UserModel.findOne({ displayName: 'Kate Sills' })
 	} catch (err) {
 		log.err(err)
 	}
@@ -32,7 +32,7 @@ async function mockAuthenticate() {
 
 // Allows the middleware to think we are *not* authenticated
 function mockUnauthenticate() {
-	server.request.isAuthenticated = function () {
+	server.request.isAuthenticated = function() {
 		return false
 	}
 	server.request.user = null
@@ -63,16 +63,17 @@ function assertUnauthenticatedError(res) {
 
 //Our parent block
 describe('FQHCs', () => {
-	beforeEach(async () => { //Before each test we empty the database
+	beforeEach(async () => {
+		//Before each test we empty the database
 		mockUnauthenticate()
 		await FQHCModel.remove({})
 		await UserModel.remove({})
 		const me = new UserModel({
-			displayName: 'Kate Sills'
+			displayName: 'Kate Sills',
 		})
 		await me.save()
 		const someoneElse = new UserModel({
-			displayName: 'Someone Else'
+			displayName: 'Someone Else',
 		})
 		await someoneElse.save()
 	})
@@ -83,9 +84,7 @@ describe('FQHCs', () => {
 	describe('/GET /api/fqhcs/verify no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
 			try {
-				await chai.request(server)
-					.get('/api/fqhcs/verify')
-
+				await chai.request(server).get('/api/fqhcs/verify')
 			} catch (err) {
 				assertUnauthenticatedError(err.response)
 			}
@@ -97,35 +96,31 @@ describe('FQHCs', () => {
 	 */
 	describe('/GET /api/fqhcs/verify', () => {
 		it('it should return a single pregnancy center', async () => {
-
 			await FQHCModel.create({
-				'address': {
-					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: '650 Fulton St	BROOKLYN, NY, 11217',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.7814005, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
-				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
-				'phone': '+17185969800',
-				'website': 'www.brooklynplaza.org',
+				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				phone: '+17185969800',
+				website: 'www.brooklynplaza.org',
 				services: {},
-
 			})
 
 			await mockAuthenticate()
 
-			const res = await chai.request(server)
-				.get('/api/fqhcs/verify')
+			const res = await chai.request(server).get('/api/fqhcs/verify')
 
 			// note that verification is randomized, so there is no guarantee of the resulting object
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('fqhcName')
-
 		})
 	})
 
@@ -134,13 +129,10 @@ describe('FQHCs', () => {
 	 */
 	describe('/GET /api/fqhcs/verify', () => {
 		it('it should return a 404 not found ', async () => {
-
 			await mockAuthenticate()
 
 			try {
-				await chai.request(server)
-					.get('/api/fqhcs/verify')
-
+				await chai.request(server).get('/api/fqhcs/verify')
 			} catch (err) {
 				assertError(err.response, 404, 'Not Found')
 			}
@@ -152,28 +144,28 @@ describe('FQHCs', () => {
 	 */
 	describe('/PUT /api/fqhcs/:fqhcId no-auth', () => {
 		it('it should return a 401 error because there is no authentication', async () => {
-
 			const fqhc = new FQHCModel({
-				'address': {
-					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: '650 Fulton St	BROOKLYN, NY, 11217',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.7814005, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
-				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
-				'phone': '+17185969800',
-				'website': 'www.brooklynplaza.org',
+				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				phone: '+17185969800',
+				website: 'www.brooklynplaza.org',
 				services: {},
 			})
 
 			await fqhc.save()
 
 			try {
-				await chai.request(server)
+				await chai
+					.request(server)
 					.put('/api/fqhcs/' + fqhc._id)
 					.send(fqhc)
 			} catch (err) {
@@ -190,49 +182,50 @@ describe('FQHCs', () => {
 			await mockAuthenticate()
 
 			const oldValues = {
-				'address': {
-					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: '650 Fulton St	BROOKLYN, NY, 11217',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.7814005, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
-				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
-				'phone': '+17185969800',
-				'website': 'www.brooklynplaza.org',
+				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				phone: '+17185969800',
+				website: 'www.brooklynplaza.org',
 				services: {},
 			}
 
 			const newValues = {
-				'address': {
-					'line1': 'New Address',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: 'New Address',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.99, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
-				'fqhcName': 'New Name',
-				'phone': '+17185969899',
-				'website': 'www.newurl.org',
-				services: {'wellWomanCare': true},
+				fqhcName: 'New Name',
+				phone: '+17185969899',
+				website: 'www.newurl.org',
+				services: { wellWomanCare: true },
 				verifiedData: {
 					address: {
-						date: '2017-04-16T23:33:17.220Z'
-					}
-				}
+						date: '2017-04-16T23:33:17.220Z',
+					},
+				},
 			}
 
-			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+			const testUser = await UserModel.findOne({ displayName: 'Kate Sills' })
 
 			const oldFQHC = await FQHCModel.create(oldValues)
 
-			const res = await chai.request(server)
+			const res = await chai
+				.request(server)
 				.put('/api/fqhcs/' + oldFQHC._id)
 				.send(newValues)
 
@@ -252,16 +245,17 @@ describe('FQHCs', () => {
 
 			// check that the pregnancy center history is created as well.
 			const histories = await FQHCHistoryModel.find({
-				fqhcId: oldFQHC._id
+				fqhcId: oldFQHC._id,
 			})
 			const fields = _.map(histories, 'field')
-			fields.should.have.members([ 
+			fields.should.have.members([
 				'fqhcName',
 				'phone',
 				'website',
 				'services',
 				'verifiedData',
-				'address' ])
+				'address',
+			])
 		})
 	})
 
@@ -273,55 +267,61 @@ describe('FQHCs', () => {
 			await mockAuthenticate()
 
 			const oldValues = {
-				'address': {
-					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: '650 Fulton St	BROOKLYN, NY, 11217',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.7814005, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
 				outOfBusiness: true,
-				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
-				'phone': '+17185969800',
-				'website': 'www.brooklynplaza.org',
+				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				phone: '+17185969800',
+				website: 'www.brooklynplaza.org',
 				services: {},
 			}
 
 			const newValues = {
-				'address': {
-					'line1': 'New Address',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: 'New Address',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.99, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
-				'fqhcName': 'New Name',
-				'phone': '+17185969899',
-				'website': 'www.newurl.org',
-				services: {'wellWomanCare': true},
+				fqhcName: 'New Name',
+				phone: '+17185969899',
+				website: 'www.newurl.org',
+				services: { wellWomanCare: true },
 				verifiedData: {
 					address: {
-						date: '2017-04-16T23:33:17.220Z'
-					}
-				}
+						date: '2017-04-16T23:33:17.220Z',
+					},
+				},
 			}
 
 			const oldFQHC = await FQHCModel.create(oldValues)
 			oldFQHC.outOfBusiness.should.equal(true)
 			log.info('OLD outOfBusiness IS', oldFQHC.outOfBusiness)
 			try {
-				await chai.request(server)
+				await chai
+					.request(server)
 					.put('/api/fqhcs/' + oldFQHC._id)
 					.send(newValues)
-				chai.assert.fail(0, 1, 'Error not thrown')	
+				chai.assert.fail(0, 1, 'Error not thrown')
 			} catch (err) {
-				assertError(err.response, 400, 'Bad Request', 'Cannot edit a outOfBusiness FQHC')
+				assertError(
+					err.response,
+					400,
+					'Bad Request',
+					'Cannot edit a outOfBusiness FQHC',
+				)
 			}
 		})
 	})
@@ -334,30 +334,31 @@ describe('FQHCs', () => {
 			await mockAuthenticate()
 
 			const oldValues = {
-				'address': {
-					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
-					'location': {
-						'type': 'Point',
-						'coordinates': [
+				address: {
+					line1: '650 Fulton St	BROOKLYN, NY, 11217',
+					location: {
+						type: 'Point',
+						coordinates: [
 							-73.7814005, // this is fake data
-							42.6722152
-						]
+							42.6722152,
+						],
 					},
 				},
 				outOfBusiness: true,
-				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
-				'phone': '+17185969800',
-				'website': 'www.brooklynplaza.org',
+				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				phone: '+17185969800',
+				website: 'www.brooklynplaza.org',
 				services: {},
 			}
-			
+
 			const oldFQHC = await FQHCModel.create(oldValues)
 			oldFQHC.outOfBusiness.should.equal(true)
-			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
-			
-			const res = await chai.request(server)
-				.put('/api/fqhcs/' + oldFQHC._id +'/out-of-business')
-				.send({outOfBusiness: false})
+			const testUser = await UserModel.findOne({ displayName: 'Kate Sills' })
+
+			const res = await chai
+				.request(server)
+				.put('/api/fqhcs/' + oldFQHC._id + '/out-of-business')
+				.send({ outOfBusiness: false })
 
 			res.should.have.status(200)
 			res.body.should.be.a('object')
@@ -369,11 +370,13 @@ describe('FQHCs', () => {
 			res.body.should.have.property('updated')
 			res.body.updated.should.have.property('outOfBusiness')
 			res.body.updated.outOfBusiness.should.have.property('userId')
-			res.body.updated.outOfBusiness.userId.should.equal(testUser._id.toString())
+			res.body.updated.outOfBusiness.userId.should.equal(
+				testUser._id.toString(),
+			)
 
 			// check that the pregnancy center history is created as well.
 			const histories = await FQHCHistoryModel.find({
-				fqhcId: oldFQHC._id
+				fqhcId: oldFQHC._id,
 			})
 			const fields = _.map(histories, 'field')
 			fields.should.have.members(['outOfBusiness'])
