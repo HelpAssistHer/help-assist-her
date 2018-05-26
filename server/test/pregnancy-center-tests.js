@@ -1215,6 +1215,101 @@ describe('PregnancyCenters', () => {
 	})
 
 	/*
+ * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
+ */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business', () => {
+		it('it should return a single pregnancy center with updated outOfBusiness', async () => {
+
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222'
+			})
+			await primaryContactPerson.save()
+
+			const pc = new PregnancyCenterModel({
+				'address': {
+					'line1': '586 Central Ave.\nAlbany, NY 12206',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005,
+							42.6722152
+						]
+					},
+				},
+				'prcName': 'Birthright of Albany',
+				'primaryContactPerson': primaryContactPerson,
+				'phone': '+15184382978',
+				'website': 'http://www.birthright.org',
+				'services': {},
+				'outOfBusiness': true
+			})
+
+			await pc.save()
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+
+			await mockAuthenticate()
+			const res = await chai.request(server)
+				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.send({'outOfBusiness': false})
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body._id.should.equal(String(pc._id))
+			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.primaryContactPerson.firstName.should.equal('Joanna')
+			res.body.verifiedData.should.deep.equal({})
+			res.body.outOfBusiness.should.equal(false)
+			res.body.updated.outOfBusiness.userId.should.equal(testUser._id.toString())
+
+			// check that the pregnancy center history is created as well.
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: pc._id
+			})
+			
+			log.info(histories)
+			const fields = _.map(histories, 'field')
+			fields.should.have.members(['outOfBusiness'])
+			
+			// test other way
+
+			const res2 = await chai.request(server)
+				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.send({'outOfBusiness': true})
+
+			res2.should.have.status(200)
+			res2.body.should.be.a('object')
+			res2.body.should.have.property('_id')
+			res2.body.should.have.property('prcName')
+			res2.body._id.should.equal(String(pc._id))
+			res2.body.prcName.should.equal('Birthright of Albany')
+			res2.body.primaryContactPerson.firstName.should.equal('Joanna')
+			res2.body.verifiedData.should.deep.equal({})
+			res2.body.outOfBusiness.should.equal(true)
+			
+			// test no change
+
+			const res3 = await chai.request(server)
+				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.send({'outOfBusiness': true})
+
+			res3.should.have.status(200)
+			res3.body.should.be.a('object')
+			res3.body.should.have.property('_id')
+			res3.body.should.have.property('prcName')
+			res3.body._id.should.equal(String(pc._id))
+			res3.body.prcName.should.equal('Birthright of Albany')
+			res3.body.primaryContactPerson.firstName.should.equal('Joanna')
+			res3.body.verifiedData.should.deep.equal({})
+			res3.body.outOfBusiness.should.equal(true)
+		})
+	})
+
+	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
 	describe('Test Joi validation for pregnancy centers address 1', () => {

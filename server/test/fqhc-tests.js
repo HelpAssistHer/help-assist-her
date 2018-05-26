@@ -325,4 +325,58 @@ describe('FQHCs', () => {
 			}
 		})
 	})
+
+	/*
+	 * Test the /PUT /api/fqhcs/:fqhcId/out-of-business
+	 */
+	describe('/PUT /api/fqhcs/:fqhcId/out-of-business', () => {
+		it('it should return the updated fqhc', async () => {
+			await mockAuthenticate()
+
+			const oldValues = {
+				'address': {
+					'line1': '650 Fulton St	BROOKLYN, NY, 11217',
+					'location': {
+						'type': 'Point',
+						'coordinates': [
+							-73.7814005, // this is fake data
+							42.6722152
+						]
+					},
+				},
+				outOfBusiness: true,
+				'fqhcName': 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				'phone': '+17185969800',
+				'website': 'www.brooklynplaza.org',
+				services: {},
+			}
+			
+			const oldFQHC = await FQHCModel.create(oldValues)
+			oldFQHC.outOfBusiness.should.equal(true)
+			const testUser = await UserModel.findOne({displayName: 'Kate Sills'})
+			
+			const res = await chai.request(server)
+				.put('/api/fqhcs/' + oldFQHC._id +'/out-of-business')
+				.send({outOfBusiness: false})
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('fqhcName')
+			res.body._id.should.equal(String(oldFQHC._id))
+			res.body.fqhcName.should.equal(oldValues.fqhcName)
+			res.body.should.have.property('verifiedData')
+			res.body.should.have.property('updated')
+			res.body.updated.should.have.property('outOfBusiness')
+			res.body.updated.outOfBusiness.should.have.property('userId')
+			res.body.updated.outOfBusiness.userId.should.equal(testUser._id.toString())
+
+			// check that the pregnancy center history is created as well.
+			const histories = await FQHCHistoryModel.find({
+				fqhcId: oldFQHC._id
+			})
+			const fields = _.map(histories, 'field')
+			fields.should.have.members(['outOfBusiness'])
+		})
+	})
 })
