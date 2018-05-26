@@ -18,10 +18,11 @@ class VerificationPortal extends React.Component {
 		}
 		this.toggleState = this.toggleState.bind(this)
 	}
-	toggleState = (key) => {// toggling state
-	let currentState = this.state[key]
-	this.setState({ [key]: !currentState })
-}
+	toggleState = key => {
+		// toggling state by passing key
+		let currentState = this.state[key]
+		this.setState({ [key]: !currentState })
+	}
 	submit = values => {
 		updateResource(values)
 	}
@@ -36,27 +37,30 @@ class VerificationPortal extends React.Component {
 				<div className={classes.verificationPortal}>
 					{shouldShowFeature(userDisplayName) && (
 						<div>
-						<div className={classes.leftPositionButton}>
-							<Button
-								activeState={this.state.outOfBiz}
-								buttonText="Out of Business"
-								onClick={() => this.toggleState('outOfBiz')}
-								size='medium'
-							/>
+							<div className={classes.leftPositionButton}>
+								<Button
+									activeState={this.state.outOfBiz}
+									buttonText="Out of Business"
+									onClick={() => this.toggleState('outOfBiz')}
+									size="medium"
+								/>
+							</div>
+							<div className={classNames(classes.leftPositionButton, classes.moveDown)}>
+								<Button
+									activeState={this.state.doNotList}
+									buttonText="Do not list"
+									onClick={() => this.toggleState('doNotList')}
+									size="medium"
+								/>
+							</div>
 						</div>
-						<div className={classNames(classes.leftPositionButton, classes.moveDown)}>
-							<Button
-								activeState={this.state.doNotList}
-								buttonText="Do not list"
-								onClick={() => this.toggleState('doNotList')}
-								size='medium'
-							/>
-						</div>
-						</div>
-
 					)}
 
-					<VerificationPortalForm outOfBiz={this.state.outOfBiz} doNotList={this.state.doNotList} onSubmit={this.submit} />
+					<VerificationPortalForm
+						outOfBiz={this.state.outOfBiz}
+						doNotList={this.state.doNotList}
+						onSubmit={this.submit}
+					/>
 					<Spacer height="100px" />
 				</div>
 			</div>
@@ -82,12 +86,12 @@ const styles = {
 		left: '25%',
 		'z-index': '100',
 	},
-	moveDown:{
-		top:'1.5%',
+	moveDown: {
+		top: '1.5%',
 	},
-	resourceButton:{
+	resourceButton: {
 		'margin-top': '0.5%',
-	}
+	},
 }
 
 export default injectSheet(styles)(VerificationPortal)
