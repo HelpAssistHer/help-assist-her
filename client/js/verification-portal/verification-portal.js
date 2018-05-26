@@ -36,7 +36,7 @@ class VerificationPortal extends React.Component {
 					{shouldShowFeature(userDisplayName) && (
 						<div className={classes.leftPositionButton}>
 							<Button
-								activeState={this.state.outOfBiz}
+								activeState={!!this.props.resource.outOfBusiness}
 								buttonText="Out of Business"
 								onClick={this.handleClick}
 								size="medium"
