@@ -8,8 +8,10 @@
 1.  Create a new branch
     `git checkout -b new-unique-branch-name`
 
-1.  Commit your changes
+1.  Stage your changes
     `git add .` to add all changed files or `git add path-to-file-to-stage` to add specific files
+    
+1. Commit your changes
     `git commit -m 'Message that details what commit entails'`
 
 Ideally, your commits will be small, have similar or related changes in each commit, and your commit message will be detailed
