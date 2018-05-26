@@ -5,21 +5,13 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
-import Button from '../components/button' // importing bewBUtton Component
+import Button from '../components/button'
 import { shouldShowFeature } from '../hah-app/helpers'
+import { updateOutOfBusiness } from './out-of-business/action-creators'
 
 class VerificationPortal extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			outOfBiz: false, // addition of variable to keep track of out of business status.
-		}
-		this.handleClick = this.handleClick.bind(this)
-	}
-	handleClick = () => {
-		// toggling out of business status
-		let { outOfBiz } = this.state
-		this.setState({ outOfBiz: !outOfBiz })
 	}
 	submit = values => {
 		updateResource(values)
@@ -41,7 +33,7 @@ class VerificationPortal extends React.Component {
 								activeState={!!outOfBusiness}
 								buttonText="Out of Business"
 								size="medium"
-								onClick={this.handleClick}
+								onClick={() => updateOutOfBusiness(!outOfBusiness)}
 							/>
 						</div>
 					)}
