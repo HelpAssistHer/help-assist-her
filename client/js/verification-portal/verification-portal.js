@@ -28,7 +28,6 @@ class VerificationPortal extends React.Component {
 		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
 		const { classes, changeFieldValue, resource } = this.props
 		const { outOfBusiness } = resource
-		console.log('OUT OF BUSINESS IN VIEW', outOfBusiness)
 
 		return (
 			<div>
