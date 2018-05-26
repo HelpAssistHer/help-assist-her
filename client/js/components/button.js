@@ -18,7 +18,7 @@ const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
 const styles = {
 	default: {
 		// this class will be applied to all button
-		'outline': 'none',
+		outline: 'none',
 		'font-size': '.75em',
 		'font-weight': 'bold',
 	},
@@ -39,17 +39,17 @@ const styles = {
 		'background-color': '#f28274',
 	},
 	medium: {
-		'height': '49.69px',
-		'width': '153.18px',
-		'border': '2px solid #000000',
-		'border-radius': '100px'
+		height: '49.69px',
+		width: '153.18px',
+		border: '2px solid #000000',
+		'border-radius': '100px',
 	},
 	large: {
 		'font-size': '1.25em',
-		'height': '48.84px',
-		'width': '280px',
-		'border': '2px solid #000000',
-		'border-radius': '100px'
+		height: '48.84px',
+		width: '280px',
+		border: '2px solid #000000',
+		'border-radius': '100px',
 	},
 }
 

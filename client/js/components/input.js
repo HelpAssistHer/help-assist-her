@@ -8,7 +8,7 @@ const Input = ({ classes, input, label, type, placeholder }) => {
 		<div className={classes.child}>
 			<label className={classes.label}>{label}</label>
 			<input className={classes.textInput} type={type} placeholder={placeholder} {...input} />
-			<Spacer height='10px' />
+			<Spacer height="10px" />
 		</div>
 	)
 }
@@ -30,8 +30,8 @@ const styles = {
 		padding: '12px 20px',
 		margin: '8px 0',
 		'font-size': '90%',
-		'border': 'none',
-		'border-bottom': '1px solid #979797'
+		border: 'none',
+		'border-bottom': '1px solid #979797',
 	},
 }
 
