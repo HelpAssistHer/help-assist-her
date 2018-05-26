@@ -4,8 +4,8 @@ const _ = require('lodash')
 const mongoose = require('mongoose')
 
 const pointSchema = new mongoose.Schema({
-	type: {type: String},
-	coordinates: [Number]
+	type: { type: String },
+	coordinates: [Number],
 })
 
 const addressSchema = new mongoose.Schema({
@@ -25,9 +25,17 @@ const userDateSchema = new mongoose.Schema({
 })
 
 function getFullAddress() {
-	return _.get(this, 'address.line1', '') + ' ' + _.get(this, 'address.line2', '') + ' '
-		+ _.get(this, 'address.city', '') + ' ' + _.get(this, 'address.state', '') + ' ' +
+	return (
+		_.get(this, 'address.line1', '') +
+		' ' +
+		_.get(this, 'address.line2', '') +
+		' ' +
+		_.get(this, 'address.city', '') +
+		' ' +
+		_.get(this, 'address.state', '') +
+		' ' +
 		_.get(this, 'address.zip', '')
+	)
 }
 
-module.exports = { pointSchema, addressSchema, userDateSchema, getFullAddress}
+module.exports = { pointSchema, addressSchema, userDateSchema, getFullAddress }

@@ -15,7 +15,7 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 
 const connectToDatabase = async () => {
-	mongoose.connect(config.mongo.connectionString, {'bufferCommands': false})
+	mongoose.connect(config.mongo.connectionString, { bufferCommands: false })
 	log.info(`Connected to database ${config.mongo.connectionString} `)
 }
 
@@ -31,15 +31,17 @@ const clearDatabase = async () => {
 }
 
 const getFqhcData = async () => {
-	const dataToImport = fs.readFileSync('server/data-import/fixtures/fqhcs.json', 'utf8')
+	const dataToImport = fs.readFileSync(
+		'server/data-import/fixtures/fqhcs.json',
+		'utf8',
+	)
 	log.info('fqhc data read in')
 	return EJSON.parse(dataToImport)
 }
 
 const validateAndAddLocation = async (joiSchema, model, doc) => {
-
 	let result = await Joi.validate(doc, joiSchema, {
-		abortEarly: false
+		abortEarly: false,
 	})
 
 	const newLocation = await model.create(result.value)
@@ -50,10 +52,12 @@ const importDocs = async (getDataFunction, schemaJoi, model) => {
 	try {
 		const docs = await getDataFunction()
 
-		return await Promise.all(docs.map(async doc => {
-			const _id = await validateAndAddLocation(schemaJoi, model, doc)
-			log.info(_id)
-		}))
+		return await Promise.all(
+			docs.map(async doc => {
+				const _id = await validateAndAddLocation(schemaJoi, model, doc)
+				log.info(_id)
+			}),
+		)
 	} catch (err) {
 		log.error(err)
 		throw err
@@ -65,7 +69,7 @@ async function reimport() {
 		await connectToDatabase()
 
 		const clear = process.argv[2]
-		if(clear === '--clear'){
+		if (clear === '--clear') {
 			await clearDatabase()
 		}
 		await importDocs(getFqhcData, fqhcSchemaJoi, FqhcModel)
@@ -77,4 +81,3 @@ async function reimport() {
 }
 
 P.resolve(reimport())
-

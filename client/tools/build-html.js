@@ -10,7 +10,7 @@ fs.readFile('index.html', 'utf8', (err, markup) => {
 	const $ = cheerio.load(markup)
 	$('head').prepend('')
 
-	fs.writeFile('public/index.html', $.html(), 'utf8', function (err) {
+	fs.writeFile('public/index.html', $.html(), 'utf8', function(err) {
 		if (err) {
 			return console.log(err)
 		}

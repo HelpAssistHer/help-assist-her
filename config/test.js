@@ -10,7 +10,8 @@ module.exports = {
 		key: process.env.VERIFICATION_PORTAL_GOOGLE_MAPS_KEY,
 	},
 	mapbox: {
-		accessToken: 'pk.eyJ1Ijoia2FyZW5tcm9zZSIsImEiOiJjaXd6bWoyeXowMGg2MnRvNnlncWE0azZsIn0.R61g_76oVqY3Jg7ob4kSsA',
+		accessToken:
+			'pk.eyJ1Ijoia2FyZW5tcm9zZSIsImEiOiJjaXd6bWoyeXowMGg2MnRvNnlncWE0azZsIn0.R61g_76oVqY3Jg7ob4kSsA',
 	},
 	mongo: {
 		connectionString: process.env.MONGO_DB_CONNECTION,
@@ -19,10 +20,9 @@ module.exports = {
 		hostname: 'localhost',
 		port: 4000,
 		protocol: 'https',
-		url: 'http://localhost:4000'
+		url: 'http://localhost:4000',
 	},
 	session: {
-		secret:  process.env.SESSION_SECRET,
+		secret: process.env.SESSION_SECRET,
 	},
 }
-

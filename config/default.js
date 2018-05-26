@@ -12,6 +12,6 @@ module.exports = {
 		connectionString: process.env.MONGO_DB_CONNECTION,
 	},
 	session: {
-		secret:  process.env.SESSION_SECRET,
+		secret: process.env.SESSION_SECRET,
 	},
 }

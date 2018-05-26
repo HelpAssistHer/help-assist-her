@@ -12,11 +12,11 @@ const log = new Log('info')
 
 const googleMapsClient = require('@google/maps').createClient({
 	key: config.googleMaps.key,
-	Promise: P
+	Promise: P,
 })
 
 // TODO: Error handling
-const startDatabase = P.coroutine(function *startDatabase() {
+const startDatabase = P.coroutine(function* startDatabase() {
 	yield mongoose.connect(config.mongo.connectionString)
 
 	log.info('Connected to database')
@@ -35,20 +35,24 @@ startDatabase()
 // }
 
 async function geocodePregnancyCenters() {
-	const pregnancyCenters = await PregnancyCenterModel.find({'address.location': null})
+	const pregnancyCenters = await PregnancyCenterModel.find({
+		'address.location': null,
+	})
 	for (const pregnancyCenter of pregnancyCenters) {
 		log.info(pregnancyCenter.prcName)
 		log.info(pregnancyCenter.getFullAddress())
 
 		// Geocode an address.
-		const response = await googleMapsClient.geocode({ 'address': pregnancyCenter.getFullAddress() }).asPromise()
+		const response = await googleMapsClient
+			.geocode({ address: pregnancyCenter.getFullAddress() })
+			.asPromise()
 		const location = response.json.results[0].geometry.location
-		
+
 		log.info(location)
 
 		pregnancyCenter.address.location = {
-			'type': 'Point',
-			'coordinates': [location.lng, location.lat]
+			type: 'Point',
+			coordinates: [location.lng, location.lat],
 		}
 		await pregnancyCenter.save()
 	}

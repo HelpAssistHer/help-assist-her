@@ -19,13 +19,13 @@ const mapDispatchToProps = dispatch => {
 		},
 		changeFieldValue: (field, value) => {
 			dispatch(change('verificationPortal', field, value || ''))
-		}
+		},
 	}
 }
 
 const VerificationPortalContainer = connect(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
 )(VerificationPortal)
 
 export default VerificationPortalContainer

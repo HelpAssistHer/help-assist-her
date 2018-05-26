@@ -18,6 +18,6 @@ module.exports = {
 		url: 'https://hah-prod.herokuapp.com',
 	},
 	session: {
-		secret:  process.env.SESSION_SECRET,
+		secret: process.env.SESSION_SECRET,
 	},
 }

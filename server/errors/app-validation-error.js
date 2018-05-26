@@ -1,6 +1,5 @@
 module.exports = class AppValidationError extends Error {
-	constructor (message) {
-
+	constructor(message) {
 		// Calling parent constructor of base Error class.
 		super(message)
 
@@ -9,8 +8,7 @@ module.exports = class AppValidationError extends Error {
 
 		// Capturing stack trace, excluding constructor call from it.
 		Error.captureStackTrace(this, this.constructor)
-		
-		this.status = 400
 
+		this.status = 400
 	}
 }

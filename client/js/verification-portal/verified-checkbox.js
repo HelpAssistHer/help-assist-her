@@ -5,7 +5,7 @@ const VerifiedCheckbox = ({ classes, input, label }) => {
 	return (
 		<div className={classes.child}>
 			<label className={classes.label}>{label}</label>
-			<input type='checkbox' checked={input.value} {...input} />
+			<input type="checkbox" checked={input.value} {...input} />
 		</div>
 	)
 }

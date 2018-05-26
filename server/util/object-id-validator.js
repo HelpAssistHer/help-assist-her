@@ -7,21 +7,25 @@ const objectIdJoi = Joi.extend({
 	base: Joi.string(),
 	name: 'objectId',
 	language: {
-		isValid: 'needs to be a valid MongoDB ObjectId'
+		isValid: 'needs to be a valid MongoDB ObjectId',
 	},
 	rules: [
 		{
 			name: 'isValid',
 			validate(params, value, state, options) {
-
 				if (!mongoose.Types.ObjectId.isValid(value)) {
-					return this.createError('objectId.isValid', { v: value }, state, options)
+					return this.createError(
+						'objectId.isValid',
+						{ v: value },
+						state,
+						options,
+					)
 				}
 
-				return value 
-			}
-		}
-	]
+				return value
+			},
+		},
+	],
 })
 
 module.exports = objectIdJoi
