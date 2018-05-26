@@ -7,7 +7,12 @@ const Input = ({ classes, input, label, type, placeholder }) => {
 	return (
 		<div className={classes.child}>
 			<label className={classes.label}>{label}</label>
-			<input className={classes.textInput} type={type} placeholder={placeholder} {...input} />
+			<input
+				className={classes.textInput}
+				type={type}
+				placeholder={placeholder}
+				{...input}
+			/>
 			<Spacer height="10px" />
 		</div>
 	)
