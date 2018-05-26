@@ -44,7 +44,10 @@ class VerificationPortal extends React.Component {
 						</div>
 					)}
 
-					<VerificationPortalForm outOfBiz={this.state.outOfBiz} onSubmit={this.submit} />
+					<VerificationPortalForm
+						outOfBiz={this.state.outOfBiz}
+						onSubmit={this.submit}
+					/>
 					<Spacer height="100px" />
 				</div>
 			</div>

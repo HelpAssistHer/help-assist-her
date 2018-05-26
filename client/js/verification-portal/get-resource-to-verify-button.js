@@ -33,28 +33,55 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	} = resource
 
 	changeFieldValue('prcName', prcName)
-	changeFieldValue('verifiedData.prcName.verified', _.get(verifiedData, 'prcName.verified'))
+	changeFieldValue(
+		'verifiedData.prcName.verified',
+		_.get(verifiedData, 'prcName.verified'),
+	)
 
 	changeFieldValue('address.line1', _.get(address, 'line1'))
 	changeFieldValue('address.line2', _.get(address, 'line2'))
 	changeFieldValue('address.city', _.get(address, 'city'))
 	changeFieldValue('address.state', _.get(address, 'state'))
 	changeFieldValue('address.zip', _.get(address, 'zip'))
-	changeFieldValue('verifiedData.address.verified', _.get(verifiedData, 'address.verified'))
+	changeFieldValue(
+		'verifiedData.address.verified',
+		_.get(verifiedData, 'address.verified'),
+	)
 
 	changeFieldValue('phone', phone)
-	changeFieldValue('verifiedData.phone.verified', _.get(verifiedData, 'phone.verified'))
+	changeFieldValue(
+		'verifiedData.phone.verified',
+		_.get(verifiedData, 'phone.verified'),
+	)
 
 	changeFieldValue('email', email)
-	changeFieldValue('verifiedData.email.verified', _.get(verifiedData, 'email.verified'))
+	changeFieldValue(
+		'verifiedData.email.verified',
+		_.get(verifiedData, 'email.verified'),
+	)
 
 	changeFieldValue('website', website)
-	changeFieldValue('verifiedData.website.verified', _.get(verifiedData, 'website.verified'))
+	changeFieldValue(
+		'verifiedData.website.verified',
+		_.get(verifiedData, 'website.verified'),
+	)
 
-	changeFieldValue('primaryContactPerson.firstName', _.get(primaryContactPerson, 'firstName'))
-	changeFieldValue('primaryContactPerson.lastName', _.get(primaryContactPerson, 'lastName'))
-	changeFieldValue('primaryContactPerson.phone', _.get(primaryContactPerson, 'phone'))
-	changeFieldValue('primaryContactPerson.email', _.get(primaryContactPerson, 'email'))
+	changeFieldValue(
+		'primaryContactPerson.firstName',
+		_.get(primaryContactPerson, 'firstName'),
+	)
+	changeFieldValue(
+		'primaryContactPerson.lastName',
+		_.get(primaryContactPerson, 'lastName'),
+	)
+	changeFieldValue(
+		'primaryContactPerson.phone',
+		_.get(primaryContactPerson, 'phone'),
+	)
+	changeFieldValue(
+		'primaryContactPerson.email',
+		_.get(primaryContactPerson, 'email'),
+	)
 	changeFieldValue(
 		'verifiedData.primaryContactPerson.verified',
 		_.get(verifiedData, 'primaryContactPerson.verified'),
@@ -64,23 +91,71 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		changeFieldValue(`services.${key}`, 1)
 	})
 	changeFieldValue('otherServices', otherServices)
-	changeFieldValue('verifiedData.services.verified', _.get(verifiedData, 'services.verified'))
+	changeFieldValue(
+		'verifiedData.services.verified',
+		_.get(verifiedData, 'services.verified'),
+	)
 
-	changeFieldValue('hours[0].open', convertNumberToTimeFormat(_.get(hours, '[0].open')))
-	changeFieldValue('hours[0].close', convertNumberToTimeFormat(_.get(hours, '[0].close')))
-	changeFieldValue('hours[1].open', convertNumberToTimeFormat(_.get(hours, '[1].open')))
-	changeFieldValue('hours[1].close', convertNumberToTimeFormat(_.get(hours, '[1].close')))
-	changeFieldValue('hours[2].open', convertNumberToTimeFormat(_.get(hours, '[2].open')))
-	changeFieldValue('hours[2].close', convertNumberToTimeFormat(_.get(hours, '[2].close')))
-	changeFieldValue('hours[3].open', convertNumberToTimeFormat(_.get(hours, '[3].open')))
-	changeFieldValue('hours[3].close', convertNumberToTimeFormat(_.get(hours, '[3].close')))
-	changeFieldValue('hours[4].open', convertNumberToTimeFormat(_.get(hours, '[4].open')))
-	changeFieldValue('hours[4].close', convertNumberToTimeFormat(_.get(hours, '[4].close')))
-	changeFieldValue('hours[5].open', convertNumberToTimeFormat(_.get(hours, '[5].open')))
-	changeFieldValue('hours[5].close', convertNumberToTimeFormat(_.get(hours, '[5].close')))
-	changeFieldValue('hours[6].open', convertNumberToTimeFormat(_.get(hours, '[6].open')))
-	changeFieldValue('hours[6].close', convertNumberToTimeFormat(_.get(hours, '[6].close')))
-	changeFieldValue('verifiedData.hours.verified', _.get(verifiedData, 'hours.verified'))
+	changeFieldValue(
+		'hours[0].open',
+		convertNumberToTimeFormat(_.get(hours, '[0].open')),
+	)
+	changeFieldValue(
+		'hours[0].close',
+		convertNumberToTimeFormat(_.get(hours, '[0].close')),
+	)
+	changeFieldValue(
+		'hours[1].open',
+		convertNumberToTimeFormat(_.get(hours, '[1].open')),
+	)
+	changeFieldValue(
+		'hours[1].close',
+		convertNumberToTimeFormat(_.get(hours, '[1].close')),
+	)
+	changeFieldValue(
+		'hours[2].open',
+		convertNumberToTimeFormat(_.get(hours, '[2].open')),
+	)
+	changeFieldValue(
+		'hours[2].close',
+		convertNumberToTimeFormat(_.get(hours, '[2].close')),
+	)
+	changeFieldValue(
+		'hours[3].open',
+		convertNumberToTimeFormat(_.get(hours, '[3].open')),
+	)
+	changeFieldValue(
+		'hours[3].close',
+		convertNumberToTimeFormat(_.get(hours, '[3].close')),
+	)
+	changeFieldValue(
+		'hours[4].open',
+		convertNumberToTimeFormat(_.get(hours, '[4].open')),
+	)
+	changeFieldValue(
+		'hours[4].close',
+		convertNumberToTimeFormat(_.get(hours, '[4].close')),
+	)
+	changeFieldValue(
+		'hours[5].open',
+		convertNumberToTimeFormat(_.get(hours, '[5].open')),
+	)
+	changeFieldValue(
+		'hours[5].close',
+		convertNumberToTimeFormat(_.get(hours, '[5].close')),
+	)
+	changeFieldValue(
+		'hours[6].open',
+		convertNumberToTimeFormat(_.get(hours, '[6].open')),
+	)
+	changeFieldValue(
+		'hours[6].close',
+		convertNumberToTimeFormat(_.get(hours, '[6].close')),
+	)
+	changeFieldValue(
+		'verifiedData.hours.verified',
+		_.get(verifiedData, 'hours.verified'),
+	)
 
 	changeFieldValue('notes', notes)
 }

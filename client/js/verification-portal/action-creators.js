@@ -57,15 +57,18 @@ export async function updateResource(updatedResource) {
 	// },
 
 	try {
-		const response = await fetch(`/api/pregnancy-centers/${store.getState().resource._id}`, {
-			method: 'PUT',
-			credentials: 'include',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
+		const response = await fetch(
+			`/api/pregnancy-centers/${store.getState().resource._id}`,
+			{
+				method: 'PUT',
+				credentials: 'include',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(transformedResource),
 			},
-			body: JSON.stringify(transformedResource),
-		})
+		)
 
 		const result = await response.json()
 
@@ -73,7 +76,9 @@ export async function updateResource(updatedResource) {
 			const alertMessage =
 				'There was an error saving this resource. Please take a screenshot ' +
 				'of this message and attach using the Help button in the lower right corner.' +
-				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(result.message)}`
+				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(
+					result.message,
+				)}`
 			alert(alertMessage)
 		} else {
 			alert('Updates saved successfully!')

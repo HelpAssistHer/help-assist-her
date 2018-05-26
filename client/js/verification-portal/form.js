@@ -71,13 +71,38 @@ class VerificationPortalForm extends Component {
 						/>
 					</div>
 
-					<Field placeholder="Address 1" name="address.line1" component={Input} type="text" />
-					<Field placeholder="Address 2" name="address.line2" component={Input} type="text" />
-					<Field placeholder="City" name="address.city" component={Input} type="text" />
-					<Field placeholder="State" name="address.state" component={Input} type="text" />
+					<Field
+						placeholder="Address 1"
+						name="address.line1"
+						component={Input}
+						type="text"
+					/>
+					<Field
+						placeholder="Address 2"
+						name="address.line2"
+						component={Input}
+						type="text"
+					/>
+					<Field
+						placeholder="City"
+						name="address.city"
+						component={Input}
+						type="text"
+					/>
+					<Field
+						placeholder="State"
+						name="address.state"
+						component={Input}
+						type="text"
+					/>
 
 					<div className={classes.parent}>
-						<Field placeholder="Zip Code" name="address.zip" component={Input} type="number" />
+						<Field
+							placeholder="Zip Code"
+							name="address.zip"
+							component={Input}
+							type="number"
+						/>
 						<Field
 							label="Address Verified"
 							name="verifiedData.address.verified"
@@ -102,7 +127,12 @@ class VerificationPortalForm extends Component {
 					</div>
 
 					<div className={classes.parent}>
-						<Field placeholder="Email" name="email" component={Input} type="text" />
+						<Field
+							placeholder="Email"
+							name="email"
+							component={Input}
+							type="text"
+						/>
 						<Field
 							label="Email Verified"
 							name="verifiedData.email.verified"
@@ -111,7 +141,12 @@ class VerificationPortalForm extends Component {
 					</div>
 
 					<div className={classes.parent}>
-						<Field placeholder="Website" name="website" component={Input} type="url" />
+						<Field
+							placeholder="Website"
+							name="website"
+							component={Input}
+							type="url"
+						/>
 						<Field
 							label="Website Verified"
 							name="verifiedData.website.verified"
@@ -235,7 +270,12 @@ class VerificationPortalForm extends Component {
 					<Field name="notes" component="textarea" rows="4" cols="50" />
 				</div>
 				<Spacer height="50px" />
-				<Button type="submit" buttonText="Save Progress" activeState={false} size="large" />
+				<Button
+					type="submit"
+					buttonText="Save Progress"
+					activeState={false}
+					size="large"
+				/>
 			</form>
 		)
 	}
