@@ -16,14 +16,14 @@ export async function updateOutOfBusiness(isOutOfBusiness) {
 	)
 	const jsonResponse = await response.json()
 
-	store.dispatch(updateOutOfBusinessActionCreator(jsonResponse))
+	store.dispatch(updateOutOfBusinessActionCreator(jsonResponse.outOfBusiness))
 
 	return jsonResponse
 }
 
-function updateOutOfBusinessActionCreator(resource) {
+export function updateOutOfBusinessActionCreator(outOfBusiness) {
 	return {
 		type: OUT_OF_BUSINESS,
-		outOfBusiness: resource.outOfBusiness,
+		outOfBusiness,
 	}
 }
