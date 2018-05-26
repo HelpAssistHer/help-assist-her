@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { change } from 'redux-form'
 
-import VerificationPortal from './verification-portal'
+import VerificationPortal from './view'
 
 const mapStateToProps = state => {
 	const { initialData, resource } = state
@@ -14,9 +14,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		getResourceToVerify: () => {
-			dispatch(getResourceToVerify)
-		},
 		changeFieldValue: (field, value) => {
 			dispatch(change('verificationPortal', field, value || ''))
 		},
