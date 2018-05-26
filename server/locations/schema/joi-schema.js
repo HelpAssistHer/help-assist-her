@@ -4,17 +4,34 @@ const Joi = require('joi')
 const objectIdValidator = require('../../util/object-id-validator.js')
 
 const pointSchemaJoi = Joi.object().keys({
-	_id: objectIdValidator.objectId().isValid().allow(null),
-	type: Joi.string().valid('Point').required(),
-	coordinates: Joi.array().ordered(
-		Joi.number().max(-66).min(-128).required(), // general continental US longitude parameters
-		Joi.number().min(23).max(50).required() 	// general continental US latitude parameters, to keep
-		// from accidentally switching lat, lng
-	).min(2).max(2)
+	_id: objectIdValidator
+		.objectId()
+		.isValid()
+		.allow(null),
+	type: Joi.string()
+		.valid('Point')
+		.required(),
+	coordinates: Joi.array()
+		.ordered(
+			Joi.number()
+				.max(-66)
+				.min(-128)
+				.required(), // general continental US longitude parameters
+			Joi.number()
+				.min(23)
+				.max(50)
+				.required(), // general continental US latitude parameters, to keep
+			// from accidentally switching lat, lng
+		)
+		.min(2)
+		.max(2),
 })
 
 const addressSchemaJoi = Joi.object().keys({
-	_id: objectIdValidator.objectId().isValid().allow(null),
+	_id: objectIdValidator
+		.objectId()
+		.isValid()
+		.allow(null),
 	city: Joi.string(),
 	googlePlaceId: Joi.string(), // we can store the google place ID according to TOS
 	line1: Joi.string(),
@@ -25,8 +42,14 @@ const addressSchemaJoi = Joi.object().keys({
 })
 
 const dayHoursSchemaJoi = Joi.object().keys({
-	open: Joi.number().min(0).max(2359).allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
-	close: Joi.number().min(0).max(2359).allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
+	open: Joi.number()
+		.min(0)
+		.max(2359)
+		.allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
+	close: Joi.number()
+		.min(0)
+		.max(2359)
+		.allow(null), // corresponds to 00:00 to 23:59 24-hour hhmm format.
 	closedAllDay: Joi.boolean().allow(null),
 })
 
@@ -35,7 +58,8 @@ const dayHoursSchemaJoi = Joi.object().keys({
 // Values are in the range 0000–2359. The time will be reported in the place’s time zone
 // as much as possible, we are matching Google's Business hours https://developers.google.com/places/web-service/details
 
-const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunday.
+const hoursSchemaJoi = Joi.object().keys({
+	// day of the week with 0 being Sunday.
 	0: dayHoursSchemaJoi,
 	1: dayHoursSchemaJoi,
 	2: dayHoursSchemaJoi,
@@ -46,14 +70,27 @@ const hoursSchemaJoi = Joi.object().keys({ // day of the week with 0 being Sunda
 })
 
 const dateUserActionSchemaJoi = Joi.object().keys({
-	_id: objectIdValidator.objectId().isValid().allow(null),
+	_id: objectIdValidator
+		.objectId()
+		.isValid()
+		.allow(null),
 	date: Joi.date().iso(),
-	userId: objectIdValidator.objectId().isValid().allow(null),
-	verified: Joi.boolean().default(false)
+	userId: objectIdValidator
+		.objectId()
+		.isValid()
+		.allow(null),
+	verified: Joi.boolean().default(false),
 })
 
 const outOfBusinessSchemaJoi = Joi.object().keys({
-	outOfBusiness: Joi.boolean()
+	outOfBusiness: Joi.boolean(),
 })
 
-module.exports = { pointSchemaJoi, addressSchemaJoi, dayHoursSchemaJoi, hoursSchemaJoi, dateUserActionSchemaJoi, outOfBusinessSchemaJoi }
+module.exports = {
+	pointSchemaJoi,
+	addressSchemaJoi,
+	dayHoursSchemaJoi,
+	hoursSchemaJoi,
+	dateUserActionSchemaJoi,
+	outOfBusinessSchemaJoi,
+}
