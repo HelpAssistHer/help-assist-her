@@ -26,7 +26,10 @@ class VerificationPortal extends React.Component {
 	}
 	render() {
 		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
-		const { classes, changeFieldValue } = this.props
+		const { classes, changeFieldValue, resource } = this.props
+		const { outOfBusiness } = resource
+		console.log('OUT OF BUSINESS IN VIEW', outOfBusiness)
+
 		return (
 			<div>
 				<div className={classes.leftPositionButton}>
@@ -36,16 +39,16 @@ class VerificationPortal extends React.Component {
 					{shouldShowFeature(userDisplayName) && (
 						<div className={classes.leftPositionButton}>
 							<Button
-								activeState={!!this.props.resource.outOfBusiness}
+								activeState={!!outOfBusiness}
 								buttonText="Out of Business"
-								onClick={this.handleClick}
 								size="medium"
+								onClick={this.handleClick}
 							/>
 						</div>
 					)}
 
 					<VerificationPortalForm
-						outOfBiz={this.state.outOfBiz}
+						outOfBusiness={!!outOfBusiness}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />

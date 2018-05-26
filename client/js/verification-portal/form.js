@@ -7,7 +7,7 @@ import Input from '../components/input'
 import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
-import Button from '../components/button' // importing bewBUtton Component
+import Button from '../components/button'
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
@@ -50,11 +50,11 @@ const parsePhoneNumber = phoneNumber => {
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBiz } = this.props
+		const { classes, handleSubmit, outOfBusiness } = this.props
 
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
-				<div className={outOfBiz ? classes.outOfBiz : classes.inBiz} />
+				<div className={outOfBusiness ? classes.blockFormEditing : null} />
 				<div>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
@@ -293,7 +293,7 @@ const styles = {
 	form: {
 		position: 'relative',
 	},
-	outOfBiz: {
+	blockFormEditing: {
 		'background-color': 'rgba(242,130,116,0.3)',
 		width: '104%',
 		height: '100%',
@@ -302,9 +302,6 @@ const styles = {
 		position: 'absolute',
 		top: '1%',
 		left: '-2%',
-	},
-	inBiz: {
-		display: 'none',
 	},
 }
 
