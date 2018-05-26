@@ -1,13 +1,16 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import classNames from 'classNames'
 
-const Button = ({ classes, onClick, buttonText, activeState, type, size }) => (
-	<button type={type} {className(activeState, size)} onClick={onClick}>{ buttonText }</button>
-)
+const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
+	const activeClass = activeState? classes.active:classes.inactive
+return	<button type={type} className={classNames(activeClass, classes[size], classes.default)} onClick={onClick}>{ buttonText }</button>
+}
+
 
 const styles = {
 	default: {  // this class will be applied to all button
-		 'min-width': '14em', // default button will be medium button size
+		 // 'min-width': '14em', // default button will be medium button size
 		 'outline': 'none',
      'padding': '1% 2%',
      'font-size': '.75em',
@@ -29,24 +32,15 @@ const styles = {
 		'border-color': '#f28274',
 		'background-color': '#f28274',
 	},
-	mediumButton:{
+	medium:{
 
 	},
-	largeButton:{
+	large:{
 		'min-width': '20em', // large button class need to be added to make button large
 		'padding': '2% 5%',
 		'font-size': '1.25em',
     'border-radius': '30px',
 	}
 }
-/* This function getClasses will all classes that needs to be
-applyed on the button on the bassis of input btnType
-and available classes. */
-function getClasses(btnType, classes){
-	btnType = btnType.split(' ').map((ele) => classes[ele] ).join(' ')
-	switch(btnType){
-	default :
-		  return btnType + ' ' + classes.default
-	}
-}
+
 export default injectSheet(styles)(Button)

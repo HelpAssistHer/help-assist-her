@@ -36,9 +36,10 @@ class VerificationPortal extends React.Component {
 					{shouldShowFeature(userDisplayName) && (
 						<div className={classes.leftPositionButton}>
 							<Button
-								btnType={this.state.outOfBiz ? 'orange' : 'blackAndWhite'}
+								activeState={this.state.outOfBiz}
 								buttonText="Out of Business"
 								onClick={this.handleClick}
+								size='medium'
 							/>
 						</div>
 					)}

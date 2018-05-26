@@ -336,7 +336,8 @@ class VerificationPortalForm extends Component {
 				<Button
 				        type='submit'
 								buttonText='Save Progress'
-								btnType={'blackAndWhite largeButton'}>
+								activeState={false}
+								size='large'>
 				</Button>
 			</form>
 		)
