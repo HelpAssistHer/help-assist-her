@@ -14,7 +14,7 @@ const convertNumberToTimeFormat = timeNumber => {
 
 	const timeString = String(timeNumber).padStart(4, '0')
 
-	return `${timeString.slice(0,2)}:${timeString.slice(2,4)}`
+	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
 }
 
 const updateForm = ({ changeFieldValue, resource }) => {
@@ -29,7 +29,7 @@ const updateForm = ({ changeFieldValue, resource }) => {
 		primaryContactPerson,
 		services,
 		verifiedData,
-		website
+		website,
 	} = resource
 
 	changeFieldValue('prcName', prcName)
@@ -55,7 +55,10 @@ const updateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('primaryContactPerson.lastName', _.get(primaryContactPerson, 'lastName'))
 	changeFieldValue('primaryContactPerson.phone', _.get(primaryContactPerson, 'phone'))
 	changeFieldValue('primaryContactPerson.email', _.get(primaryContactPerson, 'email'))
-	changeFieldValue('verifiedData.primaryContactPerson.verified', _.get(verifiedData, 'primaryContactPerson.verified'))
+	changeFieldValue(
+		'verifiedData.primaryContactPerson.verified',
+		_.get(verifiedData, 'primaryContactPerson.verified'),
+	)
 
 	_.forEach(services, (value, key) => {
 		changeFieldValue(`services.${key}`, 1)
@@ -86,19 +89,18 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	return (
 		<div>
 			<Button
-			  size='large'
-				buttonText='Verify Next Resource'
+				size="large"
+				buttonText="Verify Next Resource"
 				onClick={() => {
-					dispatch(getResourceToVerify())
-						.then(() => {
-							updateForm({
-								changeFieldValue,
-								resource: store.getState().resource,
-							})
+					dispatch(getResourceToVerify()).then(() => {
+						updateForm({
+							changeFieldValue,
+							resource: store.getState().resource,
 						})
+					})
 				}}
 			/>
-			<Spacer height='20px'/>
+			<Spacer height="20px" />
 		</div>
 	)
 }

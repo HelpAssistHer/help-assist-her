@@ -39,7 +39,7 @@ class VerificationPortal extends React.Component {
 								activeState={this.state.outOfBiz}
 								buttonText="Out of Business"
 								onClick={this.handleClick}
-								size='medium'
+								size="medium"
 							/>
 						</div>
 					)}

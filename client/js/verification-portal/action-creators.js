@@ -8,7 +8,7 @@ async function getOneResource() {
 		method: 'GET',
 		credentials: 'include',
 		headers: {
-			'Accept': 'application/json',
+			Accept: 'application/json',
 		},
 	})
 	return await response.json()
@@ -23,10 +23,7 @@ function getResource(resource) {
 
 export const getResourceToVerify = () => {
 	return function(dispatch) {
-		return getOneResource()
-			.then(
-				result => dispatch(getResource(result))
-			)
+		return getOneResource().then(result => dispatch(getResource(result)))
 	}
 }
 
@@ -64,8 +61,8 @@ export async function updateResource(updatedResource) {
 			method: 'PUT',
 			credentials: 'include',
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify(transformedResource),
 		})
@@ -73,7 +70,8 @@ export async function updateResource(updatedResource) {
 		const result = await response.json()
 
 		if (result.statusCode >= 400) {
-			const alertMessage = 'There was an error saving this resource. Please take a screenshot ' +
+			const alertMessage =
+				'There was an error saving this resource. Please take a screenshot ' +
 				'of this message and attach using the Help button in the lower right corner.' +
 				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(result.message)}`
 			alert(alertMessage)
@@ -83,7 +81,8 @@ export async function updateResource(updatedResource) {
 
 		return result
 	} catch (error) {
-		const alertMessage = 'There was an unexpected error saving this resource. Please take a screenshot ' +
+		const alertMessage =
+			'There was an unexpected error saving this resource. Please take a screenshot ' +
 			'of this message and attach using the Help button in the lower right corner.' +
 			`\n\nError: ${error}`
 		alert(alertMessage)
