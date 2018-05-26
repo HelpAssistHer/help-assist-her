@@ -7,7 +7,8 @@ const helpers = require('../../pregnancy-centers/schema/helpers.js')
 const {
 	addressSchemaJoi,
 	hoursSchemaJoi,
-	dateUserActionSchemaJoi } = require('../../locations/schema/joi-schema')
+	dateUserActionSchemaJoi,
+} = require('../../locations/schema/joi-schema')
 
 const fqhcSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
@@ -31,7 +32,7 @@ const fqhcSchemaJoi = Joi.object().keys({
 		fqhcName: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
 		services: dateUserActionSchemaJoi,
-		website: dateUserActionSchemaJoi
+		website: dateUserActionSchemaJoi,
 	},
 	updated: {
 		address: dateUserActionSchemaJoi,
@@ -42,7 +43,7 @@ const fqhcSchemaJoi = Joi.object().keys({
 		notes: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
 		services: dateUserActionSchemaJoi,
-		website: dateUserActionSchemaJoi
+		website: dateUserActionSchemaJoi,
 	},
 	updatedAt: Joi.date().iso(),
 	website: Joi.string().allow(null),
