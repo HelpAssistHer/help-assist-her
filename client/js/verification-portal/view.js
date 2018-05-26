@@ -26,18 +26,17 @@ class VerificationPortal extends React.Component {
 				<div className={classes.leftPositionButton}>
 					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
 				</div>
+				{shouldShowFeature(userDisplayName) && (
+					<div className={classes.rightPositionButton}>
+						<Button
+							activeState={!!outOfBusiness}
+							buttonText="Out of Business"
+							size="medium"
+							onClick={() => updateOutOfBusiness(!outOfBusiness)}
+						/>
+					</div>
+				)}
 				<div className={classes.verificationPortal}>
-					{shouldShowFeature(userDisplayName) && (
-						<div className={classes.leftPositionButton}>
-							<Button
-								activeState={!!outOfBusiness}
-								buttonText="Out of Business"
-								size="medium"
-								onClick={() => updateOutOfBusiness(!outOfBusiness)}
-							/>
-						</div>
-					)}
-
 					<VerificationPortalForm
 						outOfBusiness={!!outOfBusiness}
 						onSubmit={this.submit}
@@ -62,10 +61,14 @@ const styles = {
 		position: 'relative',
 	},
 	leftPositionButton: {
-		width: '100%',
+		'padding-top': '50px',
 		position: 'absolute',
 		left: '1%',
 		'z-index': '100',
+	},
+	rightPositionButton: {
+		float: 'right',
+		'padding-right': '50px',
 	},
 }
 
