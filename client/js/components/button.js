@@ -18,13 +18,9 @@ const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
 const styles = {
 	default: {
 		// this class will be applied to all button
-		'min-width': '14em', // default button will be medium button size
-		outline: 'none',
-		padding: '1% 2%',
+		'outline': 'none',
 		'font-size': '.75em',
 		'font-weight': 'bold',
-		'border-radius': '25px',
-		border: '2px solid #000',
 	},
 	inactive: {
 		// this class will be applied to button which will have props btnType == balckAndWhite
@@ -42,12 +38,18 @@ const styles = {
 		'border-color': '#f28274',
 		'background-color': '#f28274',
 	},
-	medium: {},
+	medium: {
+		'height': '49.69px',
+		'width': '153.18px',
+		'border': '2px solid #000000',
+		'border-radius': '100px'
+	},
 	large: {
-		'min-width': '20em', // large button class need to be added to make button large
-		padding: '2% 5%',
 		'font-size': '1.25em',
-		'border-radius': '30px',
+		'height': '48.84px',
+		'width': '280px',
+		'border': '2px solid #000000',
+		'border-radius': '100px'
 	},
 }
 
