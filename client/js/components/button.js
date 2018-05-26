@@ -1,6 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import classNames from 'classNames'
+import classNames from 'classnames'
 
 const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
 	const activeClass = activeState ? classes.active : classes.inactive
