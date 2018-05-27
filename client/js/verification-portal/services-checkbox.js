@@ -48,11 +48,12 @@ const styles = {
 			opacity: '0',
 			cursor: 'pointer',
 		},
-		'&:hover $input ~ $checkmark': {
-			'background-color': '#F48271',
-		},
 		'& input:checked ~ $checkmark': {
 			'background-color': '#F48271',
+		},
+		'&:hover $input ~ $checkmark': {
+			'background-color': '#F48271',
+			opacity: '0.5',
 		},
 	},
 }
