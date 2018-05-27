@@ -3,9 +3,9 @@ import injectSheet from 'react-jss'
 
 const ServicesCheckbox = ({ classes, input, label }) => {
 	return (
-		<div className={classes.parent}>
+		<div className={classes.root}>
 			<label className={classes.container}>
-				{label}
+				<div className={classes.labelText}>{label}</div>
 				<input type="checkbox" checked={input.value} {...input} />
 				<span className={classes.checkmark} />
 			</label>
@@ -14,15 +14,17 @@ const ServicesCheckbox = ({ classes, input, label }) => {
 }
 
 const styles = {
-	parent: {
-		// display: 'flex',
-		// 'align-items': 'baseline',
-		// 'justify-content': 'center',
+	root: {
+		width: '325px',
+	},
+	labelText: {
+		'text-align': 'left',
+		'font-weight': 'lighter',
 	},
 	checkmark: {
 		position: 'absolute',
 		top: '0',
-		left: 0,
+		left: '0',
 		height: '22px',
 		width: '22px',
 		'background-color': '#ffffff',
@@ -30,10 +32,11 @@ const styles = {
 		'border-radius': '100%',
 	},
 	container: {
+		float: 'left',
 		display: 'block',
 		position: 'relative',
-		'padding-left': '35px',
-		'margin-bottom': '12px',
+		'padding-left': '46px',
+		'margin-bottom': '20px',
 		cursor: 'pointer',
 		'font-size': '18px',
 		color: '#000000',
