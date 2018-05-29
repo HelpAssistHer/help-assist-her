@@ -55,7 +55,7 @@ class VerificationPortalForm extends Component {
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
 				<div className={outOfBusiness ? classes.blockFormEditing : null} />
-				<div>
+				<div className={classes.formSection}>
 					<h3>General Info</h3>
 					<div className={classes.parent}>
 						<Field
@@ -196,8 +196,9 @@ class VerificationPortalForm extends Component {
 				{/*</div>*/}
 				{/*</div>*/}
 
-				<div>
+				<div className={classes.formSection}>
 					<h3>Services</h3>
+					<h4>Counseling and Support</h4>
 					{_.map(services, service => {
 						return (
 							<div key={service.id}>
@@ -209,13 +210,18 @@ class VerificationPortalForm extends Component {
 							</div>
 						)
 					})}
-					<Field
-						name="otherServices"
-						component="textarea"
-						placeholder="List other services here..."
-						rows="4"
-						cols="50"
-					/>
+				</div>
+
+				<div className={classes.formSection}>
+					<div>
+						<Field
+							name="otherServices"
+							component="textarea"
+							placeholder="Add additional services not listed above here..."
+							rows="4"
+							cols="50"
+						/>
+					</div>
 					<div className={classes.parent}>
 						<Field
 							label="Services Verified"
@@ -225,7 +231,7 @@ class VerificationPortalForm extends Component {
 					</div>
 				</div>
 
-				<div>
+				<div className={classes.formSection}>
 					<h3>Hours</h3>
 
 					<label>Sunday Hours</label>
@@ -265,17 +271,20 @@ class VerificationPortalForm extends Component {
 					/>
 				</div>
 
-				<div>
+				<div className={classes.formSection}>
 					<h3>Notes</h3>
 					<Field name="notes" component="textarea" rows="4" cols="50" />
 				</div>
-				<Spacer height="50px" />
-				<Button
-					type="submit"
-					buttonText="Save Progress"
-					activeState={false}
-					size="large"
-				/>
+
+				<div className={classes.formSection}>
+					<Spacer height="50px" />
+					<Button
+						type="submit"
+						buttonText="Save Progress"
+						activeState={false}
+						size="large"
+					/>
+				</div>
 			</form>
 		)
 	}
@@ -292,6 +301,13 @@ const styles = {
 	},
 	form: {
 		position: 'relative',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'baseline',
+		'justify-content': 'space-evenly',
+	},
+	formSection: {
+		width: '100%',
 	},
 	blockFormEditing: {
 		'background-color': 'rgba(242,130,116,0.3)',
