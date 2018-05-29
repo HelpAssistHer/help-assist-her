@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form'
 
 import { UPDATE_LOGIN_STATE, GET_INITIAL_DATA } from './action-types'
 import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/action-types'
+import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
 
 const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
@@ -25,6 +26,11 @@ const resourceReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_RESOURCE_TO_VERIFY:
 			return _.assign({}, state, action.resource)
+		case OUT_OF_BUSINESS:
+			return {
+				...state,
+				outOfBusiness: action.outOfBusiness,
+			}
 		default:
 			return state
 	}
