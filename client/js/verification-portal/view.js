@@ -5,47 +5,36 @@ import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
-import Button from '../components/button' // importing bewBUtton Component
-import { shouldShowFeature } from '../hah-app/helpers'
+import Button from '../components/button'
+import { updateOutOfBusiness } from './out-of-business/action-creators'
 
 class VerificationPortal extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			outOfBiz: false, // addition of variable to keep track of out of business status.
-		}
-		this.handleClick = this.handleClick.bind(this)
-	}
-	handleClick = () => {
-		// toggling out of business status
-		let { outOfBiz } = this.state
-		this.setState({ outOfBiz: !outOfBiz })
 	}
 	submit = values => {
 		updateResource(values)
 	}
 	render() {
-		const userDisplayName = _.get(this.props, 'initialData.userDisplayName')
-		const { classes, changeFieldValue } = this.props
+		const { classes, changeFieldValue, resource } = this.props
+		const { outOfBusiness } = resource
+
 		return (
 			<div>
 				<div className={classes.leftPositionButton}>
 					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
 				</div>
+				<div className={classes.rightPositionButton}>
+					<Button
+						activeState={!!outOfBusiness}
+						buttonText="Out of Business"
+						size="medium"
+						onClick={() => updateOutOfBusiness(!outOfBusiness)}
+					/>
+				</div>
 				<div className={classes.verificationPortal}>
-					{shouldShowFeature(userDisplayName) && (
-						<div className={classes.leftPositionButton}>
-							<Button
-								activeState={this.state.outOfBiz}
-								buttonText="Out of Business"
-								onClick={this.handleClick}
-								size="medium"
-							/>
-						</div>
-					)}
-
 					<VerificationPortalForm
-						outOfBiz={this.state.outOfBiz}
+						outOfBusiness={!!outOfBusiness}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />
@@ -68,10 +57,14 @@ const styles = {
 		position: 'relative',
 	},
 	leftPositionButton: {
-		width: '100%',
+		'padding-top': '50px',
 		position: 'absolute',
 		left: '1%',
 		'z-index': '100',
+	},
+	rightPositionButton: {
+		float: 'right',
+		'padding-right': '50px',
 	},
 }
 

@@ -4,8 +4,8 @@ import _ from 'lodash'
 
 import { getResourceToVerify } from './action-creators'
 import Button from '../components/button'
-import Spacer from '../components/spacer'
 import { store } from '../hah-app/index'
+import { updateOutOfBusinessActionCreator } from './out-of-business/action-creators'
 
 const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
@@ -17,7 +17,7 @@ const convertNumberToTimeFormat = timeNumber => {
 	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
 }
 
-const updateForm = ({ changeFieldValue, resource }) => {
+const populateForm = ({ changeFieldValue, resource }) => {
 	let {
 		prcName,
 		email,
@@ -167,15 +167,17 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 				size="large"
 				buttonText="Verify Next Resource"
 				onClick={() => {
-					dispatch(getResourceToVerify()).then(() => {
-						updateForm({
+					dispatch(getResourceToVerify()).then(result => {
+						dispatch(
+							updateOutOfBusinessActionCreator(!!result.resource.outOfBusiness),
+						)
+						populateForm({
 							changeFieldValue,
 							resource: store.getState().resource,
 						})
 					})
 				}}
 			/>
-			<Spacer height="20px" />
 		</div>
 	)
 }
