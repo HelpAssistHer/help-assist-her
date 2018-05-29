@@ -19,8 +19,8 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		.isValid()
 		.allow(null),
 	address: addressSchemaJoi,
-	outOfBusiness: Joi.boolean(),
 	createdAt: Joi.date().iso(),
+	doNotList: Joi.boolean(),
 	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
 	inVerification: objectIdValidator
@@ -30,6 +30,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	prcName: Joi.string(),
 	notes: Joi.string(),
 	otherServices: Joi.string(),
+	outOfBusiness: Joi.boolean(),
 	phone: phoneValidator.phone().validate(),
 	primaryContactPerson: personSchemaJoi,
 	services: helpers.getPregnancyCenterServicesSchema(Joi.boolean()),
@@ -45,12 +46,13 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	},
 	updated: {
 		address: dateUserActionSchemaJoi,
-		outOfBusiness: dateUserActionSchemaJoi,
+		doNotList: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
-		prcName: dateUserActionSchemaJoi,
 		notes: dateUserActionSchemaJoi,
+		outOfBusiness: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
+		prcName: dateUserActionSchemaJoi,
 		primaryContactPerson: dateUserActionSchemaJoi,
 		services: dateUserActionSchemaJoi,
 		website: dateUserActionSchemaJoi,

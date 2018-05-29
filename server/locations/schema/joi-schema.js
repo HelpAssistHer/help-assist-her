@@ -86,6 +86,10 @@ const outOfBusinessSchemaJoi = Joi.object().keys({
 	outOfBusiness: Joi.boolean(),
 })
 
+const doNotListSchemaJoi = Joi.object().keys({
+	doNotList: Joi.boolean(),
+})
+
 module.exports = {
 	pointSchemaJoi,
 	addressSchemaJoi,
@@ -93,4 +97,5 @@ module.exports = {
 	hoursSchemaJoi,
 	dateUserActionSchemaJoi,
 	outOfBusinessSchemaJoi,
+	doNotListSchemaJoi,
 }
