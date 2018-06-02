@@ -8,6 +8,7 @@ import ServicesCheckbox from './services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import Button from '../components/button'
+import Heading from '../components/heading'
 import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
@@ -56,7 +57,7 @@ class VerificationPortalForm extends Component {
 			<form className={classes.form} onSubmit={handleSubmit}>
 				<div className={outOfBusiness ? classes.blockFormEditing : null} />
 				<div className={classes.formSection}>
-					<h3>General Info</h3>
+					<Heading text="GENERAL INFORMATION" />
 					<div className={classes.parent}>
 						<Field
 							placeholder="Name of Pregnancy Resource Center"
@@ -197,7 +198,7 @@ class VerificationPortalForm extends Component {
 				{/*</div>*/}
 
 				<div className={classes.formSection}>
-					<h3>Services</h3>
+					<Heading text="SERVICES" />
 					<h4>Counseling and Support</h4>
 					{_.map(services, service => {
 						return (
@@ -232,8 +233,8 @@ class VerificationPortalForm extends Component {
 				</div>
 
 				<div className={classes.formSection}>
-					<h3>Hours</h3>
-
+					<Heading text="HOURS" />
+					<Spacer height="50px" />
 					<label>Sunday Hours</label>
 					<Field name="hours[0].open" component={Input} type="time" />
 					<Field name="hours[0].close" component={Input} type="time" />
@@ -272,7 +273,8 @@ class VerificationPortalForm extends Component {
 				</div>
 
 				<div className={classes.formSection}>
-					<h3>Notes</h3>
+					<Heading text="NOTES" />
+					<Spacer height="50px" />
 					<Field name="notes" component="textarea" rows="4" cols="50" />
 				</div>
 
