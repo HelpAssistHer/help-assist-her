@@ -48,7 +48,7 @@ class VerificationPortal extends React.Component {
 							<div className={classNames(classes.leftPositionButton, classes.moveDown)}>
 								<Button
 									activeState={this.state.doNotList}
-									buttonText="Do not list"
+									buttonText="Do Not List"
 									onClick={() => this.toggleState('doNotList')}
 									size="medium"
 								/>
