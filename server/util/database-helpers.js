@@ -538,6 +538,54 @@ module.exports = {
 		)
 		return populatePrimaryContact(newPregnancyCenterMongooseObj)
 	},
+	updatePregnancyCenterDoNotList: async (
+		userId,
+		pregnancyCenterId,
+		doNotListObj,
+	) => {
+		// validate doNotListObj as true or false
+		const validatedDoNotListObj = await validateDocument(
+			locationSchemaJoi.doNotListSchemaJoi,
+			doNotListObj,
+		)
+		const newValue = validatedDoNotListObj.doNotList
+
+		// get pregnancyCenter to get oldValue
+		const oldPregnancyCenterObj = await getPregnancyCenterObj(pregnancyCenterId)
+		const oldValue = oldPregnancyCenterObj.doNotList
+
+		// if no change, return early with the current pregnancyCenter obj
+		if (oldValue === newValue) {
+			return oldPregnancyCenterObj
+		}
+
+		const newPregnancyCenterObj = {
+			doNotList: newValue,
+			updated: {
+				doNotList: {
+					userId: userId,
+					date: new Date().toISOString(),
+				},
+			},
+		}
+
+		// create separate history document
+		await createPregnancyCenterHistory(
+			pregnancyCenterId,
+			'doNotList',
+			newValue,
+			oldValue,
+			userId,
+		)
+
+		// update
+		const newPregnancyCenterMongooseObj = await findByIdAndUpdate(
+			PregnancyCenterModel,
+			pregnancyCenterId,
+			newPregnancyCenterObj,
+		)
+		return populatePrimaryContact(newPregnancyCenterMongooseObj)
+	},
 	updateFqhc: (userId, fqhcId, fqhcObj) => {
 		return new P(async (resolve, reject) => {
 			try {
@@ -594,6 +642,39 @@ module.exports = {
 
 		// create separate history document
 		await createFqhcHistory(fqhcId, 'outOfBusiness', newValue, oldValue, userId)
+
+		// update
+		return findByIdAndUpdate(FQHCModel, fqhcId, newFqhcObj)
+	},
+	updateFqhcDoNotList: async (userId, fqhcId, doNotListObj) => {
+		// validate doNotListObj as true or false
+		const validatedDoNotListObj = await validateDocument(
+			locationSchemaJoi.doNotListSchemaJoi,
+			doNotListObj,
+		)
+		const newValue = validatedDoNotListObj.doNotList
+
+		// get fqhc to get oldValue
+		const oldFqhcObj = await getFqhcObj(fqhcId)
+		const oldValue = oldFqhcObj.doNotList
+
+		// if no change, return early with the current fqhc obj
+		if (oldValue === newValue) {
+			return oldFqhcObj
+		}
+
+		const newFqhcObj = {
+			doNotList: newValue,
+			updated: {
+				doNotList: {
+					userId: userId,
+					date: new Date().toISOString(),
+				},
+			},
+		}
+
+		// create separate history document
+		await createFqhcHistory(fqhcId, 'doNotList', newValue, oldValue, userId)
 
 		// update
 		return findByIdAndUpdate(FQHCModel, fqhcId, newFqhcObj)
