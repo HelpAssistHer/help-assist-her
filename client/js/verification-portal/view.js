@@ -89,7 +89,7 @@ const styles = {
 		right: '5%',
 	},
 	moveDown: {
-		top: '20%',
+		top: '90px',
 	},
 }
 
