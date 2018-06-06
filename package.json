@@ -23,7 +23,7 @@
 		"precommit": "pretty-quick --staged",
 		"start": "NODE_ENV=localhost nodemon ./server/server.js",
 		"startdb": "mongod --dbpath ~/.hah/data",
-		"test": "NODE_ENV=test mocha 'server/test/test.js'",
+		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
 		"test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
 		"wds": "webpack-dev-server --content-base public/"
 	},
