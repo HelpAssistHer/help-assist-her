@@ -29,50 +29,50 @@ exports.counselingServices = [
 	},
 ]
 
-exports.exams = [
+exports.examServices = [
 	{
-		id: '',
-		name: '',
+		id: 'breastExams',
+		name: 'Breast Exams (Clinical)',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'cervicalCancerScreenings',
+		name: 'Cervical Cancer Screenings',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'cervicalCancerPrevention',
+		name: 'Cervical Cancer Prevention (HPV Vaccine)',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'mammography',
+		name: 'Mammography (or referral)',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'papSmear',
+		name: 'Pap Smear Test',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'pelvicExam',
+		name: 'Pelvic Exam / Colposcopy',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'hivTreatmentServices',
+		name: 'HIV Treatment Services',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'utiTestingTreatment',
+		name: 'UTI Testing and Treatment',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'vaginalInfectionTestingTreatment',
+		name: 'Vaginal Infection Testing and Treatment',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'ultrasound',
+		name: 'Ultrasound',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'wellWomanCare',
+		name: 'Well Woman Care',
 	},
 ]
 
@@ -210,13 +210,5 @@ exports.services = [
 	{
 		id: 'stdTesting',
 		name: 'STD Testing',
-	},
-	{
-		id: 'ultrasound',
-		name: 'Ultrasound',
-	},
-	{
-		id: 'wellWomanCare',
-		name: 'Well Woman Care',
 	},
 ]
