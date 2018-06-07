@@ -3,14 +3,13 @@ import injectSheet from 'react-jss'
 
 import Spacer from '../../components/spacer'
 import ServiceFields from './service-fields'
-import { counselingServices } from '../../../../server/pregnancy-centers/pregnancy-center-services'
 
-const ServicesGroup = ({ classes, heading }) => {
+const ServicesGroup = ({ classes, heading, listOfServices }) => {
 	return (
 		<div>
 			<div className={classes.heading}>{heading}</div>
 			<Spacer height="20px" />
-			<ServiceFields listOfServices={counselingServices} />
+			<ServiceFields listOfServices={listOfServices} />
 		</div>
 	)
 }

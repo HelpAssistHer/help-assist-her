@@ -8,6 +8,10 @@ import VerifiedCheckbox from './verified-checkbox'
 import Button from '../components/button'
 import Heading from '../components/heading'
 import ServicesGroup from './components/services-group'
+import {
+	counselingServices,
+	pregnancyTestServices,
+} from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -199,7 +203,14 @@ class VerificationPortalForm extends Component {
 				<div className={classes.formSection}>
 					<Heading text="SERVICES" />
 					<Spacer height="53px" />
-					<ServicesGroup heading="Counseling and Support" />
+					<ServicesGroup
+						heading="Counseling and Support"
+						listOfServices={counselingServices}
+					/>
+					<ServicesGroup
+						heading="Pregnancy Tests"
+						listOfServices={pregnancyTestServices}
+					/>
 				</div>
 
 				<div className={classes.formSection}>

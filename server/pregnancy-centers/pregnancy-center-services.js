@@ -103,22 +103,22 @@ exports.education = [
 	},
 ]
 
-exports.pregnancyTests = [
+exports.pregnancyTestServices = [
 	{
-		id: '',
-		name: '',
+		id: 'freePregnancyTest',
+		name: 'Free Pregnancy Test',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'medicalQualityPregnancyTest',
+		name: 'Medical Quality Pregnancy Test',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'selfAdministeredPregnancyTest',
+		name: 'Self-Administered Pregnancy Test',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'proofOfPregnancy',
+		name: 'Proof of Pregnancy',
 	},
 ]
 
@@ -202,14 +202,7 @@ exports.services = [
 		id: 'prenatalCare',
 		name: 'Prenatal Care',
 	},
-	{
-		id: 'proofOfPregnancy',
-		name: 'Proof of Pregnancy',
-	},
-	{
-		id: 'selfAdministeredPregnancyTest',
-		name: 'Self-Administered Pregnancy Test',
-	},
+
 	{
 		id: 'spiritualDirection',
 		name: 'Spiritual Direction',
