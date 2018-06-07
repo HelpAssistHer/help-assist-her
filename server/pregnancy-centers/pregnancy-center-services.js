@@ -1,4 +1,171 @@
-module.exports = [
+exports.counseling = [
+	{
+		id: 'familyPlanningCounselingAndServices',
+		name: 'Family Planning Counseling and Services',
+	},
+	{
+		id: 'infertilityCounseling',
+		name: 'Infertility Counseling',
+	},
+	{
+		id: 'miscarriageCounseling',
+		name: 'Miscarriage Counseling',
+	},
+	{
+		id: 'peerCounseling',
+		name: 'Peer Counseling and/or Pregnancy Support Groups',
+	},
+	{
+		id: 'postAbortionCounseling',
+		name: 'Post-Abortion Counseling',
+	},
+	{
+		id: 'sexualViolenceCounseling',
+		name: 'Sexual Violence/Assault/Abuse Counseling',
+	},
+	{
+		id: 'spiritualSupport',
+		name: 'Spiritual Support',
+	},
+]
+
+exports.exams = [
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+]
+
+exports.education = [
+	{
+		id: 'abortionPillReversal',
+		name: 'Abortion Pill Reversal',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+]
+
+exports.pregnancyTests = [
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+]
+
+exports.referrals = [
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+	{
+		id: '',
+		name: '',
+	},
+]
+
+exports.services = [
 	{
 		id: 'abortionPillReversal',
 		name: 'Abortion Pill Reversal',
@@ -58,9 +225,5 @@ module.exports = [
 	{
 		id: 'wellWomanCare',
 		name: 'Well Woman Care',
-	},
-	{
-		id: 'other',
-		name: 'Other Services',
 	},
 ]

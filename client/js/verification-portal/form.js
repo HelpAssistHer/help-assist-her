@@ -9,7 +9,8 @@ import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import Button from '../components/button'
 import Heading from '../components/heading'
-import services from '../../../server/pregnancy-centers/pregnancy-center-services'
+import ServicesGroup from './components/services-group'
+import { services } from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -199,7 +200,8 @@ class VerificationPortalForm extends Component {
 
 				<div className={classes.formSection}>
 					<Heading text="SERVICES" />
-					<h4>Counseling and Support</h4>
+					<Spacer height="53px" />
+					<ServicesGroup heading="Counseling and Support" />
 					{_.map(services, service => {
 						return (
 							<div key={service.id}>
