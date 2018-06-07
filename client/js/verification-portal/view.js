@@ -2,6 +2,8 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import GetResourceToVerifyButton from './get-resource-to-verify-button'
+import HeaderSuccess from './components/header-success'
+import LoginButton from '../authentication/facebook-login-button'
 import Spacer from '../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
@@ -21,8 +23,11 @@ class VerificationPortal extends React.Component {
 
 		return (
 			<div>
+				<HeaderSuccess />
 				<div className={classes.leftPositionButton}>
 					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
+					<Spacer height="25px" />
+					<LoginButton />
 				</div>
 				<div className={classes.rightPositionButton}>
 					<Button
