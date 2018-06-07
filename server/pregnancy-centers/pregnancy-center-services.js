@@ -1,4 +1,6 @@
-exports.counselingServices = [
+'use strict'
+
+const counselingServices = [
 	{
 		id: 'familyPlanningCounselingAndServices',
 		name: 'Family Planning Counseling and Services',
@@ -29,7 +31,7 @@ exports.counselingServices = [
 	},
 ]
 
-exports.examServices = [
+const examServices = [
 	{
 		id: 'breastExams',
 		name: 'Breast Exams (Clinical)',
@@ -76,7 +78,7 @@ exports.examServices = [
 	},
 ]
 
-exports.educationServices = [
+const educationServices = [
 	{
 		id: 'abortionEducation',
 		name: 'Abortion Education',
@@ -103,7 +105,7 @@ exports.educationServices = [
 	},
 ]
 
-exports.otherServices = [
+const otherServices = [
 	{
 		id: 'coordinatedChildrensServicesInitiatives',
 		name: "CCSI (Coordinated Children's Services Initiatives)",
@@ -134,7 +136,7 @@ exports.otherServices = [
 	},
 ]
 
-exports.pregnancyTestServices = [
+const pregnancyTestServices = [
 	{
 		id: 'freePregnancyTest',
 		name: 'Free Pregnancy Test',
@@ -153,7 +155,7 @@ exports.pregnancyTestServices = [
 	},
 ]
 
-exports.referralServices = [
+const referralServices = [
 	{
 		id: 'adoptionAssistance',
 		name: 'Adoption Assistance',
@@ -196,50 +198,66 @@ exports.referralServices = [
 	},
 ]
 
-exports.services = [
-	{
-		id: 'abortionPillReversal',
-		name: 'Abortion Pill Reversal',
-	},
-	{
-		id: 'licensedProfessionalCounseling',
-		name: 'Licensed Professional Counseling',
-	},
-	{
-		id: 'materialAssistance',
-		name: 'Material Assistance',
-	},
-	{
-		id: 'medicalQualityPregnancyTest',
-		name: 'Medical Quality Pregnancy Test',
-	},
-	{
-		id: 'naProTechnology',
-		name: 'NaProTECHNOLOGY',
-	},
-	{
-		id: 'parentingClasses',
-		name: 'Parenting Classes',
-	},
-	{
-		id: 'peerCounseling',
-		name: 'Peer Counseling',
-	},
-	{
-		id: 'postAbortionCounseling',
-		name: 'Post-Abortion Counseling',
-	},
-	{
-		id: 'prenatalCare',
-		name: 'Prenatal Care',
-	},
+// exports.services = [
+// 	{
+// 		id: 'abortionPillReversal',
+// 		name: 'Abortion Pill Reversal',
+// 	},
+// 	{
+// 		id: 'licensedProfessionalCounseling',
+// 		name: 'Licensed Professional Counseling',
+// 	},
+// 	{
+// 		id: 'materialAssistance',
+// 		name: 'Material Assistance',
+// 	},
+// 	{
+// 		id: 'medicalQualityPregnancyTest',
+// 		name: 'Medical Quality Pregnancy Test',
+// 	},
+// 	{
+// 		id: 'naProTechnology',
+// 		name: 'NaProTECHNOLOGY',
+// 	},
+// 	{
+// 		id: 'parentingClasses',
+// 		name: 'Parenting Classes',
+// 	},
+// 	{
+// 		id: 'peerCounseling',
+// 		name: 'Peer Counseling',
+// 	},
+// 	{
+// 		id: 'postAbortionCounseling',
+// 		name: 'Post-Abortion Counseling',
+// 	},
+// 	{
+// 		id: 'prenatalCare',
+// 		name: 'Prenatal Care',
+// 	},
+//
+// 	{
+// 		id: 'spiritualDirection',
+// 		name: 'Spiritual Direction',
+// 	},
+// 	{
+// 		id: 'stdTesting',
+// 		name: 'STD Testing',
+// 	},
+// ]
 
-	{
-		id: 'spiritualDirection',
-		name: 'Spiritual Direction',
-	},
-	{
-		id: 'stdTesting',
-		name: 'STD Testing',
-	},
+exports.counselingServices = counselingServices
+exports.educationServices = educationServices
+exports.examServices = examServices
+exports.otherServices = otherServices
+exports.pregnancyTestServices = pregnancyTestServices
+exports.referralServices = referralServices
+
+exports.pregnancyCenterServices = [
+	...counselingServices,
+	...educationServices,
+	...examServices,
+	...otherServices,
+	...pregnancyTestServices,
+	...referralServices,
 ]
