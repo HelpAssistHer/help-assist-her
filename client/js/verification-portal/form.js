@@ -10,6 +10,7 @@ import Heading from '../components/heading'
 import ServicesGroup from './components/services-group'
 import {
 	counselingServices,
+	educationServices,
 	pregnancyTestServices,
 } from '../../../server/pregnancy-centers/pregnancy-center-services'
 
@@ -210,6 +211,10 @@ class VerificationPortalForm extends Component {
 					<ServicesGroup
 						heading="Pregnancy Tests"
 						listOfServices={pregnancyTestServices}
+					/>
+					<ServicesGroup
+						heading="Education and Classes"
+						listOfServices={educationServices}
 					/>
 				</div>
 

@@ -76,30 +76,30 @@ exports.exams = [
 	},
 ]
 
-exports.education = [
+exports.educationServices = [
 	{
-		id: 'abortionPillReversal',
-		name: 'Abortion Pill Reversal',
+		id: 'abortionEducation',
+		name: 'Abortion Education',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'abortionAlternativeEducation',
+		name: 'Abortion Alternative Education',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'fetalDevelopmentEducation',
+		name: 'Fetal Development Education',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'fertilityCounselingPrevention',
+		name: 'fertility Counseling/Prevention',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'parentingClasses',
+		name: 'Parenting Classes',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'stdEducation',
+		name: 'Sexually Transmitted Diseases Education',
 	},
 ]
 
