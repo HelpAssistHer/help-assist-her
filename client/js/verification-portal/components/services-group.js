@@ -6,7 +6,7 @@ import ServiceFields from './service-fields'
 
 const ServicesGroup = ({ classes, heading, listOfServices }) => {
 	return (
-		<div>
+		<div className={classes.group}>
 			<div className={classes.heading}>{heading}</div>
 			<Spacer height="20px" />
 			<ServiceFields listOfServices={listOfServices} />
@@ -15,6 +15,9 @@ const ServicesGroup = ({ classes, heading, listOfServices }) => {
 }
 
 const styles = {
+	group: {
+		padding: '0 66px 40px 0',
+	},
 	heading: {
 		color: '#000000',
 		'font-size': '18px',

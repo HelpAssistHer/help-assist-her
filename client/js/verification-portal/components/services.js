@@ -13,29 +13,36 @@ import {
 
 const Services = ({ classes }) => {
 	return (
-		<div>
+		<div className={classes.servicesSection}>
 			<ServicesGroup
 				heading="Counseling and Support"
 				listOfServices={counselingServices}
 			/>
 			<ServicesGroup
-				heading="Pregnancy Tests"
-				listOfServices={pregnancyTestServices}
-			/>
-			<ServicesGroup
 				heading="Education and Classes"
 				listOfServices={educationServices}
 			/>
-			<ServicesGroup heading="Referrals" listOfServices={referralServices} />
 			<ServicesGroup
 				heading="Exams, Screenings, and Testings"
 				listOfServices={examServices}
 			/>
+			<ServicesGroup
+				heading="Pregnancy Tests"
+				listOfServices={pregnancyTestServices}
+			/>
+			<ServicesGroup heading="Referrals" listOfServices={referralServices} />
 			<ServicesGroup heading="Other Services" listOfServices={otherServices} />
 		</div>
 	)
 }
 
-const styles = {}
+const styles = {
+	servicesSection: {
+		display: 'flex',
+		'flex-direction': 'row',
+		'flex-wrap': 'wrap',
+		'justify-content': 'flex-end',
+	},
+}
 
 export default injectSheet(styles)(Services)
