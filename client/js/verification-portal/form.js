@@ -12,6 +12,7 @@ import {
 	counselingServices,
 	educationServices,
 	examServices,
+	otherServices,
 	pregnancyTestServices,
 	referralServices,
 } from '../../../server/pregnancy-centers/pregnancy-center-services'
@@ -225,6 +226,10 @@ class VerificationPortalForm extends Component {
 					<ServicesGroup
 						heading="Exams, Screenings, and Testings"
 						listOfServices={examServices}
+					/>
+					<ServicesGroup
+						heading="Other Services"
+						listOfServices={otherServices}
 					/>
 				</div>
 

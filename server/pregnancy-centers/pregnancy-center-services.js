@@ -103,6 +103,37 @@ exports.educationServices = [
 	},
 ]
 
+exports.otherServices = [
+	{
+		id: 'coordinatedChildrensServicesInitiatives',
+		name: "CCSI (Coordinated Children's Services Initiatives)",
+	},
+	{
+		id: 'childGroupAngerManagement',
+		name: 'Child Group Anger Management (12-16)',
+	},
+	{
+		id: 'imageGroupSelfHarmingBehavior',
+		name: 'IMAGE Group Self-harming behavior (12-18)',
+	},
+	{
+		id: 'projectIris',
+		name: 'Project Iris',
+	},
+	{
+		id: 'projectRachel',
+		name: 'Project Rachel',
+	},
+	{
+		id: 'seawayHouse',
+		name: 'Seaway House',
+	},
+	{
+		id: 'leapToSuccessMentoring',
+		name: 'LEAP to Success Mentoring',
+	},
+]
+
 exports.pregnancyTestServices = [
 	{
 		id: 'freePregnancyTest',
