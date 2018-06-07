@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 import _ from 'lodash'
 
 import Input from '../components/input'
-import ServicesCheckbox from './services-checkbox'
+import ServicesCheckbox from './components/services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import Button from '../components/button'
