@@ -122,46 +122,46 @@ exports.pregnancyTestServices = [
 	},
 ]
 
-exports.referrals = [
+exports.referralServices = [
 	{
-		id: '',
-		name: '',
+		id: 'adoptionAssistance',
+		name: 'Adoption Assistance',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'materialAssistance',
+		name: 'Material Assistance',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'educationalAssistance',
+		name: 'Educational Assistance / GED',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'financialAssistance',
+		name: 'Financial Assistance',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'careerAssistance',
+		name: 'Career Assistance / Job Search',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'doctorPrimarySpecialtyCare',
+		name: 'Doctor / Primary and Specialty Care',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'legal',
+		name: 'Legal',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'licensedProfessionalCounselorReferral',
+		name: 'Referral - Licensed Professional Counselors',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'socialServices',
+		name: 'Social Services',
 	},
 	{
-		id: '',
-		name: '',
+		id: 'wic',
+		name: 'WIC (Women, Infant, and Child)',
 	},
 ]
 

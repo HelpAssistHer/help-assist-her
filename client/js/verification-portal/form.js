@@ -12,6 +12,7 @@ import {
 	counselingServices,
 	educationServices,
 	pregnancyTestServices,
+	referralServices,
 } from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
@@ -215,6 +216,10 @@ class VerificationPortalForm extends Component {
 					<ServicesGroup
 						heading="Education and Classes"
 						listOfServices={educationServices}
+					/>
+					<ServicesGroup
+						heading="Referrals"
+						listOfServices={referralServices}
 					/>
 				</div>
 
