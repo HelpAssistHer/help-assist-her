@@ -202,7 +202,6 @@ class VerificationPortalForm extends Component {
 					<Services />
 				</div>
 
-				<Spacer height="100px" />
 				<div className={classes.formSection}>
 					<div>
 						<Field
