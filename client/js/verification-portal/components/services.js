@@ -15,16 +15,16 @@ const Services = ({ classes }) => {
 	return (
 		<div className={classes.servicesSection}>
 			<ServicesGroup
+				heading="Exams, Screenings, and Testings"
+				listOfServices={examServices}
+			/>
+			<ServicesGroup
 				heading="Counseling and Support"
 				listOfServices={counselingServices}
 			/>
 			<ServicesGroup
 				heading="Education and Classes"
 				listOfServices={educationServices}
-			/>
-			<ServicesGroup
-				heading="Exams, Screenings, and Testings"
-				listOfServices={examServices}
 			/>
 			<ServicesGroup
 				heading="Pregnancy Tests"
