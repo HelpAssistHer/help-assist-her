@@ -32,6 +32,7 @@ const styles = {
 		'border-radius': '100%',
 	},
 	container: {
+		width: '90%',
 		float: 'left',
 		display: 'block',
 		position: 'relative',
