@@ -1,4 +1,4 @@
-exports.counseling = [
+exports.counselingServices = [
 	{
 		id: 'familyPlanningCounselingAndServices',
 		name: 'Family Planning Counseling and Services',

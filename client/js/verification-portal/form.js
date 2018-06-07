@@ -1,16 +1,13 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
-import _ from 'lodash'
 
 import Input from '../components/input'
-import ServicesCheckbox from './components/services-checkbox'
 import Spacer from '../components/spacer'
 import VerifiedCheckbox from './verified-checkbox'
 import Button from '../components/button'
 import Heading from '../components/heading'
 import ServicesGroup from './components/services-group'
-import { services } from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -198,21 +195,11 @@ class VerificationPortalForm extends Component {
 				{/*</div>*/}
 				{/*</div>*/}
 
+				<Spacer height="83px" />
 				<div className={classes.formSection}>
 					<Heading text="SERVICES" />
 					<Spacer height="53px" />
 					<ServicesGroup heading="Counseling and Support" />
-					{_.map(services, service => {
-						return (
-							<div key={service.id}>
-								<Field
-									label={service.name}
-									name={`services.${service.id}`}
-									component={ServicesCheckbox}
-								/>
-							</div>
-						)
-					})}
 				</div>
 
 				<div className={classes.formSection}>
