@@ -1,27 +1,16 @@
 import React from 'react'
-import { Field } from 'redux-form'
 import injectSheet from 'react-jss'
 
 import Spacer from '../../components/spacer'
+import ServiceFields from './service-fields'
 import { counselingServices } from '../../../../server/pregnancy-centers/pregnancy-center-services'
-import ServicesCheckbox from './services-checkbox'
 
 const ServicesGroup = ({ classes, heading }) => {
 	return (
 		<div>
 			<div className={classes.heading}>{heading}</div>
 			<Spacer height="20px" />
-			{_.map(counselingServices, service => {
-				return (
-					<div key={service.id}>
-						<Field
-							label={service.name}
-							name={`services.${service.id}`}
-							component={ServicesCheckbox}
-						/>
-					</div>
-				)
-			})}
+			<ServiceFields listOfServices={counselingServices} />
 		</div>
 	)
 }
