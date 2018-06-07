@@ -91,7 +91,7 @@ exports.educationServices = [
 	},
 	{
 		id: 'fertilityCounselingPrevention',
-		name: 'fertility Counseling/Prevention',
+		name: 'Fertility Counseling/Prevention',
 	},
 	{
 		id: 'parentingClasses',
