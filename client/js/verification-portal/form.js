@@ -51,11 +51,15 @@ const parsePhoneNumber = phoneNumber => {
 
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBusiness } = this.props
+		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
 
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
-				<div className={outOfBusiness ? classes.blockFormEditing : null} />
+				<div
+					className={
+						outOfBusiness || doNotList ? classes.blockFormEditing : null
+					}
+				/>
 				<div className={classes.formSection}>
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>Verified</div>
