@@ -1,6 +1,5 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import classNames from 'classnames'
 
 const Heading = ({ classes, text }) => {
 	return <div className={classes.headingText}>{text}</div>

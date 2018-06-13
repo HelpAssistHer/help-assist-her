@@ -64,16 +64,18 @@ class VerificationPortalForm extends Component {
 					<Heading text="GENERAL INFORMATION" />
 					<div className={classes.parent}>
 						<Field
-							placeholder="Name of Pregnancy Resource Center"
-							name="prcName"
-							component={Input}
-							type="text"
-						/>
-						<Field
 							label="Name Verified"
 							name="verifiedData.prcName.verified"
 							component={VerifiedCheckbox}
 						/>
+						<div className={classes.pregnancyCenterName}>
+							<Field
+								placeholder="Name of Pregnancy Resource Center"
+								name="prcName"
+								component={Input}
+								type="text"
+							/>
+						</div>
 					</div>
 
 					<Field
@@ -324,6 +326,10 @@ const styles = {
 		position: 'absolute',
 		top: '1%',
 		left: '-2%',
+	},
+	pregnancyCenterName: {
+		'font-size': '30px',
+		'line-height': '37px',
 	},
 }
 
