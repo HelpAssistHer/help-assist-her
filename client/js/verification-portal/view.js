@@ -9,10 +9,20 @@ import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import Button from '../components/button'
 import { updateOutOfBusiness } from './out-of-business/action-creators'
+import classNames from 'classnames'
 
 class VerificationPortal extends React.Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			doNotList: false, // addition of variable to keep track of listing status
+		}
+		this.toggleState = this.toggleState.bind(this)
+	}
+	toggleState = key => {
+		// toggling state by passing key
+		let currentState = this.state[key]
+		this.setState({ [key]: !currentState })
 	}
 	submit = values => {
 		updateResource(values)
@@ -31,15 +41,24 @@ class VerificationPortal extends React.Component {
 				</div>
 				<div className={classes.rightPositionButton}>
 					<Button
-						activeState={!!outOfBusiness}
+						activeState={outOfBusiness}
 						buttonText="Out of Business"
 						size="medium"
 						onClick={() => updateOutOfBusiness(!outOfBusiness)}
 					/>
+					<div className={classes.moveDown}>
+						<Button
+							activeState={this.state.doNotList}
+							buttonText="Do Not List"
+							size="medium"
+							onClick={() => this.toggleState('doNotList')}
+						/>
+					</div>
 				</div>
 				<div className={classes.verificationPortal}>
 					<VerificationPortalForm
-						outOfBusiness={!!outOfBusiness}
+						outOfBusiness={outOfBusiness}
+						doNotList={this.state.doNotList}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />
@@ -68,8 +87,12 @@ const styles = {
 		'z-index': '100',
 	},
 	rightPositionButton: {
-		float: 'right',
-		'padding-right': '50px',
+		display: 'block',
+		position: 'absolute',
+		right: '5%',
+	},
+	moveDown: {
+		'margin-top': '25px',
 	},
 }
 
