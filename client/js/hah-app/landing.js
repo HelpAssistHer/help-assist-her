@@ -5,7 +5,9 @@ class Landing extends React.Component {
 	render() {
 		return (
 			<div className="landing">
-				<Link to="/verification">Verification Portal</Link>
+				<Link to="/verification/pregnancy-resource-center">
+					Pregnancy Resource Center Verification
+				</Link>
 			</div>
 		)
 	}
