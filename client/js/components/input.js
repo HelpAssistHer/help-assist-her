@@ -3,7 +3,7 @@ import injectSheet from 'react-jss'
 
 import Spacer from '../components/spacer'
 
-const Input = ({ classes, input, label, type, placeholder }) => {
+const Input = ({ classes, input, type, placeholder }) => {
 	return (
 		<div className={classes.child}>
 			<input
@@ -12,7 +12,6 @@ const Input = ({ classes, input, label, type, placeholder }) => {
 				placeholder={placeholder}
 				{...input}
 			/>
-			<Spacer height="10px" />
 		</div>
 	)
 }
@@ -21,13 +20,12 @@ const styles = {
 	child: {
 		display: 'flex',
 		'align-items': 'flex-start',
-		width: '100%',
 	},
 	textInput: {
 		width: '100%',
 		padding: '12px 20px',
 		margin: '8px 30px 8px 0px',
-		'font-size': '100%',
+		'font-size': '18px',
 		border: 'none',
 		'border-bottom': '1px solid #979797',
 	},

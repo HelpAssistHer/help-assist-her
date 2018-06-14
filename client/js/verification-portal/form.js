@@ -261,7 +261,6 @@ class VerificationPortalForm extends Component {
 					</div>
 					<div className={classes.parent}>
 						<Field
-							label="Verified"
 							name="verifiedData.services.verified"
 							component={VerifiedCheckbox}
 						/>
@@ -302,7 +301,6 @@ class VerificationPortalForm extends Component {
 
 				<div className={classes.parent}>
 					<Field
-						label="Verified"
 						name="verifiedData.hours.verified"
 						component={VerifiedCheckbox}
 					/>
