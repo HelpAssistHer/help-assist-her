@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import ServicesGroup from './services-group'
+import ServicesGroup from '../components/services-group'
 import {
 	counselingServices,
 	educationServices,

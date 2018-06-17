@@ -7,7 +7,7 @@ import Spacer from '../../components/spacer'
 import VerifiedCheckbox from '../components/verified-checkbox'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
-import Services from '../components/services'
+import Services from './services'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
