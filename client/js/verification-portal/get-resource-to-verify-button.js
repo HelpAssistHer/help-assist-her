@@ -87,7 +87,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		_.get(verifiedData, 'primaryContactPerson.verified'),
 	)
 
-	_.forEach(services, (value, key) => {
+	_.forEach(services, value => {
 		resource.services[value.id]
 			? changeFieldValue(`services.${value.id}`, 1)
 			: changeFieldValue(`services.${value.id}`, 0)
