@@ -2,7 +2,6 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import HeaderSuccess from './components/header-success'
-import Tabs from './components/tabs'
 import Spacer from '../components/spacer'
 import LoginButton from '../authentication/facebook-login-button'
 import { formTypes } from './constants'
@@ -24,9 +23,6 @@ const VerificationPortal = ({ classes, formType }) => {
 	return (
 		<div>
 			<HeaderSuccess />
-			<Tabs
-				tabNames={['community health center', 'pregnancy resource center']}
-			/>
 			<Spacer height="64px" />
 			<Spacer height="25px" />
 			<LoginButton />
