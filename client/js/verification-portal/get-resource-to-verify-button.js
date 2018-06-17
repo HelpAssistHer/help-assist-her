@@ -6,6 +6,7 @@ import { getResourceToVerify } from './action-creators'
 import Button from '../components/button'
 import { store } from '../hah-app/index'
 import { updateOutOfBusinessActionCreator } from './out-of-business/action-creators'
+import services from '../../../server/pregnancy-centers/pregnancy-center-services'
 
 const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
@@ -27,7 +28,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		otherServices,
 		phone,
 		primaryContactPerson,
-		services,
 		verifiedData,
 		website,
 	} = resource
@@ -88,7 +88,9 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	)
 
 	_.forEach(services, (value, key) => {
-		changeFieldValue(`services.${key}`, 1)
+		resource.services[value.id]
+			? changeFieldValue(`services.${value.id}`, 1)
+			: changeFieldValue(`services.${value.id}`, 0)
 	})
 	changeFieldValue('otherServices', otherServices)
 	changeFieldValue(
