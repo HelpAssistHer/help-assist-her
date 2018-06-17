@@ -1,5 +1,10 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect,
+} from 'react-router-dom'
 
 import Landing from './landing'
 import VerificationPortalContainer from '../verification-portal'
@@ -10,15 +15,6 @@ const HahRouter = () => {
 		<Router>
 			<Switch>
 				<Route exact path="/" component={Landing} />
-				<Route
-					path="/verification"
-					render={props => (
-						<VerificationPortalContainer
-							formType={formTypes.PREGNANCY_RESOURCE_CENTER}
-							{...props}
-						/>
-					)}
-				/>
 				<Route
 					exact
 					path="/verification/pregnancy-resource-center"
@@ -38,6 +34,10 @@ const HahRouter = () => {
 							{...props}
 						/>
 					)}
+				/>
+				<Redirect
+					from="/verification"
+					to="/verification/pregnancy-resource-center"
 				/>
 			</Switch>
 		</Router>
