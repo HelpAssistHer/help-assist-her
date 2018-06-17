@@ -3,33 +3,29 @@ import injectSheet from 'react-jss'
 
 import Spacer from '../components/spacer'
 
-const Input = ({ classes, input, label, type, placeholder }) => {
+const Input = ({ classes, input, type, placeholder }) => {
 	return (
 		<div className={classes.child}>
-			<label className={classes.label}>{label}</label>
-			<input className={classes.textInput} type={type} placeholder={placeholder} {...input} />
-			<Spacer height="10px" />
+			<input
+				className={classes.textInput}
+				type={type}
+				placeholder={placeholder}
+				{...input}
+			/>
 		</div>
 	)
 }
 
 const styles = {
 	child: {
-		'justify-content': 'center',
-		width: '80%',
-	},
-	label: {
-		padding: '20px 10px',
-		display: 'block',
-		float: 'left',
-		width: '20%',
-		'text-align': 'right',
+		display: 'flex',
+		'align-items': 'flex-start',
 	},
 	textInput: {
-		width: '50%',
+		width: '100%',
 		padding: '12px 20px',
-		margin: '8px 0',
-		'font-size': '90%',
+		margin: '8px 30px 8px 0px',
+		'font-size': '18px',
 		border: 'none',
 		'border-bottom': '1px solid #979797',
 	},
