@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Landing from './landing'
 import VerificationPortalContainer from '../verification-portal'
+import { formTypes } from '../verification-portal/constants'
 
 const HahRouter = () => {
 	return (
@@ -12,7 +13,12 @@ const HahRouter = () => {
 				<Route
 					exact
 					path="/verification"
-					component={VerificationPortalContainer}
+					render={props => (
+						<VerificationPortalContainer
+							formType={formTypes.PREGNANCY_RESOURCE_CENTER}
+							{...props}
+						/>
+					)}
 				/>
 			</div>
 		</Router>
