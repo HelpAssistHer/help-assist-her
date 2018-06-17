@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
 
-import Input from '../components/input'
-import Spacer from '../components/spacer'
-import VerifiedCheckbox from './verified-checkbox'
-import Button from '../components/button'
-import Heading from '../components/heading'
-import Services from './components/services'
+import Input from '../../components/input'
+import Spacer from '../../components/spacer'
+import VerifiedCheckbox from '../components/verified-checkbox'
+import Button from '../../components/button'
+import Heading from '../../components/heading'
+import Services from '../components/services'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {

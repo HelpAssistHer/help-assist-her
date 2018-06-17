@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 
 import { getResourceToVerify } from './action-creators'
-import Button from '../components/button'
-import { store } from '../hah-app/index'
-import { updateOutOfBusinessActionCreator } from './out-of-business/action-creators'
-import services from '../../../server/pregnancy-centers/pregnancy-center-services'
+import Button from '../../components/button'
+import { store } from '../../hah-app/index'
+import { updateOutOfBusinessActionCreator } from '../out-of-business/action-creators'
+import services from '../../../../server/pregnancy-centers/pregnancy-center-services'
 
 const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
