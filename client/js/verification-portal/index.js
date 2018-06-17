@@ -3,6 +3,7 @@ import injectSheet from 'react-jss'
 
 import HeaderSuccess from './components/header-success'
 import Tabs from './components/tabs'
+import Spacer from '../components/spacer'
 import LoginButton from '../authentication/facebook-login-button'
 
 const VerificationPortal = ({ classes }) => (
