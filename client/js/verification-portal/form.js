@@ -61,102 +61,134 @@ class VerificationPortalForm extends Component {
 					}
 				/>
 				<div className={classes.formSection}>
-					<Heading text="GENERAL INFORMATION" />
-					<div className={classes.parent}>
-						<Field
-							placeholder="Name of Pregnancy Resource Center"
-							name="prcName"
-							component={Input}
-							type="text"
-						/>
-						<Field
-							label="Name Verified"
-							name="verifiedData.prcName.verified"
-							component={VerifiedCheckbox}
-						/>
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>Verified</div>
+						<div className={classes.secondAndThirdBox}>
+							<Heading text="GENERAL INFORMATION" />
+						</div>
 					</div>
 
-					<Field
-						placeholder="Address 1"
-						name="address.line1"
-						component={Input}
-						type="text"
-					/>
-					<Field
-						placeholder="Address 2"
-						name="address.line2"
-						component={Input}
-						type="text"
-					/>
-					<Field
-						placeholder="City"
-						name="address.city"
-						component={Input}
-						type="text"
-					/>
-					<Field
-						placeholder="State"
-						name="address.state"
-						component={Input}
-						type="text"
-					/>
-
-					<div className={classes.parent}>
-						<Field
-							placeholder="Zip Code"
-							name="address.zip"
-							component={Input}
-							type="number"
-						/>
-						<Field
-							label="Address Verified"
-							name="verifiedData.address.verified"
-							component={VerifiedCheckbox}
-						/>
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field
+								name="verifiedData.prcName.verified"
+								component={VerifiedCheckbox}
+							/>
+						</div>
+						<div className={classes.secondAndThirdBox}>
+							<Field
+								placeholder="Name of Pregnancy Resource Center"
+								name="prcName"
+								component={Input}
+								type="text"
+							/>
+						</div>
 					</div>
 
-					<div className={classes.parent}>
-						<Field
-							name="phone"
-							component={Input}
-							placeholder="Phone Number"
-							type="tel"
-							format={formatPhoneDigits}
-							parse={parsePhoneNumber}
-						/>
-						<Field
-							label="Phone Number Verified"
-							name="verifiedData.phone.verified"
-							component={VerifiedCheckbox}
-						/>
+					<div className={classes.gridField}>
+						<div className={classes.secondAndThirdBox}>
+							<Field
+								placeholder="Address 1"
+								name="address.line1"
+								component={Input}
+								type="text"
+							/>
+						</div>
+						<div className={classes.secondAndThirdBox}>
+							<Field
+								placeholder="Address 2"
+								name="address.line2"
+								component={Input}
+								type="text"
+							/>
+						</div>
+						<div className={classes.secondBox}>
+							<Field
+								placeholder="City"
+								name="address.city"
+								component={Input}
+								type="text"
+							/>
+						</div>
+						<div className={classes.thirdBox}>
+							<Field
+								placeholder="State"
+								name="address.state"
+								component={Input}
+								type="text"
+							/>
+						</div>
 					</div>
 
-					<div className={classes.parent}>
-						<Field
-							placeholder="Email"
-							name="email"
-							component={Input}
-							type="text"
-						/>
-						<Field
-							label="Email Verified"
-							name="verifiedData.email.verified"
-							component={VerifiedCheckbox}
-						/>
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field
+								name="verifiedData.address.verified"
+								component={VerifiedCheckbox}
+							/>
+						</div>
+
+						<div className={classes.secondBox}>
+							<Field
+								placeholder="Zip Code"
+								name="address.zip"
+								component={Input}
+								type="number"
+							/>
+						</div>
 					</div>
 
-					<div className={classes.parent}>
-						<Field
-							placeholder="Website"
-							name="website"
-							component={Input}
-							type="url"
-						/>
-						<Field
-							label="Website Verified"
-							name="verifiedData.website.verified"
-							component={VerifiedCheckbox}
-						/>
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field
+								name="verifiedData.phone.verified"
+								component={VerifiedCheckbox}
+							/>
+						</div>
+						<div className={classes.secondBox}>
+							<Field
+								name="phone"
+								component={Input}
+								placeholder="Phone Number"
+								type="tel"
+								format={formatPhoneDigits}
+								parse={parsePhoneNumber}
+							/>
+						</div>
+					</div>
+
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field
+								name="verifiedData.email.verified"
+								component={VerifiedCheckbox}
+							/>
+						</div>
+						<div className={classes.secondBox}>
+							<Field
+								placeholder="Email"
+								name="email"
+								component={Input}
+								type="text"
+							/>
+						</div>
+					</div>
+
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field
+								name="verifiedData.website.verified"
+								component={VerifiedCheckbox}
+							/>
+						</div>
+						<div className={classes.secondBox}>
+							<Field
+								placeholder="Website"
+								name="website"
+								component={Input}
+								type="url"
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -229,7 +261,6 @@ class VerificationPortalForm extends Component {
 					</div>
 					<div className={classes.parent}>
 						<Field
-							label="Services Verified"
 							name="verifiedData.services.verified"
 							component={VerifiedCheckbox}
 						/>
@@ -270,7 +301,6 @@ class VerificationPortalForm extends Component {
 
 				<div className={classes.parent}>
 					<Field
-						label="Hours Verified"
 						name="verifiedData.hours.verified"
 						component={VerifiedCheckbox}
 					/>
@@ -324,6 +354,26 @@ const styles = {
 		position: 'absolute',
 		top: '1%',
 		left: '-2%',
+	},
+	gridField: {
+		display: 'grid',
+		'grid-template-columns': '20% 50% 30%',
+	},
+	firstBox: {
+		'grid-column-start': 1,
+		'grid-column-end': 2,
+	},
+	secondBox: {
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+	},
+	thirdBox: {
+		'grid-column-start': 3,
+		'grid-column-end': 4,
+	},
+	secondAndThirdBox: {
+		'grid-column-start': 2,
+		'grid-column-end': 4,
 	},
 }
 
