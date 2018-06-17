@@ -129,10 +129,6 @@ const startDatabase = P.coroutine(function* startDatabase() {
 
 startDatabase()
 
-server.get('/verification', (req, res) => {
-	res.sendFile(path.join(__dirname, '../public/index.html'))
-})
-
 server.get('/verification/*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'))
 })
