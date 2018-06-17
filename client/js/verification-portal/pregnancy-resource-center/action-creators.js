@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { store } from '../hah-app/index'
+import { store } from '../../hah-app/index'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
 
 async function getOneResource() {

@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
 import { UPDATE_LOGIN_STATE, GET_INITIAL_DATA } from './action-types'
-import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/action-types'
+import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/pregnancy-resource-center/action-types'
 import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
 
 const authenticationReducer = (state = {}, action) => {

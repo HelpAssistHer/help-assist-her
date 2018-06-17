@@ -3,13 +3,13 @@ import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
 import _ from 'lodash'
 
-import Input from '../components/input'
-import ServicesCheckbox from './services-checkbox'
-import Spacer from '../components/spacer'
-import VerifiedCheckbox from './verified-checkbox'
-import Button from '../components/button'
-import Heading from '../components/heading'
-import services from '../../../server/pregnancy-centers/pregnancy-center-services'
+import Input from '../../components/input'
+import ServicesCheckbox from '../components/services-checkbox'
+import Spacer from '../../components/spacer'
+import VerifiedCheckbox from '../components/verified-checkbox'
+import Button from '../../components/button'
+import Heading from '../../components/heading'
+import services from '../../../../server/pregnancy-centers/pregnancy-center-services'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
