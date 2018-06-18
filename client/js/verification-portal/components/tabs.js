@@ -1,6 +1,5 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import { Link } from 'react-router-dom'
 import { NavTab } from 'react-router-tabs'
 
 import { tabNames } from '../constants'
