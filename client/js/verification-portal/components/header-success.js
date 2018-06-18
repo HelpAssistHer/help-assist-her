@@ -7,7 +7,7 @@ const HeaderSuccess = ({ classes }) => {
 
 const styles = {
 	root: {
-		height: '246px',
+		height: '0px', //'246px',
 	},
 }
 
