@@ -32,7 +32,6 @@ const styles = {
 	grid: {
 		display: 'grid',
 		'grid-template-columns': 'repeat(2, 1fr)',
-		'grid-template-rows': '1',
 		height: '47px',
 		color: '#FFFFFF',
 		'font-family': 'sans-serif',
@@ -41,17 +40,17 @@ const styles = {
 		'line-height': '20px',
 		'text-transform': 'uppercase',
 		cursor: 'pointer',
+		'text-align': 'center',
 	},
 	gridItems: {
-		'justify-self': 'center',
-		'align-self': 'center',
+		display: 'flex',
 	},
 	navTab: {
 		'background-color': 'rgba(240,100,154,0.15)',
-		display: 'inline-block',
-		padding: '10px 25px',
 		'text-decoration': 'none',
 		color: 'inherit',
+		width: '100%',
+		height: '100%',
 		'&:hover': {
 			'background-color': '#F0649A',
 		},
