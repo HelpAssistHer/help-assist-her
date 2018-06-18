@@ -11,6 +11,7 @@ const Tabs = ({ classes }) => (
 			<NavTab
 				to="/verification/community-health-center"
 				className={classes.navTab}
+				activeClassName={classes.navTabActive}
 			>
 				{tabNames.COMMUNITY_HEALTH_CENTER}
 			</NavTab>
@@ -19,6 +20,7 @@ const Tabs = ({ classes }) => (
 			<NavTab
 				to="/verification/pregnancy-resource-center"
 				className={classes.navTab}
+				activeClassName={classes.navTabActive}
 			>
 				{tabNames.PREGNANCY_RESOURCE_CENTER}
 			</NavTab>
@@ -43,19 +45,19 @@ const styles = {
 	gridItems: {
 		'justify-self': 'center',
 		'align-self': 'center',
-		'text-decoration': 'none !important',
 	},
 	navTab: {
-		'background-color': '#F0649A',
+		'background-color': 'rgba(240,100,154,0.15)',
 		display: 'inline-block',
 		padding: '10px 25px',
 		'text-decoration': 'none',
+		color: 'inherit',
 		'&:hover': {
-			'background-color': 'rgba(240,100,154,0.15)',
+			'background-color': '#F0649A',
 		},
 	},
 	navTabActive: {
-		'background-color': 'rgba(240,100,154,0.15)',
+		'background-color': '#F0649A',
 	},
 }
 
