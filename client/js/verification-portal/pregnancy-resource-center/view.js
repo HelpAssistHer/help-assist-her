@@ -32,11 +32,8 @@ class VerificationPortal extends React.Component {
 
 		return (
 			<div>
-				<HeaderSuccess />
 				<div className={classes.leftPositionButton}>
 					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
-					<Spacer height="25px" />
-					<LoginButton />
 				</div>
 				<div className={classes.rightPositionButton}>
 					<Button

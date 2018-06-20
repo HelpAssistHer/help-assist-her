@@ -1,20 +1,45 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import {
+	BrowserRouter as Router,
+	Route,
+	Switch,
+	Redirect,
+} from 'react-router-dom'
 
 import Landing from './landing'
-import VerificationPortalContainer from '../verification-portal/pregnancy-resource-center'
+import VerificationPortalContainer from '../verification-portal'
+import { formTypes } from '../verification-portal/constants'
 
 const HahRouter = () => {
 	return (
 		<Router>
-			<div>
+			<Switch>
 				<Route exact path="/" component={Landing} />
 				<Route
 					exact
-					path="/verification"
-					component={VerificationPortalContainer}
+					path="/verification/pregnancy-resource-center"
+					render={props => (
+						<VerificationPortalContainer
+							formType={formTypes.PREGNANCY_RESOURCE_CENTER}
+							{...props}
+						/>
+					)}
 				/>
-			</div>
+				<Route
+					exact
+					path="/verification/community-health-center"
+					render={props => (
+						<VerificationPortalContainer
+							formType={formTypes.COMMUNITY_HEALTH_CENTER}
+							{...props}
+						/>
+					)}
+				/>
+				<Redirect
+					from="/verification"
+					to="/verification/pregnancy-resource-center"
+				/>
+			</Switch>
 		</Router>
 	)
 }
