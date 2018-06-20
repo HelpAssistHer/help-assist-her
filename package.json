@@ -5,7 +5,7 @@
 	"main": "server.js",
 	"private": true,
 	"engines": {
-		"node": "9.0.0"
+		"node": "10.4.0"
 	},
 	"scripts": {
 		"build": "NODE_ENV=production babel-node client/tools/build.js",
