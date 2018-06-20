@@ -1,6 +1,8 @@
+'use strict'
+
 const _ = require('lodash')
 
-const pregnancyCenterServices = require('../pregnancy-center-services')
+const { pregnancyCenterServices } = require('../pregnancy-center-services')
 
 /*
 	Create the Joi and Mongoose schemas based off of the pregnancy-center-services
