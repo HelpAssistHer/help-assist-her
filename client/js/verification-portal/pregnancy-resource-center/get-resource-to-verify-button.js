@@ -87,7 +87,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		_.get(verifiedData, 'primaryContactPerson.verified'),
 	)
 
-	console.log('SERVICES', pregnancyCenterServices)
 	_.forEach(pregnancyCenterServices, service => {
 		resource.services[service.id]
 			? changeFieldValue(`services.${service.id}`, true)
