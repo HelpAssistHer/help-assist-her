@@ -9,26 +9,15 @@ import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import Button from '../../components/button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
+import { updateBusinessListingState } from '../business-state/action-creators'
 
 class VerificationPortal extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			doNotList: false, // addition of variable to keep track of listing status
-		}
-		this.toggleState = this.toggleState.bind(this)
-	}
-	toggleState = key => {
-		// toggling state by passing key
-		let currentState = this.state[key]
-		this.setState({ [key]: !currentState })
-	}
 	submit = values => {
 		updateResource(values)
 	}
 	render() {
 		const { classes, changeFieldValue, resource } = this.props
-		const { outOfBusiness } = resource
+		const { outOfBusiness, doNotList } = resource
 
 		return (
 			<div>
@@ -44,17 +33,17 @@ class VerificationPortal extends React.Component {
 					/>
 					<div className={classes.moveDown}>
 						<Button
-							activeState={this.state.doNotList}
+							activeState={doNotList}
 							buttonText="Do Not List"
 							size="medium"
-							onClick={() => this.toggleState('doNotList')}
+							onClick={() => updateBusinessListingState('doNotList')}
 						/>
 					</div>
 				</div>
 				<div className={classes.verificationPortal}>
 					<VerificationPortalForm
 						outOfBusiness={outOfBusiness}
-						doNotList={this.state.doNotList}
+						doNotList={doNotList}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />
