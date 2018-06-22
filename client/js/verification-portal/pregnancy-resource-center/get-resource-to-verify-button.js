@@ -28,6 +28,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		notes,
 		otherServices,
 		phone,
+		services,
 		primaryContactPerson,
 		verifiedData,
 		website,
@@ -89,7 +90,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	)
 
 	_.forEach(pregnancyCenterServices, service => {
-		resource.services[service.id]
+		services[service.id]
 			? changeFieldValue(`services.${service.id}`, true)
 			: changeFieldValue(`services.${service.id}`, false)
 	})
