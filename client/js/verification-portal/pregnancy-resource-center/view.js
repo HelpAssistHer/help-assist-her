@@ -9,7 +9,7 @@ import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import Button from '../../components/button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
-import { updateBusinessListingState } from '../business-state/action-creators'
+import { updateDoNotList } from '../do-not-list/action-creators'
 
 class VerificationPortal extends React.Component {
 	submit = values => {
@@ -18,7 +18,6 @@ class VerificationPortal extends React.Component {
 	render() {
 		const { classes, changeFieldValue, resource } = this.props
 		const { outOfBusiness, doNotList } = resource
-
 		return (
 			<div>
 				<div className={classes.leftPositionButton}>
@@ -36,7 +35,7 @@ class VerificationPortal extends React.Component {
 							activeState={doNotList}
 							buttonText="Do Not List"
 							size="medium"
-							onClick={() => updateBusinessListingState('doNotList')}
+							onClick={() => updateDoNotList(!doNotList)}
 						/>
 					</div>
 				</div>
