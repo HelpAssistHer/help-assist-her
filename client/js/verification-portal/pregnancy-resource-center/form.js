@@ -60,11 +60,14 @@ class VerificationPortalForm extends Component {
 				/>
 				<div className={classes.formSection}>
 					<div className={classes.gridField}>
-						<div className={classes.firstBox}>Verified</div>
-						<div className={classes.secondAndThirdBox}>
-							<Heading text="GENERAL INFORMATION" />
+						<div className={classes.firstBox}>
+							<Heading text="VERIFIED" size="small" />
+						</div>
+						<div className={classes.headingGrid}>
+							<Heading text="GENERAL INFORMATION" size="medium" />
 						</div>
 					</div>
+					<Spacer height="15px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
@@ -82,6 +85,7 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
+					<Spacer height="15px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.secondAndThirdBox}>
@@ -135,6 +139,7 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
+					<Spacer height="15px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
@@ -188,52 +193,58 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
-				</div>
 
-				{/* 5-12-18, I am commenting this out for now, as we want to keep the
+					{/* </div> */}
+
+					{/* 5-12-18, I am commenting this out for now, as we want to keep the
 				data verification simple for now. We will eventually add this back. */}
-				{/*<div>*/}
-				{/*<h3>Primary Contact</h3>*/}
-				{/*<Field*/}
-				{/*label='First Name'*/}
-				{/*name='primaryContactPerson.firstName'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
+					{/*<div>*/}
+					{/*<h3>Primary Contact</h3>*/}
+					{/*<Field*/}
+					{/*label='First Name'*/}
+					{/*name='primaryContactPerson.firstName'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
 
-				{/*<Field*/}
-				{/*label='Last Name'*/}
-				{/*name='primaryContactPerson.lastName'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
+					{/*<Field*/}
+					{/*label='Last Name'*/}
+					{/*name='primaryContactPerson.lastName'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
 
-				{/*<Field*/}
-				{/*label='Email'*/}
-				{/*name='primaryContactPerson.email'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
+					{/*<Field*/}
+					{/*label='Email'*/}
+					{/*name='primaryContactPerson.email'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
 
-				{/*<div className={classes.parent}>*/}
-				{/*<Field*/}
-				{/*label='Phone Number'*/}
-				{/*name='primaryContactPerson.phone'*/}
-				{/*placeholder='Format must be +19998887777'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
-				{/*<Field*/}
-				{/*label='Primary Contact Verified'*/}
-				{/*name='verifiedData.primaryContactPerson.verified'*/}
-				{/*component={VerifiedCheckbox}*/}
-				{/*/>*/}
-				{/*</div>*/}
-				{/*</div>*/}
+					{/*<div className={classes.parent}>*/}
+					{/*<Field*/}
+					{/*label='Phone Number'*/}
+					{/*name='primaryContactPerson.phone'*/}
+					{/*placeholder='Format must be +19998887777'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
+					{/*<Field*/}
+					{/*label='Primary Contact Verified'*/}
+					{/*name='verifiedData.primaryContactPerson.verified'*/}
+					{/*component={VerifiedCheckbox}*/}
+					{/*/>*/}
+					{/*</div>*/}
+					{/*</div>*/}
 
-				<Spacer height="83px" />
-				<div className={classes.formSection}>
-					<Heading text="SERVICES" />
+					<Spacer height="50px" />
+
+					{/* <div className={classes.formSection}> */}
+					<div className={classes.gridField}>
+						<div className={classes.headingGrid}>
+							<Heading text="SERVICES" size="medium" />
+						</div>
+					</div>
 					<Spacer height="53px" />
 					<Services />
 				</div>
@@ -351,6 +362,7 @@ const styles = {
 	firstBox: {
 		'grid-column-start': 1,
 		'grid-column-end': 2,
+		'justify-self': 'center',
 	},
 	secondBox: {
 		'grid-column-start': 2,
@@ -363,6 +375,11 @@ const styles = {
 	secondAndThirdBox: {
 		'grid-column-start': 2,
 		'grid-column-end': 4,
+	},
+	headingGrid: {
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+		'justify-self': 'start',
 	},
 }
 
