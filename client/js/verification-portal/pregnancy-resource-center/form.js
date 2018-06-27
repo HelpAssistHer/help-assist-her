@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
+import { connect } from 'react-redux'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
@@ -48,9 +49,23 @@ const parsePhoneNumber = phoneNumber => {
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
+const closedAllDayStatus = (dayNum, hours) => {
+	return hours && hours.length > 0
+		? hours[dayNum]
+			? hours[dayNum].closedAllDay
+			: true
+		: false
+}
+
 class VerificationPortalForm extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
+		const {
+			classes,
+			handleSubmit,
+			outOfBusiness,
+			doNotList,
+			hours,
+		} = this.props
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
 				<div
@@ -230,43 +245,70 @@ class VerificationPortalForm extends Component {
 				{/*/>*/}
 				{/*</div>*/}
 				{/*</div>*/}
-
-				<Spacer height="83px" />
-				<div className={classes.formSection}>
-					<Heading text="SERVICES" />
-					<Spacer height="53px" />
-					<Services />
-				</div>
-
-				<div className={classes.formSection}>
-					<div>
-						<Field
-							name="otherServices"
-							component="textarea"
-							placeholder="Add additional services not listed above here..."
-							rows="4"
-							cols="50"
-						/>
-					</div>
-					<div className={classes.parent}>
-						<Field
-							name="verifiedData.services.verified"
-							component={VerifiedCheckbox}
-						/>
-					</div>
-				</div>
-
+				{
+					// <Spacer height="83px" />
+					// <div className={classes.formSection}>
+					// 	<Heading text="SERVICES" />
+					// 	<Spacer height="53px" />
+					// 	<Services />
+					// </div>
+					//
+					// <div className={classes.formSection}>
+					// 	<div>
+					// 		<Field
+					// 			name="otherServices"
+					// 			component="textarea"
+					// 			placeholder="Add additional services not listed above here..."
+					// 			rows="4"
+					// 			cols="50"
+					// 		/>
+					// 	</div>
+					// 	<div className={classes.parent}>
+					// 		<Field
+					// 			name="verifiedData.services.verified"
+					// 			component={VerifiedCheckbox}
+					// 		/>
+					// 	</div>
+					// </div>
+				}
 				<div className={classes.formSection}>
 					<Heading text="HOURS" />
 					<Spacer height="50px" />
-
-					<Day day="Sunday" name={`hours[0]`} />
-					<Day day="Monday" name={`hours[1]`} />
-					<Day day="Tuesday" name={`hours[2]`} />
-					<Day day="Wednesday" name={`hours[3]`} />
-					<Day day="Thursday" name={`hours[4]`} />
-					<Day day="Friday" name={`hours[5]`} />
-					<Day day="Saturday" name={`hours[6]`} />
+					<Day
+						day="Sunday"
+						closedAllDay={closedAllDayStatus(0, hours)}
+						name={`hours[0]`}
+					/>
+					<Day
+						day="Monday"
+						closedAllDay={closedAllDayStatus(1, hours)}
+						name={`hours[1]`}
+					/>
+					<Day
+						day="Tuesday"
+						closedAllDay={closedAllDayStatus(2, hours)}
+						name={`hours[2]`}
+					/>
+					<Day
+						day="Wednesday"
+						closedAllDay={closedAllDayStatus(3, hours)}
+						name={`hours[3]`}
+					/>
+					<Day
+						day="Thursday"
+						closedAllDay={closedAllDayStatus(4, hours)}
+						name={`hours[4]`}
+					/>
+					<Day
+						day="Friday"
+						closedAllDay={closedAllDayStatus(5, hours)}
+						name={`hours[5]`}
+					/>
+					<Day
+						day="Saturday"
+						closedAllDay={closedAllDayStatus(6, hours)}
+						name={`hours[6]`}
+					/>
 				</div>
 
 				<div className={classes.parent}>
@@ -299,6 +341,17 @@ class VerificationPortalForm extends Component {
 VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
 })(VerificationPortalForm)
+
+const mapStateToProps = state => {
+	return {
+		hours: state.form.verificationPortal
+			? state.form.verificationPortal.values
+				? state.form.verificationPortal.values.hours
+				: []
+			: [],
+	}
+}
+VerificationPortalForm = connect(mapStateToProps)(VerificationPortalForm)
 
 const styles = {
 	parent: {

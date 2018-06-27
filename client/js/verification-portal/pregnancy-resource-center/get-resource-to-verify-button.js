@@ -12,12 +12,11 @@ const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
 		return null
 	}
-
 	const timeString = String(timeNumber).padStart(4, '0')
 
 	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
 }
-
+const registeredHours = [0, 1, 2, 3, 4, 5, 6]
 const populateForm = ({ changeFieldValue, resource }) => {
 	let {
 		prcName,
@@ -97,14 +96,13 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.services.verified',
 		_.get(verifiedData, 'services.verified'),
 	)
-
-	_.forEach(hours, (hour, i) => {
+	_.forEach(registeredHours, (hour, i) => {
 		changeFieldValue(
-			`hours${i}.open`,
+			`hours[${i}].open`,
 			convertNumberToTimeFormat(_.get(hours, `[${i}].open`)),
 		)
 		changeFieldValue(
-			`hours${i}.close`,
+			`hours[${i}].close`,
 			convertNumberToTimeFormat(_.get(hours, `[${i}].close`)),
 		)
 	})
