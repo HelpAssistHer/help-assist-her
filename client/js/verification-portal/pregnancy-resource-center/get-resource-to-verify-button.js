@@ -98,62 +98,16 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		_.get(verifiedData, 'services.verified'),
 	)
 
-	changeFieldValue(
-		'hours[0].open',
-		convertNumberToTimeFormat(_.get(hours, '[0].open')),
-	)
-	changeFieldValue(
-		'hours[0].close',
-		convertNumberToTimeFormat(_.get(hours, '[0].close')),
-	)
-	changeFieldValue(
-		'hours[1].open',
-		convertNumberToTimeFormat(_.get(hours, '[1].open')),
-	)
-	changeFieldValue(
-		'hours[1].close',
-		convertNumberToTimeFormat(_.get(hours, '[1].close')),
-	)
-	changeFieldValue(
-		'hours[2].open',
-		convertNumberToTimeFormat(_.get(hours, '[2].open')),
-	)
-	changeFieldValue(
-		'hours[2].close',
-		convertNumberToTimeFormat(_.get(hours, '[2].close')),
-	)
-	changeFieldValue(
-		'hours[3].open',
-		convertNumberToTimeFormat(_.get(hours, '[3].open')),
-	)
-	changeFieldValue(
-		'hours[3].close',
-		convertNumberToTimeFormat(_.get(hours, '[3].close')),
-	)
-	changeFieldValue(
-		'hours[4].open',
-		convertNumberToTimeFormat(_.get(hours, '[4].open')),
-	)
-	changeFieldValue(
-		'hours[4].close',
-		convertNumberToTimeFormat(_.get(hours, '[4].close')),
-	)
-	changeFieldValue(
-		'hours[5].open',
-		convertNumberToTimeFormat(_.get(hours, '[5].open')),
-	)
-	changeFieldValue(
-		'hours[5].close',
-		convertNumberToTimeFormat(_.get(hours, '[5].close')),
-	)
-	changeFieldValue(
-		'hours[6].open',
-		convertNumberToTimeFormat(_.get(hours, '[6].open')),
-	)
-	changeFieldValue(
-		'hours[6].close',
-		convertNumberToTimeFormat(_.get(hours, '[6].close')),
-	)
+	_.forEach(hours, (hour, i) => {
+		changeFieldValue(
+			`hours${i}.open`,
+			convertNumberToTimeFormat(_.get(hours, `[${i}].open`)),
+		)
+		changeFieldValue(
+			`hours${i}.close`,
+			convertNumberToTimeFormat(_.get(hours, `[${i}].close`)),
+		)
+	})
 	changeFieldValue(
 		'verifiedData.hours.verified',
 		_.get(verifiedData, 'hours.verified'),

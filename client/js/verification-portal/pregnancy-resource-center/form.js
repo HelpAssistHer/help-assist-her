@@ -7,6 +7,7 @@ import Spacer from '../../components/spacer'
 import VerifiedCheckbox from '../components/verified-checkbox'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
+import Day from '../components/day'
 import Services from './services'
 
 const formatPhoneDigits = digits => {
@@ -50,7 +51,6 @@ const parsePhoneNumber = phoneNumber => {
 class VerificationPortalForm extends Component {
 	render() {
 		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
-
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
 				<div
@@ -259,33 +259,14 @@ class VerificationPortalForm extends Component {
 				<div className={classes.formSection}>
 					<Heading text="HOURS" />
 					<Spacer height="50px" />
-					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Input} type="time" />
-					<Field name="hours[0].close" component={Input} type="time" />
 
-					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Input} type="time" />
-					<Field name="hours[1].close" component={Input} type="time" />
-
-					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Input} type="time" />
-					<Field name="hours[2].close" component={Input} type="time" />
-
-					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Input} type="time" />
-					<Field name="hours[3].close" component={Input} type="time" />
-
-					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Input} type="time" />
-					<Field name="hours[4].close" component={Input} type="time" />
-
-					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Input} type="time" />
-					<Field name="hours[5].close" component={Input} type="time" />
-
-					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Input} type="time" />
-					<Field name="hours[6].close" component={Input} type="time" />
+					<Day day="Sunday" name={`hours[0]`} />
+					<Day day="Monday" name={`hours[1]`} />
+					<Day day="Tuesday" name={`hours[2]`} />
+					<Day day="Wednesday" name={`hours[3]`} />
+					<Day day="Thursday" name={`hours[4]`} />
+					<Day day="Friday" name={`hours[5]`} />
+					<Day day="Saturday" name={`hours[6]`} />
 				</div>
 
 				<div className={classes.parent}>
