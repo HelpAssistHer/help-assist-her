@@ -8,6 +8,7 @@ import VerifiedCheckbox from '../components/verified-checkbox'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
+import Toggle from '../../components/toggle'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -48,6 +49,21 @@ const parsePhoneNumber = phoneNumber => {
 }
 
 class VerificationPortalForm extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			toggle: false,
+		}
+	}
+
+	onToggle = event => {
+		event.preventDefault()
+		this.setState(prevState => ({
+			...prevState,
+			toggle: !prevState.toggle,
+		}))
+	}
+
 	render() {
 		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
 
@@ -62,6 +78,7 @@ class VerificationPortalForm extends Component {
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
 							<Heading text="VERIFIED" size="small" />
+							/>
 						</div>
 						<div className={classes.headingGrid}>
 							<Heading text="GENERAL INFORMATION" size="medium" />

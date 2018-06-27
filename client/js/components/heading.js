@@ -13,7 +13,6 @@ const styles = {
 		'font-weight': 'bold',
 		'letter-spacing': '3.73px',
 		'line-height': '24px',
-		'justify-self': 'start',
 	},
 	small: {
 		height: '17px',
