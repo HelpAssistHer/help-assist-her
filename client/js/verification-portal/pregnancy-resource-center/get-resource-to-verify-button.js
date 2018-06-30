@@ -12,10 +12,11 @@ const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
 		return null
 	}
-
 	const timeString = String(timeNumber).padStart(4, '0')
-
-	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
+	const hours = parseInt(`${timeString.slice(0, 2)}`)
+	let am = ''
+	am = hours > 12 ? 'pm' : 'am'
+	return `${hours > 12 ? hours - 12 : hours}:${timeString.slice(2, 4)}  ${am}`
 }
 
 const populateForm = ({ changeFieldValue, resource }) => {

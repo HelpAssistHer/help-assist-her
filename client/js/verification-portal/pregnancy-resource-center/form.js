@@ -5,6 +5,7 @@ import injectSheet from 'react-jss'
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
 import VerifiedCheckbox from '../components/verified-checkbox'
+import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
@@ -230,67 +231,67 @@ class VerificationPortalForm extends Component {
 				{/*/>*/}
 				{/*</div>*/}
 				{/*</div>*/}
-
-				<Spacer height="83px" />
-				<div className={classes.formSection}>
-					<Heading text="SERVICES" />
-					<Spacer height="53px" />
-					<Services />
-				</div>
-
-				<div className={classes.formSection}>
-					<div>
-						<Field
-							name="otherServices"
-							component="textarea"
-							placeholder="Add additional services not listed above here..."
-							rows="4"
-							cols="50"
-						/>
-					</div>
-					<div className={classes.parent}>
-						<Field
-							name="verifiedData.services.verified"
-							component={VerifiedCheckbox}
-						/>
-					</div>
-				</div>
-
+				{
+					// <Spacer height="83px" />
+					// <div className={classes.formSection}>
+					// 	<Heading text="SERVICES" />
+					// 	<Spacer height="53px" />
+					// 	<Services />
+					// </div>
+					//
+					// <div className={classes.formSection}>
+					// 	<div>
+					// 		<Field
+					// 			name="otherServices"
+					// 			component="textarea"
+					// 			placeholder="Add additional services not listed above here..."
+					// 			rows="4"
+					// 			cols="50"
+					// 		/>
+					// 	</div>
+					// 	<div className={classes.parent}>
+					// 		<Field
+					// 			name="verifiedData.services.verified"
+					// 			component={VerifiedCheckbox}
+					// 		/>
+					// 	</div>
+					// </div>
+				}
 				<div className={classes.formSection}>
 					<Heading text="HOURS" />
 					<Spacer height="50px" />
 					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Input} type="time" />
-					<Field name="hours[0].close" component={Input} type="time" />
+					<Field name="hours[0].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[0].close" component={Time} placeholder={'Close'} />
 
 					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Input} type="time" />
-					<Field name="hours[1].close" component={Input} type="time" />
+					<Field name="hours[1].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[1].close" component={Time} placeholder={'Close'} />
 
 					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Input} type="time" />
-					<Field name="hours[2].close" component={Input} type="time" />
+					<Field name="hours[2].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[2].close" component={Time} placeholder={'Close'} />
 
 					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Input} type="time" />
-					<Field name="hours[3].close" component={Input} type="time" />
+					<Field name="hours[3].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[3].close" component={Time} placeholder={'Close'} />
 
 					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Input} type="time" />
-					<Field name="hours[4].close" component={Input} type="time" />
+					<Field name="hours[4].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[4].close" component={Time} placeholder={'Close'} />
 
 					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Input} type="time" />
-					<Field name="hours[5].close" component={Input} type="time" />
+					<Field name="hours[5].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[5].close" component={Time} placeholder={'Close'} />
 
 					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Input} type="time" />
-					<Field name="hours[6].close" component={Input} type="time" />
+					<Field name="hours[6].open" component={Time} placeholder={'Open'} />
+					<Field name="hours[6].close" component={Time} placeholder={'Close'} />
 				</div>
 
 				<div className={classes.parent}>
 					<Field
-						name="verifiedData.hours.verified"
+						name="verifiedTimeData.hours.verified"
 						component={VerifiedCheckbox}
 					/>
 				</div>
