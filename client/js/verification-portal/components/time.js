@@ -19,6 +19,9 @@ const Time = ({ classes, input, placeholder }) => {
 const styles = {
 	warper: {
 		color: '#000',
+		padding: '2.5px',
+		'border-bottom': '1px solid #979797',
+		width: '105px',
 	},
 	input: {
 		height: '17px',
@@ -30,13 +33,13 @@ const styles = {
 		'text-align': 'center',
 		border: 'none',
 		outline: 'none',
-		padding: '0px 5px',
+		padding: '0px 1.5px',
 	},
 	arrow: {
 		height: '18px',
 		width: '8px',
 		'font-family': 'Al Tarikh',
-		'font-size': '18px',
+		'font-size': '14px',
 		'letter-spacing': '0.95px',
 		'line-height': '18px',
 		cursor: 'pointer',
