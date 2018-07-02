@@ -1,21 +1,86 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import { connect } from 'react-redux'
+import { change } from 'redux-form'
 
-const Time = ({ classes, input, placeholder }) => {
-	return (
-		<div className={classes.warper}>
-			<span className={classes.arrow}>{'<'}</span>
-			<input
-				className={classes.input}
-				type="text"
-				placeholder={placeholder}
-				{...input}
-			/>
-			<span className={classes.arrow}>{'>'}</span>
-		</div>
-	)
+class Time extends React.Component {
+	render() {
+		const { classes, input, placeholder, changeFieldValue } = this.props
+		let i = 0
+		const hr = [
+			'12:30',
+			'1:00',
+			'1:30',
+			'2:00',
+			'2:30',
+			'3:00',
+			'3:30',
+			'4:00',
+			'4:30',
+			'5:00',
+			'5:30',
+			'6:00',
+			'6:30',
+			'7:00',
+			'7:30',
+			'8:00',
+			'8:30',
+			'9:00',
+			'9:30',
+			'10:00',
+			'10:30',
+			'11:00',
+			'11:30',
+			'12:00',
+		]
+		const increase = (current, name) => {
+			if (!current) return changeFieldValue(name, '6:00 am')
+			current = current.split(' ')
+			i = hr.indexOf(current[0])
+			if (!hr[i - 1]) {
+				i = hr.length
+				current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
+			}
+			current[0] = hr[i - 1]
+			current = current.join(' ')
+			changeFieldValue(name, current)
+		}
+		const decrease = (current, name) => {
+			if (!current) return changeFieldValue(name, '9:00 pm')
+			current = current.split(' ')
+			i = hr.indexOf(current[0])
+			if (!hr[i + 1]) {
+				i = -1
+				current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
+			}
+			current[0] = hr[i + 1]
+			current = current.join(' ')
+			changeFieldValue(name, current)
+		}
+		return (
+			<div className={classes.warper}>
+				<span
+					className={classes.arrow}
+					onClick={() => increase(input.value, input.name)}
+				>
+					{'<'}
+				</span>
+				<input
+					className={classes.input}
+					type="text"
+					placeholder={placeholder}
+					{...input}
+				/>
+				<span
+					className={classes.arrow}
+					onClick={() => decrease(input.value, input.name)}
+				>
+					{'>'}
+				</span>
+			</div>
+		)
+	}
 }
-
 const styles = {
 	warper: {
 		color: '#000',
@@ -34,6 +99,10 @@ const styles = {
 		border: 'none',
 		outline: 'none',
 		padding: '0px 1.5px',
+		'& ::-webkit-inner-spin-button, & ::-webkit-inner-spin-button:hover, & ::-webkit-outer-spin-button, & ::-webkit-outer-spin-button:hover': {
+			'-webkit-appearance': 'none',
+			margin: '0',
+		},
 	},
 	arrow: {
 		height: '18px',
@@ -46,4 +115,13 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(Time)
+const mapDispatchToProps = dispatch => {
+	return {
+		changeFieldValue: (field, value) => {
+			dispatch(change('verificationPortal', field, value || ''))
+		},
+	}
+}
+const timeContainer = connect('', mapDispatchToProps)(Time)
+
+export default injectSheet(styles)(timeContainer)
