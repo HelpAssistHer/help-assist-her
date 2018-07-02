@@ -245,32 +245,30 @@ class VerificationPortalForm extends Component {
 				{/*/>*/}
 				{/*</div>*/}
 				{/*</div>*/}
-				{
-					// <Spacer height="83px" />
-					// <div className={classes.formSection}>
-					// 	<Heading text="SERVICES" />
-					// 	<Spacer height="53px" />
-					// 	<Services />
-					// </div>
-					//
-					// <div className={classes.formSection}>
-					// 	<div>
-					// 		<Field
-					// 			name="otherServices"
-					// 			component="textarea"
-					// 			placeholder="Add additional services not listed above here..."
-					// 			rows="4"
-					// 			cols="50"
-					// 		/>
-					// 	</div>
-					// 	<div className={classes.parent}>
-					// 		<Field
-					// 			name="verifiedData.services.verified"
-					// 			component={VerifiedCheckbox}
-					// 		/>
-					// 	</div>
-					// </div>
-				}
+				<Spacer height="83px" />
+				<div className={classes.formSection}>
+					<Heading text="SERVICES" />
+					<Spacer height="53px" />
+					<Services />
+				</div>
+
+				<div className={classes.formSection}>
+					<div>
+						<Field
+							name="otherServices"
+							component="textarea"
+							placeholder="Add additional services not listed above here..."
+							rows="4"
+							cols="50"
+						/>
+					</div>
+					<div className={classes.parent}>
+						<Field
+							name="verifiedData.services.verified"
+							component={VerifiedCheckbox}
+						/>
+					</div>
+				</div>
 				<div className={classes.formSection}>
 					<Heading text="HOURS" />
 					<Spacer height="50px" />

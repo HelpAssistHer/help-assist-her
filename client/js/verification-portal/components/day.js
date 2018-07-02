@@ -19,14 +19,10 @@ const Day = ({ classes, day, name, closedAllDay }) => {
 					Closed
 				</div>
 			</div>
-			{closedAllDay ? (
-				''
-			) : (
-				<div>
-					<Field name={`${name}.open`} component={Input} type="time" />
-					<Field name={`${name}.close`} component={Input} type="time" />
-				</div>
-			)}
+			<div>
+				<Field name={`${name}.open`} component={Input} type="time" />
+				<Field name={`${name}.close`} component={Input} type="time" />
+			</div>
 		</div>
 	)
 }
