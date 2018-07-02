@@ -33,27 +33,26 @@ class Time extends React.Component {
 			'11:30',
 			'12:00',
 		]
-		const increase = (current, name) => {
-			if (!current) return changeFieldValue(name, '6:00 am')
+		const timeSpin = (current, name, up) => {
+			if (!current)
+				return name.split('.')[1] == 'open'
+					? changeFieldValue(name, '9:00 am')
+					: changeFieldValue(name, '5:00 pm')
 			current = current.split(' ')
 			i = hr.indexOf(current[0])
-			if (!hr[i - 1]) {
-				i = hr.length
-				current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
+			if (up == 'up') {
+				if (!hr[i - 1]) {
+					i = hr.length
+					current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
+				}
+				current[0] = hr[i - 1]
+			} else {
+				if (!hr[i + 1]) {
+					i = -1
+					current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
+				}
+				current[0] = hr[i + 1]
 			}
-			current[0] = hr[i - 1]
-			current = current.join(' ')
-			changeFieldValue(name, current)
-		}
-		const decrease = (current, name) => {
-			if (!current) return changeFieldValue(name, '9:00 pm')
-			current = current.split(' ')
-			i = hr.indexOf(current[0])
-			if (!hr[i + 1]) {
-				i = -1
-				current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
-			}
-			current[0] = hr[i + 1]
 			current = current.join(' ')
 			changeFieldValue(name, current)
 		}
@@ -61,7 +60,7 @@ class Time extends React.Component {
 			<div className={classes.warper}>
 				<span
 					className={classes.arrow}
-					onClick={() => increase(input.value, input.name)}
+					onClick={() => timeSpin(input.value, input.name, 'up')}
 				>
 					{'<'}
 				</span>
@@ -73,7 +72,7 @@ class Time extends React.Component {
 				/>
 				<span
 					className={classes.arrow}
-					onClick={() => decrease(input.value, input.name)}
+					onClick={() => timeSpin(input.value, input.name, 'down')}
 				>
 					{'>'}
 				</span>
