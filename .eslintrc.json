@@ -24,6 +24,7 @@
 
 	"rules": {
 		"eol-last": ["error", "always"],
+		"eqeqeq": ["error", "always"],
 		"indent": ["error", "tab", { "SwitchCase": 1 }],
 		"linebreak-style": ["error", "unix"],
 		"no-multiple-empty-lines": [
