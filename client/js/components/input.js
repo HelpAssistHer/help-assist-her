@@ -1,8 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Spacer from '../components/spacer'
-
 const Input = ({ classes, input, type, placeholder }) => {
 	return (
 		<div className={classes.child}>
