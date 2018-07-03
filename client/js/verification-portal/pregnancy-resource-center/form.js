@@ -47,7 +47,7 @@ const parsePhoneNumber = phoneNumber => {
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
-class VerificationPortalForm extends Component {
+class VerificationPortalFormClass extends Component {
 	render() {
 		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
 
@@ -315,9 +315,9 @@ class VerificationPortalForm extends Component {
 	}
 }
 
-VerificationPortalForm = reduxForm({
+const VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
-})(VerificationPortalForm)
+})(VerificationPortalFormClass)
 
 const styles = {
 	parent: {
