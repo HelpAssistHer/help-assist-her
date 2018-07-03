@@ -101,6 +101,7 @@
 		"webpack": "^2.5.1"
 	},
 	"devDependencies": {
+		"babel-eslint": "^8.2.5",
 		"babel-jest": "16.0.0",
 		"babel-preset-env": "^1.6.1",
 		"css-loader": "0.25.0",
