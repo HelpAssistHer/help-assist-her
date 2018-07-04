@@ -17,7 +17,6 @@ const styles = {
 	},
 	small: {
 		height: '17px',
-		width: '78px',
 		color: '#F48271',
 		'font-size': '14px',
 		'font-weight': 'bold',
