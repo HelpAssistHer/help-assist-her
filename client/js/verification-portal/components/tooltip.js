@@ -4,14 +4,13 @@ import ReactTooltip from 'react-tooltip'
 
 import Spacer from '../../components/spacer'
 
-const Tooltip = ({ classes, text, tooltipHeading, tooltipText }) => {
+const Tooltip = ({ classes, id, heading, text }) => {
 	return (
 		<div>
-			<a data-tip="react-tooltip">{text}</a>
-			<ReactTooltip place="bottom" type="dark" effect="solid">
-				<div className={classes.heading}>{tooltipHeading}</div>
+			<ReactTooltip id={id} place="top" type="dark" effect="solid">
+				<div className={classes.heading}>{heading}</div>
 				<Spacer height="8px" />
-				<div className={classes.text}>{tooltipText}</div>
+				<div className={classes.text}>{text}</div>
 			</ReactTooltip>
 		</div>
 	)
