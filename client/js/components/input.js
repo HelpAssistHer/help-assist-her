@@ -9,6 +9,7 @@ const Input = ({ classes, input, type, placeholder }) => {
 			<input
 				className={classes.textInput}
 				type={type}
+				style={{ fontSize: input.name === 'prcName' ? '30px' : '18px' }}
 				placeholder={placeholder}
 				{...input}
 			/>
@@ -25,7 +26,6 @@ const styles = {
 		width: '100%',
 		padding: '12px 20px',
 		margin: '8px 30px 8px 0px',
-		'font-size': '18px',
 		border: 'none',
 		'border-bottom': '1px solid #979797',
 	},
