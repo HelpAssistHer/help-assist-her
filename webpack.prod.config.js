@@ -11,25 +11,25 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, '/public'),
 		filename: 'bundle.js',
-		publicPath: '/public/'
+		publicPath: '/public/',
 	},
 
 	plugins: [
 		new webpack.optimize.UglifyJsPlugin({
 			minimize: true,
 			compress: {
-				warnings: false
-			}
+				warnings: false,
+			},
 		}),
 		new webpack.DefinePlugin({
 			'process.env': {
-				'NODE_ENV': JSON.stringify('dev')
-			}
-		})
+				NODE_ENV: JSON.stringify('dev'),
+			},
+		}),
 	],
 
 	resolve: {
-		extensions: ['.js', '.json']
+		extensions: ['.js', '.json'],
 	},
 
 	module: {
@@ -38,16 +38,16 @@ module.exports = {
 				test: /\.js$/,
 				loader: 'babel-loader',
 				include: path.resolve(__dirname, 'client/js'),
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.png$/,
-				loader: 'file'
+				loader: 'file',
 			},
 			{
 				test: /\.json$/,
-				loader: 'json-loader'
-			}
-		]
-	}
+				loader: 'json-loader',
+			},
+		],
+	},
 }

@@ -19,7 +19,7 @@ function getFormComponent({ formType }) {
 	}
 }
 
-const VerificationPortal = ({ classes, formType }) => {
+const VerificationPortal = ({ formType }) => {
 	return (
 		<div>
 			<HeaderSuccess />
