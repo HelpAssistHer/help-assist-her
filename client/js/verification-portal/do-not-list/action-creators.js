@@ -11,7 +11,7 @@ export async function updateDoNotList(doNotList) {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ doNotList: doNotList }),
+			body: JSON.stringify({ doNotList }),
 		},
 	)
 	const jsonResponse = await response.json()
@@ -22,9 +22,8 @@ export async function updateDoNotList(doNotList) {
 }
 
 export function updateDoNotListActionCreator(doNotList) {
-	doNotList = doNotList ? doNotList : false
 	return {
 		type: DO_NOT_LIST,
-		doNotList,
+		doNotList: !!doNotList,
 	}
 }
