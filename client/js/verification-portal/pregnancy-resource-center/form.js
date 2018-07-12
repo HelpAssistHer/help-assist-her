@@ -49,14 +49,6 @@ const parsePhoneNumber = phoneNumber => {
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
-const closedAllDayStatus = (dayNum, hours) => {
-	return hours && hours.length > 0
-		? hours[dayNum]
-			? hours[dayNum].closedAllDay
-			: true
-		: false
-}
-
 class VerificationPortalForm extends Component {
 	render() {
 		const {
@@ -274,47 +266,50 @@ class VerificationPortalForm extends Component {
 					<Heading text="HOURS" />
 					<Spacer height="50px" />
 					<Day
-						day="Sunday"
-						closedAllDay={closedAllDayStatus(0, hours)}
-						timeing={_.get(hours, `[0]`)}
-						name={`hours[0]`}
+						hours={_.get(hours)}
+						// day="Sunday"
+						// closedAllDay={closedAllDayStatus(0, hours)}
+						// timeing={_.get(hours, `[0]`)}
+						// name={`hours[0]`}
 					/>
-					<Day
-						day="Monday"
-						closedAllDay={closedAllDayStatus(1, hours)}
-						timeing={_.get(hours, `[1]`)}
-						name={`hours[1]`}
-					/>
-					<Day
-						day="Tuesday"
-						closedAllDay={closedAllDayStatus(2, hours)}
-						timeing={_.get(hours, `[2]`)}
-						name={`hours[2]`}
-					/>
-					<Day
-						day="Wednesday"
-						closedAllDay={closedAllDayStatus(3, hours)}
-						timeing={_.get(hours, `[3]`)}
-						name={`hours[3]`}
-					/>
-					<Day
-						day="Thursday"
-						closedAllDay={closedAllDayStatus(4, hours)}
-						timeing={_.get(hours, `[4]`)}
-						name={`hours[4]`}
-					/>
-					<Day
-						day="Friday"
-						closedAllDay={closedAllDayStatus(5, hours)}
-						timeing={_.get(hours, `[5]`)}
-						name={`hours[5]`}
-					/>
-					<Day
-						day="Saturday"
-						closedAllDay={closedAllDayStatus(6, hours)}
-						timeing={_.get(hours, `[6]`)}
-						name={`hours[6]`}
-					/>
+					{
+						// <Day
+						// 		day="Monday"
+						// 		closedAllDay={closedAllDayStatus(1, hours)}
+						// 		timeing={_.get(hours, `[1]`)}
+						// 		name={`hours[1]`}
+						// 	/>
+						// 	<Day
+						// 		day="Tuesday"
+						// 		closedAllDay={closedAllDayStatus(2, hours)}
+						// 		timeing={_.get(hours, `[2]`)}
+						// 		name={`hours[2]`}
+						// 	/>
+						// 	<Day
+						// 		day="Wednesday"
+						// 		closedAllDay={closedAllDayStatus(3, hours)}
+						// 		timeing={_.get(hours, `[3]`)}
+						// 		name={`hours[3]`}
+						// 	/>
+						// 	<Day
+						// 		day="Thursday"
+						// 		closedAllDay={closedAllDayStatus(4, hours)}
+						// 		timeing={_.get(hours, `[4]`)}
+						// 		name={`hours[4]`}
+						// 	/>
+						// 	<Day
+						// 		day="Friday"
+						// 		closedAllDay={closedAllDayStatus(5, hours)}
+						// 		timeing={_.get(hours, `[5]`)}
+						// 		name={`hours[5]`}
+						// 	/>
+						// 	<Day
+						// 		day="Saturday"
+						// 		closedAllDay={closedAllDayStatus(6, hours)}
+						// 		timeing={_.get(hours, `[6]`)}
+						// 		name={`hours[6]`}
+						// />
+					}
 				</div>
 
 				<div className={classes.parent}>

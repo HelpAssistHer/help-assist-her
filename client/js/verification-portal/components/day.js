@@ -11,57 +11,74 @@ import { updateResource } from '../pregnancy-resource-center/action-creators'
 
 class Day extends React.Component {
 	render() {
-		let {
-			classes,
-			day,
-			name,
-			timeing,
-			closedAllDay,
-			changeFieldValue,
-		} = this.props
-		console.log(day, ' timeimg == ', timeing, ' name == ', name)
-		if (!timeing) timeing = {}
+		const { classes, changeFieldValue, hours } = this.props
+		const dayName = [
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday',
+		]
+		let closedAllDay = false
+		let timeing = {}
 		const openClose = (name, closedToday) => {
-			if (!timeing) timeing = {}
 			closedAllDay = !closedToday
 			timeing.closedAllDay = !closedToday
 			changeFieldValue(`${name}`, timeing)
 			return closedAllDay
 		}
+		const closedAllDayStatus = (dayNum, hours) => {
+			return hours && hours.length > 0
+				? hours[dayNum]
+					? hours[dayNum].closedAllDay
+					: true
+				: false
+		}
+
 		return (
-			<div className={classes.day}>
-				<div>
-					<label className={classes.lable}>{day}</label>
-					<div
-						onClick={() => openClose(name, closedAllDay)}
-						className={
-							closedAllDay
-								? classNames(classes.closed, classes.lable)
-								: classNames(classes.lable, classes.notClose)
-						}
-					>
-						Closed
-					</div>
-				</div>
-				{closedAllDay ? (
-					''
-				) : (
-					<div>
-						<Field
-							className={classes.field}
-							name={`${name}.open`}
-							component={Time}
-							placeholder={'open'}
-						/>
-						to
-						<Field
-							className={classes.field}
-							name={`${name}.close`}
-							component={Time}
-							placeholder={'close'}
-						/>
-					</div>
-				)}
+			<div>
+				{_.map(dayName, (today, i) => {
+					closedAllDay = closedAllDayStatus(i, hours)
+					timeing = _.get(hours, `[${i}]`) || {}
+					return (
+						<div className={classes.day} key={today}>
+							<div>
+								<label className={classes.lable}>{today}</label>
+								<div
+									onClick={() => openClose(today, closedAllDay)}
+									className={
+										closedAllDay
+											? classNames(classes.closed, classes.lable)
+											: classNames(classes.lable, classes.notClose)
+									}
+								>
+									Closed
+								</div>
+							</div>
+							{closedAllDay ? (
+								''
+							) : (
+								<div>
+									<Field
+										className={classes.field}
+										name={`hours[${i}].open`}
+										component={Time}
+										placeholder={'open'}
+									/>
+									to
+									<Field
+										className={classes.field}
+										name={`hours[${i}].close`}
+										component={Time}
+										placeholder={'close'}
+									/>
+								</div>
+							)}
+						</div>
+					)
+				})}
 			</div>
 		)
 	}
