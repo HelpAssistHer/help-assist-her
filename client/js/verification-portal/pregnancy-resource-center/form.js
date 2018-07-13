@@ -8,7 +8,6 @@ import VerifiedCheckbox from '../components/verified-checkbox'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
-import Toggle from '../../components/toggle'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -49,27 +48,6 @@ const parsePhoneNumber = phoneNumber => {
 }
 
 class VerificationPortalForm extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			toggle: false,
-			prcNameVerified: false,
-			prcAddressVerified: false,
-			prcPhoneVerified: false,
-			prcEmailVerified: false,
-			prcWebsiteVerified: false,
-		}
-		this.onToggle.bind(this)
-	}
-
-	onToggle = param => event => {
-		console.log('state: ', this.state)
-		event.preventDefault()
-		this.setState({
-			[param]: !this.state[param],
-		})
-	}
-
 	render() {
 		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
 
@@ -93,13 +71,9 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							{/* <Field
+							<Field
 								name="verifiedData.prcName.verified"
 								component={VerifiedCheckbox}
-							/> */}
-							<Toggle
-								toggle={this.state.prcNameVerified}
-								onClick={this.onToggle('prcNameVerified')}
 							/>
 						</div>
 						<div className={classes.secondAndThirdBox}>
@@ -150,13 +124,9 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							{/* <Field
+							<Field
 								name="verifiedData.address.verified"
 								component={VerifiedCheckbox}
-							/> */}
-							<Toggle
-								toggle={this.state.prcAddressVerified}
-								onClick={this.onToggle('prcAddressVerified')}
 							/>
 						</div>
 
@@ -173,13 +143,9 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							{/* <Field
+							<Field
 								name="verifiedData.phone.verified"
 								component={VerifiedCheckbox}
-							/> */}
-							<Toggle
-								toggle={this.state.prcPhoneVerified}
-								onClick={this.onToggle('prcPhoneVerified')}
 							/>
 						</div>
 						<div className={classes.secondBox}>
@@ -196,13 +162,9 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							{/* <Field
+							<Field
 								name="verifiedData.email.verified"
 								component={VerifiedCheckbox}
-							/> */}
-							<Toggle
-								toggle={this.state.prcEmailVerified}
-								onClick={this.onToggle('prcEmailVerified')}
 							/>
 						</div>
 						<div className={classes.secondBox}>
@@ -217,13 +179,9 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							{/* <Field
+							<Field
 								name="verifiedData.website.verified"
 								component={VerifiedCheckbox}
-							/> */}
-							<Toggle
-								toggle={this.state.prcWebsiteVerified}
-								onClick={this.onToggle('prcWebsiteVerified')}
 							/>
 						</div>
 						<div className={classes.secondBox}>
@@ -405,7 +363,6 @@ const styles = {
 		'grid-column-start': 1,
 		'grid-column-end': 2,
 		'justify-self': 'center',
-		'align-self': 'center',
 	},
 	secondBox: {
 		'grid-column-start': 2,
