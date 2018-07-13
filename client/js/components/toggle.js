@@ -1,30 +1,23 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+// import classNames from 'classnames/bind'
+import cx from 'classnames'
 
-const Toggle = ({ classes, toggle, onClick }) => (
-	<div
-		className={classes.toggle}
-		onClick={onClick}
-		style={{ color: toggle ? '#F48271' : '#D8D8D8' }}
-	>
-		<input type="checkbox" className={classes.toggleSwitch} value={toggle} />
-		<label className={classes.toggleLabel}>
-			<span
-				className={classes.toggleButton}
-				style={{ transform: toggle ? 'translateX(70%)' : '' }}
-			/>
-		</label>
-	</div>
-)
+const Toggle = ({ classes, toggle, onClick }) => {
+	const buttonClasses = cx(classes.toggleButton, toggle && classes.toggleMove)
+	const activeClasses = cx(classes.toggle, toggle && classes.toggleActive)
+
+	return (
+		<div className={activeClasses} onClick={onClick}>
+			<input type="checkbox" className={classes.toggleSwitch} value={toggle} />
+			<label className={classes.toggleLabel}>
+				<span className={buttonClasses} />
+			</label>
+		</div>
+	)
+}
 
 const styles = {
-	toggle: props => ({
-		display: 'flex',
-		flex: '0 0 100%',
-		justifyContent: 'center',
-		alignItems: 'center',
-		transition: 'all .3s',
-	}),
 	toggleSwitch: {
 		height: 0,
 		width: 0,
@@ -35,6 +28,7 @@ const styles = {
 		display: 'inline-block',
 		height: '24px',
 		width: '39px',
+		color: '#D8D8D8',
 		backgroundColor: 'currentColor',
 		borderRadius: '100px',
 		position: 'relative',
@@ -50,6 +44,12 @@ const styles = {
 		border: '2px solid #fff',
 		borderRadius: '100px',
 		transition: 'all .3s',
+	},
+	toggleMove: {
+		transform: 'translateX(70%)',
+	},
+	toggleActive: {
+		color: '#F48271',
 	},
 }
 
