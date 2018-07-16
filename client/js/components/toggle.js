@@ -1,6 +1,5 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-// import classNames from 'classnames/bind'
 import cx from 'classnames'
 
 const Toggle = ({ classes, toggle, onClick }) => {
