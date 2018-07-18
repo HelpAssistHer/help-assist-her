@@ -47,7 +47,7 @@ const parsePhoneNumber = phoneNumber => {
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
-class VerificationPortalForm extends Component {
+class VerificationPortalFormClass extends Component {
 	render() {
 		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
 
@@ -67,7 +67,7 @@ class VerificationPortalForm extends Component {
 							<Heading text="GENERAL INFORMATION" size="medium" />
 						</div>
 					</div>
-					<Spacer height="15px" />
+					<Spacer height="55px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
@@ -85,7 +85,7 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
-					<Spacer height="15px" />
+					<Spacer height="64px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.secondAndThirdBox}>
@@ -139,7 +139,7 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
-					<Spacer height="15px" />
+					<Spacer height="66px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
@@ -194,8 +194,6 @@ class VerificationPortalForm extends Component {
 						</div>
 					</div>
 
-					{/* </div> */}
-
 					{/* 5-12-18, I am commenting this out for now, as we want to keep the
 				data verification simple for now. We will eventually add this back. */}
 					{/*<div>*/}
@@ -237,9 +235,8 @@ class VerificationPortalForm extends Component {
 					{/*</div>*/}
 					{/*</div>*/}
 
-					<Spacer height="50px" />
+					<Spacer height="81px" />
 
-					{/* <div className={classes.formSection}> */}
 					<div className={classes.gridField}>
 						<div className={classes.headingGrid}>
 							<Heading text="SERVICES" size="medium" />
@@ -268,7 +265,7 @@ class VerificationPortalForm extends Component {
 				</div>
 
 				<div className={classes.formSection}>
-					<Heading text="HOURS" />
+					<Heading text="HOURS" size="medium" />
 					<Spacer height="50px" />
 					<label>Sunday Hours</label>
 					<Field name="hours[0].open" component={Input} type="time" />
@@ -307,7 +304,7 @@ class VerificationPortalForm extends Component {
 				</div>
 
 				<div className={classes.formSection}>
-					<Heading text="NOTES" />
+					<Heading text="NOTES" size="medium" />
 					<Spacer height="50px" />
 					<Field name="notes" component="textarea" rows="4" cols="50" />
 				</div>
@@ -326,9 +323,9 @@ class VerificationPortalForm extends Component {
 	}
 }
 
-VerificationPortalForm = reduxForm({
+const VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
-})(VerificationPortalForm)
+})(VerificationPortalFormClass)
 
 const styles = {
 	parent: {

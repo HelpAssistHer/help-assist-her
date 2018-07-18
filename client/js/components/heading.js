@@ -1,6 +1,5 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import classNames from 'classnames'
 
 const Heading = ({ classes, text, size }) => {
 	return <div className={classes[`${size}`]}>{text}</div>
@@ -13,6 +12,15 @@ const styles = {
 		'font-weight': 'bold',
 		'letter-spacing': '3.73px',
 		'line-height': '24px',
+		'justify-self': 'start',
+	},
+	small: {
+		height: '17px',
+		color: '#F48271',
+		'font-size': '14px',
+		'font-weight': 'bold',
+		'letter-spacing': '2.61px',
+		'line-height': '17px',
 	},
 	small: {
 		height: '17px',
