@@ -22,6 +22,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	createdAt: Joi.date().iso(),
 	doNotList: Joi.boolean(),
 	email: Joi.string().email(),
+	hotlinePhoneNumber: phoneValidator.phone().validate(),
 	hours: hoursSchemaJoi,
 	inVerification: objectIdValidator
 		.objectId()

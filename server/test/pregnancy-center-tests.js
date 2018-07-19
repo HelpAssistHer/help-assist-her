@@ -1135,6 +1135,7 @@ describe('PregnancyCenters', () => {
 				prcName: 'Birthright of Albany',
 				primaryContactPerson: primaryContactPerson,
 				phone: '+15184382978',
+				hotlinePhoneNumber: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
 			})
@@ -1151,6 +1152,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(pc._id))
+			res.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res.body.verifiedData.should.deep.equal({})
@@ -1181,6 +1183,7 @@ describe('PregnancyCenters', () => {
 				prcName: 'Birthright of Albany',
 				primaryContactPerson: primaryContactPerson,
 				phone: '+15184382978',
+				hotlinePhoneNumber: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
 				outOfBusiness: true,
@@ -1201,6 +1204,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(pc._id))
 			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res.body.verifiedData.should.deep.equal({})
 			res.body.outOfBusiness.should.equal(false)
@@ -1229,6 +1233,7 @@ describe('PregnancyCenters', () => {
 			res2.body.should.have.property('_id')
 			res2.body.should.have.property('prcName')
 			res2.body._id.should.equal(String(pc._id))
+			res2.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res2.body.prcName.should.equal('Birthright of Albany')
 			res2.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res2.body.verifiedData.should.deep.equal({})
@@ -1245,6 +1250,7 @@ describe('PregnancyCenters', () => {
 			res3.body.should.be.a('object')
 			res3.body.should.have.property('_id')
 			res3.body.should.have.property('prcName')
+			res3.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res3.body._id.should.equal(String(pc._id))
 			res3.body.prcName.should.equal('Birthright of Albany')
 			res3.body.primaryContactPerson.firstName.should.equal('Joanna')
@@ -1277,6 +1283,7 @@ describe('PregnancyCenters', () => {
 				prcName: 'Birthright of Albany',
 				primaryContactPerson: primaryContactPerson,
 				phone: '+15184382978',
+				hotlinePhoneNumber: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
 				outOfBusiness: true,
@@ -1297,6 +1304,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(pc._id))
 			res.body.prcName.should.equal('Birthright of Albany')
+			res.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res.body.verifiedData.should.deep.equal({})
 			res.body.outOfBusiness.should.equal(false)
@@ -1324,6 +1332,7 @@ describe('PregnancyCenters', () => {
 			res2.body.should.have.property('_id')
 			res2.body.should.have.property('prcName')
 			res2.body._id.should.equal(String(pc._id))
+			res2.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res2.body.prcName.should.equal('Birthright of Albany')
 			res2.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res2.body.verifiedData.should.deep.equal({})
@@ -1341,6 +1350,7 @@ describe('PregnancyCenters', () => {
 			res3.body.should.have.property('_id')
 			res3.body.should.have.property('prcName')
 			res3.body._id.should.equal(String(pc._id))
+			res3.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res3.body.prcName.should.equal('Birthright of Albany')
 			res3.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res3.body.verifiedData.should.deep.equal({})
@@ -1372,6 +1382,7 @@ describe('PregnancyCenters', () => {
 				prcName: 'Birthright of Albany',
 				primaryContactPerson: primaryContactPerson,
 				phone: '+15184382978',
+				hotlinePhoneNumber: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
 				doNotList: true,
@@ -1391,6 +1402,7 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
 			res.body._id.should.equal(String(pc._id))
+			res.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res.body.prcName.should.equal('Birthright of Albany')
 			res.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res.body.verifiedData.should.deep.equal({})
@@ -1417,6 +1429,7 @@ describe('PregnancyCenters', () => {
 			res2.body.should.have.property('_id')
 			res2.body.should.have.property('prcName')
 			res2.body._id.should.equal(String(pc._id))
+			res2.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res2.body.prcName.should.equal('Birthright of Albany')
 			res2.body.primaryContactPerson.firstName.should.equal('Joanna')
 			res2.body.verifiedData.should.deep.equal({})
@@ -1433,6 +1446,7 @@ describe('PregnancyCenters', () => {
 			res3.body.should.be.a('object')
 			res3.body.should.have.property('_id')
 			res3.body.should.have.property('prcName')
+			res3.body.hotlinePhoneNumber.should.equal('+15184382978')
 			res3.body._id.should.equal(String(pc._id))
 			res3.body.prcName.should.equal('Birthright of Albany')
 			res3.body.primaryContactPerson.firstName.should.equal('Joanna')

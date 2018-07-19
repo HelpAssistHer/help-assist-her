@@ -14,6 +14,7 @@ const pregnancyCenterSchema = mongoose.Schema(
 		address: addressSchema,
 		doNotList: Boolean,
 		email: String,
+		hotlinePhoneNumber: String,
 		hours: Object,
 		inVerification: mongoose.Schema.Types.ObjectId,
 		prcName: String,
