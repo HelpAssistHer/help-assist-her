@@ -267,6 +267,7 @@ class VerificationPortalForm extends Component {
 					<Spacer height="50px" />
 					<Day
 						hours={_.get(hours)}
+						resource={this.props.resource}
 						// day="Sunday"
 						// closedAllDay={closedAllDayStatus(0, hours)}
 						// timeing={_.get(hours, `[0]`)}

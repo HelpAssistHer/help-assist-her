@@ -11,7 +11,7 @@ import { updateResource } from '../pregnancy-resource-center/action-creators'
 
 class Day extends React.Component {
 	render() {
-		const { classes, changeFieldValue, hours } = this.props
+		const { classes, changeFieldValue, hours, resource } = this.props
 		const dayName = [
 			'Sunday',
 			'Monday',
@@ -23,11 +23,15 @@ class Day extends React.Component {
 		]
 		let closedAllDay = false
 		let timeing = {}
-		const openClose = (name, closedToday) => {
+		const openClose = (i, hours, closedToday) => {
 			closedAllDay = !closedToday
 			timeing.closedAllDay = !closedToday
-			changeFieldValue(`${name}`, timeing)
-			return closedAllDay
+			console.log(' hour before = ', hours)
+			resource.hours[i] = timeing
+			console.log(' hour after = ', hours)
+			updateResource(resource)
+			// changeFieldValue(`${name}`, timeing)
+			// return closedAllDay
 		}
 		const closedAllDayStatus = (dayNum, hours) => {
 			return hours && hours.length > 0
@@ -47,7 +51,7 @@ class Day extends React.Component {
 							<div>
 								<label className={classes.lable}>{today}</label>
 								<div
-									onClick={() => openClose(today, closedAllDay)}
+									onClick={() => openClose(i, hours, closedAllDay)}
 									className={
 										closedAllDay
 											? classNames(classes.closed, classes.lable)
