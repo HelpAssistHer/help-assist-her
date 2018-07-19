@@ -261,37 +261,37 @@ class VerificationPortalForm extends Component {
 					<Heading text="HOURS" />
 					<Spacer height="50px" />
 					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[0].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[0].open" component={Time} />
+					<Field name="hours[0].close" component={Time} />
 
 					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[1].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[1].open" component={Time} />
+					<Field name="hours[1].close" component={Time} />
 
 					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[2].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[2].open" component={Time} />
+					<Field name="hours[2].close" component={Time} />
 
 					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[3].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[3].open" component={Time} />
+					<Field name="hours[3].close" component={Time} />
 
 					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[4].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[4].open" component={Time} />
+					<Field name="hours[4].close" component={Time} />
 
 					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[5].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[5].open" component={Time} />
+					<Field name="hours[5].close" component={Time} />
 
 					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Time} placeholder={'Open'} />
-					<Field name="hours[6].close" component={Time} placeholder={'Close'} />
+					<Field name="hours[6].open" component={Time} />
+					<Field name="hours[6].close" component={Time} />
 				</div>
 
 				<div className={classes.parent}>
 					<Field
-						name="verifiedTimeData.hours.verified"
+						name="verifiedData.hours.verified"
 						component={VerifiedCheckbox}
 					/>
 				</div>
