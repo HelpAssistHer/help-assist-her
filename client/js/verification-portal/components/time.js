@@ -33,14 +33,14 @@ class Time extends React.Component {
 			'11:30',
 			'12:00',
 		]
-		const timeSpin = (current, name, up) => {
+		const timeSpin = (current, name, arrow) => {
 			if (!current)
 				return name.split('.')[1] == 'open'
 					? changeFieldValue(name, '9:00 am')
 					: changeFieldValue(name, '5:00 pm')
 			current = current.split(' ')
 			i = hr.indexOf(current[0])
-			if (up == 'up') {
+			if (arrow == 'up') {
 				if (!hr[i - 1]) {
 					i = hr.length
 					current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
@@ -53,8 +53,7 @@ class Time extends React.Component {
 				}
 				current[0] = hr[i + 1]
 			}
-			current = current.join(' ')
-			changeFieldValue(name, current)
+			changeFieldValue(name, current.join(' '))
 		}
 		return (
 			<div className={classes.wrapper}>
