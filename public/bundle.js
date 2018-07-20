@@ -1312,6 +1312,7 @@
 		},
 		/* 144 */
 		/***/ function(module, exports, __webpack_require__) {
+			'use strict'
 			eval(
 				"var MATCH = __webpack_require__(11)('match');\nmodule.exports = function (KEY) {\n  var re = /./;\n  try {\n    '/./'[KEY](re);\n  } catch (e) {\n    try {\n      re[MATCH] = false;\n      return !'/./'[KEY](re);\n    } catch (f) { /* empty */ }\n  } return true;\n};\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/core-js/modules/_fails-is-regexp.js\n// module id = 144\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/core-js/modules/_fails-is-regexp.js?",
 			)
@@ -1328,6 +1329,7 @@
 		},
 		/* 146 */
 		/***/ function(module, exports, __webpack_require__) {
+			'use strict'
 			eval(
 				"var isObject = __webpack_require__(10);\nvar setPrototypeOf = __webpack_require__(154).set;\nmodule.exports = function (that, target, C) {\n  var S = target.constructor;\n  var P;\n  if (S !== C && typeof S == 'function' && (P = S.prototype) !== C.prototype && isObject(P) && setPrototypeOf) {\n    setPrototypeOf(that, P);\n  } return that;\n};\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/core-js/modules/_inherit-if-required.js\n// module id = 146\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/core-js/modules/_inherit-if-required.js?",
 			)
@@ -1469,6 +1471,7 @@
 		},
 		/* 163 */
 		/***/ function(module, exports, __webpack_require__) {
+			'use strict'
 			eval(
 				"var classof = __webpack_require__(85);\nvar ITERATOR = __webpack_require__(11)('iterator');\nvar Iterators = __webpack_require__(74);\nmodule.exports = __webpack_require__(40).getIteratorMethod = function (it) {\n  if (it != undefined) return it[ITERATOR]\n    || it['@@iterator']\n    || Iterators[classof(it)];\n};\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/core-js/modules/core.get-iterator-method.js\n// module id = 163\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/core-js/modules/core.get-iterator-method.js?",
 			)
@@ -1476,8 +1479,7 @@
 			/***/
 		},
 		/* 164 */
-		/***/ function(module, exports, __webpack_require__) {
-			'use strict'
+		/***/ function(module, exports) {
 			eval(
 				"\nvar addToUnscopables = __webpack_require__(52);\nvar step = __webpack_require__(241);\nvar Iterators = __webpack_require__(74);\nvar toIObject = __webpack_require__(33);\n\n// 22.1.3.4 Array.prototype.entries()\n// 22.1.3.13 Array.prototype.keys()\n// 22.1.3.29 Array.prototype.values()\n// 22.1.3.30 Array.prototype[@@iterator]()\nmodule.exports = __webpack_require__(149)(Array, 'Array', function (iterated, kind) {\n  this._t = toIObject(iterated); // target\n  this._i = 0;                   // next index\n  this._k = kind;                // kind\n// 22.1.5.2.1 %ArrayIteratorPrototype%.next()\n}, function () {\n  var O = this._t;\n  var kind = this._k;\n  var index = this._i++;\n  if (!O || index >= O.length) {\n    this._t = undefined;\n    return step(1);\n  }\n  if (kind == 'keys') return step(0, index);\n  if (kind == 'values') return step(0, O[index]);\n  return step(0, [index, O[index]]);\n}, 'values');\n\n// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)\nIterators.Arguments = Iterators.Array;\n\naddToUnscopables('keys');\naddToUnscopables('values');\naddToUnscopables('entries');\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/core-js/modules/es6.array.iterator.js\n// module id = 164\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/core-js/modules/es6.array.iterator.js?",
 			)
@@ -1504,7 +1506,6 @@
 		},
 		/* 167 */
 		/***/ function(module, exports, __webpack_require__) {
-			'use strict'
 			eval(
 				"/**\n * Copyright (c) 2013-present, Facebook, Inc.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n *\n * @typechecks\n * \n */\n\n/*eslint-disable no-self-compare */\n\n\n\nvar hasOwnProperty = Object.prototype.hasOwnProperty;\n\n/**\n * inlined Object.is polyfill to avoid requiring consumers ship their own\n * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is\n */\nfunction is(x, y) {\n  // SameValue algorithm\n  if (x === y) {\n    // Steps 1-5, 7-10\n    // Steps 6.b-6.e: +0 != -0\n    // Added the nonzero y check to make Flow happy, but it is redundant\n    return x !== 0 || y !== 0 || 1 / x === 1 / y;\n  } else {\n    // Step 6.a: NaN == NaN\n    return x !== x && y !== y;\n  }\n}\n\n/**\n * Performs equality by iterating through keys on an object and returning false\n * when any key has values which are not strictly equal between the arguments.\n * Returns true when the values of all keys are strictly equal.\n */\nfunction shallowEqual(objA, objB) {\n  if (is(objA, objB)) {\n    return true;\n  }\n\n  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {\n    return false;\n  }\n\n  var keysA = Object.keys(objA);\n  var keysB = Object.keys(objB);\n\n  if (keysA.length !== keysB.length) {\n    return false;\n  }\n\n  // Test for A's keys different from B.\n  for (var i = 0; i < keysA.length; i++) {\n    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {\n      return false;\n    }\n  }\n\n  return true;\n}\n\nmodule.exports = shallowEqual;\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/fbjs/lib/shallowEqual.js\n// module id = 167\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/fbjs/lib/shallowEqual.js?",
 			)
@@ -1640,7 +1641,7 @@
 		/***/ function(module, __webpack_exports__, __webpack_require__) {
 			'use strict'
 			eval(
-				'/**\n * This method returns the first argument it receives.\n *\n * @static\n * @since 0.1.0\n * @memberOf _\n * @category Util\n * @param {*} value Any value.\n * @returns {*} Returns `value`.\n * @example\n *\n * var object = { \'a\': 1 };\n *\n * console.log(_.identity(object) === object);\n * // => true\n */\nfunction identity(value) {\n  return value;\n}\n\n/* harmony default export */ __webpack_exports__["a"] = (identity);\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/lodash-es/identity.js\n// module id = 182\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/lodash-es/identity.js?',
+				"/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__ = __webpack_require__(75);\n/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__isObject_js__ = __webpack_require__(54);\n\n\n\n/** `Object#toString` result references. */\nvar asyncTag = '[object AsyncFunction]',\n    funcTag = '[object Function]',\n    genTag = '[object GeneratorFunction]',\n    proxyTag = '[object Proxy]';\n\n/**\n * Checks if `value` is classified as a `Function` object.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a function, else `false`.\n * @example\n *\n * _.isFunction(_);\n * // => true\n *\n * _.isFunction(/abc/);\n * // => false\n */\nfunction isFunction(value) {\n  if (!__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__isObject_js__[\"a\" /* default */])(value)) {\n    return false;\n  }\n  // The use of `Object#toString` avoids issues with the `typeof` operator\n  // in Safari 9 which returns 'object' for typed arrays and other constructors.\n  var tag = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__baseGetTag_js__[\"a\" /* default */])(value);\n  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;\n}\n\n/* harmony default export */ __webpack_exports__[\"a\"] = (isFunction);\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/lodash-es/isFunction.js\n// module id = 182\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/lodash-es/isFunction.js?",
 			)
 
 			/***/
@@ -1673,7 +1674,7 @@
 			/***/
 		},
 		/* 186 */
-		/***/ function(module, __webpack_exports__, __webpack_require__) {
+		/***/ function(module, exports, __webpack_require__) {
 			'use strict'
 			eval(
 				"/** Used as references for various `Number` constants. */\nvar MAX_SAFE_INTEGER = 9007199254740991;\n\n/**\n * Checks if `value` is a valid array-like length.\n *\n * **Note:** This method is loosely based on\n * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.\n * @example\n *\n * _.isLength(3);\n * // => true\n *\n * _.isLength(Number.MIN_VALUE);\n * // => false\n *\n * _.isLength(Infinity);\n * // => false\n *\n * _.isLength('3');\n * // => false\n */\nfunction isLength(value) {\n  return typeof value == 'number' &&\n    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;\n}\n\n/* harmony default export */ __webpack_exports__[\"a\"] = (isLength);\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/lodash-es/isLength.js\n// module id = 186\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/lodash-es/isLength.js?",
@@ -1816,7 +1817,7 @@
 			/***/
 		},
 		/* 202 */
-		/***/ function(module, exports, __webpack_require__) {
+		/***/ function(module, __webpack_exports__, __webpack_require__) {
 			'use strict'
 			eval(
 				'/**\n * Copyright (c) 2013-present, Facebook, Inc.\n *\n * This source code is licensed under the MIT license found in the\n * LICENSE file in the root directory of this source tree.\n *\n */\n\n\n\n/**\n * Gets the target node from a native browser event by accounting for\n * inconsistencies in browser DOM APIs.\n *\n * @param {object} nativeEvent Native browser event.\n * @return {DOMEventTarget} Target node.\n */\n\nfunction getEventTarget(nativeEvent) {\n  var target = nativeEvent.target || nativeEvent.srcElement || window;\n\n  // Normalize SVG <use> element events #4963\n  if (target.correspondingUseElement) {\n    target = target.correspondingUseElement;\n  }\n\n  // Safari may fire events on text nodes (Node.TEXT_NODE is 3).\n  // @see http://www.quirksmode.org/js/events_properties.html\n  return target.nodeType === 3 ? target.parentNode : target;\n}\n\nmodule.exports = getEventTarget;\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/react-dom/lib/getEventTarget.js\n// module id = 202\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/react-dom/lib/getEventTarget.js?',
@@ -1861,7 +1862,7 @@
 			/***/
 		},
 		/* 207 */
-		/***/ function(module, __webpack_exports__, __webpack_require__) {
+		/***/ function(module, exports, __webpack_require__) {
 			'use strict'
 			eval(
 				'/* harmony export (immutable) */ __webpack_exports__["a"] = warning;\n/**\n * Prints a warning in the console if it exists.\n *\n * @param {String} message The warning message.\n * @returns {void}\n */\nfunction warning(message) {\n  /* eslint-disable no-console */\n  if (typeof console !== \'undefined\' && typeof console.error === \'function\') {\n    console.error(message);\n  }\n  /* eslint-enable no-console */\n  try {\n    // This error was thrown as a convenience so that if you enable\n    // "break on all exceptions" in your console,\n    // it would pause the execution at this line.\n    throw new Error(message);\n    /* eslint-disable no-empty */\n  } catch (e) {}\n  /* eslint-enable no-empty */\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/react-redux/es/utils/warning.js\n// module id = 207\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/react-redux/es/utils/warning.js?',
@@ -1888,7 +1889,7 @@
 			/***/
 		},
 		/* 210 */
-		/***/ function(module, __webpack_exports__, __webpack_require__) {
+		/***/ function(module, exports, __webpack_require__) {
 			'use strict'
 			eval(
 				'/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__ = __webpack_require__(211);\n// Written in this round about way for babel-transform-imports\n\n\n/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Router__["a" /* default */]);\n\n//////////////////\n// WEBPACK FOOTER\n// ./~/react-router-tabs/~/react-router-dom/es/Router.js\n// module id = 210\n// module chunks = 0\n\n//# sourceURL=webpack:///./~/react-router-tabs/~/react-router-dom/es/Router.js?',
@@ -1970,7 +1971,6 @@
 		},
 		/* 219 */
 		/***/ function(module, exports, __webpack_require__) {
-			'use strict'
 			eval(
 				'\n\nObject.defineProperty(exports, "__esModule", {\n\tvalue: true\n});\nexports.logout = exports.login = exports.getInitialAppData = undefined;\n\nvar getInitialData = function () {\n\tvar _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {\n\t\tvar response;\n\t\treturn regeneratorRuntime.wrap(function _callee$(_context) {\n\t\t\twhile (1) {\n\t\t\t\tswitch (_context.prev = _context.next) {\n\t\t\t\t\tcase 0:\n\t\t\t\t\t\t_context.next = 2;\n\t\t\t\t\t\treturn fetch(\'/api/initial-data\', {\n\t\t\t\t\t\t\tmethod: \'GET\'\n\t\t\t\t\t\t});\n\n\t\t\t\t\tcase 2:\n\t\t\t\t\t\tresponse = _context.sent;\n\t\t\t\t\t\t_context.next = 5;\n\t\t\t\t\t\treturn response.json();\n\n\t\t\t\t\tcase 5:\n\t\t\t\t\t\treturn _context.abrupt(\'return\', _context.sent);\n\n\t\t\t\t\tcase 6:\n\t\t\t\t\tcase \'end\':\n\t\t\t\t\t\treturn _context.stop();\n\t\t\t\t}\n\t\t\t}\n\t\t}, _callee, this);\n\t}));\n\n\treturn function getInitialData() {\n\t\treturn _ref.apply(this, arguments);\n\t};\n}();\n\nexports.createLoginAction = createLoginAction;\nexports.createLogoutAction = createLogoutAction;\n\nvar _actionTypes = __webpack_require__(220);\n\nvar _actionCreators = __webpack_require__(218);\n\nfunction _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }\n\nfunction createInitialDataAction(initialData) {\n\treturn {\n\t\ttype: _actionTypes.GET_INITIAL_DATA,\n\t\tinitialData: initialData\n\t};\n}\n\nfunction createLoginAction(userDisplayName) {\n\treturn {\n\t\ttype: _actionTypes.UPDATE_LOGIN_STATE,\n\t\tisLoggedIn: true,\n\t\tuserDisplayName: userDisplayName\n\t};\n}\n\nfunction createLogoutAction() {\n\treturn {\n\t\ttype: _actionTypes.UPDATE_LOGIN_STATE,\n\t\tisLoggedIn: false\n\t};\n}\n\nvar getInitialAppData = exports.getInitialAppData = function getInitialAppData() {\n\treturn function (dispatch) {\n\t\treturn getInitialData().then(function (result) {\n\t\t\treturn dispatch(createInitialDataAction(result));\n\t\t});\n\t};\n};\n\nvar login = exports.login = function login(accessToken) {\n\treturn function (dispatch) {\n\t\treturn (0, _actionCreators.authenticateUser)(accessToken).then(function (result) {\n\t\t\tif (result) {\n\t\t\t\tdispatch(createLoginAction());\n\t\t\t}\n\t\t});\n\t};\n};\n\nvar logout = exports.logout = function logout() {\n\treturn function (dispatch) {\n\t\treturn (0, _actionCreators.logoutUser)().then(function (result) {\n\t\t\tif (result) {\n\t\t\t\tdispatch(createLogoutAction());\n\t\t\t}\n\t\t});\n\t};\n};\n\n//////////////////\n// WEBPACK FOOTER\n// ./client/js/hah-app/action-creators.js\n// module id = 219\n// module chunks = 0\n\n//# sourceURL=webpack:///./client/js/hah-app/action-creators.js?',
 			)
