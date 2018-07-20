@@ -22,15 +22,6 @@ const styles = {
 		'letter-spacing': '2.61px',
 		'line-height': '17px',
 	},
-	small: {
-		height: '17px',
-		width: '78px',
-		color: '#F48271',
-		'font-size': '14px',
-		'font-weight': 'bold',
-		'letter-spacing': '2.61px',
-		'line-height': '17px',
-	},
 }
 
 export default injectSheet(styles)(Heading)
