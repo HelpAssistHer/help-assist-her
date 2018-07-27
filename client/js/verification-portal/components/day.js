@@ -5,13 +5,27 @@ import { connect } from 'react-redux'
 import { change } from 'redux-form'
 import classNames from 'classnames'
 import Time from './time'
-import { updateResource } from '../pregnancy-resource-center/action-creators'
-
-// const Day = ({ classes, day, name, closedAllDay }) => {
 
 class Day extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			hours: this.props.hours,
+		}
+		this.openState = this.openState.bind(this)
+	}
+	openState = (i, currentState, hours, changeFieldValue) => {
+		hours[i]
+			? (hours[i].closedAllDay = !currentState)
+			: (hours[i] = { closedAllDay: !currentState })
+		changeFieldValue(`hours[${i}].closedAllDay`, !currentState)
+		this.setState({ hours })
+	}
+	componentWillReceiveProps(nextProps) {
+		this.setState({ hours: nextProps.hours })
+	}
 	render() {
-		const { classes, changeFieldValue, hours, resource } = this.props
+		const { classes, changeFieldValue } = this.props
 		const dayName = [
 			'Sunday',
 			'Monday',
@@ -21,39 +35,27 @@ class Day extends React.Component {
 			'Friday',
 			'Saturday',
 		]
-		let closedAllDay = false
-		let timeing = {}
-		const openClose = (i, hours, closedToday) => {
-			closedAllDay = !closedToday
-			timeing.closedAllDay = !closedToday
-			console.log(' hour before = ', hours)
-			resource.hours[i] = timeing
-			console.log(' hour after = ', hours)
-			updateResource(resource)
-			// changeFieldValue(`${name}`, timeing)
-			// return closedAllDay
-		}
 		const closedAllDayStatus = (dayNum, hours) => {
-			return hours && hours.length > 0
-				? hours[dayNum]
-					? hours[dayNum].closedAllDay
-					: true
-				: false
+			return hours ? (hours[dayNum] ? hours[dayNum].closedAllDay : true) : false
 		}
-
 		return (
 			<div>
 				{_.map(dayName, (today, i) => {
-					closedAllDay = closedAllDayStatus(i, hours)
-					timeing = _.get(hours, `[${i}]`) || {}
 					return (
 						<div className={classes.day} key={today}>
 							<div>
 								<label className={classes.lable}>{today}</label>
 								<div
-									onClick={() => openClose(i, hours, closedAllDay)}
+									onClick={() =>
+										this.openState(
+											i,
+											closedAllDayStatus(i, this.props.hours),
+											this.props.hours,
+											changeFieldValue,
+										)
+									}
 									className={
-										closedAllDay
+										closedAllDayStatus(i, this.state.hours)
 											? classNames(classes.closed, classes.lable)
 											: classNames(classes.lable, classes.notClose)
 									}
@@ -61,7 +63,7 @@ class Day extends React.Component {
 									Closed
 								</div>
 							</div>
-							{closedAllDay ? (
+							{closedAllDayStatus(i, this.state.hours) ? (
 								''
 							) : (
 								<div>
@@ -69,14 +71,12 @@ class Day extends React.Component {
 										className={classes.field}
 										name={`hours[${i}].open`}
 										component={Time}
-										placeholder={'open'}
 									/>
 									to
 									<Field
 										className={classes.field}
 										name={`hours[${i}].close`}
 										component={Time}
-										placeholder={'close'}
 									/>
 								</div>
 							)}
@@ -124,6 +124,6 @@ const mapDispatchToProps = dispatch => {
 		},
 	}
 }
-const dayContainer = connect('', mapDispatchToProps)(Day)
+const dayContainer = connect(null, mapDispatchToProps)(Day)
 
 export default injectSheet(styles)(dayContainer)

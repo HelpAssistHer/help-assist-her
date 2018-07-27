@@ -37,7 +37,6 @@ const convertTimeToNumber = timeString => {
 
 export async function updateResource(updatedResource) {
 	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
-		console.log(' dayOfWeek == ', dayOfWeek)
 		return {
 			open: convertTimeToNumber(dayOfWeek.open),
 			close: convertTimeToNumber(dayOfWeek.close),

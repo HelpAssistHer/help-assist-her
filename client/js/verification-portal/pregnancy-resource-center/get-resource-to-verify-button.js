@@ -13,10 +13,12 @@ const convertNumberToTimeFormat = timeNumber => {
 		return null
 	}
 	const timeString = String(timeNumber).padStart(4, '0')
-
-	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
+	const hours = parseInt(`${timeString.slice(0, 2)}`)
+	let am = ''
+	am = hours > 12 ? 'pm' : 'am'
+	return `${hours > 12 ? hours - 12 : hours}:${timeString.slice(2, 4)} ${am}`
 }
-const registeredDays = [0, 1, 2, 3, 4, 5, 6]
+
 const populateForm = ({ changeFieldValue, resource }) => {
 	let {
 		prcName,
@@ -96,7 +98,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.services.verified',
 		_.get(verifiedData, 'services.verified'),
 	)
-	_.forEach(registeredDays, (hour, i) => {
+	_.forEach(hours, (hour, i) => {
 		if (!_.get(hours, `[${i}]`) && hours) hours[i] = {}
 		changeFieldValue(
 			`hours[${i}].open`,

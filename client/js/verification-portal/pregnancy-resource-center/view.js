@@ -55,7 +55,7 @@ class VerificationPortal extends React.Component {
 					<VerificationPortalForm
 						outOfBusiness={outOfBusiness}
 						doNotList={this.state.doNotList}
-						resource={resource}
+						hours={resource.hours}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />
