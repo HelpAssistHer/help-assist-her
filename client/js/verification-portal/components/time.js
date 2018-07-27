@@ -97,10 +97,6 @@ const styles = {
 		border: 'none',
 		outline: 'none',
 		padding: '0px 1.5px',
-		// '& ::-webkit-inner-spin-button, & ::-webkit-inner-spin-button:hover, & ::-webkit-outer-spin-button, & ::-webkit-outer-spin-button:hover': {
-		// 	'-webkit-appearance': 'none',
-		// 	margin: '0',
-		// },
 	},
 	arrow: {
 		height: '18px',
