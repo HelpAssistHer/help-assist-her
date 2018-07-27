@@ -8,6 +8,7 @@ class Time extends React.Component {
 		const { classes, input, placeholder, changeFieldValue } = this.props
 		let i = 0
 		const hr = [
+			'12:00',
 			'12:30',
 			'1:00',
 			'1:30',
@@ -31,35 +32,28 @@ class Time extends React.Component {
 			'10:30',
 			'11:00',
 			'11:30',
-			'12:00',
 		]
-		const timeSpin = (current, name, arrow) => {
+		const timeSpin = (current, name, increment) => {
 			if (!current)
 				return name.split('.')[1] == 'open'
 					? changeFieldValue(name, '9:00 am')
 					: changeFieldValue(name, '5:00 pm')
 			current = current.split(' ')
 			i = hr.indexOf(current[0])
-			if (arrow == 'up') {
-				if (!hr[i - 1]) {
-					i = hr.length
-					current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
-				}
-				current[0] = hr[i - 1]
-			} else {
-				if (!hr[i + 1]) {
-					i = -1
-					current[1] == 'am' ? (current[1] = 'pm') : (current[1] = 'am')
-				}
-				current[0] = hr[i + 1]
-			}
+			!hr[i + increment]
+				? current[1] == 'am'
+					? (current[1] = 'pm')
+					: (current[1] = 'am')
+				: ''
+			!hr[i + increment] ? (increment < 0 ? (i = hr.length) : (i = -1)) : ''
+			current[0] = hr[i + increment]
 			changeFieldValue(name, current.join(' '))
 		}
 		return (
 			<div className={classes.wrapper}>
 				<span
 					className={classes.arrow}
-					onClick={() => timeSpin(input.value, input.name, 'up')}
+					onClick={() => timeSpin(input.value, input.name, -1)}
 				>
 					{'<'}
 				</span>
@@ -71,7 +65,7 @@ class Time extends React.Component {
 				/>
 				<span
 					className={classes.arrow}
-					onClick={() => timeSpin(input.value, input.name, 'down')}
+					onClick={() => timeSpin(input.value, input.name, 1)}
 				>
 					{'>'}
 				</span>
