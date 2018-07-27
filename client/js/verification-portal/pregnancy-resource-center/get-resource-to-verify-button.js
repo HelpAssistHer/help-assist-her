@@ -181,10 +181,10 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue, history }) => {
 							changeFieldValue,
 							resource: store.getState().resource,
 						})
-						console.log('state', store.getState())
 						history.push(
-							'/verification/pregnancy-resource-center/' +
-								store.getState().resource._id,
+							`/verification/pregnancy-resource-center/${
+								store.getState().resource._id
+							}`,
 						)
 					})
 				}}
