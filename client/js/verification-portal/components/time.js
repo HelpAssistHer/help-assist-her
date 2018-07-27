@@ -5,7 +5,7 @@ import { change } from 'redux-form'
 
 class Time extends React.Component {
 	render() {
-		const { classes, input, placeholder, changeFieldValue } = this.props
+		const { classes, input, changeFieldValue } = this.props
 		let i = 0
 		const hr = [
 			'12:00',
@@ -35,13 +35,13 @@ class Time extends React.Component {
 		]
 		const timeSpin = (current, name, increment) => {
 			if (!current)
-				return name.split('.')[1] == 'open'
+				return name.split('.')[1] === 'open'
 					? changeFieldValue(name, '9:00 am')
 					: changeFieldValue(name, '5:00 pm')
 			current = current.split(' ')
 			i = hr.indexOf(current[0])
 			!hr[i + increment]
-				? current[1] == 'am'
+				? current[1] === 'am'
 					? (current[1] = 'pm')
 					: (current[1] = 'am')
 				: ''
