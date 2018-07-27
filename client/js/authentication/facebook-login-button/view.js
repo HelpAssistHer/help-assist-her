@@ -5,9 +5,14 @@ import { connect } from 'react-redux'
 
 import { isAuthenticated } from '../action-creators'
 
-import { createLoginAction, createLogoutAction, login, logout } from '../../hah-app/action-creators'
+import {
+	createLoginAction,
+	createLogoutAction,
+	login,
+	logout,
+} from '../../hah-app/action-creators'
 
-class FacebookLoginButton extends React.Component {
+class FacebookLoginButtonClass extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -86,5 +91,5 @@ function mapStateToProps(state) {
 	}
 }
 
-FacebookLoginButton = injectSheet(styles)(FacebookLoginButton)
+const FacebookLoginButton = injectSheet(styles)(FacebookLoginButtonClass)
 export default connect(mapStateToProps)(FacebookLoginButton)
