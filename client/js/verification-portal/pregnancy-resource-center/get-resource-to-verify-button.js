@@ -6,6 +6,7 @@ import { getResourceToVerify } from './action-creators'
 import Button from '../../components/button'
 import { store } from '../../hah-app/index'
 import { updateOutOfBusinessActionCreator } from '../out-of-business/action-creators'
+import { updateDoNotListActionCreator } from '../do-not-list/action-creators'
 import { pregnancyCenterServices } from '../../../../server/pregnancy-centers/pregnancy-center-services'
 
 const convertNumberToTimeFormat = timeNumber => {
@@ -28,6 +29,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		notes,
 		otherServices,
 		phone,
+		services,
 		primaryContactPerson,
 		verifiedData,
 		website,
@@ -89,7 +91,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	)
 
 	_.forEach(pregnancyCenterServices, service => {
-		resource.services[service.id]
+		services[service.id]
 			? changeFieldValue(`services.${service.id}`, true)
 			: changeFieldValue(`services.${service.id}`, false)
 	})
@@ -128,6 +130,7 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 						dispatch(
 							updateOutOfBusinessActionCreator(!!result.resource.outOfBusiness),
 						)
+						dispatch(updateDoNotListActionCreator(result.resource.doNotList))
 						populateForm({
 							changeFieldValue,
 							resource: store.getState().resource,
