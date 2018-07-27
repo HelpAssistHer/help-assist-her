@@ -298,17 +298,6 @@ VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
 })(VerificationPortalForm)
 
-// const mapStateToProps = state => {
-// 	return {
-// 		hours: state.form.verificationPortal
-// 			? state.form.verificationPortal.values
-// 				? state.form.verificationPortal.values.hours
-// 				: []
-// 			: [],
-// 	}
-// }
-// VerificationPortalForm = connect(mapStateToProps)(VerificationPortalForm)
-
 const styles = {
 	parent: {
 		display: 'flex',
