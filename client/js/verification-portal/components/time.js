@@ -33,21 +33,21 @@ class Time extends React.Component {
 			'11:00',
 			'11:30',
 		]
-		const timeSpin = (current, name, increment) => {
-			if (!current)
+		const timeSpin = (currentValue, name, increment) => {
+			if (!currentValue)
 				return name.split('.')[1] === 'open'
 					? changeFieldValue(name, '9:00 am')
 					: changeFieldValue(name, '5:00 pm')
-			current = current.split(' ')
-			i = hr.indexOf(current[0])
+			const currentTime = currentValue.split(' ')
+			i = hr.indexOf(currentTime[0])
 			!hr[i + increment]
-				? current[1] === 'am'
-					? (current[1] = 'pm')
-					: (current[1] = 'am')
+				? currentTime[1] === 'am'
+					? (currentTime[1] = 'pm')
+					: (currentTime[1] = 'am')
 				: ''
 			!hr[i + increment] ? (increment < 0 ? (i = hr.length) : (i = -1)) : ''
-			current[0] = hr[i + increment]
-			changeFieldValue(name, current.join(' '))
+			currentTime[0] = hr[i + increment]
+			changeFieldValue(name, currentTime.join(' '))
 		}
 		return (
 			<div className={classes.wrapper}>
