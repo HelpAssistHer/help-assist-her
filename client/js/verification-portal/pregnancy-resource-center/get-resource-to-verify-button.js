@@ -15,9 +15,11 @@ const convertNumberToTimeFormat = timeNumber => {
 	}
 	const timeString = String(timeNumber).padStart(4, '0')
 	const hours = parseInt(`${timeString.slice(0, 2)}`)
-	let am = ''
-	am = hours > 12 ? 'pm' : 'am'
-	return `${hours > 12 ? hours - 12 : hours}:${timeString.slice(2, 4)} ${am}`
+	const meridien = hours > 12 ? 'pm' : 'am'
+	return `${hours > 12 ? hours - 12 : hours}:${timeString.slice(
+		2,
+		4,
+	)} ${meridien}`
 }
 
 const populateForm = ({ changeFieldValue, resource }) => {
