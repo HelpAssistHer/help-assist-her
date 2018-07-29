@@ -11,12 +11,14 @@ const mapStateToProps = state => {
 	}
 }
 
-const ResourceListView = ({ classes }) => {
+const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
 		<div className={classes.root}>
 			A LIST OF AWESOME PREGNANCY CENTERS
-			{_.map(['Name 1', 'Name 2'], name => {
-				return <ResourceCard key={name} resourceName={name} />
+			{_.map(pregnancyResourceCenters, prc => {
+				const { prcName } = prc
+
+				return <ResourceCard key={prcName} resourceName={prcName} />
 			})}
 		</div>
 	)
