@@ -9,6 +9,7 @@ const ResourceTypeButtonStyle = ({ classes, dispatch, history }) => {
 	return (
 		<div className={classes.root}>
 			<button
+				type="submit"
 				onClick={() => {
 					dispatch(getPregnancyResourceCenters())
 					history.push('/mini-app/pregnancy-resource-centers')
