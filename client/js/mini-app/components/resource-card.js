@@ -8,6 +8,7 @@ const ResourceCard = ({ classes, resourceName }) => {
 const styles = {
 	root: {
 		height: '0px',
+		'padding-bottom': '30px',
 	},
 }
 
