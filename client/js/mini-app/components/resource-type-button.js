@@ -3,16 +3,15 @@ import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
 import { withRouter } from 'react-router-dom'
 
-import { findPregnancyCentersNearMe } from '../data/action-creators'
+import { getPregnancyResourceCenters } from '../data/action-creators'
 
 const ResourceTypeButtonStyle = ({ classes, dispatch, history }) => {
 	return (
 		<div className={classes.root}>
 			<button
 				onClick={() => {
-					findPregnancyCentersNearMe()
+					dispatch(getPregnancyResourceCenters())
 					history.push('/mini-app/pregnancy-resource-centers')
-					// dispatch(findPregnancyCentersNearMe())
 				}}
 			>
 				Pregnancy Centers
