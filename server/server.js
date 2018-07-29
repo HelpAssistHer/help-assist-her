@@ -129,14 +129,6 @@ const startDatabase = P.coroutine(function* startDatabase() {
 
 startDatabase()
 
-server.get('/mini-app*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../public/index.html'))
-})
-
-server.get('/verification*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../public/index.html'))
-})
-
 server.get('/api/initial-data', (req, res) => {
 	return res.status(200).json({
 		facebookAppId: config.facebook.appId,
@@ -523,6 +515,10 @@ server.get(
 		res.send(200)
 	}),
 )
+
+server.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../public/index.html'))
+})
 
 function isLoggedInAPI(req, res, next) {
 	// if user is authenticated in the session, carry on
