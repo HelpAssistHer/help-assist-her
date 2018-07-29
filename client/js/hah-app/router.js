@@ -8,6 +8,7 @@ import {
 
 import Landing from './landing'
 import VerificationPortalContainer from '../verification-portal'
+import MiniApp from '../mini-app'
 import { formTypes } from '../verification-portal/constants'
 
 const HahRouter = () => {
@@ -15,6 +16,7 @@ const HahRouter = () => {
 		<Router>
 			<Switch>
 				<Route exact path="/" component={Landing} />
+				<Route exact path="/mini-app" render={() => <MiniApp />} />
 				<Route
 					exact
 					path="/verification/pregnancy-resource-center"
