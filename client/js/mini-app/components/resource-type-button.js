@@ -1,10 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
 
-const ResourceTypeButton = ({ classes }) => {
+import { findPregnancyCentersNearMe } from '../data/action-creators'
+
+const ResourceTypeButtonStyle = ({ classes, dispatch }) => {
 	return (
 		<div className={classes.root}>
-			<button>Pregnancy Centers</button>
+			<button
+				onClick={() => {
+					findPregnancyCentersNearMe()
+					// dispatch(findPregnancyCentersNearMe())
+				}}
+			>
+				Pregnancy Centers
+			</button>
 		</div>
 	)
 }
@@ -15,4 +25,6 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(ResourceTypeButton)
+const ResourceTypeButton = injectSheet(styles)(ResourceTypeButtonStyle)
+
+export default connect()(ResourceTypeButton)
