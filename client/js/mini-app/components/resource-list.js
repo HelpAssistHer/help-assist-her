@@ -1,10 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import _ from 'lodash'
 import injectSheet from 'react-jss'
 
 import ResourceCard from './resource-card'
 
-const ResourceList = ({ classes }) => {
+const mapStateToProps = state => {
+	return {
+		pregnancyResourceCenters: state.miniApp.pregnancyResourceCenters,
+	}
+}
+
+const ResourceListView = ({ classes }) => {
 	return (
 		<div className={classes.root}>
 			A LIST OF AWESOME PREGNANCY CENTERS
@@ -20,5 +27,7 @@ const styles = {
 		height: '0px',
 	},
 }
+
+const ResourceList = connect(mapStateToProps)(ResourceListView)
 
 export default injectSheet(styles)(ResourceList)
