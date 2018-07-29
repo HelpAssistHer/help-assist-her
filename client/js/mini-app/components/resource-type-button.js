@@ -1,15 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
+import { withRouter } from 'react-router-dom'
 
 import { findPregnancyCentersNearMe } from '../data/action-creators'
 
-const ResourceTypeButtonStyle = ({ classes, dispatch }) => {
+const ResourceTypeButtonStyle = ({ classes, dispatch, history }) => {
 	return (
 		<div className={classes.root}>
 			<button
 				onClick={() => {
 					findPregnancyCentersNearMe()
+					history.push('/mini-app/pregnancy-resource-centers')
 					// dispatch(findPregnancyCentersNearMe())
 				}}
 			>
@@ -27,4 +29,4 @@ const styles = {
 
 const ResourceTypeButton = injectSheet(styles)(ResourceTypeButtonStyle)
 
-export default connect()(ResourceTypeButton)
+export default connect()(withRouter(ResourceTypeButton))
