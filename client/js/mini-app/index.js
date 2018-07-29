@@ -1,8 +1,15 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
+import ResourceTypeButton from './components/resource-type-button'
+
 const MiniApp = ({ classes }) => {
-	return <div className={classes.root}>The Mini App</div>
+	return (
+		<div className={classes.root}>
+			The Mini App
+			<ResourceTypeButton />
+		</div>
+	)
 }
 
 const styles = {
