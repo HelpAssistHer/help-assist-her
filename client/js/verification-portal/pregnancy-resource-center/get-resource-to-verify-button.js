@@ -57,7 +57,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.phone.verified',
 		_.get(verifiedData, 'phone.verified'),
 	)
-	console.log(' hotlinePhoneNumber == ', hotlinePhoneNumber)
 	changeFieldValue('hotlinePhoneNumber', hotlinePhoneNumber)
 	changeFieldValue(
 		'verifiedData.hotlinePhoneNumber.verified',
