@@ -3,75 +3,76 @@ import injectSheet from 'react-jss'
 import { connect } from 'react-redux'
 import { change } from 'redux-form'
 
-class Time extends React.Component {
-	render() {
-		const { classes, input, changeFieldValue } = this.props
-		let i = 0
-		const hr = [
-			'12:00',
-			'12:30',
-			'1:00',
-			'1:30',
-			'2:00',
-			'2:30',
-			'3:00',
-			'3:30',
-			'4:00',
-			'4:30',
-			'5:00',
-			'5:30',
-			'6:00',
-			'6:30',
-			'7:00',
-			'7:30',
-			'8:00',
-			'8:30',
-			'9:00',
-			'9:30',
-			'10:00',
-			'10:30',
-			'11:00',
-			'11:30',
-		]
-		const timeSpin = (currentValue, name, increment) => {
-			if (!currentValue)
-				return name.split('.')[1] === 'open'
-					? changeFieldValue(name, '9:00 am')
-					: changeFieldValue(name, '5:00 pm')
-			const currentTime = currentValue.split(' ')
-			i = hr.indexOf(currentTime[0])
-			!hr[i + increment]
-				? currentTime[1] === 'am'
-					? (currentTime[1] = 'pm')
-					: (currentTime[1] = 'am')
-				: ''
-			!hr[i + increment] ? (increment < 0 ? (i = hr.length) : (i = -1)) : ''
-			currentTime[0] = hr[i + increment]
-			changeFieldValue(name, currentTime.join(' '))
-		}
-		return (
-			<div className={classes.wrapper}>
-				<span
-					className={classes.arrow}
-					onClick={() => timeSpin(input.value, input.name, -1)}
-				>
-					{'<'}
-				</span>
-				<input
-					className={classes.input}
-					type="text"
-					placeholder={input.name.split('.')[1]}
-					{...input}
-				/>
-				<span
-					className={classes.arrow}
-					onClick={() => timeSpin(input.value, input.name, 1)}
-				>
-					{'>'}
-				</span>
-			</div>
-		)
-	}
+let i = 0
+const timeInterval = [
+	'12:00',
+	'12:30',
+	'1:00',
+	'1:30',
+	'2:00',
+	'2:30',
+	'3:00',
+	'3:30',
+	'4:00',
+	'4:30',
+	'5:00',
+	'5:30',
+	'6:00',
+	'6:30',
+	'7:00',
+	'7:30',
+	'8:00',
+	'8:30',
+	'9:00',
+	'9:30',
+	'10:00',
+	'10:30',
+	'11:00',
+	'11:30',
+]
+const timeSpin = (currentValue, name, increment, changeFieldValue) => {
+	if (!currentValue)
+		return name.split('.')[1] === 'open'
+			? changeFieldValue(name, '9:00 am')
+			: changeFieldValue(name, '5:00 pm')
+	const currentTime = currentValue.split(' ')
+	i = timeInterval.indexOf(currentTime[0])
+	!timeInterval[i + increment]
+		? currentTime[1] === 'am'
+			? (currentTime[1] = 'pm')
+			: (currentTime[1] = 'am')
+		: ''
+	!timeInterval[i + increment]
+		? increment < 0
+			? (i = timeInterval.length)
+			: (i = -1)
+		: ''
+	currentTime[0] = timeInterval[i + increment]
+	changeFieldValue(name, currentTime.join(' '))
+}
+const Time = ({ classes, input, changeFieldValue }) => {
+	return (
+		<div className={classes.wrapper}>
+			<span
+				className={classes.arrow}
+				onClick={() => timeSpin(input.value, input.name, -1, changeFieldValue)}
+			>
+				{'<'}
+			</span>
+			<input
+				className={classes.input}
+				type="text"
+				placeholder={input.name.split('.')[1]}
+				{...input}
+			/>
+			<span
+				className={classes.arrow}
+				onClick={() => timeSpin(input.value, input.name, 1, changeFieldValue)}
+			>
+				{'>'}
+			</span>
+		</div>
+	)
 }
 const styles = {
 	wrapper: {

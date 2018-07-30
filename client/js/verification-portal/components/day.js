@@ -6,6 +6,19 @@ import { change } from 'redux-form'
 import classNames from 'classnames'
 import Time from './time'
 
+const dayName = [
+	'Sunday',
+	'Monday',
+	'Tuesday',
+	'Wednesday',
+	'Thursday',
+	'Friday',
+	'Saturday',
+]
+const closedAllDayStatus = (dayNum, hours) => {
+	return hours ? (hours[dayNum] ? hours[dayNum].closedAllDay : true) : false
+}
+
 class Day extends React.Component {
 	constructor(props) {
 		super(props)
@@ -15,6 +28,7 @@ class Day extends React.Component {
 		this.openState = this.openState.bind(this)
 	}
 	openState = (i, currentState, hours, changeFieldValue) => {
+		hours ? '' : (hours = [{}, {}, {}, {}, {}, {}, {}])
 		hours[i]
 			? (hours[i].closedAllDay = !currentState)
 			: (hours[i] = { closedAllDay: !currentState })
@@ -26,18 +40,6 @@ class Day extends React.Component {
 	}
 	render() {
 		const { classes, changeFieldValue } = this.props
-		const dayName = [
-			'Sunday',
-			'Monday',
-			'Tuesday',
-			'Wednesday',
-			'Thursday',
-			'Friday',
-			'Saturday',
-		]
-		const closedAllDayStatus = (dayNum, hours) => {
-			return hours ? (hours[dayNum] ? hours[dayNum].closedAllDay : true) : false
-		}
 		return (
 			<div>
 				{_.map(dayName, (today, i) => {
@@ -49,8 +51,8 @@ class Day extends React.Component {
 									onClick={() =>
 										this.openState(
 											i,
-											closedAllDayStatus(i, this.props.hours),
-											this.props.hours,
+											closedAllDayStatus(i, this.state.hours),
+											this.state.hours,
 											changeFieldValue,
 										)
 									}
