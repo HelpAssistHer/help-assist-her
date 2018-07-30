@@ -15,9 +15,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		changeFieldValue: (field, value) => {
-			field == 'hotlinePhoneNumber'
-				? console.log('changeFieldValue hotlinePhoneNumber == ', value)
-				: ''
 			dispatch(change('verificationPortal', field, value || ''))
 		},
 	}
