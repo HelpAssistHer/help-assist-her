@@ -8,6 +8,7 @@ import { store } from '../../hah-app/index'
 import { updateOutOfBusinessActionCreator } from '../out-of-business/action-creators'
 import { updateDoNotListActionCreator } from '../do-not-list/action-creators'
 import { pregnancyCenterServices } from '../../../../server/pregnancy-centers/pregnancy-center-services'
+import { withRouter } from 'react-router-dom'
 
 const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
@@ -121,7 +122,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('notes', notes)
 }
 
-const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
+const GetResourceToVerifyButton = ({ dispatch, changeFieldValue, history }) => {
 	return (
 		<div>
 			<Button
@@ -137,6 +138,11 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 							changeFieldValue,
 							resource: store.getState().resource,
 						})
+						history.push(
+							`/verification/pregnancy-resource-center/${
+								store.getState().resource._id
+							}`,
+						)
 					})
 				}}
 			/>
@@ -144,4 +150,4 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	)
 }
 
-export default connect()(GetResourceToVerifyButton)
+export default connect()(withRouter(GetResourceToVerifyButton))
