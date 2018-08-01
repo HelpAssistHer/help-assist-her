@@ -1,4 +1,9 @@
+import P from 'bluebird'
 import { GET_PREGNANCY_RESOURCE_CENTERS } from './action-types'
+
+const googleMapsClient = require('@google/maps').createClient({
+	Promise: P,
+})
 
 function getPregnancyResourceCentersAction(pregnancyResourceCenters) {
 	return {
@@ -7,22 +12,19 @@ function getPregnancyResourceCentersAction(pregnancyResourceCenters) {
 	}
 }
 
-export const getPregnancyResourceCenters = () => {
+export const getPregnancyResourceCenters = address => {
 	return function(dispatch) {
-		return findPregnancyResourceCentersNearMe().then(result =>
+		return findPregnancyResourceCentersNearMe(address).then(result =>
 			dispatch(getPregnancyResourceCentersAction(result)),
 		)
 	}
 }
 
-async function findPregnancyResourceCentersNearMe() {
+async function findPregnancyResourceCentersNearMe(address) {
 	const miles = 50
 
-	const coordinates = await geocodeAddress(
-		'45 Lansing St San Francisco CA 94105',
-	)
+	const coordinates = await geocodeAddress(address)
 	const { lat, lng } = coordinates
-	console.log('AFTER GEOCODE', coordinates)
 
 	const queryString = `?lng=${lng}&lat=${lat}&miles=${miles}`
 	const fullUrl = `/api/pregnancy-centers/near-me${queryString}`
@@ -33,12 +35,6 @@ async function findPregnancyResourceCentersNearMe() {
 
 	return await response.json()
 }
-
-const P = require('bluebird')
-
-const googleMapsClient = require('@google/maps').createClient({
-	Promise: P,
-})
 
 async function geocodeAddress(address) {
 	const response = await googleMapsClient.geocode({ address }).asPromise()
