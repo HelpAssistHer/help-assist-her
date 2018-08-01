@@ -16,9 +16,13 @@ export const getPregnancyResourceCenters = () => {
 }
 
 async function findPregnancyResourceCentersNearMe() {
-	const lng = -73.6778994
-	const lat = 41.4271604
 	const miles = 50
+
+	const coordinates = await geocodeAddress(
+		'45 Lansing St San Francisco CA 94105',
+	)
+	const { lat, lng } = coordinates
+	console.log('AFTER GEOCODE', coordinates)
 
 	const queryString = `?lng=${lng}&lat=${lat}&miles=${miles}`
 	const fullUrl = `/api/pregnancy-centers/near-me${queryString}`
@@ -28,4 +32,16 @@ async function findPregnancyResourceCentersNearMe() {
 	})
 
 	return await response.json()
+}
+
+const P = require('bluebird')
+
+const googleMapsClient = require('@google/maps').createClient({
+	Promise: P,
+})
+
+async function geocodeAddress(address) {
+	const response = await googleMapsClient.geocode({ address }).asPromise()
+
+	return response.json.results[0].geometry.location
 }
