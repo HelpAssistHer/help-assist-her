@@ -1,13 +1,24 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
 
 import HahRouter from './router'
+import { getInitialAppData } from './action-creators'
 
-const App = ({ classes }) => (
-	<div id="app" className={classes.app}>
-		<HahRouter />
-	</div>
-)
+class App extends Component {
+	componentDidMount() {
+		this.props.dispatch(getInitialAppData())
+	}
+
+	render() {
+		const { classes } = this.props
+		return (
+			<div id="app" className={classes.app}>
+				<HahRouter />
+			</div>
+		)
+	}
+}
 
 const styles = {
 	app: {
@@ -15,4 +26,6 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(App)
+const AppWithStyle = injectSheet(styles)(App)
+
+export default connect()(AppWithStyle)
