@@ -1,9 +1,11 @@
 import React from 'react'
+import injectSheet from 'react-jss'
 
 import HeaderSuccess from './components/header-success'
 import Spacer from '../components/spacer'
 import LoginButton from '../authentication/facebook-login-button'
 import Tabs from './components/tabs'
+import LeftHandSideNav from './components/leftside-nav'
 import CommunityHealthCenterForm from './community-health-center'
 import PregnancyResourceCenterForm from './pregnancy-resource-center'
 import { formTypes } from './constants'
@@ -19,9 +21,10 @@ function getFormComponent({ formType }) {
 	}
 }
 
-const VerificationPortal = ({ formType }) => {
+const ResourceView = ({ formType, classes }) => {
 	return (
-		<div>
+		<div style={{ flex: '0 0 auto' }}>
+			<Spacer height="25px" backgroundColor="black" />
 			<HeaderSuccess />
 			<Tabs />
 			<Spacer height="63px" />
@@ -31,4 +34,19 @@ const VerificationPortal = ({ formType }) => {
 	)
 }
 
-export default VerificationPortal
+const VerificationPortal = ({ formType, classes }) => {
+	return (
+		<div className={classes.verificationPortal}>
+			<LeftHandSideNav />
+			<ResourceView formType={formType} />
+		</div>
+	)
+}
+
+const styles = {
+	verificationPortal: {
+		display: 'flex',
+		'flex-direction': 'row',
+	},
+}
+export default injectSheet(styles)(VerificationPortal)

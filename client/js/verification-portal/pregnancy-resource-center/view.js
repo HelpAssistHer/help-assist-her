@@ -63,7 +63,7 @@ const styles = {
 		position: 'relative',
 	},
 	leftPositionButton: {
-		'padding-top': '50px',
+		'padding-top': '100px',
 		position: 'absolute',
 		left: '1%',
 		'z-index': '100',
