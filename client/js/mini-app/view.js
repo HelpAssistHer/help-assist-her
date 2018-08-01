@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
 
-import Input from '../components/input'
-import ResourceTypeButton from './components/resource-type-button'
+import MiniAppForm from './form'
 
 class MiniApp extends Component {
 	submit = values => {
@@ -11,21 +9,11 @@ class MiniApp extends Component {
 	}
 
 	render() {
-		const { classes, handleSubmit } = this.props
-
 		return (
-			<form onSubmit={handleSubmit}>
-				<div className={classes.root}>
-					The Mini App
-					<Field
-						placeholder="Address, city/state, zip code"
-						name="locationInput"
-						component={Input}
-						type="text"
-					/>
-					<ResourceTypeButton />
-				</div>
-			</form>
+			<div>
+				The Mini App
+				<MiniAppForm onSubmit={this.submit} />
+			</div>
 		)
 	}
 }
@@ -36,8 +24,4 @@ const styles = {
 	},
 }
 
-const MiniAppForm = reduxForm({
-	form: 'miniApp',
-})(MiniApp)
-
-export default injectSheet(styles)(MiniAppForm)
+export default injectSheet(styles)(MiniApp)
