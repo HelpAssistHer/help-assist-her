@@ -38,15 +38,15 @@ class FacebookLoginButtonClass extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, facebookAppId, isLoggedIn } = this.props
 
-		if (!this.props.fbAppId) {
+		if (!facebookAppId) {
 			return null
 		}
 
 		return (
 			<div>
-				{this.props.isLoggedIn ? (
+				{isLoggedIn ? (
 					<button
 						type="button"
 						className={classes.facebookLoginButton}
@@ -56,7 +56,7 @@ class FacebookLoginButtonClass extends React.Component {
 					</button>
 				) : (
 					<FacebookLogin
-						appId={this.props.fbAppId}
+						appId={facebookAppId}
 						autoLoad={false}
 						fields="name,email,picture"
 						callback={this.facebookResponse.bind(this)}
@@ -86,8 +86,10 @@ const styles = {
 }
 
 function mapStateToProps(state) {
+	const { initialData } = state
 	return {
-		isLoggedIn: state.initialData.isLoggedIn,
+		facebookAppId: initialData.facebookAppId,
+		isLoggedIn: initialData.isLoggedIn,
 	}
 }
 
