@@ -329,19 +329,6 @@ describe('PregnancyCenters', () => {
 	})
 
 	/*
-	 * Test the GET /api/pregnancy-centers/near-me' route w/o authentication
-	 */
-	describe('/GET /api/pregnancy-centers/near-me no-auth', () => {
-		it('it should return a 401 error because there is no authentication', async () => {
-			try {
-				await chai.request(server).get('/api/pregnancy-centers/near-me')
-			} catch (err) {
-				assertUnauthenticatedError(err.response)
-			}
-		})
-	})
-
-	/*
 	 * Test the GET /api/pregnancy-centers/near-me' route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/near-me', () => {

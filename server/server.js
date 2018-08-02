@@ -129,10 +129,6 @@ const startDatabase = P.coroutine(function* startDatabase() {
 
 startDatabase()
 
-server.get('/verification*', (req, res) => {
-	res.sendFile(path.join(__dirname, '../public/index.html'))
-})
-
 server.get('/api/initial-data', (req, res) => {
 	return res.status(200).json({
 		facebookAppId: config.facebook.appId,
@@ -165,7 +161,6 @@ server.get(
  */
 server.get(
 	'/api/pregnancy-centers/near-me',
-	isLoggedInAPI,
 	handleRejectedPromise(async (req, res) => {
 		const METERS_PER_MILE = 1609.34
 		const lng = req.query.lng || -73.781332
@@ -520,6 +515,10 @@ server.get(
 		res.send(200)
 	}),
 )
+
+server.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../public/index.html'))
+})
 
 function isLoggedInAPI(req, res, next) {
 	// if user is authenticated in the session, carry on
