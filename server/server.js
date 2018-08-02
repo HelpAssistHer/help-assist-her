@@ -136,6 +136,7 @@ server.get('/verification*', (req, res) => {
 server.get('/api/initial-data', (req, res) => {
 	return res.status(200).json({
 		facebookAppId: config.facebook.appId,
+		googleMapsApiKey: config.googleMaps.key,
 	})
 })
 
