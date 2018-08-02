@@ -2,19 +2,29 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import LogoutButton from '../../authentication/logout-button'
+import GetResourceToVerifyButton from './get-resource-to-verify-button'
 
-const LeftSideNav = ({ classes, getFormComponent }) => {
-	return (
-		<div className={classes.leftHandSideNav}>
-			<div className={classes.topSideBar}>
-				<div className={classes.informationDatabase}>Information Database</div>
+class LeftSideNav extends React.Component {
+	render() {
+		const { classes, changeFieldValue } = this.props
+
+		return (
+			<div className={classes.leftHandSideNav}>
+				<div className={classes.topSideBar}>
+					<div className={classes.informationDatabase}>
+						Information Database
+					</div>
+				</div>
+				<div className={classes.middleSideBar}>
+					Admin Profile Info
+					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
+				</div>
+				<div className={classes.bottomSideBar}>
+					<LogoutButton />
+				</div>
 			</div>
-			<div className={classes.middleSideBar}>Admin Profile Info</div>
-			<div className={classes.bottomSideBar}>
-				<LogoutButton />
-			</div>
-		</div>
-	)
+		)
+	}
 }
 
 const styles = {
