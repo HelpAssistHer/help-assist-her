@@ -132,6 +132,7 @@ startDatabase()
 server.get('/api/initial-data', (req, res) => {
 	return res.status(200).json({
 		facebookAppId: config.facebook.appId,
+		googleMapsApiKey: config.googleMaps.key,
 	})
 })
 
@@ -160,7 +161,6 @@ server.get(
  */
 server.get(
 	'/api/pregnancy-centers/near-me',
-	isLoggedInAPI,
 	handleRejectedPromise(async (req, res) => {
 		const METERS_PER_MILE = 1609.34
 		const lng = req.query.lng || -73.781332
