@@ -26,7 +26,7 @@ const authenticationReducer = (state = {}, action) => {
 const resourceReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_RESOURCE_TO_VERIFY:
-			state.hotlinePhoneNumber = action.resource.hotlinePhoneNumber || ''
+			state.hotlinePhoneNumber = action.resource.hotlinePhoneNumber
 			return _.assign({}, state, action.resource)
 		case OUT_OF_BUSINESS:
 			return {
