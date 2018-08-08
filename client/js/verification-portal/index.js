@@ -21,7 +21,7 @@ function getFormComponent({ formType }) {
 	}
 }
 
-const ResourceView = ({ formType, classes }) => {
+const ResourceView = ({ formType }) => {
 	return (
 		<div style={{ flex: '0 0 auto' }}>
 			<Spacer height="25px" backgroundColor="black" />

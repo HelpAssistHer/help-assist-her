@@ -3,10 +3,6 @@ import { change } from 'redux-form'
 
 import LeftSideNav from '../components/left-side-nav'
 
-const mapStateToProps = state => {
-	return {}
-}
-
 const mapDispatchToProps = dispatch => {
 	return {
 		changeFieldValue: (field, value) => {
@@ -15,8 +11,6 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const LeftSideNavContainer = connect(mapStateToProps, mapDispatchToProps)(
-	LeftSideNav,
-)
+const LeftSideNavContainer = connect(mapDispatchToProps)(LeftSideNav)
 
 export default LeftSideNavContainer

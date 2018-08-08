@@ -13,7 +13,7 @@ class VerificationPortal extends React.Component {
 		updateResource(values)
 	}
 	render() {
-		const { classes, changeFieldValue, resource } = this.props
+		const { classes, resource } = this.props
 		const { outOfBusiness, doNotList } = resource
 
 		return (

@@ -1,7 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Spacer from '../components/spacer'
 import { logoutUser } from './action-creators'
 
 const LogoutButton = ({ classes }) => (
