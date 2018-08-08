@@ -51,11 +51,14 @@ computer.
 1.  Click on the "Files changed" tab and review your changes _line by line_. Verify that every line of code changed is intended and that nothing accidently got committed.
 1.  Add the "needs review" label to indicate that the PR needs to be reviewed
 
-## A Note on Labels
+## GitHub Labels
 
-There are several labels in Github. Here is their meaning:
+There are several labels in GitHub for use on PRs. Here is their meaning and when to use them:
 
 `work in progress` - use while you are still working on a PR
+
 `needs review` - use once your PR is ready for review
+
 `needs revision` - used by the code reviewer to indicate the PR needs changes before being approved
+
 `needs discussion` - used by the code reviewer to indicate the PR needs discussion or questions answered before being approved
