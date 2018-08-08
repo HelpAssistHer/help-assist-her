@@ -31,6 +31,7 @@ const styles = {
 		border: 'none',
 		'border-bottom': '1px solid #979797',
 		fontSize: '18px',
+		outline: 'none',
 	},
 	largeFontSize: {
 		fontSize: '30px',

@@ -1,7 +1,6 @@
 import React from 'react'
 import FacebookLogin from 'react-facebook-login'
 import injectSheet from 'react-jss'
-import { connect } from 'react-redux'
 
 import { isAuthenticated } from '../action-creators'
 
@@ -12,7 +11,7 @@ import {
 	logout,
 } from '../../hah-app/action-creators'
 
-class FacebookLoginButtonClass extends React.Component {
+class FacebookLoginButton extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -38,15 +37,15 @@ class FacebookLoginButtonClass extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, facebookAppId, isLoggedIn } = this.props
 
-		if (!this.props.fbAppId) {
+		if (!facebookAppId) {
 			return null
 		}
 
 		return (
 			<div>
-				{this.props.isLoggedIn ? (
+				{isLoggedIn ? (
 					<button
 						type="button"
 						className={classes.facebookLoginButton}
@@ -56,7 +55,7 @@ class FacebookLoginButtonClass extends React.Component {
 					</button>
 				) : (
 					<FacebookLogin
-						appId={this.props.fbAppId}
+						appId={facebookAppId}
 						autoLoad={false}
 						fields="name,email,picture"
 						callback={this.facebookResponse.bind(this)}
@@ -85,11 +84,4 @@ const styles = {
 	},
 }
 
-function mapStateToProps(state) {
-	return {
-		isLoggedIn: state.initialData.isLoggedIn,
-	}
-}
-
-const FacebookLoginButton = injectSheet(styles)(FacebookLoginButtonClass)
-export default connect(mapStateToProps)(FacebookLoginButton)
+export default injectSheet(styles)(FacebookLoginButton)
