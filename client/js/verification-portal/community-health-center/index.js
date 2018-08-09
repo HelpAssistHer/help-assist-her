@@ -8,7 +8,6 @@ const handleSubmit = values => {
 
 const CommunityHealthCenterContainer = () => (
 	<div>
-		Community Health Center Form
 		<CommunityHealtCenterForm
 			chcInputResource={chcInputResource}
 			onSubmit={handleSubmit}

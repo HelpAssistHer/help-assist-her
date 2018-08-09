@@ -15,6 +15,10 @@ class chcForm extends Component {
 		const { classes, chcInputResource, handleSubmit } = this.props
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
+				<div>
+					<div className={classes.leftColumn}>VERIFIED</div>
+					<div className={classes.rightColumn}>GENERAL INFORMATION</div>
+				</div>
 				{chcInputResource.map(field => registerFields(field))}
 				<Button
 					type="submit"
@@ -35,6 +39,27 @@ const styles = {
 	form: {
 		width: '80%',
 		'margin-left': '10%',
+		'font-family': 'sans-serif',
+	},
+	leftColumn: {
+		display: 'inline-block',
+		width: '20%',
+		color: '#F48271',
+		height: '17px',
+		'font-size': '14px',
+		'font-weight': 'bold',
+		'line-height': '17px',
+		'letter-spacing': '2.61px',
+	},
+	rightColumn: {
+		display: 'inline-block',
+		width: '80%',
+		color: '#D8D8D8',
+		'font-size': '20px',
+		'font-weight': 'bold',
+		'line-height': '24px',
+		'justify-self': 'start',
+		'letter-spacing': '3.73px',
 	},
 }
 
