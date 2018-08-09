@@ -26,11 +26,7 @@ const styles = {
 		opacity: '100%',
 		'background-color': 'Transparent',
 		color: '#FFFFFF',
-		'font-family': 'Century Gothic',
-		'font-size': '11px',
-		'font-weight': 'bold',
 		'letter-spacing': '0.18px',
-		'text-align': 'center',
 		'line-height': '13px',
 	},
 }
