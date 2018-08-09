@@ -1,4 +1,7 @@
+import P from 'bluebird'
 import { GET_PREGNANCY_RESOURCE_CENTERS } from './action-types'
+
+import { store } from '../../hah-app'
 
 function getPregnancyResourceCentersAction(pregnancyResourceCenters) {
 	return {
@@ -7,18 +10,19 @@ function getPregnancyResourceCentersAction(pregnancyResourceCenters) {
 	}
 }
 
-export const getPregnancyResourceCenters = () => {
+export const getPregnancyResourceCenters = address => {
 	return function(dispatch) {
-		return findPregnancyResourceCentersNearMe().then(result =>
+		return findPregnancyResourceCentersNearMe(address).then(result =>
 			dispatch(getPregnancyResourceCentersAction(result)),
 		)
 	}
 }
 
-async function findPregnancyResourceCentersNearMe() {
-	const lng = -73.6778994
-	const lat = 41.4271604
+async function findPregnancyResourceCentersNearMe(address) {
 	const miles = 50
+
+	const coordinates = await geocodeAddress(address)
+	const { lat, lng } = coordinates
 
 	const queryString = `?lng=${lng}&lat=${lat}&miles=${miles}`
 	const fullUrl = `/api/pregnancy-centers/near-me${queryString}`
@@ -28,4 +32,15 @@ async function findPregnancyResourceCentersNearMe() {
 	})
 
 	return await response.json()
+}
+
+async function geocodeAddress(address) {
+	const googleMapsClient = require('@google/maps').createClient({
+		key: store.getState().initialData.googleMapsApiKey,
+		Promise: P,
+	})
+
+	const response = await googleMapsClient.geocode({ address }).asPromise()
+
+	return response.json.results[0].geometry.location
 }
