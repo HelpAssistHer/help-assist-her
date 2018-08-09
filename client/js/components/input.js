@@ -5,7 +5,8 @@ import cx from 'classnames'
 const Input = ({ classes, input, type, placeholder }) => {
 	const inputClasses = cx(
 		classes.textInput,
-		input.name === 'prcName' && classes.largeFontSize,
+		(input.name === 'prcName' || input.name === 'nameOfCHC') &&
+			classes.largeFontSize,
 	)
 	return (
 		<div className={classes.child}>
