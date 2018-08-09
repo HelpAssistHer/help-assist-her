@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { change } from 'redux-form'
 
-import LeftSideNav from '../components/left-side-nav'
+import LeftSideNav from './left-side-nav'
 
 const mapStateToProps = () => {
 	return {}

@@ -1,8 +1,8 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import LogoutButton from '../../authentication/logout-button'
-import GetResourceToVerifyButton from './get-resource-to-verify-button'
+import LogoutButton from '../authentication/logout-button'
+import GetResourceToVerifyButton from './components/get-resource-to-verify-button'
 
 class LeftSideNav extends React.Component {
 	render() {
