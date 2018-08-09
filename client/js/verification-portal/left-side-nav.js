@@ -35,7 +35,6 @@ const styles = {
 	},
 	topSideBar: {
 		height: '244.52px',
-		width: '339px',
 		'background-color': '#000000',
 		'box-shadow': '0 3px 6px 0 rgba(0,0,0,0.5)',
 	},

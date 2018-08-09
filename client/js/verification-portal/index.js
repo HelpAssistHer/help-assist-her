@@ -23,7 +23,7 @@ function getFormComponent({ formType }) {
 
 const ResourceView = ({ formType }) => {
 	return (
-		<div style={{ flex: '0 0 auto' }}>
+		<div>
 			<Spacer height="25px" backgroundColor="black" />
 			<HeaderSuccess />
 			<Tabs />
@@ -37,7 +37,9 @@ const ResourceView = ({ formType }) => {
 const VerificationPortal = ({ formType, classes }) => {
 	return (
 		<div className={classes.verificationPortal}>
-			<LeftSideNavContainer />
+			<div className={classes.leftSideNav}>
+				<LeftSideNavContainer />
+			</div>
 			<ResourceView formType={formType} />
 		</div>
 	)
@@ -47,6 +49,9 @@ const styles = {
 	verificationPortal: {
 		display: 'flex',
 		'flex-direction': 'row',
+	},
+	leftSideNav: {
+		flex: '0 0 339px',
 	},
 }
 export default injectSheet(styles)(VerificationPortal)
