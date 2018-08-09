@@ -9,6 +9,7 @@ import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
+import Toggle from '../../components/toggle'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -71,10 +72,7 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.prcName.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.prcName.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondAndThirdBox}>
 							<Field
@@ -124,10 +122,7 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.address.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.address.verified" component={Toggle} />
 						</div>
 
 						<div className={classes.secondBox}>
@@ -143,10 +138,7 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.phone.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.phone.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
@@ -162,10 +154,7 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.email.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.email.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
@@ -179,10 +168,7 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.website.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.website.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
@@ -257,10 +243,7 @@ class VerificationPortalFormClass extends Component {
 						/>
 					</div>
 					<div className={classes.parent}>
-						<Field
-							name="verifiedData.services.verified"
-							component={VerifiedCheckbox}
-						/>
+						<Field name="verifiedData.services.verified" component={Toggle} />
 					</div>
 				</div>
 
@@ -297,10 +280,7 @@ class VerificationPortalFormClass extends Component {
 				</div>
 
 				<div className={classes.parent}>
-					<Field
-						name="verifiedData.hours.verified"
-						component={VerifiedCheckbox}
-					/>
+					<Field name="verifiedData.hours.verified" component={Toggle} />
 				</div>
 
 				<div className={classes.formSection}>
@@ -360,6 +340,7 @@ const styles = {
 		'grid-column-start': 1,
 		'grid-column-end': 2,
 		'justify-self': 'center',
+		'align-self': 'center',
 	},
 	secondBox: {
 		'grid-column-start': 2,
