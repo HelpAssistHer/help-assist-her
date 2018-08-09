@@ -5,9 +5,9 @@ import injectSheet from 'react-jss'
 import RegisterField from '../components/register-field'
 import Button from '../../components/button'
 
-const registerFields = info => {
-	if (!info.name) return info.map(field => registerFields(field))
-	return <RegisterField info={info} key={info.name} />
+const registerFields = inputField => {
+	if (!inputField.name) return inputField.map(field => registerFields(field))
+	return <RegisterField inputField={inputField} key={inputField.name} />
 }
 
 class chcForm extends Component {
