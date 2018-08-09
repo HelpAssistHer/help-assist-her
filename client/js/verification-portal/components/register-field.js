@@ -8,12 +8,11 @@ const RegisterField = ({ classes, info }) => {
 	return (
 		<div>
 			<div className={classes.verifiedField}>
-				<Field
-					name={`${info.name}.verified`}
-					type="checkbox"
-					value={info.verified}
-					component={Input}
-				/>
+				{info.verify ? (
+					<Field name={info.verify.name} component={Input} type="checkbox" />
+				) : (
+					''
+				)}
 			</div>
 			<div className={classes.inputField}>
 				<Field
