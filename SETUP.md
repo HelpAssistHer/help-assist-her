@@ -78,6 +78,16 @@ yarn startdb
 yarn start
 ```
 
+## Build Client
+
+```
+yarn webpack
+```
+
+## Make Changes to Client
+
+Run `yarn webpack` again and refresh the browser
+
 # Getting Started with Development on Ubuntu or GalliumOS (Linux for Chromebooks)
 
 ## Install Git
