@@ -68,15 +68,15 @@ mkdir -p ~/.hah/data
 
 Make sure you are in the help-assist-her directory
 
+```
+yarn startdb
+```
+
 ## Populate MongoDB
 
 `yarn overwrite-pc-data`
 
 `yarn geocode`
-
-```
-yarn startdb
-```
 
 ## Start Server
 
