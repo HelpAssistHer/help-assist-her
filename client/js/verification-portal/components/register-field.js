@@ -1,6 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import { Field, reduxForm } from 'redux-form'
+import { Field } from 'redux-form'
 
 import Input from '../../components/input'
 
