@@ -19,7 +19,7 @@ const styles = {
 		'border-radius': '32px',
 		background:
 			'rgb(215, 97, 127) none repeat scroll 0% 0% / auto padding-box border-box',
-		'font-family': 'Century Gothic, san-serif !important',
+		'font-family': 'san-serif',
 		'font-size': '25px !important',
 	},
 }
