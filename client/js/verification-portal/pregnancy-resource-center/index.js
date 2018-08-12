@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		changeFieldValue: (field, value) => {
-			dispatch(change('verificationPortal', field, value || ''))
+			dispatch(change('verificationPortal', field, value))
 		},
 	}
 }

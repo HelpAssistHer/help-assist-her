@@ -6,7 +6,7 @@ import MiniApp from './view'
 const mapDispatchToProps = dispatch => {
 	return {
 		changeFieldValue: (field, value) => {
-			dispatch(change('miniApp', field, value || ''))
+			dispatch(change('miniApp', field, value))
 		},
 	}
 }
