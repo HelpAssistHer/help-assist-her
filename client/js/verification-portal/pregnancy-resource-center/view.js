@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
 
 import GetResourceToVerifyButton from './get-resource-to-verify-button'
@@ -8,10 +9,15 @@ import { updateResource } from './action-creators'
 import Button from '../../components/button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
 import { updateDoNotList } from '../do-not-list/action-creators'
+import { clearVerificationPortalFormAction } from '../../hah-app/action-creators'
 
-class VerificationPortal extends React.Component {
+class VerificationPortalClass extends React.Component {
 	submit = values => {
-		updateResource(values)
+		const { dispatch } = this.props
+
+		updateResource(values).then(() => {
+			dispatch(clearVerificationPortalFormAction())
+		})
 	}
 	render() {
 		const { classes, changeFieldValue, resource } = this.props
@@ -79,4 +85,6 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(VerificationPortal)
+const VerificationPortal = injectSheet(styles)(VerificationPortalClass)
+
+export default connect()(VerificationPortal)

@@ -1,4 +1,8 @@
-import { GET_INITIAL_DATA, UPDATE_LOGIN_STATE } from './action-types'
+import {
+	GET_INITIAL_DATA,
+	UPDATE_LOGIN_STATE,
+	CLEAR_FORM,
+} from './action-types'
 import { authenticateUser, logoutUser } from '../authentication/action-creators'
 
 async function getInitialData() {
@@ -30,9 +34,17 @@ export function createLogoutAction() {
 	}
 }
 
+export function clearVerificationPortalFormAction() {
+	return {
+		type: CLEAR_FORM,
+	}
+}
+
 export const getInitialAppData = () => {
 	return function(dispatch) {
-		return getInitialData().then(result => dispatch(createInitialDataAction(result)))
+		return getInitialData().then(result =>
+			dispatch(createInitialDataAction(result)),
+		)
 	}
 }
 
