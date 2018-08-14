@@ -31,16 +31,23 @@ const convertTimeToNumber = timeString => {
 	if (!timeString) {
 		return null
 	}
-
-	return Number(timeString.replace(/:/, ''))
+	const hours =
+		timeString.slice(5, timeString.length) == 'pm'
+			? parseInt(`${timeString.slice(0, 2)}`) + 12
+			: (parseInt(`${timeString.slice(0, 2)}`) < 10 ? '0' : '') +
+			  parseInt(`${timeString.slice(0, 2)}`)
+	const minutes =
+		(parseInt(`${timeString.slice(2, 5)}`) < 10 ? '0' : '') +
+		parseInt(`${timeString.slice(2, 5)}`)
+	return Number(`${hours}${minutes}`)
 }
 
 export async function updateResource(updatedResource) {
 	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
 		return {
-			open: convertTimeToNumber(dayOfWeek.open),
-			close: convertTimeToNumber(dayOfWeek.close),
-			closedAllDay: dayOfWeek.closedAllDay,
+			open: convertTimeToNumber(_.get(dayOfWeek, 'open')),
+			close: convertTimeToNumber(_.get(dayOfWeek, 'close')),
+			closedAllDay: _.get(dayOfWeek, 'closedAllDay'),
 		}
 	})
 

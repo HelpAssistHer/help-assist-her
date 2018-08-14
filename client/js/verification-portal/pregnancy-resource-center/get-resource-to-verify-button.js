@@ -103,8 +103,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.services.verified',
 		_.get(verifiedData, 'services.verified'),
 	)
-	_.forEach(hours, (hour, i) => {
-		if (!_.get(hours, `[${i}]`) && hours) hours[i] = {}
+	_.forEach([1, 2, 3, 4, 5, 6, 7], (hour, i) => {
 		changeFieldValue(
 			`hours[${i}].open`,
 			convertNumberToTimeFormat(_.get(hours, `[${i}].open`)),

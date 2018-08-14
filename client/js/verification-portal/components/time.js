@@ -3,7 +3,6 @@ import injectSheet from 'react-jss'
 import { connect } from 'react-redux'
 import { change } from 'redux-form'
 
-let i = 0
 const timeInterval = [
 	'12:00',
 	'12:30',
@@ -30,6 +29,7 @@ const timeInterval = [
 	'11:00',
 	'11:30',
 ]
+let i = 0
 const timeSpin = (currentValue, name, increment, changeFieldValue) => {
 	if (!currentValue)
 		return name.split('.')[1] === 'open'
@@ -86,7 +86,7 @@ const styles = {
 	input: {
 		height: '17px',
 		width: '84px',
-		'font-family': 'Century Gothic',
+		'font-family': 'sans-serif',
 		'font-size': '14px',
 		'letter-spacing': '1.91px',
 		'line-height': '17px',

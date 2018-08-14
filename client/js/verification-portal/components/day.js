@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { change } from 'redux-form'
 import classNames from 'classnames'
 import Time from './time'
+import _ from 'lodash'
 
 const dayName = [
 	'Sunday',
@@ -16,7 +17,7 @@ const dayName = [
 	'Saturday',
 ]
 const closedAllDayStatus = (dayNum, hours) => {
-	return hours ? (hours[dayNum] ? hours[dayNum].closedAllDay : true) : false
+	return hours ? (hours[dayNum] ? hours[dayNum].closedAllDay : false) : false
 }
 
 class Day extends React.Component {
@@ -25,9 +26,9 @@ class Day extends React.Component {
 		this.state = {
 			hours: this.props.hours,
 		}
-		this.openState = this.openState.bind(this)
+		this.openStateToggle = this.openStateToggle.bind(this)
 	}
-	openState = (i, currentState, hours, changeFieldValue) => {
+	openStateToggle = (i, currentState, hours, changeFieldValue) => {
 		hours ? '' : (hours = [{}, {}, {}, {}, {}, {}, {}])
 		hours[i]
 			? (hours[i].closedAllDay = !currentState)
@@ -49,7 +50,7 @@ class Day extends React.Component {
 								<label className={classes.lable}>{today}</label>
 								<div
 									onClick={() =>
-										this.openState(
+										this.openStateToggle(
 											i,
 											closedAllDayStatus(i, this.state.hours),
 											this.state.hours,
