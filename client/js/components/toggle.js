@@ -2,13 +2,20 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import cx from 'classnames'
 
-const Toggle = ({ classes, toggle, onClick }) => {
-	const buttonClasses = cx(classes.toggleButton, toggle && classes.toggleMove)
-	const activeClasses = cx(classes.toggle, toggle && classes.toggleActive)
-
+const Toggle = ({ classes, input }) => {
+	const buttonClasses = cx(
+		classes.toggleButton,
+		input.value && classes.toggleMove,
+	)
+	const activeClasses = cx(classes.toggle, input.value && classes.toggleActive)
 	return (
-		<div className={activeClasses} onClick={onClick}>
-			<input type="checkbox" className={classes.toggleSwitch} value={toggle} />
+		<div className={activeClasses} onClick={() => input.onChange(!input.value)}>
+			<input
+				type="checkbox"
+				className={classes.toggleSwitch}
+				checked={input.value}
+				{...input}
+			/>
 			<label className={classes.toggleLabel}>
 				<span className={buttonClasses} />
 			</label>
