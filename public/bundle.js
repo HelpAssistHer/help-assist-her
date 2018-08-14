@@ -4028,7 +4028,7 @@
 		/***/ function(module, exports, __webpack_require__) {
 			'use strict'
 			eval(
-				'\n\nObject.defineProperty(exports, "__esModule", {\n  value: true\n});\n\nvar _react = __webpack_require__(2);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactJss = __webpack_require__(22);\n\nvar _reactJss2 = _interopRequireDefault(_reactJss);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar LoginButton = function LoginButton(_ref) {\n  var classes = _ref.classes;\n  return _react2.default.createElement(\'div\', null);\n};\n\nvar styles = {};\n\nexports.default = (0, _reactJss2.default)(styles)(LoginButton);\n\n//////////////////\n// WEBPACK FOOTER\n// ./client/js/authentication/login-button.js\n// module id = 459\n// module chunks = 0\n\n//# sourceURL=webpack:///./client/js/authentication/login-button.js?',
+				'\n\nObject.defineProperty(exports, "__esModule", {\n  value: true\n});\n\nvar _react = __webpack_require__(2);\n\nvar _react2 = _interopRequireDefault(_react);\n\nvar _reactJss = __webpack_require__(22);\n\nvar _reactJss2 = _interopRequireDefault(_reactJss);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar LoginButton = function LoginButton() {\n  return _react2.default.createElement(\'div\', null);\n};\n\nvar styles = {};\n\nexports.default = (0, _reactJss2.default)(styles)(LoginButton);\n\n//////////////////\n// WEBPACK FOOTER\n// ./client/js/authentication/login-button.js\n// module id = 459\n// module chunks = 0\n\n//# sourceURL=webpack:///./client/js/authentication/login-button.js?',
 			)
 
 			/***/
