@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { reduxForm } from 'redux-form'
+import { reduxForm, formValueSelector } from 'redux-form'
 import injectSheet from 'react-jss'
 
 import RegisterField from '../components/register-field'

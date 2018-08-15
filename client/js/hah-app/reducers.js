@@ -7,6 +7,10 @@ import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/pregnancy-resourc
 import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
 import { DO_NOT_LIST } from '../verification-portal/do-not-list/action-types'
 import { GET_PREGNANCY_RESOURCE_CENTERS } from '../mini-app/data/action-types'
+import {
+	SUBMIT_CHC_FORM,
+	CLEAR_CHC_FORM,
+} from '../verification-portal/community-health-center/action-types'
 
 const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
@@ -55,8 +59,25 @@ const miniAppReducer = (state = {}, action) => {
 	}
 }
 
+const chcResourceReducer = (state = {}, action) => {
+	switch (action.type) {
+		case SUBMIT_CHC_FORM:
+			return {
+				...state,
+				formData: action.formData,
+			}
+		case CLEAR_CHC_FORM:
+			return {
+				...state,
+				formData: {},
+			}
+		default:
+			return state
+	}
+}
 const reducers = {
 	initialData: authenticationReducer,
+	chcResource: chcResourceReducer,
 	resource: resourceReducer,
 	miniApp: miniAppReducer,
 	form: formReducer,

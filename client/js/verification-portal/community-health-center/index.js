@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import CommunityHealtCenterForm from './form'
 import { chcInputResource } from './chcInputResource'
+import { submitForm } from './action-creators'
 
 const handleSubmit = values => {
-	console.log(' CHC form values == ', values)
+	submitForm(values)
 }
 
-const CommunityHealthCenterContainer = () => (
+const CommunityHealthCenter = () => (
 	<div>
 		<CommunityHealtCenterForm
 			chcInputResource={chcInputResource}
@@ -15,4 +17,5 @@ const CommunityHealthCenterContainer = () => (
 	</div>
 )
 
+const CommunityHealthCenterContainer = connect()(CommunityHealthCenter)
 export default CommunityHealthCenterContainer
