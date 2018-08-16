@@ -3,15 +3,16 @@
 1.  Request access to this repo
 
 1.  Pull the latest master
-    - On the `master` branch: `git pull`
+
+    * On the `master` branch: `git pull`
 
 1.  Create a new branch
     `git checkout -b new-unique-branch-name`
 
 1.  Stage your changes
     `git add .` to add all changed files or `git add path-to-file-to-stage` to add specific files
-    
-1. Commit your changes
+
+1.  Commit your changes
     `git commit -m 'Message that details what commit entails'`
 
 Ideally, your commits will be small, have similar or related changes in each commit, and your commit message will be detailed
@@ -46,8 +47,8 @@ computer.
     it is also a good idea to give the _why_ so that reviewers have the full picture of the change you are making.
 1.  In the Test Plan section, list the manual steps to test that your change is working. Again, being detailed here is
     valuable for two reasons:
-    - It forces you to actually go through the testing steps and verify yourself that the change is working
-    - It helps the reviewer to test that your change is working without them needing to figure it out on their own
+    * It forces you to actually go through the testing steps and verify yourself that the change is working
+    * It helps the reviewer to test that your change is working without them needing to figure it out on their own
 1.  Click on the "Files changed" tab and review your changes _line by line_. Verify that every line of code changed is intended and that nothing accidently got committed.
 1.  Add the "needs review" label to indicate that the PR needs to be reviewed
 
