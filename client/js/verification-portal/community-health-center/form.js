@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { reduxForm, formValueSelector } from 'redux-form'
+import { reduxForm, change } from 'redux-form'
 import injectSheet from 'react-jss'
 
 import RegisterField from '../components/register-field'
@@ -7,9 +7,14 @@ import Button from '../../components/button'
 
 const registerFields = inputField => {
 	if (!inputField.name) return inputField.map(field => registerFields(field))
-	return <RegisterField inputField={inputField} key={inputField.name} />
+	return (
+		<RegisterField
+			inputField={inputField}
+			key={inputField.name}
+			normalize={inputField.normalize}
+		/>
+	)
 }
-
 class chcForm extends Component {
 	render() {
 		const { classes, chcInputResource, handleSubmit } = this.props

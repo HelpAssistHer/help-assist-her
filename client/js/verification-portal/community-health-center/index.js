@@ -5,7 +5,7 @@ import { chcInputResource } from './chcInputResource'
 import { submitForm } from './action-creators'
 
 const handleSubmit = values => {
-	submitForm(values)
+	return submitForm(values)
 }
 
 const CommunityHealthCenter = () => (

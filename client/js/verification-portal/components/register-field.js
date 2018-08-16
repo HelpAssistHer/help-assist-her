@@ -4,16 +4,12 @@ import { Field } from 'redux-form'
 
 import Input from '../../components/input'
 
-const RegisterField = ({ classes, inputField }) => {
+const RegisterField = ({ classes, inputField, normalize }) => {
 	return (
 		<div>
 			<div className={classes.verifiedField}>
 				{inputField.verify ? (
-					<Field
-						name={inputField.verify.name}
-						component={Input}
-						type="checkbox"
-					/>
+					<Field name={inputField.verify} component={Input} type="checkbox" />
 				) : null}
 			</div>
 			<div className={classes.inputField}>
@@ -21,7 +17,8 @@ const RegisterField = ({ classes, inputField }) => {
 					placeholder={inputField.placeholder}
 					name={inputField.name}
 					component={Input}
-					type="text"
+					type={inputField.type ? inputField.type : 'text'}
+					normalize={normalize}
 				/>
 			</div>
 		</div>
