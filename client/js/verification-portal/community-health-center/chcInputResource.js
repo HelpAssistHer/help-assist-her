@@ -1,4 +1,4 @@
-import { normalizePhone } from './util'
+import { normalizePhone, normalizeZipcode } from './util'
 
 export const chcInputResource = [
 	{
@@ -27,6 +27,7 @@ export const chcInputResource = [
 		{
 			name: 'zipCode',
 			placeholder: 'Zip Code',
+			normalize: normalizeZipcode,
 		},
 	],
 	{

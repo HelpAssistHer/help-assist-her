@@ -31,3 +31,7 @@ export const normalizePhone = input => {
 	}
 	return validNumber
 }
+
+export const normalizeZipcode = input => {
+	return input.replace(/\D/g, '').substring(0, 5)
+}
