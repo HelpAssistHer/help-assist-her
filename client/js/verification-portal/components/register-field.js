@@ -14,9 +14,9 @@ const RegisterField = ({ classes, inputField, normalize }) => {
 			</div>
 			<div className={classes.inputField}>
 				<Field
-					placeholder={inputField.placeholder}
-					name={inputField.name}
 					component={Input}
+					name={inputField.name}
+					placeholder={inputField.placeholder}
 					type={inputField.type ? inputField.type : 'text'}
 					normalize={normalize}
 				/>
