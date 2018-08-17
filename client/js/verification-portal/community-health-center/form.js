@@ -15,9 +15,6 @@ const registerFields = inputField => {
 		/>
 	)
 }
-const myOnChange = (value) => {
-	
-}
 class chcForm extends Component {
 	render() {
 		const { classes, chcInputResource, handleSubmit } = this.props

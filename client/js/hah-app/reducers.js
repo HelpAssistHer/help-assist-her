@@ -62,7 +62,7 @@ const chcResourceReducer = (state = {}, action) => {
 				...state,
 				chcFormData: action.chcFormData,
 			}
-		case 'CLEAR_CHC_FORM':
+		case 'CLEAR_CHC_STATE':
 			return {
 				...state,
 				chcFormData: {},
