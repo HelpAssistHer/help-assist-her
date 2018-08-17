@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
-import VerifiedCheckbox from '../components/verified-checkbox'
 import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
