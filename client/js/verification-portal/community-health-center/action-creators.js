@@ -16,6 +16,7 @@ const submit = values => {
 }
 
 export const submitForm = values => {
+	console.log('CHC FORM DATA === ', values)
 	store.dispatch(submit(values))
 	store.dispatch({ type: 'CLEAR_CHC_STATE' })
 	return clearField(chcInputResource)
