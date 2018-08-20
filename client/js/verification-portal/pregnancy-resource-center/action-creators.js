@@ -38,9 +38,9 @@ const convertTimeToNumber = timeString => {
 export async function updateResource(updatedResource) {
 	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
 		return {
-			open: convertTimeToNumber(dayOfWeek.open),
-			close: convertTimeToNumber(dayOfWeek.close),
-			closedAllDay: dayOfWeek.closedAllDay,
+			open: convertTimeToNumber(_.get(dayOfWeek, 'open')),
+			close: convertTimeToNumber(_.get(dayOfWeek, 'close')),
+			closedAllDay: _.get(dayOfWeek, 'closedAllDay'),
 		}
 	})
 
