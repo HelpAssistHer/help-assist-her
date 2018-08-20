@@ -154,7 +154,7 @@ class VerificationPortalFormClass extends Component {
 						<div className={classes.firstBox}>
 							<Field
 								name="verifiedData.hotlinePhoneNumber.verified"
-								component={VerifiedCheckbox}
+								component={Toggle}
 							/>
 						</div>
 						<div className={classes.secondBox}>
@@ -171,10 +171,7 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.email.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.email.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
