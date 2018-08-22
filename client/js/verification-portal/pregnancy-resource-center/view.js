@@ -53,7 +53,7 @@ const styles = {
 		'font-family': 'sans-serif',
 		color: '#4A4A4A',
 		'max-width': '903px',
-		'margin-left': 'calc(50% - 451.5px)',
+		'margin-left': '81px',
 		'background-color': '#ffffff',
 		'padding-left': '15px',
 		'padding-right': '15px',

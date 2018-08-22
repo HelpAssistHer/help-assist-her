@@ -5,8 +5,8 @@ import { logoutUser } from './action-creators'
 
 const LogoutButton = ({ classes }) => (
 	<div>
-		<div className={classes.buttonDiv}>
-			<button className={classes.button} onClick={logoutUser}>
+		<div className={classes.button}>
+			<button className={classes.logoutButton} onClick={logoutUser}>
 				Logout
 			</button>
 		</div>
@@ -14,20 +14,18 @@ const LogoutButton = ({ classes }) => (
 )
 
 const styles = {
-	buttonDiv: {
+	button: {
 		'padding-left': '233px',
 		'padding-top': '25.82px',
 	},
-	button: {
+	logoutButton: {
 		height: '28.89px',
 		width: '72.61px',
 		border: '1px solid #FFFFFF',
 		'border-radius': '100px',
-		opacity: '100%',
-		'background-color': 'Transparent',
+		'background-color': 'transparent',
 		color: '#FFFFFF',
 		'letter-spacing': '0.18px',
-		'line-height': '13px',
 	},
 }
 
