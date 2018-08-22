@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import injectSheet from 'react-jss'
 
 import Input from '../../components/input'
@@ -304,6 +304,8 @@ class VerificationPortalFormClass extends Component {
 const VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
 })(VerificationPortalFormClass)
+
+// const selector = formValueSelector('verificationPortal')
 
 const styles = {
 	parent: {
