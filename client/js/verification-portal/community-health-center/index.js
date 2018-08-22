@@ -3,7 +3,7 @@ import CommunityHealtCenterForm from './form'
 import { chcInputResource } from './chcInputResource'
 
 const handleSubmit = values => {
-	alert(' CHC form values == ', values)
+	alert(values.nameOfCHC)
 }
 
 const CommunityHealthCenterContainer = () => (
