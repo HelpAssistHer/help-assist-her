@@ -31,25 +31,33 @@ const convertTimeToNumber = timeString => {
 	if (!timeString) {
 		return null
 	}
-	const hours =
+	const hours = parseInt(timeString.slice(0, 2))
+	const hoursIn24HourFormat =
 		timeString.slice(5, timeString.length) === 'pm'
-			? parseInt(`${timeString.slice(0, 2)}`) + 12
-			: (parseInt(`${timeString.slice(0, 2)}`) < 10 ? '0' : '') +
-			  parseInt(`${timeString.slice(0, 2)}`)
-	const minutes =
-		parseInt(`${timeString.slice(2, 5)}`) > 0
-			? parseInt(`${timeString.slice(2, 5)}`)
-			: '00'
-	return Number(`${hours}${minutes}`)
+			? hours + 12
+			: (hours < 10 ? '0' : '') + hours
+	const minutes = parseInt(timeString.slice(2, 5))
+	const minutesInTwoDesigt = minutes > 0 ? minutes : '00'
+	console.log(
+		'hoursIn24HourFormat == ',
+		hoursIn24HourFormat,
+		' minutesInTwoDesigt == ',
+		minutesInTwoDesigt,
+		Number(`${hoursIn24HourFormat}${minutesInTwoDesigt}`),
+	)
+	return Number(`${hoursIn24HourFormat}${minutesInTwoDesigt}`)
 }
 
 export async function updateResource(updatedResource) {
 	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
-		return {
-			open: convertTimeToNumber(_.get(dayOfWeek, 'open')),
-			close: convertTimeToNumber(_.get(dayOfWeek, 'close')),
-			closedAllDay: _.get(dayOfWeek, 'closedAllDay'),
-		}
+		return _.omitBy(
+			{
+				open: convertTimeToNumber(_.get(dayOfWeek, 'open')),
+				close: convertTimeToNumber(_.get(dayOfWeek, 'close')),
+				closedAllDay: _.get(dayOfWeek, 'closedAllDay'),
+			},
+			_.isNull || _.isUndefined,
+		)
 	})
 
 	const transformedResource = {
