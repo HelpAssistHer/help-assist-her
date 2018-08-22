@@ -2,17 +2,13 @@ export const chcInputResource = [
 	{
 		name: 'nameOfCHC',
 		placeholder: 'Name of Community Health Center',
-		verify: {
-			name: 'verifiedData.nameOfCHC.verified',
-		},
+		verify: 'verifiedData.nameOfCHC.verified',
 	},
 	[
 		{
 			name: 'addressLine1',
 			placeholder: 'Address 1',
-			verify: {
-				name: 'verifiedData.address.verified',
-			},
+			verify: 'verifiedData.address.verified',
 		},
 		{
 			name: 'addressLine2',
@@ -34,22 +30,16 @@ export const chcInputResource = [
 	{
 		name: 'phoneNumber',
 		placeholder: 'Phone Number',
-		verify: {
-			name: 'verifiedData.phoneNumber.verified',
-		},
+		verify: 'verifiedData.phoneNumber.verified',
 	},
 	{
 		name: 'email',
 		placeholder: 'Email',
-		verify: {
-			name: 'verifiedData.email.verified',
-		},
+		verify: 'verifiedData.email.verified',
 	},
 	{
 		name: 'website',
 		placeholder: 'Website',
-		verify: {
-			name: 'verifiedData.website.verified',
-		},
+		verify: 'verifiedData.website.verified',
 	},
 ]

@@ -3,17 +3,13 @@ import injectSheet from 'react-jss'
 import { Field } from 'redux-form'
 
 import Input from '../../components/input'
-
+import Toggle from '../../components/toggle'
 const RegisterField = ({ classes, inputField }) => {
 	return (
 		<div>
 			<div className={classes.verifiedField}>
 				{inputField.verify ? (
-					<Field
-						name={inputField.verify.name}
-						component={Input}
-						type="checkbox"
-					/>
+					<Field name={inputField.verify} component={Toggle} type="checkbox" />
 				) : null}
 			</div>
 			<div className={classes.inputField}>
