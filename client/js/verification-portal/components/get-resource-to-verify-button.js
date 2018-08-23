@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { getResourceToVerify } from './action-creators'
+import { getResourceToVerify } from '../pregnancy-resource-center/action-creators'
 import Button from '../../components/button'
 import { store } from '../../hah-app/index'
 import { updateOutOfBusinessActionCreator } from '../out-of-business/action-creators'

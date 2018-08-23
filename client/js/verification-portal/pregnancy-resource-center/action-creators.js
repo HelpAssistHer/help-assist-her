@@ -37,7 +37,7 @@ const convertTimeToNumber = timeString => {
 			? hours + 12
 			: (hours < 10 ? '0' : '') + hours
 	const minutes = parseInt(timeString.slice(2, 5))
-	const minutesInTwoDesigt = minutes > 0 ? minutes : '00'
+	const minutesInTwoDesigt = (minutes < 10 ? '0' : '') + minutes
 	return Number(`${hoursIn24HourFormat}${minutesInTwoDesigt}`)
 }
 
