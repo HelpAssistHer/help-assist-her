@@ -4,6 +4,7 @@ import injectSheet from 'react-jss'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
+import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
@@ -249,32 +250,32 @@ class VerificationPortalFormClass extends Component {
 					<Heading text="HOURS" size="medium" />
 					<Spacer height="50px" />
 					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Input} type="time" />
-					<Field name="hours[0].close" component={Input} type="time" />
+					<Field name="hours[0].open" component={Time} />
+					<Field name="hours[0].close" component={Time} />
 
 					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Input} type="time" />
-					<Field name="hours[1].close" component={Input} type="time" />
+					<Field name="hours[1].open" component={Time} />
+					<Field name="hours[1].close" component={Time} />
 
 					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Input} type="time" />
-					<Field name="hours[2].close" component={Input} type="time" />
+					<Field name="hours[2].open" component={Time} />
+					<Field name="hours[2].close" component={Time} />
 
 					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Input} type="time" />
-					<Field name="hours[3].close" component={Input} type="time" />
+					<Field name="hours[3].open" component={Time} />
+					<Field name="hours[3].close" component={Time} />
 
 					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Input} type="time" />
-					<Field name="hours[4].close" component={Input} type="time" />
+					<Field name="hours[4].open" component={Time} />
+					<Field name="hours[4].close" component={Time} />
 
 					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Input} type="time" />
-					<Field name="hours[5].close" component={Input} type="time" />
+					<Field name="hours[5].open" component={Time} />
+					<Field name="hours[5].close" component={Time} />
 
 					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Input} type="time" />
-					<Field name="hours[6].close" component={Input} type="time" />
+					<Field name="hours[6].open" component={Time} />
+					<Field name="hours[6].close" component={Time} />
 				</div>
 
 				<div className={classes.parent}>

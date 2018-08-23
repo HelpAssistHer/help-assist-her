@@ -14,10 +14,13 @@ const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
 		return null
 	}
-
 	const timeString = String(timeNumber).padStart(4, '0')
-
-	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
+	const hours = parseInt(`${timeString.slice(0, 2)}`)
+	const meridien = hours > 12 ? 'pm' : 'am'
+	return `${hours > 12 ? hours - 12 : hours}:${timeString.slice(
+		2,
+		4,
+	)} ${meridien}`
 }
 
 const populateForm = ({ changeFieldValue, resource }) => {
@@ -100,7 +103,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.services.verified',
 		_.get(verifiedData, 'services.verified'),
 	)
-
 	changeFieldValue(
 		'hours[0].open',
 		convertNumberToTimeFormat(_.get(hours, '[0].open')),
