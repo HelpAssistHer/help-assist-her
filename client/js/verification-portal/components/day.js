@@ -46,7 +46,7 @@ class Day extends React.Component {
 				{_.map(dayName, (today, i) => {
 					return (
 						<div className={classes.day} key={today}>
-							<div>
+							<div className={classes.dayStatus}>
 								<label className={classes.lable}>{today}</label>
 								<div
 									onClick={() =>
@@ -95,17 +95,21 @@ const styles = {
 	day: {
 		padding: '1.5%',
 	},
+	dayStatus: {
+		'margin-left': '85px',
+	},
 	lable: {
 		display: 'inline-block',
-		width: '45%',
+		width: '30%',
+		'max-width': '159.63px',
 		height: '22px',
-		width: '159.63px',
 		color: '#000000',
 		'font-family': 'Century Gothic',
 		'font-size': '18px',
 		'letter-spacing': '1px',
 		'line-height': '22px',
 		margin: '10px 20px',
+		'text-align': 'left',
 	},
 	notClose: {
 		opacity: '0.3',

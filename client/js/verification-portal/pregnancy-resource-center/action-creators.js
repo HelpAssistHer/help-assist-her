@@ -31,15 +31,14 @@ const convertTimeToNumber = timeString => {
 	if (!timeString) {
 		return null
 	}
-	const hours =
+	const hours = parseInt(timeString.slice(0, 2))
+	const hoursIn24HourFormat =
 		timeString.slice(5, timeString.length) === 'pm'
-			? parseInt(`${timeString.slice(0, 2)}`) + 12
-			: (parseInt(`${timeString.slice(0, 2)}`) < 10 ? '0' : '') +
-			  parseInt(`${timeString.slice(0, 2)}`)
-	const minutes =
-		(parseInt(`${timeString.slice(2, 5)}`) < 10 ? '0' : '') +
-		parseInt(`${timeString.slice(2, 5)}`)
-	return Number(`${hours}${minutes}`)
+			? hours + 12
+			: (hours < 10 ? '0' : '') + hours
+	const minutes = parseInt(timeString.slice(2, 5))
+	const minutesInTwoDesigt = (minutes < 10 ? '0' : '') + minutes
+	return Number(`${hoursIn24HourFormat}${minutesInTwoDesigt}`)
 }
 
 export async function updateResource(updatedResource) {

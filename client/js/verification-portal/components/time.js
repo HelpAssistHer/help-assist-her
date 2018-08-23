@@ -29,8 +29,8 @@ const timeInterval = [
 	'11:00',
 	'11:30',
 ]
-let i = 0
 const timeSpin = (currentValue, name, increment, changeFieldValue) => {
+	let i = 0
 	if (!currentValue)
 		return name.split('.')[1] === 'open'
 			? changeFieldValue(name, '9:00 am')
