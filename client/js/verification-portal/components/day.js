@@ -30,7 +30,7 @@ class Day extends React.Component {
 	}
 	openStateToggle = (i, hours) => {
 		const weeks = hours || []
-		const todaysHours = _.nth(hours, i) || {}
+		const todaysHours = _.get(hours, i) || {}
 		const currentState = closedAllDayStatus(i, this.state.hours)
 		todaysHours.closedAllDay = !currentState
 		weeks[i] = todaysHours

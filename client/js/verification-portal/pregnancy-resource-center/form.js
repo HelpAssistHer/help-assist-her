@@ -4,7 +4,6 @@ import injectSheet from 'react-jss'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
-import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Day from '../components/day'
