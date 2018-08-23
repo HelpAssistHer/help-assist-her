@@ -21,6 +21,7 @@
 		"overwrite-pc-data":
 			"NODE_ENV=localhost node ./server/data-import/overwrite-pc-data.js",
 		"precommit": "pretty-quick --staged",
+		"prepare": "yarn webpack",
 		"start": "NODE_ENV=localhost nodemon ./server/server.js",
 		"startdb": "mongod --dbpath ~/.hah/data",
 		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
