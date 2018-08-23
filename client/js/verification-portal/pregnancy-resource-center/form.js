@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
-import { connect } from 'react-redux'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
@@ -340,4 +339,5 @@ const styles = {
 		'justify-self': 'start',
 	},
 }
+
 export default injectSheet(styles)(VerificationPortalForm)

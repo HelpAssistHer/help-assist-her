@@ -17,7 +17,7 @@ const dayName = [
 	'Saturday',
 ]
 const closedAllDayStatus = (dayNum, hours) => {
-	return hours ? (hours[dayNum] ? hours[dayNum].closedAllDay : false) : false
+	return _.get(hours, `[${dayNum}].closedAllDay`) || false
 }
 
 class Day extends React.Component {
@@ -28,13 +28,14 @@ class Day extends React.Component {
 		}
 		this.openStateToggle = this.openStateToggle.bind(this)
 	}
-	openStateToggle = (i, currentState, hours, changeFieldValue) => {
-		hours ? '' : (hours = [{}, {}, {}, {}, {}, {}, {}])
-		hours[i]
-			? (hours[i].closedAllDay = !currentState)
-			: (hours[i] = { closedAllDay: !currentState })
-		changeFieldValue(`hours[${i}].closedAllDay`, !currentState)
-		this.setState({ hours })
+	openStateToggle = (i, hours) => {
+		const weeks = hours || []
+		const todaysHours = _.nth(hours, i) || {}
+		const currentState = closedAllDayStatus(i, this.state.hours)
+		todaysHours.closedAllDay = !currentState
+		weeks[i] = todaysHours
+		this.props.changeFieldValue(`hours[${i}].closedAllDay`, !currentState)
+		this.setState({ hours: weeks })
 	}
 	componentWillReceiveProps(nextProps) {
 		this.setState({ hours: nextProps.hours })
@@ -49,17 +50,10 @@ class Day extends React.Component {
 							<div className={classes.dayStatus}>
 								<label className={classes.lable}>{today}</label>
 								<div
-									onClick={() =>
-										this.openStateToggle(
-											i,
-											closedAllDayStatus(i, this.state.hours),
-											this.state.hours,
-											changeFieldValue,
-										)
-									}
+									onClick={() => this.openStateToggle(i, this.state.hours)}
 									className={
 										closedAllDayStatus(i, this.state.hours)
-											? classNames(classes.closed, classes.lable)
+											? classNames(classes.lable, classes.closed)
 											: classNames(classes.lable, classes.notClose)
 									}
 								>
