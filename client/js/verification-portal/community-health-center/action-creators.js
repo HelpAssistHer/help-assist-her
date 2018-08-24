@@ -1,7 +1,7 @@
 import { change } from 'redux-form'
 
 import { store } from './../../hah-app/index'
-import { chcInputResource } from './chc_input_resource'
+import { chcInputResource } from './chc-input-resource'
 
 const clearField = inputField => {
 	if (!inputField.name) return inputField.forEach(field => clearField(field))
