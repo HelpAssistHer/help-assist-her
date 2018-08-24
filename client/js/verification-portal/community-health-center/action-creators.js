@@ -20,4 +20,4 @@ export const submitForm = values => {
 	store.dispatch({ type: 'CLEAR_CHC_STATE' })
 	return clearField(chcInputResource)
 }
-console.log('store == ', store) // store is undefined ?????
+//store.dispatch is working but store is undefined ?????

@@ -41,16 +41,19 @@ export const chcInputResource = [
 		verify: 'verifiedData.phoneNumber.verified',
 		spacer: '66px',
 		normalize: normalizePhone,
+		customInputStyle: 'leftHalfInputField',
 	},
 	{
 		name: 'email',
 		placeholder: 'Email',
 		verify: 'verifiedData.email.verified',
 		type: 'email',
+		customInputStyle: 'leftHalfInputField',
 	},
 	{
 		name: 'website',
 		placeholder: 'Website',
 		verify: 'verifiedData.website.verified',
+		customInputStyle: 'leftHalfInputField',
 	},
 ]
