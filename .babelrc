@@ -1,9 +1,9 @@
 {
   "plugins": [
+	  "@babel/plugin-proposal-class-properties",
+	  "@babel/plugin-proposal-object-rest-spread"
 //	  "syntax-async-functions",
 //	  "transform-async-to-generator",
-	  "transform-class-properties",
-	  "transform-object-rest-spread"
 //	  "transform-regenerator"
   ],
   "presets": [
