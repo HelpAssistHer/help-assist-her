@@ -7,7 +7,7 @@ module.exports = {
 	mode: 'development',
 	context: __dirname,
 	entry: ['@babel/polyfill', './client/js/hah-app/index.js'],
-	devtool: 'eval',
+	devtool: 'inline-source-map',
 	output: {
 		path: path.join(__dirname, '/public'),
 		filename: 'bundle.js',
