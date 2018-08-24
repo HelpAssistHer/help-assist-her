@@ -97,7 +97,7 @@
 		"babel-loader": "^8.0.0-beta",
 		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"css-loader": "0.25.0",
+		"css-loader": "^1.0.0",
 		"eslint": "^5.0.1",
 		"eslint-config-standard": "^11.0.0",
 		"eslint-config-standard-jsx": "^5.0.0",
@@ -113,7 +113,7 @@
 		"pretty-quick": "^1.5.1",
 		"react-addons-test-utils": "15.3.2",
 		"react-test-renderer": "15.3.2",
-		"style-loader": "0.13.1",
+		"style-loader": "^0.22.1",
 		"webpack": "^4.17.1",
 		"webpack-cli": "^3.1.0",
 		"webpack-dev-server": "^2.4.5"
