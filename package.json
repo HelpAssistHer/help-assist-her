@@ -39,6 +39,7 @@
 	},
 	"homepage": "https://github.com/HelpAssistHer/help-assist-her#readme",
 	"dependencies": {
+		"@babel/polyfill": "^7.0.0-rc.2",
 		"@google/maps": "^0.3.1",
 		"@turf/turf": "^3.7.4",
 		"axios": "0.15.2",

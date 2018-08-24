@@ -6,7 +6,7 @@ const webpack = require('webpack')
 module.exports = {
 	mode: 'development',
 	context: __dirname,
-	entry: ['./client/js/hah-app/index.js'],
+	entry: ['@babel/polyfill', './client/js/hah-app/index.js'],
 	devtool: 'eval',
 	output: {
 		path: path.join(__dirname, '/public'),

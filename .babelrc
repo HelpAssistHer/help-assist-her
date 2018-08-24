@@ -5,7 +5,7 @@
 	  "@babel/plugin-transform-regenerator"
   ],
   "presets": [
-	  "@babel/env",
+	  "@babel/preset-env",
 	  "@babel/react"
   ]
 }
