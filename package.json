@@ -26,8 +26,7 @@
 		"startdb": "mongod --dbpath ~/.hah/data",
 		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
 		"test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
-		"watch": "webpack --watch",
-		"wds": "webpack-dev-server --content-base public/"
+		"watch": "webpack --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -118,7 +117,6 @@
 		"react-test-renderer": "15.3.2",
 		"style-loader": "^0.22.1",
 		"webpack": "^4.17.1",
-		"webpack-cli": "^3.1.0",
-		"webpack-dev-server": "^2.4.5"
+		"webpack-cli": "^3.1.0"
 	}
 }
