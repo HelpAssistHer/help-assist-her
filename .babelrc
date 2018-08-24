@@ -8,6 +8,6 @@
   ],
   "presets": [
 	  "@babel/env",
-	  "react"
+	  "@babel/react"
   ]
 }
