@@ -21,15 +21,18 @@ export const chcInputResource = [
 		{
 			name: 'city',
 			placeholder: 'City',
+			customInputStyle: 'leftHalfInputField',
 		},
 		{
 			name: 'state',
 			placeholder: 'State',
+			customInputStyle: 'rightHalfInputField',
 		},
 		{
 			name: 'zipCode',
 			placeholder: 'Zip Code',
 			normalize: normalizeZipcode,
+			customInputStyle: 'leftHalfInputField',
 		},
 	],
 	{

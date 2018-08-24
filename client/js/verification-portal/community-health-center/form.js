@@ -47,6 +47,7 @@ const styles = {
 		width: '80%',
 		'margin-left': '10%',
 		'font-family': 'sans-serif',
+		position: 'relative',
 	},
 	leftColumn: {
 		display: 'inline-block',
