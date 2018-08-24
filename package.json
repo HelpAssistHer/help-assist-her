@@ -43,8 +43,6 @@
 		"@turf/turf": "^3.7.4",
 		"axios": "0.15.2",
 		"babel-cli": "^6.24.1",
-		"babel-core": "6.16.0",
-		"babel-loader": "6.2.7",
 		"babel-plugin-syntax-async-functions": "^6.13.0",
 		"babel-plugin-transform-async-to-generator": "^6.22.0",
 		"babel-plugin-transform-class-properties": "^6.24.1",
@@ -103,7 +101,6 @@
 	"devDependencies": {
 		"babel-eslint": "^8.2.5",
 		"babel-jest": "16.0.0",
-		"babel-preset-env": "^1.6.1",
 		"css-loader": "0.25.0",
 		"eslint": "^5.0.1",
 		"eslint-config-standard": "^11.0.0",
