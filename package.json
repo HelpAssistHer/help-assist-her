@@ -99,8 +99,11 @@
 		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.0.0-rc.2",
+		"@babel/preset-env": "^7.0.0-rc.2",
 		"babel-eslint": "^8.2.5",
 		"babel-jest": "16.0.0",
+		"babel-loader": "^8.0.0-beta",
 		"css-loader": "0.25.0",
 		"eslint": "^5.0.1",
 		"eslint-config-standard": "^11.0.0",
