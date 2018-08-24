@@ -1,6 +1,6 @@
 import React from 'react'
 import CommunityHealtCenterForm from './form'
-import { chcInputResource } from './chcInputResource'
+import { chcInputResource } from './chc_input_resource'
 
 const handleSubmit = values => {
 	alert(values.nameOfCHC)
