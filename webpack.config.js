@@ -8,6 +8,7 @@ module.exports = {
 	context: __dirname,
 	entry: ['@babel/polyfill', './client/js/hah-app/index.js'],
 	devtool: 'inline-source-map',
+	target: 'web',
 	output: {
 		path: path.join(__dirname, '/public'),
 		filename: 'bundle.js',
@@ -27,9 +28,17 @@ module.exports = {
 		extensions: ['.js', '.json'],
 	},
 	stats: {
+		assets: false,
+		builtAt: true,
+		cached: true,
+		chunks: false,
 		colors: true,
-		reasons: true,
-		chunks: true,
+		errors: true,
+		errorDetails: true,
+		hash: true,
+		performance: true,
+		reasons: false,
+		warnings: true,
 	},
 	module: {
 		rules: [
