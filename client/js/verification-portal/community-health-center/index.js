@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import CommunityHealtCenterForm from './form'
-import { chcInputResource } from './chcInputResource'
+import { chcInputResource } from './chc_input_resource'
 import { submitForm } from './action-creators'
 
 const handleSubmit = values => {

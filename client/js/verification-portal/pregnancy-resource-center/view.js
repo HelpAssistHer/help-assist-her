@@ -1,7 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import GetResourceToVerifyButton from './get-resource-to-verify-button'
 import Spacer from '../../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
@@ -14,13 +13,11 @@ class VerificationPortal extends React.Component {
 		updateResource(values)
 	}
 	render() {
-		const { classes, changeFieldValue, resource } = this.props
+		const { classes, resource } = this.props
 		const { outOfBusiness, doNotList } = resource
+
 		return (
 			<div>
-				<div className={classes.leftPositionButton}>
-					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
-				</div>
 				<div className={classes.rightPositionButton}>
 					<Button
 						activeState={outOfBusiness}
@@ -56,17 +53,11 @@ const styles = {
 		'font-family': 'sans-serif',
 		color: '#4A4A4A',
 		'max-width': '903px',
-		'margin-left': 'calc(50% - 451.5px)',
+		'margin-left': '81px',
 		'background-color': '#ffffff',
 		'padding-left': '15px',
 		'padding-right': '15px',
 		position: 'relative',
-	},
-	leftPositionButton: {
-		'padding-top': '50px',
-		position: 'absolute',
-		left: '1%',
-		'z-index': '100',
 	},
 	rightPositionButton: {
 		display: 'block',

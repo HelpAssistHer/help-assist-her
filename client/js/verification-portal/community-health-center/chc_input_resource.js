@@ -5,12 +5,14 @@ export const chcInputResource = [
 		name: 'nameOfCHC',
 		placeholder: 'Name of Community Health Center',
 		verify: 'verifiedData.nameOfCHC.verified',
+		spacer: '55px',
 	},
 	[
 		{
 			name: 'addressLine1',
 			placeholder: 'Address 1',
 			verify: 'verifiedData.address.verified',
+			spacer: '64px',
 		},
 		{
 			name: 'addressLine2',
@@ -34,6 +36,7 @@ export const chcInputResource = [
 		name: 'phoneNumber',
 		placeholder: 'Phone Number',
 		verify: 'verifiedData.phoneNumber.verified',
+		spacer: '66px',
 		normalize: normalizePhone,
 	},
 	{

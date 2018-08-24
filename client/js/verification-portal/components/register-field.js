@@ -4,10 +4,12 @@ import { Field } from 'redux-form'
 
 import Input from '../../components/input'
 import Toggle from '../../components/toggle'
+import Spacer from '../../components/spacer'
 
 const RegisterField = ({ classes, inputField, normalize }) => {
 	return (
 		<div>
+			{inputField.spacer ? <Spacer height={inputField.spacer} /> : ''}
 			<div className={classes.verifiedField}>
 				{inputField.verify ? (
 					<Field name={inputField.verify} component={Toggle} type="checkbox" />

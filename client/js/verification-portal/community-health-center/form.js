@@ -4,6 +4,7 @@ import injectSheet from 'react-jss'
 
 import RegisterField from '../components/register-field'
 import Button from '../../components/button'
+import Spacer from '../../components/spacer'
 
 const registerFields = inputField => {
 	if (!inputField.name) return inputField.map(field => registerFields(field))
@@ -25,6 +26,7 @@ class chcForm extends Component {
 					<div className={classes.rightColumn}>GENERAL INFORMATION</div>
 				</div>
 				{chcInputResource.map(field => registerFields(field))}
+				<Spacer height="50px" />
 				<Button
 					type="submit"
 					buttonText="Save Progress"
