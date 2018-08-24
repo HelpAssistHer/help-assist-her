@@ -498,7 +498,7 @@
     "@babel/helper-plugin-utils" "7.0.0-rc.2"
     "@babel/plugin-syntax-jsx" "7.0.0-rc.2"
 
-"@babel/plugin-transform-regenerator@7.0.0-rc.2":
+"@babel/plugin-transform-regenerator@7.0.0-rc.2", "@babel/plugin-transform-regenerator@^7.0.0-rc.2":
   version "7.0.0-rc.2"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.0.0-rc.2.tgz#35c26152b0ddff76d93ca1fcf55417b16111ade8"
   dependencies:
