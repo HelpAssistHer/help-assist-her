@@ -8,23 +8,29 @@ import Toggle from '../../components/toggle'
 import Spacer from '../../components/spacer'
 
 const RegisterField = ({ classes, inputField, normalize }) => {
-	const customInputStyle = inputField.customInputStyle
-		? classes[inputField.customInputStyle]
-		: ''
+	const {
+		name,
+		placeholder,
+		type,
+		verify,
+		spacer,
+		customInputStyle,
+	} = inputField
+	const customStyle = customInputStyle ? classes[customInputStyle] : ''
 	return (
 		<div>
-			{inputField.spacer ? <Spacer height={inputField.spacer} /> : ''}
+			{inputField.spacer ? <Spacer height={spacer} /> : ''}
 			<div className={classes.verifiedField}>
-				{inputField.verify ? (
-					<Field name={inputField.verify} component={Toggle} type="checkbox" />
+				{verify ? (
+					<Field name={verify} component={Toggle} type="checkbox" />
 				) : null}
 			</div>
-			<div className={classNames(classes.inputField, customInputStyle)}>
+			<div className={classNames(classes.inputField, customStyle)}>
 				<Field
 					component={Input}
-					name={inputField.name}
-					placeholder={inputField.placeholder}
-					type={inputField.type ? inputField.type : 'text'}
+					name={name}
+					placeholder={placeholder}
+					type={type ? type : 'text'}
 					normalize={normalize}
 				/>
 			</div>
