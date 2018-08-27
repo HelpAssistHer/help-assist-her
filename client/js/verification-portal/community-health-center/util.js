@@ -19,7 +19,6 @@ export const normalizePhone = input => {
 				? '(' + first3 + ') ' + middle3 + ' - ' + last4
 				: validNumber
 	}
-	return validNumber
 }
 
 export const normalizeZipcode = input => {
