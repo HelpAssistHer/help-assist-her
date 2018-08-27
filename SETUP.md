@@ -84,15 +84,11 @@ yarn startdb
 yarn start
 ```
 
-## Build Client
+## Run Client
 
 ```
-yarn webpack
+yarn run watch
 ```
-
-## Make Changes to Client
-
-Run `yarn webpack` again and refresh the browser
 
 # Getting Started with Development on Ubuntu or GalliumOS (Linux for Chromebooks)
 
@@ -160,9 +156,11 @@ Add the following configurations to your bash profile (make sure to change the p
 
 In a new tab, run `yarn start`
 
-## Rebuild front-end if necessary
+## Run Client
 
-`yarn webpack`
+```
+yarn run watch
+```
 
 ## View website
 

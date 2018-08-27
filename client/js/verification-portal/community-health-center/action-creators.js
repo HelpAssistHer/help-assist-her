@@ -5,6 +5,7 @@ import { chcInputResource } from './chc-input-resource'
 
 const clearField = inputField => {
 	if (!inputField.name) return inputField.forEach(field => clearField(field))
+	store.dispatch(change('chcForm', inputField.verify, ''))
 	return store.dispatch(change('chcForm', inputField.name, ''))
 }
 
