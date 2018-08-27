@@ -6,7 +6,7 @@ export const normalizePhone = input => {
 	const last4 = validNumber.substring(6, 10)
 
 	switch (size) {
-		case size == 0:
+		case size === 0:
 			return validNumber
 		case size < 4:
 			return '(' + validNumber
