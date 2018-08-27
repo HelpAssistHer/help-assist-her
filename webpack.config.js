@@ -4,9 +4,11 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
+	mode: 'development',
 	context: __dirname,
-	entry: ['babel-polyfill', './client/js/hah-app/index.js'],
-	devtool: 'eval',
+	entry: ['@babel/polyfill', './client/js/hah-app/index.js'],
+	devtool: 'inline-source-map',
+	target: 'web',
 	output: {
 		path: path.join(__dirname, '/public'),
 		filename: 'bundle.js',
@@ -26,25 +28,30 @@ module.exports = {
 		extensions: ['.js', '.json'],
 	},
 	stats: {
+		assets: false,
+		builtAt: true,
+		cached: true,
+		chunks: false,
 		colors: true,
-		reasons: true,
-		chunks: true,
+		errors: true,
+		errorDetails: true,
+		hash: true,
+		performance: true,
+		reasons: false,
+		warnings: true,
 	},
 	module: {
 		rules: [
 			{
-				// 	enforce: 'pre',
-				// 	test: /\.js$/,
-				// 	loader: 'eslint-loader',
-				// 	exclude: /node_modules/
-				// }, {
-				test: /\.json$/,
-				loader: 'json-loader',
-			},
-			{
-				include: path.resolve(__dirname, 'client/js'),
 				test: /\.js$/,
-				loader: 'babel-loader',
+				exclude: /(node_modules|bower_components)/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: ['@babel/preset-env'],
+					},
+				},
+				include: path.resolve(__dirname, 'client/js'),
 			},
 			{
 				test: /\.css$/,
