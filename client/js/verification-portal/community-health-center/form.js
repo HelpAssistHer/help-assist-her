@@ -8,13 +8,7 @@ import Spacer from '../../components/spacer'
 
 const registerFields = inputField => {
 	if (!inputField.name) return inputField.map(field => registerFields(field))
-	return (
-		<RegisterField
-			inputField={inputField}
-			key={inputField.name}
-			normalize={inputField.normalize}
-		/>
-	)
+	return <RegisterField inputField={inputField} key={inputField.name} />
 }
 class chcForm extends Component {
 	render() {

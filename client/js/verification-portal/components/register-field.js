@@ -7,15 +7,9 @@ import Input from '../../components/input'
 import Toggle from '../../components/toggle'
 import Spacer from '../../components/spacer'
 
-const RegisterField = ({ classes, inputField, normalize }) => {
-	const {
-		name,
-		placeholder,
-		type,
-		verify,
-		spacer,
-		customInputStyle,
-	} = inputField
+const RegisterField = ({ classes, inputField }) => {
+	const { name, type, placeholder, verify, styling } = inputField
+	const { normalize, spacer, customInputStyle } = styling
 	const customStyle = customInputStyle ? classes[customInputStyle] : ''
 	return (
 		<div>
