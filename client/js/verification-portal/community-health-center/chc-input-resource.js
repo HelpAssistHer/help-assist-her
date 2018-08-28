@@ -21,7 +21,6 @@ export const chcInputResource = [
 		{
 			name: 'addressLine2',
 			placeholder: 'Address 2',
-			styling: {},
 		},
 		{
 			name: 'city',

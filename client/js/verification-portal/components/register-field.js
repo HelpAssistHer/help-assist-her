@@ -9,11 +9,11 @@ import Spacer from '../../components/spacer'
 
 const RegisterField = ({ classes, inputField }) => {
 	const { name, type, placeholder, verify, styling } = inputField
-	const { normalize, spacer, customInputStyle } = styling
+	const { normalize, spacer, customInputStyle } = styling || {}
 	const customStyle = customInputStyle ? classes[customInputStyle] : ''
 	return (
 		<div>
-			{inputField.spacer ? <Spacer height={spacer} /> : ''}
+			{spacer ? <Spacer height={spacer} /> : ''}
 			<div className={classes.verifiedField}>
 				{verify ? (
 					<Field name={verify} component={Toggle} type="checkbox" />
