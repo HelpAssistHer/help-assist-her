@@ -21,4 +21,3 @@ export const submitForm = values => {
 	store.dispatch({ type: 'CLEAR_CHC_STATE' })
 	return clearField(chcInputResource)
 }
-//store.dispatch is working but store is undefined ?????
