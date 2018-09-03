@@ -3,7 +3,10 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 
 import { UPDATE_LOGIN_STATE, GET_INITIAL_DATA } from './action-types'
-import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/pregnancy-resource-center/action-types'
+import {
+	GET_RESOURCE_TO_VERIFY,
+	FORM_SUCCESSFULLY_SUBMITTED,
+} from '../verification-portal/pregnancy-resource-center/action-types'
 import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
 import { DO_NOT_LIST } from '../verification-portal/do-not-list/action-types'
 import { GET_PREGNANCY_RESOURCE_CENTERS } from '../mini-app/data/action-types'
@@ -55,11 +58,30 @@ const miniAppReducer = (state = {}, action) => {
 	}
 }
 
+const localStateReducer = (state = {}, action) => {
+	console.log('the action type is: ', action.type)
+	switch (action.type) {
+		case FORM_SUCCESSFULLY_SUBMITTED:
+			console.log("we've passed the case statement")
+			return {
+				...state,
+				form_status: action.formStatus,
+			}
+		default:
+			console.log("we've hit the default case")
+			return {
+				...state,
+				form_status: 'Pending',
+			}
+	}
+}
+
 const reducers = {
 	initialData: authenticationReducer,
 	resource: resourceReducer,
 	miniApp: miniAppReducer,
 	form: formReducer,
+	localState: localStateReducer,
 }
 
 const reducer = combineReducers(reducers)

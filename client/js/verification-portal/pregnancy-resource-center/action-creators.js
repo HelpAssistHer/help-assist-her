@@ -2,6 +2,7 @@ import _ from 'lodash'
 
 import { store } from '../../hah-app/index'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
+import { FORM_SUCCESSFULLY_SUBMITTED } from './action-types'
 
 async function getOneResource() {
 	const response = await fetch(`/api/pregnancy-centers/verify`, {
@@ -18,6 +19,13 @@ function getResource(resource) {
 	return {
 		type: GET_RESOURCE_TO_VERIFY,
 		resource,
+	}
+}
+
+function getFormStatus(status) {
+	return {
+		type: FORM_SUCCESSFULLY_SUBMITTED,
+		formStatus: status,
 	}
 }
 
@@ -80,8 +88,12 @@ export async function updateResource(updatedResource) {
 					result.message,
 				)}`
 			alert(alertMessage)
+			store.dispatch(getFormStatus('Failed'))
+			store.dispatch(getFormStatus('Pending'))
 		} else {
 			alert('Updates saved successfully!')
+			store.dispatch(getFormStatus('Success'))
+			// store.dispatch(getFormStatus('Pending'))
 		}
 
 		return result
@@ -91,5 +103,7 @@ export async function updateResource(updatedResource) {
 			'of this message and attach using the Help button in the lower right corner.' +
 			`\n\nError: ${error}`
 		alert(alertMessage)
+		store.dispatch(getFormStatus('Failed'))
+		// store.dispatch(getFormStatus('Pending'))
 	}
 }
