@@ -89,11 +89,9 @@ export async function updateResource(updatedResource) {
 				)}`
 			alert(alertMessage)
 			store.dispatch(getFormStatus('Failed'))
-			store.dispatch(getFormStatus('Pending'))
 		} else {
 			alert('Updates saved successfully!')
 			store.dispatch(getFormStatus('Success'))
-			// store.dispatch(getFormStatus('Pending'))
 		}
 
 		return result
@@ -104,6 +102,5 @@ export async function updateResource(updatedResource) {
 			`\n\nError: ${error}`
 		alert(alertMessage)
 		store.dispatch(getFormStatus('Failed'))
-		// store.dispatch(getFormStatus('Pending'))
 	}
 }

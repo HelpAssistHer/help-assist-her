@@ -1,6 +1,6 @@
 import React from 'react'
 
-import HeaderSuccess from './components/header-success'
+import HeaderModal from './components/header-modal'
 import Spacer from '../components/spacer'
 import LoginButton from '../authentication/facebook-login-button'
 import Tabs from './components/tabs'
@@ -22,7 +22,7 @@ function getFormComponent({ formType }) {
 const VerificationPortal = ({ formType }) => {
 	return (
 		<div>
-			<HeaderSuccess />
+			<HeaderModal />
 			<Tabs />
 			<Spacer height="63px" />
 			<LoginButton />

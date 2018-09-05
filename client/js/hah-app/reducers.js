@@ -59,16 +59,13 @@ const miniAppReducer = (state = {}, action) => {
 }
 
 const localStateReducer = (state = {}, action) => {
-	console.log('the action type is: ', action.type)
 	switch (action.type) {
 		case FORM_SUCCESSFULLY_SUBMITTED:
-			console.log("we've passed the case statement")
 			return {
 				...state,
 				form_status: action.formStatus,
 			}
 		default:
-			console.log("we've hit the default case")
 			return {
 				...state,
 				form_status: 'Pending',

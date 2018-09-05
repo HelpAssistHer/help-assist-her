@@ -3,19 +3,27 @@ import injectSheet from 'react-jss'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 
-class HeaderSuccess extends Component {
+class HeaderModal extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			closed: false,
+			prevSubmit: null,
 		}
 		this.handleClick = this.handleClick.bind(this)
 	}
 
 	componentDidUpdate() {
-		if (this.props.submitStatus == 'Pending' && this.state.closed) {
+		const { submitStatus } = this.props
+		if (submitStatus == 'Pending' && this.state.closed) {
 			this.setState({
 				closed: false,
+			})
+		}
+
+		if (submitStatus != 'Pending' && this.state.prevSubmit != submitStatus) {
+			this.setState({
+				prevSubmit: submitStatus,
 			})
 		}
 	}
@@ -31,11 +39,15 @@ class HeaderSuccess extends Component {
 		const { classes, submitStatus } = this.props
 		const modalClasses = cx(
 			classes.root,
-			submitStatus == 'Failed' && classes.error,
+			submitStatus === 'Success' && classes.success,
+			submitStatus === 'Failed' && classes.error,
 			this.state.closed && classes.closed,
 		)
 
-		if (submitStatus == 'Success') {
+		if (
+			(submitStatus === 'Success' && this.state.prevSubmit === null) ||
+			this.state.prevSubmit === 'Success'
+		) {
 			return (
 				<div className={modalClasses}>
 					<div>
@@ -50,8 +62,7 @@ class HeaderSuccess extends Component {
 					</div>
 				</div>
 			)
-		}
-		if (submitStatus == 'Failed') {
+		} else {
 			return (
 				<div className={modalClasses}>
 					<div>
@@ -64,17 +75,16 @@ class HeaderSuccess extends Component {
 				</div>
 			)
 		}
-		return null
 	}
 }
 
 const styles = {
 	root: {
-		height: '246px',
+		height: '0px',
 		color: '#FFFFFF',
 		display: 'flex',
-		background: '#ee6298',
 		'text-align': 'left',
+		background: '#ee6298',
 		'justify-content': 'center',
 		'align-items': 'center',
 		'font-size': '30px',
@@ -85,23 +95,29 @@ const styles = {
 		'padding-left': '10px',
 		transition: ['height'],
 		transitionDuration: '2s',
-		'animation-name': 'closing-animation',
-		'animation-duration': '2s',
-		'animation-fill-mode': 'forwards',
-		'animation-delay': '10s',
-		'animation-play-state': 'running',
+		// 'animation-name': 'closing-animation',
+		// 'animation-duration': '2s',
+		// 'animation-fill-mode': 'forwards',
+		// 'animation-delay': '10s',
+		// 'animation-play-state': 'running',
+	},
+	success: {
+		height: '246px',
+		background: '#ee6298',
 	},
 	error: {
+		height: '246px',
 		background: 'black',
 	},
 	button: {
 		padding: '10px',
 		'align-self': 'flex-start',
+		cursor: 'pointer',
 	},
-	'@keyframes closing-animation': {
-		from: { height: '246px' },
-		to: { height: '0px' },
-	},
+	// '@keyframes closing-animation': {
+	// 	from: { height: '246px' },
+	// 	to: { height: '0px' },
+	// },
 	closed: {
 		height: '0px',
 		'animation-name': 'closing-animation',
@@ -110,8 +126,7 @@ const styles = {
 }
 
 const HeaderConnected = connect(state => ({
-	id: state.resource._id,
 	submitStatus: state.localState.form_status,
-}))(HeaderSuccess)
+}))(HeaderModal)
 
 export default injectSheet(styles)(HeaderConnected)
