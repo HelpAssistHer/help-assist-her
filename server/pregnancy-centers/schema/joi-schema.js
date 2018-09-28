@@ -38,6 +38,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 	verifiedData: {
 		address: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,
+		hotlinePhoneNumber: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		prcName: dateUserActionSchemaJoi,
 		phone: dateUserActionSchemaJoi,
@@ -49,6 +50,7 @@ const pregnancyCenterSchemaJoi = Joi.object().keys({
 		address: dateUserActionSchemaJoi,
 		doNotList: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,
+		hotlinePhoneNumber: dateUserActionSchemaJoi,
 		hours: dateUserActionSchemaJoi,
 		notes: dateUserActionSchemaJoi,
 		outOfBusiness: dateUserActionSchemaJoi,
