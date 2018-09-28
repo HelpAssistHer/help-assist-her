@@ -21,12 +21,12 @@
 		"overwrite-pc-data":
 			"NODE_ENV=localhost node ./server/data-import/overwrite-pc-data.js",
 		"precommit": "pretty-quick --staged",
-		"prepare": "yarn webpack",
+		"prepare": "webpack",
 		"start": "NODE_ENV=localhost nodemon ./server/server.js",
 		"startdb": "mongod --dbpath ~/.hah/data",
 		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
 		"test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
-		"wds": "webpack-dev-server --content-base public/"
+		"watch": "webpack --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -39,21 +39,10 @@
 	},
 	"homepage": "https://github.com/HelpAssistHer/help-assist-her#readme",
 	"dependencies": {
+		"@babel/polyfill": "^7.0.0-rc.2",
 		"@google/maps": "^0.3.1",
 		"@turf/turf": "^3.7.4",
 		"axios": "0.15.2",
-		"babel-cli": "^6.24.1",
-		"babel-core": "6.16.0",
-		"babel-loader": "6.2.7",
-		"babel-plugin-syntax-async-functions": "^6.13.0",
-		"babel-plugin-transform-async-to-generator": "^6.22.0",
-		"babel-plugin-transform-class-properties": "^6.24.1",
-		"babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
-		"babel-plugin-transform-object-rest-spread": "^6.23.0",
-		"babel-plugin-transform-regenerator": "^6.24.1",
-		"babel-polyfill": "^6.23.0",
-		"babel-preset-react": "6.16.0",
-		"babel-register": "6.16.0",
 		"bluebird": "^3.4.7",
 		"body-parser": "^1.16.1",
 		"boom": "^4.3.1",
@@ -74,7 +63,6 @@
 		"history": "^4.4.0",
 		"joi": "^10.4.1",
 		"joi-phone-validator": "^1.0.0",
-		"json-loader": "0.5.4",
 		"lodash": "^4.17.4",
 		"log": "^1.4.0",
 		"mapbox": "^1.0.0-beta5",
@@ -98,14 +86,20 @@
 		"react-router-tabs": "^1.2.0",
 		"redux": "^3.6.0",
 		"redux-form": "^7.1.2",
-		"redux-thunk": "^2.2.0",
-		"webpack": "^2.5.1"
+		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.0.0-rc.2",
+		"@babel/plugin-proposal-class-properties": "^7.0.0-rc.2",
+		"@babel/plugin-proposal-object-rest-spread": "^7.0.0-rc.2",
+		"@babel/plugin-transform-async-to-generator": "^7.0.0-rc.2",
+		"@babel/plugin-transform-regenerator": "^7.0.0-rc.2",
+		"@babel/preset-env": "^7.0.0-rc.2",
+		"@babel/preset-react": "^7.0.0-rc.2",
 		"babel-eslint": "^8.2.5",
 		"babel-jest": "16.0.0",
-		"babel-preset-env": "^1.6.1",
-		"css-loader": "0.25.0",
+		"babel-loader": "^8.0.0-beta",
+		"css-loader": "^1.0.0",
 		"eslint": "^5.0.1",
 		"eslint-config-standard": "^11.0.0",
 		"eslint-config-standard-jsx": "^5.0.0",
@@ -121,7 +115,8 @@
 		"pretty-quick": "^1.5.1",
 		"react-addons-test-utils": "15.3.2",
 		"react-test-renderer": "15.3.2",
-		"style-loader": "0.13.1",
-		"webpack-dev-server": "^2.4.5"
+		"style-loader": "^0.22.1",
+		"webpack": "^4.17.1",
+		"webpack-cli": "^3.1.0"
 	}
 }
