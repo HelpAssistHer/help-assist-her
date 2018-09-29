@@ -30,6 +30,7 @@ const pregnancyCenterSchema = mongoose.Schema(
 		verifiedData: {
 			address: userDateSchema,
 			email: userDateSchema,
+			hotlinePhoneNumber: userDateSchema,
 			hours: userDateSchema,
 			prcName: userDateSchema,
 			phone: userDateSchema,
@@ -41,6 +42,7 @@ const pregnancyCenterSchema = mongoose.Schema(
 			address: userDateSchema,
 			doNotList: userDateSchema,
 			email: userDateSchema,
+			hotlinePhoneNumber: userDateSchema,
 			hours: userDateSchema,
 			notes: userDateSchema,
 			outOfBusiness: userDateSchema,
