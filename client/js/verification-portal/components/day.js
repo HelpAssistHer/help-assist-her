@@ -16,8 +16,8 @@ const dayName = [
 	'Friday',
 	'Saturday',
 ]
-const closedAllDayStatus = (dayNum, hours) => {
-	return _.get(hours, `[${dayNum}].closedAllDay`) || false
+const closedAllDayStatus = (dayNumber, hours) => {
+	return _.get(hours, `[${dayNumber}].closedAllDay`) || false
 }
 
 class Day extends React.Component {
