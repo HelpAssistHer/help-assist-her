@@ -2,9 +2,9 @@ import { normalizePhone, normalizeZipcode } from './util'
 
 export const chcInputResource = [
 	{
-		name: 'nameOfCHC',
+		name: 'chcName',
 		placeholder: 'Name of Community Health Center',
-		verify: 'verifiedData.nameOfCHC.verified',
+		verify: 'verifiedData.chcName.verified',
 		styling: {
 			spacer: '55px',
 		},

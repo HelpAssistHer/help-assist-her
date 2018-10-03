@@ -5,7 +5,7 @@ import cx from 'classnames'
 const Input = ({ classes, input, type, placeholder }) => {
 	const inputClasses = cx(
 		classes.textInput,
-		(input.name === 'prcName' || input.name === 'nameOfCHC') &&
+		(input.name === 'prcName' || input.name === 'chcName') &&
 			classes.largeFontSize,
 	)
 	return (
