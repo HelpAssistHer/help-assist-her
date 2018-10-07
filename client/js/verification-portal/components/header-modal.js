@@ -15,13 +15,13 @@ class HeaderModal extends Component {
 
 	componentDidUpdate() {
 		const { submitStatus } = this.props
-		if (submitStatus == 'Pending' && this.state.closed) {
+		if (submitStatus === 'Pending' && this.state.closed) {
 			this.setState({
 				closed: false,
 			})
 		}
 
-		if (submitStatus != 'Pending' && this.state.prevSubmit != submitStatus) {
+		if (submitStatus !== 'Pending' && this.state.prevSubmit !== submitStatus) {
 			this.setState({
 				prevSubmit: submitStatus,
 			})

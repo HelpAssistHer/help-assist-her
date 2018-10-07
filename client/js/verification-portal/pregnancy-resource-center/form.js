@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Field, reduxForm, formValueSelector } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
 
 import Input from '../../components/input'
