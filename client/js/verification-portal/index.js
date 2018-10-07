@@ -1,11 +1,8 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import CommunityHealthCenterForm from './community-health-center'
-import PregnancyResourceCenterForm from './pregnancy-resource-center'
-import { formTypes } from './constants'
 import LeftSideNavContainer from './left-side-nav-container'
-import { ResourceView, getFormComponent } from './resource-view'
+import ResourceView from './resource-view'
 
 const VerificationPortal = ({ formType, classes }) => {
 	return (

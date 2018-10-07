@@ -93,6 +93,7 @@ const styles = {
 		'line-height': '27px',
 		'font-family': 'Century Gothic, sans-serif !important',
 		'padding-left': '10px',
+		overflow: 'hidden',
 		transition: ['height'],
 		transitionDuration: '2s',
 		// 'animation-name': 'closing-animation',
