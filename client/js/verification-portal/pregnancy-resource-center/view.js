@@ -14,7 +14,7 @@ class VerificationPortal extends React.Component {
 	}
 	render() {
 		const { classes, resource } = this.props
-		const { outOfBusiness, doNotList, hours } = resource
+		const { outOfBusiness, doNotList } = resource
 		return (
 			<div>
 				<div className={classes.rightPositionButton}>
@@ -37,7 +37,6 @@ class VerificationPortal extends React.Component {
 					<VerificationPortalForm
 						outOfBusiness={outOfBusiness}
 						doNotList={doNotList}
-						hours={hours}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />

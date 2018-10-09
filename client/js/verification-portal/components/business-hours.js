@@ -20,11 +20,12 @@ const closedAllDayStatus = (dayNumber, hours) => {
 	return _.get(hours, `[${dayNumber}].closedAllDay`) || false
 }
 
-class Day extends React.Component {
+class BusinessHours extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			hours: this.props.hours,
+			resourceId: this.props.resourceId,
 		}
 		this.openStateToggle = this.openStateToggle.bind(this)
 	}
@@ -37,8 +38,9 @@ class Day extends React.Component {
 		changeFieldValue(`hours[${i}].closedAllDay`, !currentState)
 		this.setState({ hours: weeks })
 	}
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({ hours: nextProps.hours })
+	componentWillReceiveProps(nextProps) {
+		if (this.state.resourceId != nextProps.resourceId)
+			this.setState({ hours: nextProps.hours })
 	}
 	render() {
 		const { classes, changeFieldValue } = this.props
@@ -48,7 +50,7 @@ class Day extends React.Component {
 					return (
 						<div className={classes.day} key={today}>
 							<div className={classes.dayStatus}>
-								<label className={classes.lable}>{today}</label>
+								<lable className={classes.lable}>{today}</lable>
 								<div
 									onClick={() =>
 										this.openStateToggle(i, this.state.hours, changeFieldValue)
@@ -56,7 +58,7 @@ class Day extends React.Component {
 									className={
 										closedAllDayStatus(i, this.state.hours)
 											? classNames(classes.lable, classes.closed)
-											: classNames(classes.lable, classes.notClose)
+											: classNames(classes.lable, classes.open)
 									}
 								>
 									Closed
@@ -107,7 +109,7 @@ const styles = {
 		margin: '10px 20px',
 		'text-align': 'left',
 	},
-	notClose: {
+	open: {
 		opacity: '0.3',
 		color: '#F7924B',
 	},
@@ -127,6 +129,15 @@ const mapDispatchToProps = dispatch => {
 		},
 	}
 }
-const dayContainer = connect(null, mapDispatchToProps)(Day)
 
-export default injectSheet(styles)(dayContainer)
+const mapStateToProps = state => {
+	return {
+		resourceId: state.resource._id,
+		hours: state.resource.hours,
+	}
+}
+const businessHoursContainer = connect(mapStateToProps, mapDispatchToProps)(
+	BusinessHours,
+)
+
+export default injectSheet(styles)(businessHoursContainer)

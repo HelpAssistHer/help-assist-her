@@ -104,6 +104,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		_.get(verifiedData, 'services.verified'),
 	)
 	_.forEach([0, 1, 2, 3, 4, 5, 6], (hour, i) => {
+		//populating data for all 7 days of week
 		changeFieldValue(
 			`hours[${i}].open`,
 			convertNumberToTimeFormat(_.get(hours, `[${i}].open`)),

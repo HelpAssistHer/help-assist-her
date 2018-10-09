@@ -6,7 +6,7 @@ import Input from '../../components/input'
 import Spacer from '../../components/spacer'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
-import Day from '../components/day'
+import BusinessHours from '../components/Business-hours'
 import Services from './services'
 import Toggle from '../../components/toggle'
 
@@ -225,7 +225,6 @@ class VerificationPortalFormClass extends Component {
 					{/*/>*/}
 					{/*</div>*/}
 					{/*</div>*/}
-
 					<Spacer height="81px" />
 
 					<div className={classes.gridField}>
@@ -236,7 +235,6 @@ class VerificationPortalFormClass extends Component {
 					<Spacer height="53px" />
 					<Services />
 				</div>
-
 				<div className={classes.formSection}>
 					<div>
 						<Field
@@ -254,7 +252,7 @@ class VerificationPortalFormClass extends Component {
 				<div className={classes.formSection}>
 					<Heading text="HOURS" size="medium" />
 					<Spacer height="50px" />
-					<Day hours={hours} />
+					<BusinessHours />
 				</div>
 
 				<div className={classes.parent}>
