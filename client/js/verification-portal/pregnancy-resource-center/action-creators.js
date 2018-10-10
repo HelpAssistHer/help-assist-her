@@ -20,12 +20,13 @@ function getResource(resource) {
 		resource,
 	}
 }
-
+function clearResource() {
+	return { type: 'CLEAR_RESOURCE' }
+}
 export const getResourceToVerify = () => {
 	return function(dispatch) {
-		return getOneResource().then(result => {
-			return dispatch(getResource(result))
-		})
+		dispatch(clearResource())
+		return getOneResource().then(result => dispatch(getResource(result)))
 	}
 }
 

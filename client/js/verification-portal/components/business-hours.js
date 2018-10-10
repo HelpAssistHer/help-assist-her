@@ -6,7 +6,7 @@ import { change } from 'redux-form'
 import classNames from 'classnames'
 import Time from './time'
 import _ from 'lodash'
-
+import { store } from '../../hah-app/index'
 const dayName = [
 	'Sunday',
 	'Monday',
@@ -34,6 +34,7 @@ class BusinessHours extends React.Component {
 		const currentState = closedAllDayStatus(i, hours)
 		todaysHours.closedAllDay = !currentState
 		weeks[i] = todaysHours
+		// if !currentState is true setting open and clost time field to null
 		if (!currentState) {
 			changeFieldValue(`hours[${i}].open`, null)
 			changeFieldValue(`hours[${i}].close`, null)
@@ -111,6 +112,7 @@ const styles = {
 		'line-height': '22px',
 		margin: '10px 20px',
 		'text-align': 'left',
+		border: 'none',
 	},
 	open: {
 		opacity: '0.3',
@@ -133,7 +135,7 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
 	return {
 		hours: state.resource.hours,
 	}

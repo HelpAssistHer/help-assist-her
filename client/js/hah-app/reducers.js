@@ -12,13 +12,11 @@ const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_INITIAL_DATA:
 			return _.assign({}, state, action.initialData)
-
 		case UPDATE_LOGIN_STATE:
 			return _.assign({}, state, {
 				isLoggedIn: action.isLoggedIn,
 				userDisplayName: action.userDisplayName,
 			})
-
 		default:
 			return state
 	}
@@ -27,7 +25,7 @@ const authenticationReducer = (state = {}, action) => {
 const resourceReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_RESOURCE_TO_VERIFY:
-			return _.assign(state.resource, action.resource)
+			return _.assign({}, state, action.resource)
 		case OUT_OF_BUSINESS:
 			return {
 				...state,
@@ -38,6 +36,8 @@ const resourceReducer = (state = {}, action) => {
 				...state,
 				doNotList: action.doNotList,
 			}
+		case 'CLEAR_RESOURCE':
+			return null
 		default:
 			return state
 	}
