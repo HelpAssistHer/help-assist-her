@@ -23,7 +23,9 @@ function getResource(resource) {
 
 export const getResourceToVerify = () => {
 	return function(dispatch) {
-		return getOneResource().then(result => dispatch(getResource(result)))
+		return getOneResource().then(result => {
+			return dispatch(getResource(result))
+		})
 	}
 }
 

@@ -25,22 +25,25 @@ class BusinessHours extends React.Component {
 		super(props)
 		this.state = {
 			hours: this.props.hours,
-			resourceId: this.props.resourceId,
 		}
 		this.openStateToggle = this.openStateToggle.bind(this)
 	}
 	openStateToggle = (i, hours, changeFieldValue) => {
 		const weeks = hours || []
 		const todaysHours = _.get(hours, i) || {}
-		const currentState = closedAllDayStatus(i, this.state.hours)
+		const currentState = closedAllDayStatus(i, hours)
 		todaysHours.closedAllDay = !currentState
 		weeks[i] = todaysHours
+		if (!currentState) {
+			changeFieldValue(`hours[${i}].open`, null)
+			changeFieldValue(`hours[${i}].close`, null)
+			weeks[i] = { closedAllDay: !currentState }
+		}
 		changeFieldValue(`hours[${i}].closedAllDay`, !currentState)
 		this.setState({ hours: weeks })
 	}
 	componentWillReceiveProps(nextProps) {
-		if (this.state.resourceId != nextProps.resourceId)
-			this.setState({ hours: nextProps.hours })
+		this.setState({ hours: nextProps.hours })
 	}
 	render() {
 		const { classes, changeFieldValue } = this.props
@@ -132,7 +135,6 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
 	return {
-		resourceId: state.resource._id,
 		hours: state.resource.hours,
 	}
 }

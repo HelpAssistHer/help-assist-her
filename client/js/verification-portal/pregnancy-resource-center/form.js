@@ -229,29 +229,37 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.headingGrid}>
-							<Heading text="SERVICES" size="medium" />
+							{
+								// <Heading text="SERVICES" size="medium" />
+							}
 						</div>
 					</div>
-					<Spacer height="53px" />
-					<Services />
+					{
+						// <Spacer height="53px" />
+						// <Services />
+					}
 				</div>
 				<div className={classes.formSection}>
-					<div>
-						<Field
-							name="otherServices"
-							component="textarea"
-							placeholder="Add additional services not listed above here..."
-							rows="4"
-							cols="50"
-						/>
-					</div>
-					<div className={classes.parent}>
-						<Field name="verifiedData.services.verified" component={Toggle} />
-					</div>
+					{
+						// <div>
+						// 	<Field
+						// 		name="otherServices"
+						// 		component="textarea"
+						// 		placeholder="Add additional services not listed above here..."
+						// 		rows="4"
+						// 		cols="50"
+						// 	/>
+						// </div>
+						// <div className={classes.parent}>
+						// 	<Field name="verifiedData.services.verified" component={Toggle} />
+						// </div>
+					}
 				</div>
 				<div className={classes.formSection}>
-					<Heading text="HOURS" size="medium" />
-					<Spacer height="50px" />
+					{
+						// <Heading text="HOURS" size="medium" />
+						// <Spacer height="50px" />
+					}
 					<BusinessHours />
 				</div>
 
