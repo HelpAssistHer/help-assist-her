@@ -90,16 +90,8 @@ export async function updateResource(updatedResource) {
 		const result = await response.json()
 
 		if (result.statusCode >= 400) {
-			const alertMessage =
-				'There was an error saving this resource. Please take a screenshot ' +
-				'of this message and attach using the Help button in the lower right corner.' +
-				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(
-					result.message,
-				)}`
-			alert(alertMessage)
 			store.dispatch(getFormStatus('Failed'))
 		} else {
-			alert('Updates saved successfully!')
 			store.dispatch(getFormStatus('Success'))
 		}
 
