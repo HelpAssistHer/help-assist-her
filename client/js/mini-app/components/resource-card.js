@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 const ResourceCard = ({ classes, resource }) => {
 	return (
 		<div className={classes.root}>
-			{resource.prcName}
+			<div className={classes.resourceName}>{resource.prcName}</div>
 			{resource.address.line1}
 			{resource.address.line2}
 			{resource.address.city}
@@ -16,8 +16,14 @@ const ResourceCard = ({ classes, resource }) => {
 
 const styles = {
 	root: {
-		height: '0px',
-		'padding-bottom': '30px',
+		border: '2px solid #3d65f9',
+		'border-radius': '4px',
+		margin: '20px 20px 20px 20px',
+	},
+	resourceName: {
+		margin: '40px 0px 0px 30px',
+		'font-family': 'sans-serif',
+		'font-size': '20px',
 	},
 }
 
