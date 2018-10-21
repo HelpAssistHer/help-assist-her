@@ -1,15 +1,20 @@
 import React from 'react'
 import _ from 'lodash'
 import injectSheet from 'react-jss'
+import classNames from 'classnames'
 
 const resources = ['Community Health Center', 'Pregnancy Resource Center']
 
 const ResourceCarousel = ({ classes }) => {
 	return (
 		<div className={classes.resourceCarouselRoot}>
-			{_.map(resources, resource => {
+			{_.map(resources, (resource, index) => {
+				const styleWithBorder = classNames(classes.border, classes.resourceBox)
+				const resourceBoxStyle =
+					index === 1 ? styleWithBorder : classes.resourceBox
+
 				return (
-					<div className={classes.resourceBox} key={resource}>
+					<div className={resourceBoxStyle} key={resource}>
 						<div className={classes.resourceText}>{resource}</div>
 					</div>
 				)
@@ -29,12 +34,14 @@ const styles = {
 		'justify-content': 'flex-end',
 		height: '241px',
 		width: '261px',
-		'border-left': '3px solid black',
 	},
 	resourceText: {
 		'font-family': 'sans-serif',
 		'font-size': '24px',
 		'text-align': 'center',
+	},
+	border: {
+		'border-left': '3px solid black',
 	},
 }
 
