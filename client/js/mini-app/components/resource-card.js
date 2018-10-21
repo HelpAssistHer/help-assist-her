@@ -25,6 +25,11 @@ const ResourceCard = ({ classes, resource }) => {
 					{formatPhoneNumber(resource.phone)}
 				</a>
 			</div>
+			<div className={classes.resourceWebsite}>
+				<a href={resource.website} target="_blank" rel="noopener noreferrer">
+					{resource.website}
+				</a>
+			</div>
 		</div>
 	)
 }
@@ -46,6 +51,11 @@ const styles = {
 		'font-size': '15px',
 	},
 	resourcePhone: {
+		margin: '20px 0px 20px 30px',
+		'font-family': 'sans-serif',
+		'font-size': '15px',
+	},
+	resourceWebsite: {
 		margin: '20px 0px 20px 30px',
 		'font-family': 'sans-serif',
 		'font-size': '15px',
