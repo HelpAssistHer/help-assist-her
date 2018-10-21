@@ -51,10 +51,11 @@ class HeaderModal extends Component {
 			return (
 				<div className={modalClasses}>
 					<div>
-						<h2>Information Submitted Successfully</h2>
-						<p>
-							Thanks for helping us bring better healthcare to women's
-							fingertips!
+						<p className={classes.title}>Information Submitted Successfully</p>
+						<p className={classes.caption}>
+							{
+								"Thanks for helping us bring better healthcare to women's fingertips!"
+							}
 						</p>
 					</div>
 					<div className={classes.button} onClick={this.handleClick}>
@@ -66,8 +67,10 @@ class HeaderModal extends Component {
 			return (
 				<div className={modalClasses}>
 					<div>
-						<h2>Whoops!</h2>
-						<p>An error occurred and the HAH staff has been notified.</p>
+						<p className={classes.title}>Whoops!</p>
+						<p className={classes.caption}>
+							An error occurred and the HAH staff has been notified.
+						</p>
 					</div>
 					<div className={classes.button} onClick={this.handleClick}>
 						&times;
@@ -96,11 +99,6 @@ const styles = {
 		overflow: 'hidden',
 		transition: ['height'],
 		transitionDuration: '2s',
-		// 'animation-name': 'closing-animation',
-		// 'animation-duration': '2s',
-		// 'animation-fill-mode': 'forwards',
-		// 'animation-delay': '10s',
-		// 'animation-play-state': 'running',
 	},
 	success: {
 		height: '246px',
@@ -115,14 +113,16 @@ const styles = {
 		'align-self': 'flex-start',
 		cursor: 'pointer',
 	},
-	// '@keyframes closing-animation': {
-	// 	from: { height: '246px' },
-	// 	to: { height: '0px' },
-	// },
 	closed: {
 		height: '0px',
 		'animation-name': 'closing-animation',
 		'animation-play-state': 'paused',
+	},
+	title: {
+		'font-size': '37px',
+	},
+	caption: {
+		'font-size': '22px',
 	},
 }
 
