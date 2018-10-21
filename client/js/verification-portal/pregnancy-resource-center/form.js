@@ -325,8 +325,6 @@ const VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
 })(VerificationPortalFormClass)
 
-// const selector = formValueSelector('verificationPortal')
-
 const styles = {
 	parent: {
 		display: 'flex',
