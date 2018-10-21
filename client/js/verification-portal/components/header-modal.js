@@ -90,7 +90,6 @@ const styles = {
 		background: '#ee6298',
 		'justify-content': 'center',
 		'align-items': 'center',
-		'font-size': '30px',
 		'font-weight': 'bold',
 		'letter-spacing': '1.18px',
 		'line-height': '27px',
@@ -122,12 +121,12 @@ const styles = {
 		'font-size': '37px',
 	},
 	caption: {
-		'font-size': '22px',
+		'font-size': '20px',
 	},
 }
 
 const HeaderConnected = connect(state => ({
-	submitStatus: state.localState.form_status,
+	submitStatus: state.localState.setFormStatus,
 }))(HeaderModal)
 
 export default injectSheet(styles)(HeaderConnected)
