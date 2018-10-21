@@ -8,9 +8,8 @@ const ResourceCard = ({ classes, resource }) => {
 		<div className={classes.root}>
 			<div className={classes.resourceName}>{resource.prcName}</div>
 			<div className={classes.resourceAddress}>
-				{line1}
-				{line2}
-				<br />
+				{line1} <br />
+				{line2} {line2 && <br />}
 				{`${city}, ${state} ${zip}`}
 			</div>
 		</div>
