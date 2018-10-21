@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import MiniAppForm from './form'
 import { getPregnancyResourceCenters } from './data/action-creators'
+import { DesktopBreakpoint } from '../components/breakpoints'
 
 class MiniApp extends Component {
 	submit = ({ locationInput }) => {
@@ -22,6 +23,7 @@ class MiniApp extends Component {
 					Made by women, for women to help you make independent, informed
 					healthcare decisions.
 				</div>
+				<DesktopBreakpoint>DESKTOP!!!</DesktopBreakpoint>
 				<MiniAppForm onSubmit={this.submit} />
 			</div>
 		)
