@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 
 import MiniAppForm from './form'
 import { getPregnancyResourceCenters } from './data/action-creators'
+import Header from './header'
 
 class MiniApp extends Component {
 	submit = ({ locationInput }) => {
@@ -14,20 +15,18 @@ class MiniApp extends Component {
 	}
 
 	render() {
+		const { classes } = this.props
+
 		return (
 			<div>
-				The Mini App
+				<Header />
 				<MiniAppForm onSubmit={this.submit} />
 			</div>
 		)
 	}
 }
 
-const styles = {
-	root: {
-		height: '0px',
-	},
-}
+const styles = {}
 
 const MiniAppStyle = injectSheet(styles)(MiniApp)
 

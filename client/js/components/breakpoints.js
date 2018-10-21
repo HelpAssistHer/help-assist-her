@@ -4,7 +4,7 @@ import Responsive from 'react-responsive'
 const PHONE_MAX = 767
 const TABLET_MIN = 768
 const TABLET_MAX = 991
-const DESKTOP_MIN = 992
+const DESKTOP_MIN = 768
 
 const Desktop = props => <Responsive {...props} minWidth={DESKTOP_MIN} />
 const Tablet = props => (
