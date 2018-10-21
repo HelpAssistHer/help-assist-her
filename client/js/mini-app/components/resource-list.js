@@ -13,17 +13,28 @@ const mapStateToProps = state => {
 
 const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
-		<div className={classes.root}>
-			{_.map(pregnancyResourceCenters, prc => {
-				return <ResourceCard key={prc._id} resource={prc} />
-			})}
+		<div>
+			<div className={classes.header}>
+				Your search results have been arranged by closest distance to your
+				location data.
+			</div>
+			<div className={classes.root}>
+				{_.map(pregnancyResourceCenters, prc => {
+					return <ResourceCard key={prc._id} resource={prc} />
+				})}
+			</div>
 		</div>
 	)
 }
 
 const styles = {
-	root: {
-		height: '0px',
+	header: {
+		padding: '30px 0px 30px 0px',
+		'background-color': '#3d65f9',
+		'font-family': 'sans-serif',
+		'font-size': '14px',
+		color: '#99cccc',
+		'text-align': 'center',
 	},
 }
 
