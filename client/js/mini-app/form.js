@@ -9,15 +9,17 @@ class MiniAppForm extends Component {
 		const { handleSubmit } = this.props
 
 		return (
-			<form onSubmit={handleSubmit}>
-				<Field
-					placeholder="Address, city/state, zip code"
-					name="locationInput"
-					component={Input}
-					type="text"
-				/>
-				<ResourceTypeButton />
-			</form>
+			<div>
+				<form onSubmit={handleSubmit}>
+					<Field
+						placeholder="Address, city/state, or zip code"
+						name="locationInput"
+						component={Input}
+						type="text"
+					/>
+					<ResourceTypeButton />
+				</form>
+			</div>
 		)
 	}
 }
