@@ -15,8 +15,6 @@ class MiniApp extends Component {
 	}
 
 	render() {
-		const { classes } = this.props
-
 		return (
 			<div>
 				<Header />
@@ -26,7 +24,11 @@ class MiniApp extends Component {
 	}
 }
 
-const styles = {}
+const styles = {
+	root: {
+		height: '0px',
+	},
+}
 
 const MiniAppStyle = injectSheet(styles)(MiniApp)
 
