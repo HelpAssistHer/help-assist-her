@@ -23,6 +23,10 @@ class MiniApp extends Component {
 					stepNumber="STEP ONE"
 					stepDescription="Select one of the following:"
 				/>
+				<Instruction
+					stepNumber="STEP TWO"
+					stepDescription="Enter your location:"
+				/>
 				<MiniAppForm onSubmit={this.submit} />
 			</div>
 		)
