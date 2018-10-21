@@ -28,7 +28,7 @@ const styles = {
 	instructionRoot: {
 		'text-align': 'center',
 		'font-family': 'sans-serif',
-		'margin-top': '40px',
+		margin: '40px 0px 60px 0px',
 	},
 	stepNumberPhone: {
 		'font-weight': 'bold',
