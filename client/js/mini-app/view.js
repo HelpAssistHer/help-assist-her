@@ -7,6 +7,7 @@ import MiniAppForm from './form'
 import { getPregnancyResourceCenters } from './data/action-creators'
 import Header from './header'
 import Instruction from './instruction'
+import ResourceCarousel from './components/resource-carousel'
 
 class MiniApp extends Component {
 	submit = ({ locationInput }) => {
@@ -23,6 +24,7 @@ class MiniApp extends Component {
 					stepNumber="STEP ONE"
 					stepDescription="Select one of the following:"
 				/>
+				<ResourceCarousel />
 				<Instruction
 					stepNumber="STEP TWO"
 					stepDescription="Enter your location:"
