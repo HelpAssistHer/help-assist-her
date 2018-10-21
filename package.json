@@ -82,6 +82,7 @@
 		"react-facebook-login": "^3.6.1",
 		"react-jss": "^6.1.1",
 		"react-redux": "^5.0.4",
+		"react-responsive": "^5.0.0",
 		"react-router-dom": "^4.1.1",
 		"react-router-tabs": "^1.2.0",
 		"redux": "^3.6.0",
