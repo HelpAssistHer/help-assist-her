@@ -26,7 +26,7 @@
 		"startdb": "mongod --dbpath ~/.hah/data",
 		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
 		"test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
-		"watch": "webpack --watch"
+		"watch": "yarn && webpack --watch"
 	},
 	"repository": {
 		"type": "git",
