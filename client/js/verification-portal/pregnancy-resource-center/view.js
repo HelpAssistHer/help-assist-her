@@ -1,40 +1,23 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import GetResourceToVerifyButton from './get-resource-to-verify-button'
-import HeaderSuccess from '../components/header-success'
-import LoginButton from '../../authentication/facebook-login-button'
 import Spacer from '../../components/spacer'
 import VerificationPortalForm from './form'
 import { updateResource } from './action-creators'
 import Button from '../../components/button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
+import { updateDoNotList } from '../do-not-list/action-creators'
 
 class VerificationPortal extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			doNotList: false, // addition of variable to keep track of listing status
-		}
-		this.toggleState = this.toggleState.bind(this)
-	}
-	toggleState = key => {
-		// toggling state by passing key
-		let currentState = this.state[key]
-		this.setState({ [key]: !currentState })
-	}
 	submit = values => {
 		updateResource(values)
 	}
 	render() {
-		const { classes, changeFieldValue, resource } = this.props
-		const { outOfBusiness } = resource
+		const { classes, resource } = this.props
+		const { outOfBusiness, doNotList } = resource
 
 		return (
 			<div>
-				<div className={classes.leftPositionButton}>
-					<GetResourceToVerifyButton changeFieldValue={changeFieldValue} />
-				</div>
 				<div className={classes.rightPositionButton}>
 					<Button
 						activeState={outOfBusiness}
@@ -44,17 +27,17 @@ class VerificationPortal extends React.Component {
 					/>
 					<div className={classes.moveDown}>
 						<Button
-							activeState={this.state.doNotList}
+							activeState={doNotList}
 							buttonText="Do Not List"
 							size="medium"
-							onClick={() => this.toggleState('doNotList')}
+							onClick={() => updateDoNotList(!doNotList)}
 						/>
 					</div>
 				</div>
 				<div className={classes.verificationPortal}>
 					<VerificationPortalForm
 						outOfBusiness={outOfBusiness}
-						doNotList={this.state.doNotList}
+						doNotList={doNotList}
 						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />
@@ -70,22 +53,17 @@ const styles = {
 		'font-family': 'sans-serif',
 		color: '#4A4A4A',
 		'max-width': '903px',
-		'margin-left': 'calc(50% - 451.5px)',
+		'margin-left': '81px',
 		'background-color': '#ffffff',
 		'padding-left': '15px',
 		'padding-right': '15px',
 		position: 'relative',
 	},
-	leftPositionButton: {
-		'padding-top': '50px',
-		position: 'absolute',
-		left: '1%',
-		'z-index': '100',
-	},
 	rightPositionButton: {
 		display: 'block',
 		position: 'absolute',
 		right: '5%',
+		'z-index': '100',
 	},
 	moveDown: {
 		'margin-top': '25px',

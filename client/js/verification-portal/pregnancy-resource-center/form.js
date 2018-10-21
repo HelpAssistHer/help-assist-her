@@ -4,10 +4,11 @@ import injectSheet from 'react-jss'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
-import VerifiedCheckbox from '../components/verified-checkbox'
+import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
+import Toggle from '../../components/toggle'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -47,10 +48,9 @@ const parsePhoneNumber = phoneNumber => {
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
-class VerificationPortalForm extends Component {
+class VerificationPortalFormClass extends Component {
 	render() {
 		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
-
 		return (
 			<form className={classes.form} onSubmit={handleSubmit}>
 				<div
@@ -60,18 +60,18 @@ class VerificationPortalForm extends Component {
 				/>
 				<div className={classes.formSection}>
 					<div className={classes.gridField}>
-						<div className={classes.firstBox}>Verified</div>
-						<div className={classes.secondAndThirdBox}>
-							<Heading text="GENERAL INFORMATION" />
+						<div className={classes.firstBox}>
+							<Heading text="VERIFIED" size="small" />
+						</div>
+						<div className={classes.headingGrid}>
+							<Heading text="GENERAL INFORMATION" size="medium" />
 						</div>
 					</div>
+					<Spacer height="55px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.prcName.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.prcName.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondAndThirdBox}>
 							<Field
@@ -82,6 +82,7 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
+					<Spacer height="64px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.secondAndThirdBox}>
@@ -120,10 +121,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.address.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.address.verified" component={Toggle} />
 						</div>
 
 						<div className={classes.secondBox}>
@@ -135,13 +133,11 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
+					<Spacer height="66px" />
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.phone.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.phone.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
@@ -158,9 +154,25 @@ class VerificationPortalForm extends Component {
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
 							<Field
-								name="verifiedData.email.verified"
-								component={VerifiedCheckbox}
+								name="verifiedData.hotlinePhoneNumber.verified"
+								component={Toggle}
 							/>
+						</div>
+						<div className={classes.secondBox}>
+							<Field
+								name="hotlinePhoneNumber"
+								component={Input}
+								placeholder="Hotline Phone Number"
+								type="tel"
+								format={formatPhoneDigits}
+								parse={parsePhoneNumber}
+							/>
+						</div>
+					</div>
+
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field name="verifiedData.email.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
@@ -174,10 +186,7 @@ class VerificationPortalForm extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
-							<Field
-								name="verifiedData.website.verified"
-								component={VerifiedCheckbox}
-							/>
+							<Field name="verifiedData.website.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>
 							<Field
@@ -188,52 +197,55 @@ class VerificationPortalForm extends Component {
 							/>
 						</div>
 					</div>
-				</div>
 
-				{/* 5-12-18, I am commenting this out for now, as we want to keep the
+					{/* 5-12-18, I am commenting this out for now, as we want to keep the
 				data verification simple for now. We will eventually add this back. */}
-				{/*<div>*/}
-				{/*<h3>Primary Contact</h3>*/}
-				{/*<Field*/}
-				{/*label='First Name'*/}
-				{/*name='primaryContactPerson.firstName'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
+					{/*<div>*/}
+					{/*<h3>Primary Contact</h3>*/}
+					{/*<Field*/}
+					{/*label='First Name'*/}
+					{/*name='primaryContactPerson.firstName'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
 
-				{/*<Field*/}
-				{/*label='Last Name'*/}
-				{/*name='primaryContactPerson.lastName'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
+					{/*<Field*/}
+					{/*label='Last Name'*/}
+					{/*name='primaryContactPerson.lastName'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
 
-				{/*<Field*/}
-				{/*label='Email'*/}
-				{/*name='primaryContactPerson.email'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
+					{/*<Field*/}
+					{/*label='Email'*/}
+					{/*name='primaryContactPerson.email'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
 
-				{/*<div className={classes.parent}>*/}
-				{/*<Field*/}
-				{/*label='Phone Number'*/}
-				{/*name='primaryContactPerson.phone'*/}
-				{/*placeholder='Format must be +19998887777'*/}
-				{/*component={Input}*/}
-				{/*type='text'*/}
-				{/*/>*/}
-				{/*<Field*/}
-				{/*label='Primary Contact Verified'*/}
-				{/*name='verifiedData.primaryContactPerson.verified'*/}
-				{/*component={VerifiedCheckbox}*/}
-				{/*/>*/}
-				{/*</div>*/}
-				{/*</div>*/}
+					{/*<div className={classes.parent}>*/}
+					{/*<Field*/}
+					{/*label='Phone Number'*/}
+					{/*name='primaryContactPerson.phone'*/}
+					{/*placeholder='Format must be +19998887777'*/}
+					{/*component={Input}*/}
+					{/*type='text'*/}
+					{/*/>*/}
+					{/*<Field*/}
+					{/*label='Primary Contact Verified'*/}
+					{/*name='verifiedData.primaryContactPerson.verified'*/}
+					{/*component={VerifiedCheckbox}*/}
+					{/*/>*/}
+					{/*</div>*/}
+					{/*</div>*/}
 
-				<Spacer height="83px" />
-				<div className={classes.formSection}>
-					<Heading text="SERVICES" />
+					<Spacer height="81px" />
+
+					<div className={classes.gridField}>
+						<div className={classes.headingGrid}>
+							<Heading text="SERVICES" size="medium" />
+						</div>
+					</div>
 					<Spacer height="53px" />
 					<Services />
 				</div>
@@ -249,54 +261,48 @@ class VerificationPortalForm extends Component {
 						/>
 					</div>
 					<div className={classes.parent}>
-						<Field
-							name="verifiedData.services.verified"
-							component={VerifiedCheckbox}
-						/>
+						<Field name="verifiedData.services.verified" component={Toggle} />
 					</div>
 				</div>
 
 				<div className={classes.formSection}>
-					<Heading text="HOURS" />
+					<Heading text="HOURS" size="medium" />
 					<Spacer height="50px" />
 					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Input} type="time" />
-					<Field name="hours[0].close" component={Input} type="time" />
+					<Field name="hours[0].open" component={Time} />
+					<Field name="hours[0].close" component={Time} />
 
 					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Input} type="time" />
-					<Field name="hours[1].close" component={Input} type="time" />
+					<Field name="hours[1].open" component={Time} />
+					<Field name="hours[1].close" component={Time} />
 
 					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Input} type="time" />
-					<Field name="hours[2].close" component={Input} type="time" />
+					<Field name="hours[2].open" component={Time} />
+					<Field name="hours[2].close" component={Time} />
 
 					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Input} type="time" />
-					<Field name="hours[3].close" component={Input} type="time" />
+					<Field name="hours[3].open" component={Time} />
+					<Field name="hours[3].close" component={Time} />
 
 					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Input} type="time" />
-					<Field name="hours[4].close" component={Input} type="time" />
+					<Field name="hours[4].open" component={Time} />
+					<Field name="hours[4].close" component={Time} />
 
 					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Input} type="time" />
-					<Field name="hours[5].close" component={Input} type="time" />
+					<Field name="hours[5].open" component={Time} />
+					<Field name="hours[5].close" component={Time} />
 
 					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Input} type="time" />
-					<Field name="hours[6].close" component={Input} type="time" />
+					<Field name="hours[6].open" component={Time} />
+					<Field name="hours[6].close" component={Time} />
 				</div>
 
 				<div className={classes.parent}>
-					<Field
-						name="verifiedData.hours.verified"
-						component={VerifiedCheckbox}
-					/>
+					<Field name="verifiedData.hours.verified" component={Toggle} />
 				</div>
 
 				<div className={classes.formSection}>
-					<Heading text="NOTES" />
+					<Heading text="NOTES" size="medium" />
 					<Spacer height="50px" />
 					<Field name="notes" component="textarea" rows="4" cols="50" />
 				</div>
@@ -315,9 +321,9 @@ class VerificationPortalForm extends Component {
 	}
 }
 
-VerificationPortalForm = reduxForm({
+const VerificationPortalForm = reduxForm({
 	form: 'verificationPortal',
-})(VerificationPortalForm)
+})(VerificationPortalFormClass)
 
 const styles = {
 	parent: {
@@ -351,6 +357,8 @@ const styles = {
 	firstBox: {
 		'grid-column-start': 1,
 		'grid-column-end': 2,
+		'justify-self': 'center',
+		'align-self': 'center',
 	},
 	secondBox: {
 		'grid-column-start': 2,
@@ -363,6 +371,11 @@ const styles = {
 	secondAndThirdBox: {
 		'grid-column-start': 2,
 		'grid-column-end': 4,
+	},
+	headingGrid: {
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+		'justify-self': 'start',
 	},
 }
 

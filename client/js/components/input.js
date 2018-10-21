@@ -1,13 +1,16 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-
-import Spacer from '../components/spacer'
+import cx from 'classnames'
 
 const Input = ({ classes, input, type, placeholder }) => {
+	const inputClasses = cx(
+		classes.textInput,
+		input.name === 'prcName' && classes.largeFontSize,
+	)
 	return (
 		<div className={classes.child}>
 			<input
-				className={classes.textInput}
+				className={inputClasses}
 				type={type}
 				placeholder={placeholder}
 				{...input}
@@ -25,9 +28,13 @@ const styles = {
 		width: '100%',
 		padding: '12px 20px',
 		margin: '8px 30px 8px 0px',
-		'font-size': '18px',
 		border: 'none',
 		'border-bottom': '1px solid #979797',
+		fontSize: '18px',
+		outline: 'none',
+	},
+	largeFontSize: {
+		fontSize: '30px',
 	},
 }
 

@@ -72,10 +72,22 @@ Make sure you are in the help-assist-her directory
 yarn startdb
 ```
 
+## Populate MongoDB
+
+`yarn overwrite-pc-data`
+
+`yarn geocode`
+
 ## Start Server
 
 ```
 yarn start
+```
+
+## Run Client
+
+```
+yarn run watch
 ```
 
 # Getting Started with Development on Ubuntu or GalliumOS (Linux for Chromebooks)
@@ -136,7 +148,7 @@ Add the following configurations to your bash profile (make sure to change the p
 
 ## Populate MongoDB
 
-`yarn data`
+`yarn overwrite-pc-data`
 
 `yarn geocode`
 
@@ -144,9 +156,11 @@ Add the following configurations to your bash profile (make sure to change the p
 
 In a new tab, run `yarn start`
 
-## Rebuild front-end if necessary
+## Run Client
 
-`yarn webpack`
+```
+yarn run watch
+```
 
 ## View website
 

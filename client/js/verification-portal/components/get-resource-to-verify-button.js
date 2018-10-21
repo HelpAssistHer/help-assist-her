@@ -2,20 +2,25 @@ import React from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 
-import { getResourceToVerify } from './action-creators'
+import { getResourceToVerify } from '../pregnancy-resource-center/action-creators'
 import Button from '../../components/button'
 import { store } from '../../hah-app/index'
 import { updateOutOfBusinessActionCreator } from '../out-of-business/action-creators'
+import { updateDoNotListActionCreator } from '../do-not-list/action-creators'
 import { pregnancyCenterServices } from '../../../../server/pregnancy-centers/pregnancy-center-services'
+import { withRouter } from 'react-router-dom'
 
 const convertNumberToTimeFormat = timeNumber => {
 	if (!timeNumber) {
 		return null
 	}
-
 	const timeString = String(timeNumber).padStart(4, '0')
-
-	return `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`
+	const hours = parseInt(`${timeString.slice(0, 2)}`)
+	const meridien = hours > 12 ? 'pm' : 'am'
+	return `${hours > 12 ? hours - 12 : hours}:${timeString.slice(
+		2,
+		4,
+	)} ${meridien}`
 }
 
 const populateForm = ({ changeFieldValue, resource }) => {
@@ -27,6 +32,8 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		notes,
 		otherServices,
 		phone,
+		hotlinePhoneNumber,
+		services,
 		primaryContactPerson,
 		verifiedData,
 		website,
@@ -52,6 +59,11 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue(
 		'verifiedData.phone.verified',
 		_.get(verifiedData, 'phone.verified'),
+	)
+	changeFieldValue('hotlinePhoneNumber', hotlinePhoneNumber)
+	changeFieldValue(
+		'verifiedData.hotlinePhoneNumber.verified',
+		_.get(verifiedData, 'hotlinePhoneNumber.verified'),
 	)
 
 	changeFieldValue('email', email)
@@ -88,7 +100,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	)
 
 	_.forEach(pregnancyCenterServices, service => {
-		resource.services[service.id]
+		services[service.id]
 			? changeFieldValue(`services.${service.id}`, true)
 			: changeFieldValue(`services.${service.id}`, false)
 	})
@@ -97,7 +109,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.services.verified',
 		_.get(verifiedData, 'services.verified'),
 	)
-
 	changeFieldValue(
 		'hours[0].open',
 		convertNumberToTimeFormat(_.get(hours, '[0].open')),
@@ -162,7 +173,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue('notes', notes)
 }
 
-const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
+const GetResourceToVerifyButton = ({ dispatch, changeFieldValue, history }) => {
 	return (
 		<div>
 			<Button
@@ -173,10 +184,16 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 						dispatch(
 							updateOutOfBusinessActionCreator(!!result.resource.outOfBusiness),
 						)
+						dispatch(updateDoNotListActionCreator(result.resource.doNotList))
 						populateForm({
 							changeFieldValue,
 							resource: store.getState().resource,
 						})
+						history.push(
+							`/verification/pregnancy-resource-center/${
+								store.getState().resource._id
+							}`,
+						)
 					})
 				}}
 			/>
@@ -184,4 +201,4 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue }) => {
 	)
 }
 
-export default connect()(GetResourceToVerifyButton)
+export default connect()(withRouter(GetResourceToVerifyButton))

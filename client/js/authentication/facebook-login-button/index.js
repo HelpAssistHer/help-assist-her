@@ -2,25 +2,29 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import FacebookLoginButton from './view'
-import { getInitialAppData } from '../../hah-app/action-creators'
 
 class FacebookLoginButtonContainer extends React.Component {
 	constructor(props) {
 		super(props)
 	}
 
-	componentDidMount() {
-		this.props.dispatch(getInitialAppData())
-	}
-
 	render() {
-		return <FacebookLoginButton fbAppId={this.props.fbAppId} />
+		const { dispatch, facebookAppId, isLoggedIn } = this.props
+		return (
+			<FacebookLoginButton
+				dispatch={dispatch}
+				facebookAppId={facebookAppId}
+				isLoggedIn={isLoggedIn}
+			/>
+		)
 	}
 }
 
 function mapStateToProps(state) {
+	const { initialData } = state
 	return {
-		fbAppId: state.initialData.facebookAppId,
+		facebookAppId: initialData.facebookAppId,
+		isLoggedIn: initialData.isLoggedIn,
 	}
 }
 

@@ -5,6 +5,8 @@ import { reducer as formReducer } from 'redux-form'
 import { UPDATE_LOGIN_STATE, GET_INITIAL_DATA } from './action-types'
 import { GET_RESOURCE_TO_VERIFY } from '../verification-portal/pregnancy-resource-center/action-types'
 import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
+import { DO_NOT_LIST } from '../verification-portal/do-not-list/action-types'
+import { GET_PREGNANCY_RESOURCE_CENTERS } from '../mini-app/data/action-types'
 
 const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
@@ -31,6 +33,23 @@ const resourceReducer = (state = {}, action) => {
 				...state,
 				outOfBusiness: action.outOfBusiness,
 			}
+		case DO_NOT_LIST:
+			return {
+				...state,
+				doNotList: action.doNotList,
+			}
+		default:
+			return state
+	}
+}
+
+const miniAppReducer = (state = {}, action) => {
+	switch (action.type) {
+		case GET_PREGNANCY_RESOURCE_CENTERS:
+			return {
+				...state,
+				pregnancyResourceCenters: action.pregnancyResourceCenters,
+			}
 		default:
 			return state
 	}
@@ -39,6 +58,7 @@ const resourceReducer = (state = {}, action) => {
 const reducers = {
 	initialData: authenticationReducer,
 	resource: resourceReducer,
+	miniApp: miniAppReducer,
 	form: formReducer,
 }
 
