@@ -15,6 +15,7 @@ const MiniAppFooter = ({ classes }) => {
 				<Link to="/feedback" className={classes.navigationLink}>
 					Feedback
 				</Link>
+				<div className={classes.copyrightText}>&copy; Help Assist Her 2018</div>
 			</div>
 		</div>
 	)
@@ -30,6 +31,11 @@ const styles = {
 		'font-size': '18px',
 		color: '#ffffff',
 		'text-decoration': 'none',
+	},
+	copyrightText: {
+		'font-family': 'sans-serif',
+		'font-size': '14px',
+		color: '#ffffff',
 	},
 }
 
