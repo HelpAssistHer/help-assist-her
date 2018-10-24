@@ -6,7 +6,10 @@ const MiniAppFooter = ({ classes }) => {
 	return (
 		<div className={classes.footerRoot}>
 			<Link to="/about" className={classes.navigationLink}>
-				About Us
+				About
+			</Link>
+			<Link to="/feedback" className={classes.navigationLink}>
+				Feedback
 			</Link>
 		</div>
 	)
