@@ -36,7 +36,6 @@ const styles = {
 		width: '261px',
 	},
 	resourceText: {
-		'font-family': 'sans-serif',
 		'font-size': '24px',
 		'text-align': 'center',
 	},
