@@ -10,6 +10,8 @@ import Landing from './landing'
 import VerificationPortalContainer from '../verification-portal'
 import MiniApp from '../mini-app'
 import ResourceList from '../mini-app/components/resource-list'
+import About from './about'
+import Feedback from './feedback'
 import { formTypes } from '../verification-portal/constants'
 
 const HahRouter = () => {
@@ -18,6 +20,8 @@ const HahRouter = () => {
 			<Switch>
 				<Route exact path="/" component={Landing} />
 				<Route exact path="/mini-app" render={() => <MiniApp />} />
+				<Route exact path="/about" component={About} />
+				<Route exact path="/feedback" component={Feedback} />
 				<Route
 					exact
 					path="/mini-app/pregnancy-resource-centers"
