@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import MiniAppForm from './form'
 import { getPregnancyResourceCenters } from './data/action-creators'
 import Header from './header'
+import Instruction from './instruction'
 
 class MiniApp extends Component {
 	submit = ({ locationInput }) => {
@@ -18,6 +19,14 @@ class MiniApp extends Component {
 		return (
 			<div>
 				<Header />
+				<Instruction
+					stepNumber="STEP ONE"
+					stepDescription="Select one of the following:"
+				/>
+				<Instruction
+					stepNumber="STEP TWO"
+					stepDescription="Enter your location:"
+				/>
 				<MiniAppForm onSubmit={this.submit} />
 			</div>
 		)
