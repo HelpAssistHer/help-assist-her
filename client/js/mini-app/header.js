@@ -24,7 +24,6 @@ const styles = {
 	headerPhone: {
 		'background-color': '#016454',
 		color: '#abd3f9',
-		'font-family': 'sans-serif',
 		'font-size': '30px',
 		height: '104px',
 		padding: '60px 20px 40px 80px',
@@ -32,7 +31,6 @@ const styles = {
 	headerDesktop: {
 		'background-color': '#016454',
 		color: '#abd3f9',
-		'font-family': 'sans-serif',
 		'font-size': '30px',
 		height: '104px',
 		padding: '60px 20px 40px 80px',

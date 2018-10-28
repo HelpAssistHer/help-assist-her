@@ -1,0 +1,13 @@
+@font-face {
+	font-family: 'hah';
+	font-style: normal;
+	font-weight: 400;
+	src: url('./fonts/GT-Walsheim-Regular.eot'); /* IE9 Compat Modes */
+	src: local('gt-walsheim'), local('gt-walsheim'),
+		url('./fonts/GT-Walsheim-Regular.woff') format('woff'),
+		/* Modern Browsers */ url('./fonts/GT-Walsheim-Regular.eot?#iefix')
+			format('embedded-opentype'),
+		/* IE6-IE8 */ url('./fonts/GT-Walsheim-Regular.woff2') format('woff2'),
+		/* Super Modern Browsers */ url('./fonts/GT-Walsheim-Regular.ttf')
+			format('truetype'); /* Safari, Android, iOS */
+}
