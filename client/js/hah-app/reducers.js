@@ -63,12 +63,12 @@ const localStateReducer = (state = {}, action) => {
 		case FORM_SUCCESSFULLY_SUBMITTED:
 			return {
 				...state,
-				setFormStatus: action.formStatus,
+				verificationPortalFormStatus: action.formStatus,
 			}
 		default:
 			return {
 				...state,
-				setFormStatus: 'Pending',
+				verificationPortalFormStatus: 'Pending',
 			}
 	}
 }

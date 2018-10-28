@@ -22,7 +22,7 @@ function getResource(resource) {
 	}
 }
 
-function getFormStatus(status) {
+function setFormStatus(status) {
 	return {
 		type: FORM_SUCCESSFULLY_SUBMITTED,
 		formStatus: status,
@@ -90,9 +90,9 @@ export async function updateResource(updatedResource) {
 		const result = await response.json()
 
 		if (result.statusCode >= 400) {
-			store.dispatch(getFormStatus('Failed'))
+			store.dispatch(setFormStatus('Failed'))
 		} else {
-			store.dispatch(getFormStatus('Success'))
+			store.dispatch(setFormStatus('Success'))
 		}
 
 		return result
@@ -102,6 +102,6 @@ export async function updateResource(updatedResource) {
 			'of this message and attach using the Help button in the lower right corner.' +
 			`\n\nError: ${error}`
 		alert(alertMessage)
-		store.dispatch(getFormStatus('Failed'))
+		store.dispatch(setFormStatus('Failed'))
 	}
 }

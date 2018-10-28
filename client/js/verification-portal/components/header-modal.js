@@ -126,7 +126,7 @@ const styles = {
 }
 
 const HeaderConnected = connect(state => ({
-	submitStatus: state.localState.setFormStatus,
+	submitStatus: state.localState.verificationPortalFormStatus,
 }))(HeaderModal)
 
 export default injectSheet(styles)(HeaderConnected)
