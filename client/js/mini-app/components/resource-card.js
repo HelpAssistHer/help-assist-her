@@ -64,25 +64,25 @@ const styles = {
 		'border-radius': '4px',
 	},
 	resourceName: {
-		margin: '40px 0px 0px 30px',
+		margin: '24px 0px 0px 30px',
 		'font-size': '20px',
 	},
 	resourceAddress: {
 		display: 'flex',
 		'align-items': 'flex-start',
-		margin: '20px 0px 20px 30px',
+		margin: '18px 0px 0px 24px',
 		'font-size': '15px',
 	},
 	resourcePhone: {
 		display: 'flex',
 		'align-items': 'center',
-		margin: '20px 0px 20px 30px',
+		margin: '12px 0px 0px 24px',
 		'font-size': '15px',
 	},
 	resourceWebsite: {
 		display: 'flex',
 		'align-items': 'center',
-		margin: '20px 0px 40px 30px',
+		margin: '12px 0px 27px 24px',
 		'font-size': '15px',
 	},
 	margin: {
