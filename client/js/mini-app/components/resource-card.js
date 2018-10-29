@@ -4,6 +4,7 @@ import injectSheet from 'react-jss'
 import LocationIcon from '../../components/icons/icon-components/location-icon'
 import PhoneIcon from '../../components/icons/icon-components/phone-icon'
 import GlobeIcon from '../../components/icons/icon-components/globe-icon'
+import Spacer from '../../components/spacer'
 
 const formatPhoneNumber = phoneNumber => {
 	const areaCode = phoneNumber.substring(2, 5)
@@ -50,6 +51,8 @@ const ResourceCard = ({ classes, resource }) => {
 						</a>
 					</div>
 				)}
+
+				<Spacer height="27px" />
 			</div>
 		</div>
 	)
@@ -61,7 +64,7 @@ const styles = {
 	},
 	resourceCardBorder: {
 		border: '2px solid #3d65f9',
-		'border-radius': '4px',
+		'border-radius': '2px',
 	},
 	resourceName: {
 		margin: '24px 0px 0px 30px',
@@ -82,7 +85,7 @@ const styles = {
 	resourceWebsite: {
 		display: 'flex',
 		'align-items': 'center',
-		margin: '12px 0px 27px 24px',
+		margin: '12px 0px 0px 24px',
 		'font-size': '15px',
 	},
 	margin: {
