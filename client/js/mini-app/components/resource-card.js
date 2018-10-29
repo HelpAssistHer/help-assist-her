@@ -37,17 +37,19 @@ const ResourceCard = ({ classes, resource }) => {
 					</a>
 				</div>
 
-				<div className={classes.resourceWebsite}>
-					<GlobeIcon height={32} width={32} />
-					<a
-						className={classes.margin}
-						href={resource.website}
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{resource.website}
-					</a>
-				</div>
+				{resource.website && (
+					<div className={classes.resourceWebsite}>
+						<GlobeIcon height={32} width={32} />
+						<a
+							className={classes.margin}
+							href={resource.website}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{resource.website}
+						</a>
+					</div>
+				)}
 			</div>
 		</div>
 	)
