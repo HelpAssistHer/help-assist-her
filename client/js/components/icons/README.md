@@ -10,7 +10,7 @@
 
 1.  Run the following command, replacing `location` with the name of the file and `LocationIcon` with the name of the React component that will be created:
 
-`npx svgtoreact client/js/components/icons/svgs/location LocationIcon --output ./client/js/components/icons`
+`npx svgtoreact client/js/components/icons/svgs/location LocationIcon --output ./client/js/components/icons/icon-components`
 
 2.  Change the name of the file to be lowercase, with a hypen. For example: `location-icon.js`
 3.  It's now ready to be used - just import the React component and you're set!
