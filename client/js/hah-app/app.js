@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 
 import HahRouter from './router'
 import { getInitialAppData } from './action-creators'
-import './global.css'
+import './hah-font.css'
 
 class App extends Component {
 	componentDidMount() {
