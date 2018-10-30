@@ -19,11 +19,11 @@ const ResourceCarousel = ({ classes }) => {
 					index === 1 ? styleWithBorder : classes.resourceBox
 
 				return (
-					<div className={resourceBoxStyle} key={resource}>
+					<button className={resourceBoxStyle} key={resource}>
 						{icons[index]}
 						<Spacer height="11px" />
 						<div className={classes.resourceText}>{resource}</div>
-					</div>
+					</button>
 				)
 			})}
 		</div>
@@ -42,6 +42,13 @@ const styles = {
 		'align-items': 'center',
 		height: '241px',
 		width: '261px',
+		cursor: 'pointer',
+		outline: 'none',
+		border: 'none',
+		'&:hover': {
+			'background-color': '#3D65F9',
+			color: '#FFFFFF',
+		},
 	},
 	resourceText: {
 		'font-size': '24px',
