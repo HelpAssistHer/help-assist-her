@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 
-import ResourceTypeButton from './components/resource-type-button'
+import GoButton from './components/go-button'
 import Input from '../components/input'
+import Spacer from '../components/spacer'
 
 class MiniAppForm extends Component {
 	render() {
@@ -16,7 +17,8 @@ class MiniAppForm extends Component {
 					component={Input}
 					type="text"
 				/>
-				<ResourceTypeButton />
+				<Spacer height="25px" />
+				<GoButton />
 			</form>
 		)
 	}
