@@ -10,10 +10,6 @@ const Header = ({ classes }) => {
 
 	return (
 		<div>
-			<div className={classes.light}>HAH is the best!</div>
-			<div className={classes.regular}>HAH is the best!</div>
-			<div className={classes.medium}>HAH is the best!</div>
-			<div className={classes.bold}>HAH is the best!</div>
 			<Phone>
 				<div className={classes.headerPhone}>{headerText}</div>
 			</Phone>
@@ -25,18 +21,6 @@ const Header = ({ classes }) => {
 }
 
 const styles = {
-	light: {
-		'font-family': 'hah-light',
-	},
-	regular: {
-		'font-family': 'hah-regular',
-	},
-	medium: {
-		'font-family': 'hah-medium',
-	},
-	bold: {
-		'font-family': 'hah-bold',
-	},
 	headerPhone: {
 		'background-color': '#016454',
 		color: '#abd3f9',
