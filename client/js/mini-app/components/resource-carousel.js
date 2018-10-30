@@ -7,7 +7,17 @@ import Spacer from '../../components/spacer'
 import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
 import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
 
-const resources = ['Community Health Center', 'Pregnancy Resource Center']
+const resources = [
+	{
+		id: 'chc',
+		name: 'Community Health Center',
+	},
+	{
+		id: 'prc',
+		name: 'Pregnancy Resource Center',
+	},
+]
+
 const icons = [<HospitalIcon key={1} />, <PregnancyIcon key={2} />]
 
 class ResourceCarousel extends React.Component {
@@ -47,12 +57,12 @@ class ResourceCarousel extends React.Component {
 					return (
 						<button
 							className={resourceBoxStyle}
-							key={resource}
-							onClick={() => this.handleClick(resource)}
+							key={resource.id}
+							onClick={() => this.handleClick(resource.id)}
 						>
 							{icons[index]}
 							<Spacer height="11px" />
-							<div className={classes.resourceText}>{resource}</div>
+							<div className={classes.resourceText}>{resource.name}</div>
 						</button>
 					)
 				})}
