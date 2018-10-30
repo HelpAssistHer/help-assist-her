@@ -14,12 +14,13 @@ class ResourceCarousel extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			buttonClicked: 'chc',
+			buttonClicked: null,
 		}
 		this.handleClick = this.handleClick.bind(this)
 	}
 
-	handleClick = () => {
+	handleClick = resource => {
+		console.log('RESOURCE', resource)
 		let { buttonClicked } = this.state
 		console.log('BUTTON CLICKED', buttonClicked)
 		this.setState({ buttonClicked: 'prc' })
@@ -47,7 +48,7 @@ class ResourceCarousel extends React.Component {
 						<button
 							className={resourceBoxStyle}
 							key={resource}
-							onClick={this.handleClick}
+							onClick={() => this.handleClick(resource)}
 						>
 							{icons[index]}
 							<Spacer height="11px" />
