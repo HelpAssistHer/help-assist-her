@@ -50,6 +50,10 @@ const styles = {
 			color: '#FFFFFF',
 		},
 	},
+	buttonActiveState: {
+		'background-color': '#3D65F9',
+		color: '#FFFFFF',
+	},
 	resourceText: {
 		'font-size': '24px',
 		'text-align': 'center',
