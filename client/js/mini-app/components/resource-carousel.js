@@ -3,7 +3,12 @@ import _ from 'lodash'
 import injectSheet from 'react-jss'
 import classNames from 'classnames'
 
+import Spacer from '../../components/spacer'
+import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
+import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
+
 const resources = ['Community Health Center', 'Pregnancy Resource Center']
+const icons = [<HospitalIcon key={1} />, <PregnancyIcon key={2} />]
 
 const ResourceCarousel = ({ classes }) => {
 	return (
@@ -15,6 +20,8 @@ const ResourceCarousel = ({ classes }) => {
 
 				return (
 					<div className={resourceBoxStyle} key={resource}>
+						{icons[index]}
+						<Spacer height="11px" />
 						<div className={classes.resourceText}>{resource}</div>
 					</div>
 				)
@@ -31,7 +38,8 @@ const styles = {
 	resourceBox: {
 		display: 'flex',
 		'flex-direction': 'column',
-		'justify-content': 'flex-end',
+		'justify-content': 'center',
+		'align-items': 'center',
 		height: '241px',
 		width: '261px',
 	},
