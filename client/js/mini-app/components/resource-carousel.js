@@ -30,19 +30,12 @@ class ResourceCarousel extends React.Component {
 	}
 
 	handleClick = resource => {
-		console.log('RESOURCE', resource)
-		let { buttonClicked } = this.state
-		console.log('BUTTON CLICKED', buttonClicked)
-		this.setState({ buttonClicked: 'prc' })
-	}
-
-	submit = values => {
-		console.log('VALUES', values)
-		alert('it worked')
+		this.setState({ buttonClicked: resource })
 	}
 
 	render() {
 		const { classes } = this.props
+		let { buttonClicked } = this.state
 
 		return (
 			<div className={classes.resourceCarouselRoot}>
@@ -51,8 +44,16 @@ class ResourceCarousel extends React.Component {
 						classes.border,
 						classes.resourceBox,
 					)
-					const resourceBoxStyle =
+
+					let resourceBoxStyle =
 						index === 1 ? styleWithBorder : classes.resourceBox
+
+					if (resource.id === buttonClicked) {
+						resourceBoxStyle = classNames(
+							resourceBoxStyle,
+							classes.buttonActiveState,
+						)
+					}
 
 					return (
 						<button
