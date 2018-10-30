@@ -27,7 +27,6 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 const styles = {
 	instructionRoot: {
 		'text-align': 'center',
-		'font-family': 'sans-serif',
 		margin: '40px 0px 60px 0px',
 	},
 	stepNumberPhone: {

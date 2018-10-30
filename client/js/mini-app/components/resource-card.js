@@ -46,22 +46,18 @@ const styles = {
 	},
 	resourceName: {
 		margin: '40px 0px 0px 30px',
-		'font-family': 'sans-serif',
 		'font-size': '20px',
 	},
 	resourceAddress: {
 		margin: '20px 0px 20px 30px',
-		'font-family': 'sans-serif',
 		'font-size': '15px',
 	},
 	resourcePhone: {
 		margin: '20px 0px 20px 30px',
-		'font-family': 'sans-serif',
 		'font-size': '15px',
 	},
 	resourceWebsite: {
 		margin: '20px 0px 40px 30px',
-		'font-family': 'sans-serif',
 		'font-size': '15px',
 	},
 }

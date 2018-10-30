@@ -31,7 +31,6 @@ const styles = {
 	header: {
 		padding: '30px 0px 30px 0px',
 		'background-color': '#3d65f9',
-		'font-family': 'sans-serif',
 		'font-size': '14px',
 		color: '#99cccc',
 		'text-align': 'center',

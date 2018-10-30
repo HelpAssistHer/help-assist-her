@@ -1,0 +1,5 @@
+@import './hah-font.css';
+
+body {
+	font-family: 'hah', Helvetica, 'sans-serif';
+}
