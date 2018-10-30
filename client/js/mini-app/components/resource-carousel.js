@@ -10,24 +10,54 @@ import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon
 const resources = ['Community Health Center', 'Pregnancy Resource Center']
 const icons = [<HospitalIcon key={1} />, <PregnancyIcon key={2} />]
 
-const ResourceCarousel = ({ classes }) => {
-	return (
-		<div className={classes.resourceCarouselRoot}>
-			{_.map(resources, (resource, index) => {
-				const styleWithBorder = classNames(classes.border, classes.resourceBox)
-				const resourceBoxStyle =
-					index === 1 ? styleWithBorder : classes.resourceBox
+class ResourceCarousel extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			buttonClicked: 'chc',
+		}
+		this.handleClick = this.handleClick.bind(this)
+	}
 
-				return (
-					<button className={resourceBoxStyle} key={resource}>
-						{icons[index]}
-						<Spacer height="11px" />
-						<div className={classes.resourceText}>{resource}</div>
-					</button>
-				)
-			})}
-		</div>
-	)
+	handleClick = () => {
+		let { buttonClicked } = this.state
+		console.log('BUTTON CLICKED', buttonClicked)
+		this.setState({ buttonClicked: 'prc' })
+	}
+
+	submit = values => {
+		console.log('VALUES', values)
+		alert('it worked')
+	}
+
+	render() {
+		const { classes } = this.props
+
+		return (
+			<div className={classes.resourceCarouselRoot}>
+				{_.map(resources, (resource, index) => {
+					const styleWithBorder = classNames(
+						classes.border,
+						classes.resourceBox,
+					)
+					const resourceBoxStyle =
+						index === 1 ? styleWithBorder : classes.resourceBox
+
+					return (
+						<button
+							className={resourceBoxStyle}
+							key={resource}
+							onClick={this.handleClick}
+						>
+							{icons[index]}
+							<Spacer height="11px" />
+							<div className={classes.resourceText}>{resource}</div>
+						</button>
+					)
+				})}
+			</div>
+		)
+	}
 }
 
 const styles = {
