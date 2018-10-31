@@ -97,11 +97,6 @@ export async function updateResource(updatedResource) {
 
 		return result
 	} catch (error) {
-		const alertMessage =
-			'There was an unexpected error saving this resource. Please take a screenshot ' +
-			'of this message and attach using the Help button in the lower right corner.' +
-			`\n\nError: ${error}`
-		alert(alertMessage)
 		store.dispatch(setFormStatus('Failed'))
 	}
 }
