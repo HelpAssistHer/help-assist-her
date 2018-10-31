@@ -16,4 +16,9 @@ module.exports = {
 		],
 	},
 	anything: {},
+	verificationBeforeNov1: {
+		'verifiedData.prcName.date': {
+			$lt: new Date('2018-11-01'),
+		},
+	},
 }
