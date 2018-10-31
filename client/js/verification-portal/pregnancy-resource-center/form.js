@@ -153,6 +153,25 @@ class VerificationPortalFormClass extends Component {
 
 					<div className={classes.gridField}>
 						<div className={classes.firstBox}>
+							<Field
+								name="verifiedData.hotlinePhoneNumber.verified"
+								component={Toggle}
+							/>
+						</div>
+						<div className={classes.secondBox}>
+							<Field
+								name="hotlinePhoneNumber"
+								component={Input}
+								placeholder="Hotline Phone Number"
+								type="tel"
+								format={formatPhoneDigits}
+								parse={parsePhoneNumber}
+							/>
+						</div>
+					</div>
+
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
 							<Field name="verifiedData.email.verified" component={Toggle} />
 						</div>
 						<div className={classes.secondBox}>

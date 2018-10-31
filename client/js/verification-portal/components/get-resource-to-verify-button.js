@@ -32,6 +32,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		notes,
 		otherServices,
 		phone,
+		hotlinePhoneNumber,
 		services,
 		primaryContactPerson,
 		verifiedData,
@@ -58,6 +59,11 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue(
 		'verifiedData.phone.verified',
 		_.get(verifiedData, 'phone.verified'),
+	)
+	changeFieldValue('hotlinePhoneNumber', hotlinePhoneNumber)
+	changeFieldValue(
+		'verifiedData.hotlinePhoneNumber.verified',
+		_.get(verifiedData, 'hotlinePhoneNumber.verified'),
 	)
 
 	changeFieldValue('email', email)
