@@ -13,6 +13,7 @@ class HeaderModal extends Component {
 		this.handleClick = this.handleClick.bind(this)
 	}
 
+	// remove
 	componentDidUpdate() {
 		const { submitStatus } = this.props
 		if (submitStatus === 'Pending' && this.state.closed) {
@@ -44,40 +45,26 @@ class HeaderModal extends Component {
 			this.state.closed && classes.closed,
 		)
 
-		if (
-			(submitStatus === 'Success' && this.state.prevSubmit === null) ||
-			this.state.prevSubmit === 'Success'
-		) {
-			return (
-				<div className={modalClasses}>
-					<div>
-						<p className={classes.title}>Information Submitted Successfully</p>
-						<p className={classes.caption}>
-							{
-								"Thanks for helping us bring better healthcare to women's fingertips!"
-							}
-						</p>
-					</div>
-					<div className={classes.button} onClick={this.handleClick}>
-						&times;
-					</div>
+		const title =
+			submitStatus === 'Success'
+				? 'Information Submitted Successfully'
+				: 'Whoops!'
+		const caption =
+			submitStatus === 'Success'
+				? "Thanks for helping us bring better healthcare to women's fingertips!"
+				: 'An error occurred and the HAH staff has been notified.'
+
+		return (
+			<div className={modalClasses}>
+				<div>
+					<p className={classes.title}>{title}</p>
+					<p className={classes.caption}>{caption}</p>
 				</div>
-			)
-		} else {
-			return (
-				<div className={modalClasses}>
-					<div>
-						<p className={classes.title}>Whoops!</p>
-						<p className={classes.caption}>
-							An error occurred and the HAH staff has been notified.
-						</p>
-					</div>
-					<div className={classes.button} onClick={this.handleClick}>
-						&times;
-					</div>
+				<div className={classes.button} onClick={this.handleClick}>
+					&times;
 				</div>
-			)
-		}
+			</div>
+		)
 	}
 }
 
