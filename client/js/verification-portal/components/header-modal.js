@@ -47,14 +47,16 @@ class HeaderModal extends Component {
 			this.state.closed && classes.closed,
 		)
 
-		const title =
-			submitStatus === 'Success'
-				? 'Information Submitted Successfully'
-				: 'Whoops!'
-		const caption =
-			submitStatus === 'Success'
-				? "Thanks for helping us bring better healthcare to women's fingertips!"
-				: 'An error occurred and the HAH staff has been notified.'
+		let title
+		let caption
+		if (submitStatus === 'Success') {
+			title = 'Information Submitted Successfully'
+			caption =
+				"Thanks for helping us bring better healthcare to women's fingertips!"
+		} else if (submitStatus === 'Failed') {
+			title = 'Whoops!'
+			caption = 'An error occurred and the HAH staff has been notified.'
+		}
 
 		return (
 			<div className={modalClasses}>
