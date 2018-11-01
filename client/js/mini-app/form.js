@@ -3,7 +3,6 @@ import { Field, reduxForm } from 'redux-form'
 
 import GoButton from './components/go-button'
 import Input from '../components/input'
-import Spacer from '../components/spacer'
 
 class MiniAppForm extends Component {
 	render() {
@@ -17,7 +16,6 @@ class MiniAppForm extends Component {
 					component={Input}
 					type="text"
 				/>
-				<Spacer height="25px" />
 				<GoButton />
 			</form>
 		)

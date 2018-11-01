@@ -3,6 +3,7 @@ import injectSheet from 'react-jss'
 import classnames from 'classnames'
 
 import { Phone, Desktop } from '../../components/breakpoints'
+import Spacer from '../../components/spacer'
 
 const GoButton = ({ classes, onClick }) => {
 	const buttonText = 'GO'
@@ -11,23 +12,32 @@ const GoButton = ({ classes, onClick }) => {
 		<div>
 			<div className={classes.goButtonRoot}>
 				<Phone>
-					<button
-						className={classnames(classes.buttonCommon, classes.buttonPhone)}
-						type="submit"
-						onClick={onClick}
-					>
-						{buttonText}
-					</button>
+					<div>
+						<Spacer height="25px" />
+						<button
+							className={classnames(classes.buttonCommon, classes.buttonPhone)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
 				</Phone>
 
 				<Desktop>
-					<button
-						className={classnames(classes.buttonCommon, classes.buttonDesktop)}
-						type="submit"
-						onClick={onClick}
-					>
-						{buttonText}
-					</button>
+					<div>
+						<Spacer height="93px" />
+						<button
+							className={classnames(
+								classes.buttonCommon,
+								classes.buttonDesktop,
+							)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
 				</Desktop>
 			</div>
 		</div>
