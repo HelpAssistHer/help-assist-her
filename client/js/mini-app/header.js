@@ -23,25 +23,24 @@ const Header = ({ classes }) => {
 				<img
 					src="../img/two-women-hugging.jpg"
 					alt="Two Close Friends"
-					height="455"
+					width={500}
 				/>
 			</div>
 
-			{/*width="500" height="455"*/}
-			{/*<Phone>*/}
-			{/*<div>*/}
-			{/*<div className={classes.imagePhone}>Image</div>*/}
-			{/*<div className={classes.headerPhone}>*/}
-			{/*<div className={classes.titlePhone}>{titleText}</div>*/}
-			{/*<Spacer height="12px" />*/}
-			{/*<div>{descriptionText}</div>*/}
+			{/*<Spacer height="100px" />*/}
+			{/*<div className={classes.headerContainer}>*/}
+			{/*<div className={classes.headerText}>*/}
+			{/*<div className={classes.titleText}>{titleText}</div>*/}
+			{/*<Spacer height="40px" />*/}
+			{/*<div className={classes.descriptionText}>{descriptionText}</div>*/}
 			{/*</div>*/}
-			{/*</div>*/}
-			{/*</Phone>*/}
 
-			{/*<Desktop>*/}
-			{/**/}
-			{/*</Desktop>*/}
+			{/*<img*/}
+			{/*src="../img/two-women-hugging.jpg"*/}
+			{/*alt="Two Close Friends"*/}
+			{/*height="455"*/}
+			{/*/>*/}
+			{/*</div>*/}
 		</div>
 	)
 }
@@ -49,8 +48,9 @@ const Header = ({ classes }) => {
 const styles = {
 	headerContainer: {
 		display: 'flex',
+		'flex-direction': 'column',
 		'background-color': '#016454',
-		height: '455px',
+		width: '500px',
 	},
 	headerText: {
 		flex: '1 1 0',
@@ -60,43 +60,32 @@ const styles = {
 	},
 	titleText: {
 		padding: '74px 80px 0px 80px',
-		'font-size': '80px',
+		'font-size': '40px',
+		'font-weight': 300, // fix
+		'letter-spacing': '-0.5px',
 	},
 	descriptionText: {
 		padding: '0px 80px 132px 80px',
-		'font-size': '24px',
+		'font-size': '18px',
 	},
-	// headerPhone: {
+	// headerContainer: {
 	// 	display: 'flex',
-	// 	'flex-direction': 'column',
-	// 	'justify-content': 'center',
 	// 	'background-color': '#016454',
-	// 	color: '#abd3f9',
-	// 	height: '255px',
-	// 	padding: '0px 80px 0px 80px',
-	// 	'text-align': 'center',
+	// 	height: '455px',
 	// },
-	// titlePhone: {
-	// 	'font-family': 'hah',
-	// 	'font-size': '40px',
-	// 	'font-weight': 300,
-	// 	'letter-spacing': '-0.5px',
-	// },
-	// titleDesktop: {
-	//
-	// },
-	// descriptionTextPhone: {
-	// 	'font-size': '18px',
-	// },
-	// headerDesktop: {
-	// 	// 'flex-basis': '50%',
+	// headerText: {
 	// 	flex: '1 1 0',
-	// 	'background-color': '#016454',
 	// 	color: '#abd3f9',
-	// 	'font-size': '30px',
-	// 	// height: '104px',
-	// 	padding: '60px 20px 40px 80px',
-	// 	'text-shadow': '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
+	// 	'font-family': 'hah-regular',
+	// 	'text-align': 'center', // ?
+	// },
+	// titleText: {
+	// 	padding: '74px 80px 0px 80px',
+	// 	'font-size': '80px',
+	// },
+	// descriptionText: {
+	// 	padding: '0px 80px 132px 80px',
+	// 	'font-size': '24px',
 	// },
 }
 
