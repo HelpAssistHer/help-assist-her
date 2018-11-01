@@ -3,6 +3,9 @@ import injectSheet from 'react-jss'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 
+import { setFormStatus } from '../pregnancy-resource-center/action-creators'
+import { store } from '../../hah-app'
+
 class HeaderModal extends Component {
 	constructor(props) {
 		super(props)
@@ -44,40 +47,34 @@ class HeaderModal extends Component {
 			this.state.closed && classes.closed,
 		)
 
-		if (
-			(submitStatus === 'Success' && this.state.prevSubmit === null) ||
-			this.state.prevSubmit === 'Success'
-		) {
-			return (
-				<div className={modalClasses}>
-					<div>
-						<p className={classes.title}>Information Submitted Successfully</p>
-						<p className={classes.caption}>
-							{
-								"Thanks for helping us bring better healthcare to women's fingertips!"
-							}
-						</p>
-					</div>
-					<div className={classes.button} onClick={this.handleClick}>
-						&times;
-					</div>
-				</div>
-			)
-		} else {
-			return (
-				<div className={modalClasses}>
-					<div>
-						<p className={classes.title}>Whoops!</p>
-						<p className={classes.caption}>
-							An error occurred and the HAH staff has been notified.
-						</p>
-					</div>
-					<div className={classes.button} onClick={this.handleClick}>
-						&times;
-					</div>
-				</div>
-			)
+		let title
+		let caption
+		if (submitStatus === 'Success') {
+			title = 'Information Submitted Successfully'
+			caption =
+				"Thanks for helping us bring better healthcare to women's fingertips!"
+		} else if (submitStatus === 'Failed') {
+			title = 'Whoops!'
+			caption = 'An error occurred and the HAH staff has been notified.'
 		}
+
+		return (
+			<div className={modalClasses}>
+				<div>
+					<p className={classes.title}>{title}</p>
+					<p className={classes.caption}>{caption}</p>
+				</div>
+				<div
+					className={classes.button}
+					onClick={() => {
+						store.dispatch(setFormStatus('Pending'))
+						this.handleClick()
+					}}
+				>
+					&times;
+				</div>
+			</div>
+		)
 	}
 }
 
@@ -97,7 +94,7 @@ const styles = {
 		'padding-left': '10px',
 		overflow: 'hidden',
 		transition: ['height'],
-		transitionDuration: '2s',
+		transitionDuration: '1s',
 	},
 	success: {
 		height: '246px',
