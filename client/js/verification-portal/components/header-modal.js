@@ -20,7 +20,7 @@ class HeaderModal extends Component {
 		const { submitStatus } = this.props
 		if (submitStatus === 'Pending' && this.state.closed) {
 			this.setState({
-				closed: true,
+				closed: false,
 			})
 		}
 
