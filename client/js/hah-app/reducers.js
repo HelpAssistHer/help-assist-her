@@ -66,10 +66,7 @@ const localStateReducer = (state = {}, action) => {
 				verificationPortalFormStatus: action.formStatus,
 			}
 		default:
-			return {
-				...state,
-				verificationPortalFormStatus: 'Pending',
-			}
+			return state
 	}
 }
 
