@@ -30,7 +30,8 @@ const styles = {
 		margin: '40px 0px 60px 0px',
 	},
 	stepNumberPhone: {
-		'font-weight': 'bold',
+		'font-family': 'hah-bold',
+		'letter-spacing': '2px',
 		'font-size': '10px',
 		color: '#3d65f9',
 		'margin-bottom': '20px',
@@ -40,7 +41,8 @@ const styles = {
 		'font-size': '14px',
 	},
 	stepNumberDesktop: {
-		'font-weight': 'bold',
+		'font-family': 'hah-bold',
+		'letter-spacing': '2px',
 		'font-size': '18px',
 		color: '#3d65f9',
 		'margin-bottom': '20px',
