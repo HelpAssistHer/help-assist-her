@@ -204,7 +204,7 @@ server.get(
 
 		// an array of javascript objects
 		const pregnancyCenters = await PregnancyCenterModel.aggregate([
-			{ $match: _.merge(queries.verificationNotComplete, notInVerification) },
+			{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
 			{ $sample: { size: 1 } },
 		])
 
