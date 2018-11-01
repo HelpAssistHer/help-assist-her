@@ -69,9 +69,20 @@ class ResourceCarousel extends React.Component {
 							key={resource.id}
 							onClick={() => this.handleClick(resource.id)}
 						>
-							<Phone>{iconsPhone[index]}</Phone>
-							<Desktop>{iconsDesktop[index]}</Desktop>
-							<Spacer height="11px" />
+							<Phone>
+								<div>
+									{iconsPhone[index]}
+									<Spacer height="9px" />
+								</div>
+							</Phone>
+
+							<Desktop>
+								<div>
+									{iconsDesktop[index]}
+									<Spacer height="20px" />
+								</div>
+							</Desktop>
+
 							<div className={classes.resourceText}>{resource.name}</div>
 						</button>
 					)
