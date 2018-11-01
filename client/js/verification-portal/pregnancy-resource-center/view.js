@@ -3,15 +3,11 @@ import injectSheet from 'react-jss'
 
 import Spacer from '../../components/spacer'
 import VerificationPortalForm from './form'
-import { updateResource } from './action-creators'
 import Button from '../../components/button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
 import { updateDoNotList } from '../do-not-list/action-creators'
 
 class VerificationPortal extends React.Component {
-	submit = values => {
-		updateResource(values)
-	}
 	render() {
 		const { classes, resource } = this.props
 		const { outOfBusiness, doNotList } = resource
@@ -38,7 +34,6 @@ class VerificationPortal extends React.Component {
 					<VerificationPortalForm
 						outOfBusiness={outOfBusiness}
 						doNotList={doNotList}
-						onSubmit={this.submit}
 					/>
 					<Spacer height="100px" />
 				</div>

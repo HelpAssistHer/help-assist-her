@@ -23,6 +23,7 @@ function getResource(resource) {
 }
 
 function setFormStatus(status) {
+	console.log('SETTING FORM STATUS', status)
 	return {
 		type: FORM_SUCCESSFULLY_SUBMITTED,
 		formStatus: status,
@@ -73,7 +74,7 @@ export async function updateResource(updatedResource) {
 	// 	...updatedResource.primaryContactPerson
 	// },
 
-	try {
+	return new Promise(async (resolve, reject) => {
 		const response = await fetch(
 			`/api/pregnancy-centers/${store.getState().resource._id}`,
 			{
@@ -88,15 +89,18 @@ export async function updateResource(updatedResource) {
 		)
 
 		const result = await response.json()
+		console.log('RESULT', result)
 
 		if (result.statusCode >= 400) {
+			console.log('ERROR')
 			store.dispatch(setFormStatus('Failed'))
+			reject(result.error)
 		} else {
 			store.dispatch(setFormStatus('Success'))
+			resolve(result)
 		}
 
-		return result
-	} catch (error) {
-		store.dispatch(setFormStatus('Failed'))
-	}
+		// refactor
+		resolve(result.error)
+	})
 }

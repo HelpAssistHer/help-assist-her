@@ -9,6 +9,7 @@ import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Services from './services'
 import Toggle from '../../components/toggle'
+import { updateResource } from './action-creators'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -50,9 +51,15 @@ const parsePhoneNumber = phoneNumber => {
 
 class VerificationPortalFormClass extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
+		const {
+			classes,
+			handleSubmit,
+			outOfBusiness,
+			doNotList,
+			submitting,
+		} = this.props
 		return (
-			<form className={classes.form} onSubmit={handleSubmit}>
+			<form className={classes.form}>
 				<div
 					className={
 						outOfBusiness || doNotList ? classes.blockFormEditing : null
@@ -314,6 +321,8 @@ class VerificationPortalFormClass extends Component {
 						buttonText="Save Progress"
 						activeState={false}
 						size="large"
+						disabled={submitting}
+						onClick={handleSubmit(formData => updateResource(formData))}
 					/>
 				</div>
 			</form>
