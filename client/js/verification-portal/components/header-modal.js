@@ -3,6 +3,9 @@ import injectSheet from 'react-jss'
 import cx from 'classnames'
 import { connect } from 'react-redux'
 
+import { setFormStatus } from '../pregnancy-resource-center/action-creators'
+import { store } from '../../hah-app'
+
 class HeaderModal extends Component {
 	constructor(props) {
 		super(props)
@@ -13,7 +16,6 @@ class HeaderModal extends Component {
 		this.handleClick = this.handleClick.bind(this)
 	}
 
-	// remove
 	componentDidUpdate() {
 		const { submitStatus } = this.props
 		if (submitStatus === 'Pending' && this.state.closed) {
@@ -60,7 +62,13 @@ class HeaderModal extends Component {
 					<p className={classes.title}>{title}</p>
 					<p className={classes.caption}>{caption}</p>
 				</div>
-				<div className={classes.button} onClick={this.handleClick}>
+				<div
+					className={classes.button}
+					onClick={() => {
+						store.dispatch(setFormStatus('Pending'))
+						this.handleClick()
+					}}
+				>
 					&times;
 				</div>
 			</div>

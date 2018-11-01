@@ -22,7 +22,7 @@ function getResource(resource) {
 	}
 }
 
-function setFormStatus(status) {
+export function setFormStatus(status) {
 	return {
 		type: FORM_SUCCESSFULLY_SUBMITTED,
 		formStatus: status,
