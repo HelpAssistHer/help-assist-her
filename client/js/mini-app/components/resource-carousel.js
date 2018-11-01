@@ -48,47 +48,70 @@ class ResourceCarousel extends React.Component {
 		return (
 			<div className={classes.resourceCarouselRoot}>
 				{_.map(resources, (resource, index) => {
-					const styleWithBorder = classNames(
-						classes.border,
+					const styleWithBorderPhone = classNames(
+						classes.borderPhone,
 						classes.resourceBox,
 					)
 
-					let resourceBoxStyle =
-						index === 1 ? styleWithBorder : classes.resourceBox
+					let resourceBoxStylePhone =
+						index === 1 ? styleWithBorderPhone : classes.resourceBox
 
 					if (resource.id === buttonClicked) {
-						resourceBoxStyle = classNames(
-							resourceBoxStyle,
+						resourceBoxStylePhone = classNames(
+							resourceBoxStylePhone,
+							classes.buttonActiveState,
+						)
+					}
+
+					const styleWithBorderDesktop = classNames(
+						classes.borderDesktop,
+						classes.resourceBox,
+					)
+
+					let resourceBoxStyleDesktop =
+						index === 1 ? styleWithBorderDesktop : classes.resourceBox
+
+					if (resource.id === buttonClicked) {
+						resourceBoxStyleDesktop = classNames(
+							resourceBoxStyleDesktop,
 							classes.buttonActiveState,
 						)
 					}
 
 					return (
-						<button
-							className={resourceBoxStyle}
-							key={resource.id}
-							onClick={() => this.handleClick(resource.id)}
-						>
+						<div>
 							<Phone>
-								<div className={classes.flex}>
-									{iconsPhone[index]}
-									<Spacer height="9px" />
-									<div className={classes.resourceNamePhone}>
-										{resource.name}
+								<button
+									className={resourceBoxStylePhone}
+									key={resource.id}
+									onClick={() => this.handleClick(resource.id)}
+								>
+									<div className={classes.flex}>
+										{iconsPhone[index]}
+										<Spacer height="9px" />
+										<div className={classes.resourceNamePhone}>
+											{resource.name}
+										</div>
 									</div>
-								</div>
+								</button>
 							</Phone>
 
 							<Desktop>
-								<div className={classes.flex}>
-									{iconsDesktop[index]}
-									<Spacer height="20px" />
-									<div className={classes.resourceNameDesktop}>
-										{resource.name}
+								<button
+									className={resourceBoxStyleDesktop}
+									key={resource.id}
+									onClick={() => this.handleClick(resource.id)}
+								>
+									<div className={classes.flex}>
+										{iconsDesktop[index]}
+										<Spacer height="20px" />
+										<div className={classes.resourceNameDesktop}>
+											{resource.name}
+										</div>
 									</div>
-								</div>
+								</button>
 							</Desktop>
-						</button>
+						</div>
 					)
 				})}
 			</div>
@@ -129,8 +152,11 @@ const styles = {
 		'font-size': '24px',
 		width: '75%',
 	},
-	border: {
-		'border-left': '3px solid black',
+	borderPhone: {
+		'border-left': '1px solid #000000',
+	},
+	borderDesktop: {
+		'border-left': '2px solid #000000',
 	},
 }
 
