@@ -6,6 +6,7 @@ import classNames from 'classnames'
 import Spacer from '../../components/spacer'
 import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
 import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
+import { Phone, Desktop } from '../../components/breakpoints'
 
 const resources = [
 	{
@@ -18,7 +19,14 @@ const resources = [
 	},
 ]
 
-const icons = [<HospitalIcon key={1} />, <PregnancyIcon key={2} />]
+const iconsPhone = [
+	<HospitalIcon key={1} height={49} width={49} />,
+	<PregnancyIcon key={2} height={49} width={49} />,
+]
+const iconsDesktop = [
+	<HospitalIcon key={1} height={127} width={127} />,
+	<PregnancyIcon key={2} height={127} width={127} />,
+]
 
 class ResourceCarousel extends React.Component {
 	constructor(props) {
@@ -61,7 +69,8 @@ class ResourceCarousel extends React.Component {
 							key={resource.id}
 							onClick={() => this.handleClick(resource.id)}
 						>
-							{icons[index]}
+							<Phone>{iconsPhone[index]}</Phone>
+							<Desktop>{iconsDesktop[index]}</Desktop>
 							<Spacer height="11px" />
 							<div className={classes.resourceText}>{resource.name}</div>
 						</button>
