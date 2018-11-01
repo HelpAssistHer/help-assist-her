@@ -73,6 +73,9 @@ class ResourceCarousel extends React.Component {
 								<div>
 									{iconsPhone[index]}
 									<Spacer height="9px" />
+									<div className={classes.resourceNamePhone}>
+										{resource.name}
+									</div>
 								</div>
 							</Phone>
 
@@ -80,10 +83,11 @@ class ResourceCarousel extends React.Component {
 								<div>
 									{iconsDesktop[index]}
 									<Spacer height="20px" />
+									<div className={classes.resourceNameDesktop}>
+										{resource.name}
+									</div>
 								</div>
 							</Desktop>
-
-							<div className={classes.resourceText}>{resource.name}</div>
 						</button>
 					)
 				})}
@@ -116,9 +120,13 @@ const styles = {
 		'background-color': '#3D65F9',
 		color: '#FFFFFF',
 	},
-	resourceText: {
+	resourceNamePhone: {
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+	},
+	resourceNameDesktop: {
+		'font-family': 'hah-light',
 		'font-size': '24px',
-		'text-align': 'center',
 	},
 	border: {
 		'border-left': '3px solid black',
