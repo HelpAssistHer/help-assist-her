@@ -20,7 +20,7 @@ class HeaderModal extends Component {
 		const { submitStatus } = this.props
 		if (submitStatus === 'Pending' && this.state.closed) {
 			this.setState({
-				closed: false,
+				closed: true,
 			})
 		}
 
@@ -94,7 +94,7 @@ const styles = {
 		'padding-left': '10px',
 		overflow: 'hidden',
 		transition: ['height'],
-		transitionDuration: '2s',
+		transitionDuration: '1s',
 	},
 	success: {
 		height: '246px',
