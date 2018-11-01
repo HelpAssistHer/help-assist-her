@@ -23,7 +23,6 @@ function getResource(resource) {
 }
 
 function setFormStatus(status) {
-	console.log('SETTING FORM STATUS', status)
 	return {
 		type: FORM_SUCCESSFULLY_SUBMITTED,
 		formStatus: status,
@@ -89,18 +88,13 @@ export async function updateResource(updatedResource) {
 		)
 
 		const result = await response.json()
-		console.log('RESULT', result)
 
-		if (result.statusCode >= 400) {
-			console.log('ERROR')
-			store.dispatch(setFormStatus('Failed'))
-			reject(result.error)
-		} else {
+		if (response.status < 400) {
 			store.dispatch(setFormStatus('Success'))
 			resolve(result)
+		} else {
+			store.dispatch(setFormStatus('Failed'))
+			reject(result.error)
 		}
-
-		// refactor
-		resolve(result.error)
 	})
 }
