@@ -70,7 +70,7 @@ class ResourceCarousel extends React.Component {
 							onClick={() => this.handleClick(resource.id)}
 						>
 							<Phone>
-								<div>
+								<div className={classes.flex}>
 									{iconsPhone[index]}
 									<Spacer height="9px" />
 									<div className={classes.resourceNamePhone}>
@@ -80,7 +80,7 @@ class ResourceCarousel extends React.Component {
 							</Phone>
 
 							<Desktop>
-								<div>
+								<div className={classes.flex}>
 									{iconsDesktop[index]}
 									<Spacer height="20px" />
 									<div className={classes.resourceNameDesktop}>
@@ -101,13 +101,12 @@ const styles = {
 		display: 'flex',
 		'justify-content': 'center',
 	},
-	resourceBox: {
+	flex: {
 		display: 'flex',
 		'flex-direction': 'column',
-		'justify-content': 'center',
 		'align-items': 'center',
-		height: '241px',
-		width: '261px',
+	},
+	resourceBox: {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
@@ -123,10 +122,12 @@ const styles = {
 	resourceNamePhone: {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
+		width: '75%',
 	},
 	resourceNameDesktop: {
 		'font-family': 'hah-light',
 		'font-size': '24px',
+		width: '75%',
 	},
 	border: {
 		'border-left': '3px solid black',
