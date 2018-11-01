@@ -79,11 +79,10 @@ class ResourceCarousel extends React.Component {
 					}
 
 					return (
-						<div>
+						<div key={resource.id}>
 							<Phone>
 								<button
 									className={resourceBoxStylePhone}
-									key={resource.id}
 									onClick={() => this.handleClick(resource.id)}
 								>
 									<div className={classes.flex}>
@@ -99,7 +98,6 @@ class ResourceCarousel extends React.Component {
 							<Desktop>
 								<button
 									className={resourceBoxStyleDesktop}
-									key={resource.id}
 									onClick={() => this.handleClick(resource.id)}
 								>
 									<div className={classes.flex}>
