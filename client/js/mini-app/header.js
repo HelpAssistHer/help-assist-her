@@ -16,6 +16,12 @@ const Header = ({ classes }) => {
 
 			<Phone>
 				<div className={classes.headerContainerPhone}>
+					<img
+						className={classes.imagePhone}
+						src="../img/two-women-hugging.jpg"
+						alt="Two Close Friends"
+					/>
+
 					<div className={classes.headerText}>
 						<div className={classes.titleTextPhone}>{titleText}</div>
 						<Spacer height="40px" />
@@ -23,12 +29,6 @@ const Header = ({ classes }) => {
 							{descriptionText}
 						</div>
 					</div>
-
-					<img
-						className={classes.imagePhone}
-						src="../img/two-women-hugging.jpg"
-						alt="Two Close Friends"
-					/>
 				</div>
 			</Phone>
 
