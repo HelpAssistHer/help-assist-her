@@ -43,7 +43,7 @@ const styles = {
 		'background-color': '#FFFFFF',
 		'border-radius': '8px',
 		color: '#000000',
-		'font-family': 'hah', // update
+		'font-family': 'hah-regular',
 		'text-align': 'center',
 		cursor: 'pointer',
 		'text-decoration': 'none',
