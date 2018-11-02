@@ -38,11 +38,11 @@ const styles = {
 	},
 	borderPhone: {
 		'border-bottom': '1px solid #979797',
-		width: '250px',
+		width: '425px',
 	},
 	borderDesktop: {
 		'border-bottom': '2px solid #000000',
-		width: '478px',
+		width: '700px',
 	},
 	inputPhone: {
 		border: 'none',

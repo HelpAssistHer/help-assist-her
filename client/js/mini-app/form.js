@@ -20,7 +20,7 @@ class MiniAppForm extends Component {
 				</Desktop>
 
 				<Field
-					placeholder="Address, city/state, or zip code"
+					placeholder="Address, city/state, or zip code *Beta only available in NY*"
 					name="locationInput"
 					component={Input}
 					type="text"
