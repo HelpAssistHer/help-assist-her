@@ -3,10 +3,12 @@ import injectSheet from 'react-jss'
 import { Link } from 'react-router-dom'
 
 import Spacer from '../../components/spacer'
+import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 
 const Menu = ({ classes }) => {
 	return (
 		<div className={classes.menu}>
+			<LogoBetaWhite height={25} width={160} />
 			<Link to="/about" className={classes.navigationLinkPhone}>
 				About
 			</Link>
