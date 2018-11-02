@@ -7,19 +7,21 @@ import Spacer from '../components/spacer'
 import LogoBetaBlack from '../components/icons/icon-components/logo-beta-black'
 import HamburgerMenu from '../components/icons/icon-components/hamburger-menu'
 
-const LogoAndNavigation = ({ classes }) => {
-	return (
-		<div>
-			<Phone>
+const LogoAndNavigation = ({ classes }) => (
+	<div>
+		<Phone>
+			<div className={classes.logoAndNavigationPhone}>
 				<div className={classes.logoPhone}>
 					<LogoBetaBlack height={25} width={160} />
 					<Link to="/menu" className={classes.hamburgerMenuPhone}>
 						<HamburgerMenu />
 					</Link>
 				</div>
-			</Phone>
+			</div>
+		</Phone>
 
-			<Desktop>
+		<Desktop>
+			<div className={classes.logoAndNavigationDesktop}>
 				<div className={classes.logoDesktop}>
 					<LogoBetaBlack height={33} width={208} />
 					<div className={classes.linksDesktop}>
@@ -32,12 +34,18 @@ const LogoAndNavigation = ({ classes }) => {
 						</Link>
 					</div>
 				</div>
-			</Desktop>
-		</div>
-	)
-}
+			</div>
+		</Desktop>
+	</div>
+)
 
 const styles = {
+	logoAndNavigationPhone: {
+		'border-bottom': '1px solid #3D65F9',
+	},
+	logoAndNavigationDesktop: {
+		'border-bottom': '4px solid #3D65F9',
+	},
 	logoPhone: {
 		height: '55px',
 		margin: '0px 16px 0px 17px',
