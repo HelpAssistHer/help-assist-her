@@ -25,15 +25,17 @@ const MiniAppFooter = ({ classes }) => (
 				</Link>
 			</div>
 
-			<SocialMedia />
+			<div className={classes.socialMediaFormatting}>
+				<SocialMedia />
+			</div>
 		</div>
 	</div>
 )
 
 const styles = {
 	footerRoot: {
-		display: 'flex',
-		'justify-content': 'space-between',
+		display: 'grid',
+		'grid-template-columns': '31% 21% 48%',
 		height: '114px',
 		'background-color': '#3D65F9',
 		padding: '35px 82px 0px 44px',
@@ -53,6 +55,9 @@ const styles = {
 		'font-family': 'hah-regular',
 		'font-size': '10px',
 		color: '#ABD3F9',
+	},
+	socialMediaFormatting: {
+		'justify-self': 'end',
 	},
 }
 
