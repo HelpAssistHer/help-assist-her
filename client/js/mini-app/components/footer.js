@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom'
 import injectSheet from 'react-jss'
 
 import Spacer from '../../components/spacer'
+import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 
 const MiniAppFooter = ({ classes }) => {
 	return (
 		<div>
 			<Spacer height="100px" />
 			<div className={classes.footerRoot}>
+				<LogoBetaWhite height={25} width={160} />
 				<Link to="/about" className={classes.navigationLink}>
 					About
 				</Link>
@@ -23,19 +25,19 @@ const MiniAppFooter = ({ classes }) => {
 
 const styles = {
 	footerRoot: {
-		height: '188px',
-		'background-color': '#3d65f9',
+		height: '149px',
+		'background-color': '#3D65F9',
 	},
 	navigationLink: {
-		'font-family': 'sans-serif',
+		'font-family': 'hah-regular',
 		'font-size': '18px',
-		color: '#ffffff',
+		color: '#FFFFFF',
 		'text-decoration': 'none',
 	},
 	copyrightText: {
-		'font-family': 'sans-serif',
-		'font-size': '14px',
-		color: '#ffffff',
+		'font-family': 'hah-regular',
+		'font-size': '10px',
+		color: '#ABD3F9',
 	},
 }
 
