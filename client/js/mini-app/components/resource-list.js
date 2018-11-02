@@ -4,6 +4,7 @@ import _ from 'lodash'
 import injectSheet from 'react-jss'
 
 import ResourceCard from './resource-card'
+import LogoAndNavigation from '../logo-and-navigation'
 
 const mapStateToProps = state => {
 	return {
@@ -14,6 +15,7 @@ const mapStateToProps = state => {
 const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
 		<div>
+			<LogoAndNavigation />
 			<div className={classes.header}>
 				Your search results have been arranged by closest distance to your
 				location data.
