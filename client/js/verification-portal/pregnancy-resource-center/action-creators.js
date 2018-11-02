@@ -22,7 +22,7 @@ function getResource(resource) {
 	}
 }
 
-function setFormStatus(status) {
+export function setFormStatus(status) {
 	return {
 		type: FORM_SUCCESSFULLY_SUBMITTED,
 		formStatus: status,
@@ -73,7 +73,7 @@ export async function updateResource(updatedResource) {
 	// 	...updatedResource.primaryContactPerson
 	// },
 
-	try {
+	return new Promise(async (resolve, reject) => {
 		const response = await fetch(
 			`/api/pregnancy-centers/${store.getState().resource._id}`,
 			{
@@ -89,19 +89,12 @@ export async function updateResource(updatedResource) {
 
 		const result = await response.json()
 
-		if (result.statusCode >= 400) {
-			store.dispatch(setFormStatus('Failed'))
-		} else {
+		if (response.status < 400) {
 			store.dispatch(setFormStatus('Success'))
+			resolve(result)
+		} else {
+			store.dispatch(setFormStatus('Failed'))
+			reject(result.error)
 		}
-
-		return result
-	} catch (error) {
-		const alertMessage =
-			'There was an unexpected error saving this resource. Please take a screenshot ' +
-			'of this message and attach using the Help button in the lower right corner.' +
-			`\n\nError: ${error}`
-		alert(alertMessage)
-		store.dispatch(setFormStatus('Failed'))
-	}
+	})
 }
