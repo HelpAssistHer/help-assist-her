@@ -10,19 +10,19 @@ const HAH_FACEBOOK_URL = 'https://www.facebook.com/HelpAssistHer/'
 const HAH_TWITTER_URL = 'https://twitter.com/helpassisther'
 const HAH_INSTAGRAM_URL = 'https://www.instagram.com/helpassisther/'
 
-const SocialMedia = ({ classes }) => (
+const SocialMedia = ({ classes, iconSize, spacerWidth }) => (
 	<div>
 		<div className={classes.socialMedia}>
 			<a href={HAH_FACEBOOK_URL} target="_blank" rel="noopener noreferrer">
-				<FacebookWhite height={41} width={41} />
+				<FacebookWhite height={iconSize} width={iconSize} />
 			</a>
-			<Spacer width="14px" />
+			<Spacer width={spacerWidth} />
 			<a href={HAH_TWITTER_URL} target="_blank" rel="noopener noreferrer">
-				<TwitterWhite height={41} width={41} />
+				<TwitterWhite height={iconSize} width={iconSize} />
 			</a>
-			<Spacer width="14px" />
+			<Spacer width={spacerWidth} />
 			<a href={HAH_INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
-				<InstagramWhite height={41} width={41} />
+				<InstagramWhite height={iconSize} width={iconSize} />
 			</a>
 		</div>
 	</div>
