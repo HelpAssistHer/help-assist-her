@@ -13,7 +13,9 @@ const LogoAndNavigation = ({ classes }) => {
 			<Phone>
 				<div className={classes.logoPhone}>
 					<LogoBetaBlack height={25} width={160} />
-					<HamburgerMenu />
+					<Link to="/menu" className={classes.hamburgerMenuPhone}>
+						<HamburgerMenu />
+					</Link>
 				</div>
 			</Phone>
 
@@ -49,6 +51,9 @@ const styles = {
 		display: 'flex',
 		'align-items': 'center',
 		'justify-content': 'space-between',
+	},
+	hamburgerMenuPhone: {
+		cursor: 'pointer',
 	},
 	linksDesktop: {
 		display: 'flex',
