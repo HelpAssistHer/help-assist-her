@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form'
 
 import { Phone, Desktop } from '../components/breakpoints'
 import GoButton from './components/go-button'
-import Input from '../components/input'
+import Input from './components/input'
 import Spacer from '../components/spacer'
 
 class MiniAppForm extends Component {
@@ -20,7 +20,7 @@ class MiniAppForm extends Component {
 				</Desktop>
 
 				<Field
-					placeholder="Address, city/state, zip code"
+					placeholder="Address, city/state, or zip code"
 					name="locationInput"
 					component={Input}
 					type="text"
