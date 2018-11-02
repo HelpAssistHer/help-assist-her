@@ -50,12 +50,14 @@ const styles = {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
 		color: '#000000',
-		opacity: '0.27',
 		'letter-spacing': '0.5px',
 		'line-height': '16px',
 		'text-align': 'center',
 		height: '26px',
 		width: '100%',
+		'&::placeholder': {
+			opacity: '0.27',
+		},
 	},
 	inputDesktop: {
 		border: 'none',
@@ -63,12 +65,14 @@ const styles = {
 		'font-family': 'hah-light',
 		'font-size': '24px',
 		color: '#000000',
-		opacity: '0.24',
 		'letter-spacing': '0.5px',
 		'line-height': '30px',
 		'text-align': 'center',
 		height: '43px',
 		width: '100%',
+		'&::placeholder': {
+			opacity: '0.24',
+		},
 	},
 }
 
