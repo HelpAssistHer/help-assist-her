@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 
 import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
-
 import LogoBetaBlack from '../components/icons/icon-components/logo-beta-black'
+import HamburgerMenu from '../components/icons/icon-components/hamburger-menu'
 
 const LogoAndNavigation = ({ classes }) => {
 	return (
@@ -13,6 +13,7 @@ const LogoAndNavigation = ({ classes }) => {
 			<Phone>
 				<div className={classes.logoPhone}>
 					<LogoBetaBlack height={25} width={160} />
+					<HamburgerMenu />
 				</div>
 			</Phone>
 
@@ -37,9 +38,10 @@ const LogoAndNavigation = ({ classes }) => {
 const styles = {
 	logoPhone: {
 		height: '55px',
-		margin: '0px 0px 0px 17px',
+		margin: '0px 16px 0px 17px',
 		display: 'flex',
 		'align-items': 'center',
+		'justify-content': 'space-between',
 	},
 	logoDesktop: {
 		height: '100px',
