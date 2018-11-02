@@ -4,12 +4,14 @@ import injectSheet from 'react-jss'
 const Input = ({ classes, input, type, placeholder }) => {
 	return (
 		<div className={classes.inputRoot}>
-			<input
-				className={classes.inputPhone}
-				type={type}
-				placeholder={placeholder}
-				{...input}
-			/>
+			<div className={classes.border}>
+				<input
+					className={classes.inputPhone}
+					type={type}
+					placeholder={placeholder}
+					{...input}
+				/>
+			</div>
 		</div>
 	)
 }
@@ -19,9 +21,12 @@ const styles = {
 		display: 'flex',
 		'justify-content': 'center',
 	},
+	border: {
+		'border-bottom': '1px solid #979797',
+		width: '250px',
+	},
 	inputPhone: {
 		border: 'none',
-		'border-bottom': '1px solid #979797',
 		outline: 'none',
 		'font-family': 'hah-regular',
 		'font-size': '14px',
@@ -30,8 +35,8 @@ const styles = {
 		'letter-spacing': '0.5px',
 		'line-height': '16px',
 		'text-align': 'center',
-		width: '208px',
 		height: '26px',
+		width: '100%',
 	},
 }
 
