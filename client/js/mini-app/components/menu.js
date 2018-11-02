@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import Spacer from '../../components/spacer'
 import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 import ExitWhite from '../../components/icons/icon-components/exit-white'
+import FacebookWhite from '../../components/icons/icon-components/facebook-white'
+import TwitterWhite from '../../components/icons/icon-components/twitter-white'
+import InstagramWhite from '../../components/icons/icon-components/instagram-white'
 
 const Menu = ({ classes }) => {
 	return (
@@ -22,6 +25,14 @@ const Menu = ({ classes }) => {
 				<Link to="/feedback" className={classes.navigationLinkPhone}>
 					Feedback
 				</Link>
+			</div>
+
+			<div className={classes.socialMedia}>
+				<FacebookWhite height={41} width={41} />
+				<Spacer width="14px" />
+				<TwitterWhite height={41} width={41} />
+				<Spacer width="14px" />
+				<InstagramWhite height={41} width={41} />
 			</div>
 		</div>
 	)
@@ -51,6 +62,10 @@ const styles = {
 		color: '#FFFFFF',
 		'text-decoration': 'none',
 		cursor: 'pointer',
+	},
+	socialMedia: {
+		display: 'flex',
+		padding: '48px 0px 0px 23px',
 	},
 }
 
