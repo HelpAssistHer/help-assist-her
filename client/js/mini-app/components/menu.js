@@ -54,6 +54,8 @@ const styles = {
 	},
 	exitButton: {
 		cursor: 'pointer',
+		'background-color': '#3D65F9',
+		border: 'none',
 	},
 	links: {
 		display: 'flex',
