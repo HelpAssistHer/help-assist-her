@@ -249,12 +249,20 @@ class VerificationPortalFormClass extends Component {
 					<Spacer height="81px" />
 
 					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field name="verifiedData.services.verified" component={Toggle} />
+						</div>
 						<div className={classes.headingGrid}>
 							<Heading text="SERVICES" size="medium" />
 						</div>
 					</div>
+
 					<Spacer height="53px" />
-					<Services />
+					<div className={classes.gridField}>
+						<div className={classes.secondAndThirdBox}>
+							<Services />
+						</div>
+					</div>
 				</div>
 
 				<div className={classes.formSection}>
@@ -267,45 +275,52 @@ class VerificationPortalFormClass extends Component {
 							cols="50"
 						/>
 					</div>
-					<div className={classes.parent}>
-						<Field name="verifiedData.services.verified" component={Toggle} />
-					</div>
+					<Spacer height="112px" />
 				</div>
 
 				<div className={classes.formSection}>
-					<Heading text="HOURS" size="medium" />
-					<Spacer height="50px" />
-					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Time} />
-					<Field name="hours[0].close" component={Time} />
+					<div className={classes.gridField}>
+						<div className={classes.firstBox}>
+							<Field name="verifiedData.hours.verified" component={Toggle} />
+						</div>
+						<div className={classes.headingGrid}>
+							<Heading text="HOURS" size="medium" />
+						</div>
+					</div>
 
-					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Time} />
-					<Field name="hours[1].close" component={Time} />
+					<div className={classes.gridField}>
+						<div className={classes.secondAndThirdBox}>
+							<Spacer height="50px" />
+							<label>Sunday Hours</label>
+							<Field name="hours[0].open" component={Time} />
+							<Field name="hours[0].close" component={Time} />
 
-					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Time} />
-					<Field name="hours[2].close" component={Time} />
+							<label>Monday Hours</label>
+							<Field name="hours[1].open" component={Time} />
+							<Field name="hours[1].close" component={Time} />
 
-					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Time} />
-					<Field name="hours[3].close" component={Time} />
+							<label>Tuesday Hours</label>
+							<Field name="hours[2].open" component={Time} />
+							<Field name="hours[2].close" component={Time} />
 
-					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Time} />
-					<Field name="hours[4].close" component={Time} />
+							<label>Wednesday Hours</label>
+							<Field name="hours[3].open" component={Time} />
+							<Field name="hours[3].close" component={Time} />
 
-					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Time} />
-					<Field name="hours[5].close" component={Time} />
+							<label>Thursday Hours</label>
+							<Field name="hours[4].open" component={Time} />
+							<Field name="hours[4].close" component={Time} />
 
-					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Time} />
-					<Field name="hours[6].close" component={Time} />
-				</div>
+							<label>Friday Hours</label>
+							<Field name="hours[5].open" component={Time} />
+							<Field name="hours[5].close" component={Time} />
 
-				<div className={classes.parent}>
-					<Field name="verifiedData.hours.verified" component={Toggle} />
+							<label>Saturday Hours</label>
+							<Field name="hours[6].open" component={Time} />
+							<Field name="hours[6].close" component={Time} />
+						</div>
+					</div>
+					<Spacer height="98px" />
 				</div>
 
 				<div className={classes.formSection}>
