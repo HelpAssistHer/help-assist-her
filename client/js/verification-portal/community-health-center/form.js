@@ -10,29 +10,26 @@ const registerFields = inputField => {
 	if (!inputField.name) return inputField.map(field => registerFields(field))
 	return <RegisterField inputField={inputField} key={inputField.name} />
 }
-class chcForm extends Component {
-	render() {
-		const { classes, chcInputResource, handleSubmit } = this.props
-		return (
-			<form className={classes.form} onSubmit={handleSubmit}>
-				<div>
-					<div className={classes.leftColumn}>VERIFIED</div>
-					<div className={classes.rightColumn}>GENERAL INFORMATION</div>
-				</div>
-				{chcInputResource.map(field => registerFields(field))}
-				<Spacer height="50px" />
-				<Button
-					type="submit"
-					buttonText="Save Progress"
-					activeState={false}
-					size="large"
-				/>
-			</form>
-		)
-	}
+const chcForm = ({ classes, chcFormFields, handleSubmit }) => {
+	return (
+		<form className={classes.form} onSubmit={handleSubmit}>
+			<div>
+				<div className={classes.leftColumn}>VERIFIED</div>
+				<div className={classes.rightColumn}>GENERAL INFORMATION</div>
+			</div>
+			{chcFormFields.map(field => registerFields(field))}
+			<Spacer height="50px" />
+			<Button
+				type="submit"
+				buttonText="Save Progress"
+				activeState={false}
+				size="large"
+			/>
+		</form>
+	)
 }
 
-const CommunityHealtCenterForm = reduxForm({
+const CommunityHealthCenterForm = reduxForm({
 	form: 'chcForm',
 })(chcForm)
 
@@ -65,4 +62,4 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(CommunityHealtCenterForm)
+export default injectSheet(styles)(CommunityHealthCenterForm)

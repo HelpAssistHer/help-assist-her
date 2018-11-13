@@ -1,6 +1,6 @@
 import { normalizePhone, normalizeZipcode } from './util'
 
-export const chcInputResource = [
+export const chcFormFields = [
 	{
 		name: 'chcName',
 		placeholder: 'Name of Community Health Center',

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import CommunityHealtCenterForm from './form'
-import { chcInputResource } from './chc-input-resource'
+import CommunityHealthCenterForm from './form'
+import { chcFormFields } from './chc-form-fields'
 import { submitForm } from './action-creators'
 
 const handleSubmit = values => {
@@ -10,8 +10,8 @@ const handleSubmit = values => {
 
 const CommunityHealthCenter = () => (
 	<div>
-		<CommunityHealtCenterForm
-			chcInputResource={chcInputResource}
+		<CommunityHealthCenterForm
+			chcFormFields={chcFormFields}
 			onSubmit={handleSubmit}
 		/>
 	</div>

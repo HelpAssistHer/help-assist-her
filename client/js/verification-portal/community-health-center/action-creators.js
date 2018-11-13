@@ -1,8 +1,8 @@
 import { change } from 'redux-form'
 
 import { store } from './../../hah-app/index'
-import { chcInputResource } from './chc-input-resource'
-
+import { chcFormFields } from './chc-form-fields'
+import { SUBMIT_CHC_FORM } from './action-types'
 const clearField = inputField => {
 	if (!inputField.name) return inputField.forEach(field => clearField(field))
 	store.dispatch(change('chcForm', inputField.verify, ''))
@@ -11,7 +11,7 @@ const clearField = inputField => {
 
 const submit = values => {
 	return {
-		type: 'SUBMIT_CHC_FORM',
+		type: SUBMIT_CHC_FORM,
 		chcFormData: values,
 	}
 }
@@ -19,5 +19,5 @@ const submit = values => {
 export const submitForm = values => {
 	store.dispatch(submit(values))
 	store.dispatch({ type: 'CLEAR_CHC_STATE' })
-	return clearField(chcInputResource)
+	return clearField(chcFormFields)
 }
