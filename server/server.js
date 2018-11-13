@@ -90,6 +90,7 @@ passport.use(
 					provider: profile.provider,
 					providerId: profile.id,
 					displayName: profile.displayName,
+					providerPictureUrl: _.get(profile, 'photos[0].value'),
 				},
 				options = { upsert: true, new: true, setDefaultsOnInsert: true }
 
@@ -203,7 +204,7 @@ server.get(
 
 		// an array of javascript objects
 		const pregnancyCenters = await PregnancyCenterModel.aggregate([
-			{ $match: _.merge(queries.verificationNotComplete, notInVerification) },
+			{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
 			{ $sample: { size: 1 } },
 		])
 

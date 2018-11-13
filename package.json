@@ -26,7 +26,7 @@
 		"startdb": "mongod --dbpath ~/.hah/data",
 		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
 		"test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
-		"watch": "webpack --watch"
+		"watch": "yarn && webpack --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -82,6 +82,7 @@
 		"react-facebook-login": "^3.6.1",
 		"react-jss": "^6.1.1",
 		"react-redux": "^5.0.4",
+		"react-responsive": "^5.0.0",
 		"react-router-dom": "^4.1.1",
 		"react-router-tabs": "^1.2.0",
 		"react-tooltip": "^3.6.1",
@@ -117,6 +118,7 @@
 		"react-addons-test-utils": "15.3.2",
 		"react-test-renderer": "15.3.2",
 		"style-loader": "^0.22.1",
+		"svg-to-react-cli": "^1.5.0",
 		"webpack": "^4.17.1",
 		"webpack-cli": "^3.1.0"
 	}

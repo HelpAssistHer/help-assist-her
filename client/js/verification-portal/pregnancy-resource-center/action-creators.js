@@ -2,6 +2,7 @@ import _ from 'lodash'
 
 import { store } from '../../hah-app/index'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
+import { FORM_SUCCESSFULLY_SUBMITTED } from './action-types'
 
 async function getOneResource() {
 	const response = await fetch(`/api/pregnancy-centers/verify`, {
@@ -18,6 +19,13 @@ function getResource(resource) {
 	return {
 		type: GET_RESOURCE_TO_VERIFY,
 		resource,
+	}
+}
+
+export function setFormStatus(status) {
+	return {
+		type: FORM_SUCCESSFULLY_SUBMITTED,
+		formStatus: status,
 	}
 }
 
@@ -65,7 +73,7 @@ export async function updateResource(updatedResource) {
 	// 	...updatedResource.primaryContactPerson
 	// },
 
-	try {
+	return new Promise(async (resolve, reject) => {
 		const response = await fetch(
 			`/api/pregnancy-centers/${store.getState().resource._id}`,
 			{
@@ -81,24 +89,12 @@ export async function updateResource(updatedResource) {
 
 		const result = await response.json()
 
-		if (result.statusCode >= 400) {
-			const alertMessage =
-				'There was an error saving this resource. Please take a screenshot ' +
-				'of this message and attach using the Help button in the lower right corner.' +
-				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(
-					result.message,
-				)}`
-			alert(alertMessage)
+		if (response.status < 400) {
+			store.dispatch(setFormStatus('Success'))
+			resolve(result)
 		} else {
-			alert('Updates saved successfully!')
+			store.dispatch(setFormStatus('Failed'))
+			reject(result.error)
 		}
-
-		return result
-	} catch (error) {
-		const alertMessage =
-			'There was an unexpected error saving this resource. Please take a screenshot ' +
-			'of this message and attach using the Help button in the lower right corner.' +
-			`\n\nError: ${error}`
-		alert(alertMessage)
-	}
+	})
 }

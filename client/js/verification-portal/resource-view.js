@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import HeaderSuccess from './components/header-success'
+import HeaderModal from './components/header-modal'
 import Spacer from '../components/spacer'
 import LoginButton from '../authentication/facebook-login-button'
 import Tabs from './components/tabs'
@@ -24,7 +24,7 @@ const ResourceView = ({ formType, classes }) => {
 	return (
 		<div className={classes.resourceView}>
 			<Spacer height="25px" backgroundColor="black" />
-			<HeaderSuccess />
+			<HeaderModal />
 			<Tabs />
 			<Spacer height="63px" />
 			<LoginButton />
