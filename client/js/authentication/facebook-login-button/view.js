@@ -73,7 +73,7 @@ const styles = {
 	facebookLoginButton: {
 		color: '#000 !important',
 		border: '2px solid #000 !important',
-		'font-family': 'Century Gothic, san-serif !important',
+		'font-family': 'Century Gothic, sans-serif !important',
 		'font-size': '18px !important',
 		'border-radius': '6px !important',
 		'background-color': 'Transparent !important',

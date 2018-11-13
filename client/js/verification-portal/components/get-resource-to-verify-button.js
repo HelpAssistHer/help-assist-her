@@ -32,6 +32,7 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		notes,
 		otherServices,
 		phone,
+		hotlinePhoneNumber,
 		services,
 		primaryContactPerson,
 		verifiedData,
@@ -58,6 +59,11 @@ const populateForm = ({ changeFieldValue, resource }) => {
 	changeFieldValue(
 		'verifiedData.phone.verified',
 		_.get(verifiedData, 'phone.verified'),
+	)
+	changeFieldValue('hotlinePhoneNumber', hotlinePhoneNumber)
+	changeFieldValue(
+		'verifiedData.hotlinePhoneNumber.verified',
+		_.get(verifiedData, 'hotlinePhoneNumber.verified'),
 	)
 
 	changeFieldValue('email', email)
@@ -103,15 +109,15 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		'verifiedData.services.verified',
 		_.get(verifiedData, 'services.verified'),
 	)
-	_.forEach([0, 1, 2, 3, 4, 5, 6], (hour, i) => {
+	_.forEach([0, 1, 2, 3, 4, 5, 6], i => {
 		//populating data for all 7 days of week
 		changeFieldValue(
 			`hours[${i}].open`,
-			convertNumberToTimeFormat(_.get(hours, `[${i}].open`)),
+			convertNumberToTimeFormat(_.get(hours, `[${i}].open`) || null),
 		)
 		changeFieldValue(
 			`hours[${i}].close`,
-			convertNumberToTimeFormat(_.get(hours, `[${i}].close`)),
+			convertNumberToTimeFormat(_.get(hours, `[${i}].close`) || null),
 		)
 	})
 	changeFieldValue(

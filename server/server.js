@@ -90,6 +90,7 @@ passport.use(
 					provider: profile.provider,
 					providerId: profile.id,
 					displayName: profile.displayName,
+					providerPictureUrl: _.get(profile, 'photos[0].value'),
 				},
 				options = { upsert: true, new: true, setDefaultsOnInsert: true }
 

@@ -2,6 +2,9 @@ import _ from 'lodash'
 
 import { store } from '../../hah-app/index'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
+import { FORM_SUCCESSFULLY_SUBMITTED } from './action-types'
+import { CLEAR_RESOURCE } from './action-types'
+import { change } from 'redux-form'
 
 async function getOneResource() {
 	const response = await fetch(`/api/pregnancy-centers/verify`, {
@@ -20,12 +23,32 @@ function getResource(resource) {
 		resource,
 	}
 }
+
 function clearResource() {
-	return { type: 'CLEAR_RESOURCE' }
+	return {
+		type: CLEAR_RESOURCE,
+	}
+}
+
+function setFormStatus(status) {
+	return {
+		type: FORM_SUCCESSFULLY_SUBMITTED,
+		formStatus: status,
+	}
+}
+
+function resetFormAndResource(dispatch) {
+	_.forEach(
+		store.getState().form.verificationPortal.registeredFields,
+		field => {
+			dispatch(change('verificationPortal', field, null))
+		},
+	)
+	dispatch(clearResource())
 }
 export const getResourceToVerify = () => {
 	return function(dispatch) {
-		dispatch(clearResource())
+		resetFormAndResource(dispatch)
 		return getOneResource().then(result => dispatch(getResource(result)))
 	}
 }
@@ -85,15 +108,9 @@ export async function updateResource(updatedResource) {
 		const result = await response.json()
 
 		if (result.statusCode >= 400) {
-			const alertMessage =
-				'There was an error saving this resource. Please take a screenshot ' +
-				'of this message and attach using the Help button in the lower right corner.' +
-				`\n\nError: ${result.error} \nMessage: ${JSON.stringify(
-					result.message,
-				)}`
-			alert(alertMessage)
+			store.dispatch(setFormStatus('Failed'))
 		} else {
-			alert('Updates saved successfully!')
+			store.dispatch(setFormStatus('Success'))
 		}
 
 		return result
@@ -103,5 +120,6 @@ export async function updateResource(updatedResource) {
 			'of this message and attach using the Help button in the lower right corner.' +
 			`\n\nError: ${error}`
 		alert(alertMessage)
+		store.dispatch(setFormStatus('Failed'))
 	}
 }
