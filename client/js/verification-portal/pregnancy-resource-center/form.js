@@ -9,7 +9,6 @@ import Heading from '../../components/heading'
 import BusinessHours from '../components/business-hours'
 import Services from './services'
 import Toggle from '../../components/toggle'
-import { store } from '../../hah-app/index'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
