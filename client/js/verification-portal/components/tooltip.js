@@ -7,7 +7,13 @@ import Spacer from '../../components/spacer'
 const Tooltip = ({ classes, id, heading, text }) => {
 	return (
 		<div>
-			<ReactTooltip id={id} place="top" type="dark" effect="solid">
+			<ReactTooltip
+				id={id}
+				className={classes.tooltip}
+				place="top"
+				type="dark"
+				effect="solid"
+			>
 				<div className={classes.heading}>{heading}</div>
 				<Spacer height="8px" />
 				<div className={classes.text}>{text}</div>
@@ -29,6 +35,9 @@ const styles = {
 		'line-height': '15px',
 		'font-weight': 'lighter',
 		'letter-spacing': '1px',
+	},
+	tooltip: {
+		width: '200px',
 	},
 }
 
