@@ -16,7 +16,7 @@ const ServicesGroup = ({ classes, heading, listOfServices }) => {
 
 const styles = {
 	group: {
-		padding: '0 66px 40px 0',
+		padding: '0 20px 40px 0',
 	},
 	heading: {
 		color: '#000000',

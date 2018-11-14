@@ -41,7 +41,7 @@ const styles = {
 		display: 'flex',
 		'flex-direction': 'row',
 		'flex-wrap': 'wrap',
-		'justify-content': 'flex-end',
+		'justify-content': 'flex-start',
 	},
 }
 

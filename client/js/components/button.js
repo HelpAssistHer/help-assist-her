@@ -2,13 +2,27 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import classNames from 'classnames'
 
-const Button = ({ classes, onClick, buttonText, activeState, type, size }) => {
-	const activeClass = activeState ? classes.active : classes.inactive
+const Button = ({
+	classes,
+	onClick,
+	buttonText,
+	activeState,
+	type,
+	size,
+	disabled,
+}) => {
+	let buttonStyle = activeState ? classes.active : classes.inactive
+
+	if (disabled) {
+		buttonStyle = classes.disabled
+	}
+
 	return (
 		<button
 			type={type}
-			className={classNames(activeClass, classes[size], classes.default)}
+			className={classNames(buttonStyle, classes[size], classes.default)}
 			onClick={onClick}
+			disabled={disabled}
 		>
 			{buttonText}
 		</button>
@@ -22,6 +36,7 @@ const styles = {
 		border: '2px solid #000000',
 		'border-radius': '100px',
 		'text-align': 'center',
+		cursor: 'pointer',
 	},
 	inactive: {
 		color: '#000',
@@ -50,6 +65,12 @@ const styles = {
 		width: '280px',
 		'letter-spacing': '0.3px',
 		'line-height': '22px',
+	},
+	disabled: {
+		color: '#000',
+		'background-color': '#fff',
+		opacity: 0.5,
+		cursor: 'progress',
 	},
 }
 

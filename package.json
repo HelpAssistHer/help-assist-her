@@ -117,6 +117,7 @@
 		"react-addons-test-utils": "15.3.2",
 		"react-test-renderer": "15.3.2",
 		"style-loader": "^0.22.1",
+		"svg-to-react-cli": "^1.5.0",
 		"webpack": "^4.17.1",
 		"webpack-cli": "^3.1.0"
 	}
