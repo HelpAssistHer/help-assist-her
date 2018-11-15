@@ -1,4 +1,4 @@
-import { normalizePhone, normalizeZipcode } from './util'
+import { formatPhone, formatZipcode } from '../util'
 
 export const chcFormFields = [
 	{
@@ -39,7 +39,7 @@ export const chcFormFields = [
 		{
 			name: 'zipCode',
 			placeholder: 'Zip Code',
-			normalize: normalizeZipcode,
+			format: formatZipcode,
 			styling: {
 				customInputStyle: 'leftHalfInputField',
 			},
@@ -50,7 +50,7 @@ export const chcFormFields = [
 		placeholder: 'Phone Number',
 		verify: 'verifiedData.phoneNumber.verified',
 		styling: {
-			normalize: normalizePhone,
+			format: formatPhone,
 			spacer: '66px',
 			customInputStyle: 'leftHalfInputField',
 		},

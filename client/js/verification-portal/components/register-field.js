@@ -9,7 +9,7 @@ import Spacer from '../../components/spacer'
 
 const RegisterField = ({ classes, inputField }) => {
 	const { name, type, placeholder, verify, styling } = inputField
-	const { normalize, spacer, customInputStyle } = styling || {}
+	const { format, spacer, customInputStyle } = styling || {}
 	const customStyle = classes[customInputStyle] || ''
 	return (
 		<div>
@@ -23,7 +23,7 @@ const RegisterField = ({ classes, inputField }) => {
 					name={name}
 					placeholder={placeholder}
 					type={type || 'text'}
-					normalize={normalize}
+					format={format}
 				/>
 			</div>
 		</div>
