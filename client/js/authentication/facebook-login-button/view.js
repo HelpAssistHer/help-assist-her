@@ -32,10 +32,6 @@ class FacebookLoginButton extends React.Component {
 		this.props.dispatch(login(response.accessToken))
 	}
 
-	logout() {
-		this.props.dispatch(logout())
-	}
-
 	render() {
 		const { classes, facebookAppId, isLoggedIn } = this.props
 
@@ -45,25 +41,16 @@ class FacebookLoginButton extends React.Component {
 
 		return (
 			<div>
-				{isLoggedIn ? (
-					<button
-						type="button"
-						className={classes.facebookLoginButton}
-						onClick={this.logout.bind(this)}
-					>
-						Logout
-					</button>
-				) : (
+				{
 					<FacebookLogin
 						appId={facebookAppId}
 						autoLoad={false}
 						fields="name,email,picture"
 						callback={this.facebookResponse.bind(this)}
 						cssClass={classes.facebookLoginButton}
-						textButton=" Login"
-						icon="fa-facebook"
+						textButton="Sign in with your Facebook"
 					/>
-				)}
+				}
 			</div>
 		)
 	}
@@ -71,16 +58,19 @@ class FacebookLoginButton extends React.Component {
 
 const styles = {
 	facebookLoginButton: {
-		color: '#000 !important',
-		border: '2px solid #000 !important',
+		color: '#F0649A !important',
 		'font-family': 'Century Gothic, sans-serif !important',
-		'font-size': '18px !important',
-		'border-radius': '6px !important',
-		'background-color': 'Transparent !important',
-		'background-repeat': 'no-repeat !important',
+		'font-weight': 'bold',
+		'font-size': '20px !important',
+		'border-radius': '100px !important',
+		border: '5px solid #FFFFFF',
+		height: '76px',
+		width: '508px',
+		'background-color': '#FFFFFF',
 		'min-width': '145px !important',
-		'letter-spacing': '0 !important',
-		'text-shadow': '0 1px 0 rgba(255,254,255,0.50) !important',
+		'letter-spacing': '0.33px !important',
+		'line-height': '24px',
+		cursor: 'pointer',
 	},
 }
 
