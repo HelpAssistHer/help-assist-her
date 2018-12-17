@@ -1,6 +1,6 @@
 'use strict'
-
-const _ = require('lodash')
+const _ = require('lodash/fp')
+const googleMaps = require('@google/maps')
 const Joi = require('joi')
 const Log = require('log')
 const P = require('bluebird')
@@ -19,56 +19,56 @@ const PersonModel = require('../persons/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
 const personSchemaJoi = require('../persons/schema/joi-schema')
 
-const googleMapsClient = require('@google/maps').createClient({
+const googleMapsClient = googleMaps.createClient({
 	key: config.googleMaps.key,
 	Promise: P,
 })
 
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt', 'inVerification']
+const omitKeys = _.omit(keysToIgnore)
 
-function isEqualOmit(obj1, obj2, omitKeysList) {
-	return _.isEqual(_.omit(obj1, omitKeysList), _.omit(obj2, omitKeysList))
-}
+const isEqualOmit = (obj1, obj2) => _.isEqual(omitKeys(obj1), omitKeys(obj2))
 
-const objRemovingMongoKeys = obj => _.omit(obj, keysToIgnore)
-
-function createPregnancyCenterUpdateHistory(
+const createPregnancyCenterUpdateHistory = (
 	userId,
 	oldPregnancyCenterObj,
 	newPregnancyCenterObj,
-) {
-	return new P(async resolve => {
-		// transfer over `updated` info from previous updates
-		newPregnancyCenterObj.updated = _.get(oldPregnancyCenterObj, 'updated', {})
-
-		// create updated object and history document
-		_.forOwn(objRemovingMongoKeys(_.clone(newPregnancyCenterObj)), function(
-			value,
-			key,
-		) {
-			// check that the 'new' data isn't exactly the same as old
-			// this prevents us from creating histories for an update with same exact data
-			if (!isEqualOmit(oldPregnancyCenterObj[key], value, keysToIgnore)) {
-				// `updated` object in PregnancyCenterModel
-				newPregnancyCenterObj['updated'][key] = {
-					userId: userId,
-					date: new Date().toISOString(),
-				}
-
-				// make a separate history document
-				const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
-					pregnancyCenterId: oldPregnancyCenterObj._id,
-					field: key,
-					newValue: value,
-					oldValue: oldPregnancyCenterObj[key],
-					userId: userId,
-				})
-				pregnancyCenterHistoryObj.save()
-			}
+) => {
+	const createPregnancyCenterHistory = (key, value) => {
+		const pregnancyCenterHistoryObj = new PregnancyCenterHistoryModel({
+			pregnancyCenterId: oldPregnancyCenterObj._id,
+			field: key,
+			newValue: value,
+			oldValue: oldPregnancyCenterObj[key],
+			userId: userId,
 		})
+		return pregnancyCenterHistoryObj.save()
+	}
 
-		return resolve(newPregnancyCenterObj)
-	})
+	// doc object is changed
+	const addUpdateData = (doc, key) => {
+		doc['updated'][key] = {
+			userId: userId,
+			date: new Date().toISOString(),
+		}
+	}
+
+	const processKeys = (value, key) => {
+		// check that the 'new' data isn't exactly the same as old
+		// this prevents us from creating histories for an update with same exact data
+		if (isEqualOmit(oldPregnancyCenterObj[key], value)) return null
+		// `updated` object in PregnancyCenterModel
+		addUpdateData(newPregnancyCenterObj, key)
+		return createPregnancyCenterHistory(key, value)
+	}
+
+	// transfer over `updated` info from previous updates
+	newPregnancyCenterObj.updated = _.get(oldPregnancyCenterObj, 'updated', {})
+
+	// iterate over keys and values and create 'updated' data and histories
+	_.forOwn(omitKeys(newPregnancyCenterObj), processKeys)
+
+	return newPregnancyCenterObj
 }
 
 function createFqhcUpdateHistory(userId, oldFqhcObj, newFqhcObj) {
