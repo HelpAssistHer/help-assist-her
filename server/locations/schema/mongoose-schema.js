@@ -25,17 +25,16 @@ const userDateSchema = new mongoose.Schema({
 })
 
 function getFullAddress() {
-	return (
-		_.get(this, 'address.line1', '') +
-		' ' +
-		_.get(this, 'address.line2', '') +
-		' ' +
-		_.get(this, 'address.city', '') +
-		' ' +
-		_.get(this, 'address.state', '') +
-		' ' +
-		_.get(this, 'address.zip', '')
-	)
+	if (_.isUndefined(this.address)) return ''
+	const getProperty = property => _.get(this.address, property, '')
+
+	return [
+		getProperty('line1'),
+		getProperty('line2'),
+		getProperty('city'),
+		getProperty('state'),
+		getProperty('zip'),
+	].join(' ')
 }
 
 module.exports = { pointSchema, addressSchema, userDateSchema, getFullAddress }
