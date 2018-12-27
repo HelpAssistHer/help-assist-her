@@ -19,17 +19,16 @@ const FQHCModel = require('./fqhcs/schema/mongoose-schema')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
-const databaseHelpers = require('./util/database-helpers')
-const createPregnancyCenter = databaseHelpers.createPregnancyCenter
-const releaseDocuments = databaseHelpers.releaseDocuments
-const updateFqhc = databaseHelpers.updateFqhc
-const updateFqhcDoNotList = databaseHelpers.updateFqhcDoNotList
-const updateFqhcOutOfBusiness = databaseHelpers.updateFqhcOutOfBusiness
-const updatePregnancyCenter = databaseHelpers.updatePregnancyCenter
+const createPregnancyCenter = require('./util/actions/create-pregnancy-center')
+const updateFqhc = require('./util/actions/update-fqhc')
+const releaseDocuments = require('./util/actions/release-documents')
+const updateFqhcDoNotList = './util/actions/update-fqhc-do-not-list'
+const updateFqhcOutOfBusiness = './util/actions/update-fqhc-out-of-business'
+const updatePregnancyCenter = './util/actions/update-pregnancy-center'
 const updatePregnancyCenterDoNotList =
-	databaseHelpers.updatePregnancyCenterDoNotList
+	'./util/actions/update-pregnancy-center-do-not-list'
 const updatePregnancyCenterOutOfBusiness =
-	databaseHelpers.updatePregnancyCenterOutOfBusiness
+	'./util/actions/update-pregnancy-center-out-of-business'
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -141,113 +140,98 @@ server.get('/api/initial-data', (req, res) => {
 	Returns all pregnancy centers
 	TODO: limits and paging, if necessary
  */
-server.get(
-	'/api/pregnancy-centers',
-	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
-		const allPregnancyCenters = await PregnancyCenterModel.find({
-			outOfBusiness: { $in: [null, false] },
-		})
-			.populate('primaryContactPerson')
-			.lean()
-		if (allPregnancyCenters) {
-			res.status(200).json(allPregnancyCenters)
-		}
-	}),
-)
+server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+	const allPregnancyCenters = await PregnancyCenterModel.find({
+		outOfBusiness: { $in: [null, false] },
+	})
+		.populate('primaryContactPerson')
+		.lean()
+	if (allPregnancyCenters) {
+		res.status(200).json(allPregnancyCenters)
+	}
+})
 
 /*
 	Takes in 'lng', 'lat', and 'miles' radius as query vars
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
-server.get(
-	'/api/pregnancy-centers/near-me',
-	handleRejectedPromise(async (req, res) => {
-		const METERS_PER_MILE = 1609.34
-		const lng = req.query.lng || -73.781332
-		const lat = req.query.lat || 42.6721989
-		const miles = req.query.miles || 5
+server.get('/api/pregnancy-centers/near-me', async (req, res) => {
+	const METERS_PER_MILE = 1609.34
+	const lng = req.query.lng || -73.781332
+	const lat = req.query.lat || 42.6721989
+	const miles = req.query.miles || 5
 
-		const pregnancyCentersNearMe = await PregnancyCenterModel.find({
-			'address.location': {
-				$nearSphere: {
-					$geometry: {
-						type: 'Point',
-						coordinates: [lng, lat],
-					},
-					$maxDistance: miles * METERS_PER_MILE,
+	const pregnancyCentersNearMe = await PregnancyCenterModel.find({
+		'address.location': {
+			$nearSphere: {
+				$geometry: {
+					type: 'Point',
+					coordinates: [lng, lat],
 				},
+				$maxDistance: miles * METERS_PER_MILE,
 			},
-			outOfBusiness: { $in: [null, false] },
-		})
-			.populate('primaryContactPerson')
-			.lean()
+		},
+		outOfBusiness: { $in: [null, false] },
+	})
+		.populate('primaryContactPerson')
+		.lean()
 
-		if (pregnancyCentersNearMe.length <= 0) {
-			return res.boom.notFound(
-				`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
-			)
-		} else {
-			res.status(200).json(pregnancyCentersNearMe)
-		}
-	}),
-)
+	if (pregnancyCentersNearMe.length <= 0) {
+		return res.boom.notFound(
+			`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
+		)
+	} else {
+		res.status(200).json(pregnancyCentersNearMe)
+	}
+})
 
 /*
 	Returns one pregnancy center that needs verification
 */
-server.get(
-	'/api/pregnancy-centers/verify',
-	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
-		const notInVerification = { inVerification: { $in: [false, null] } }
+server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
+	const notInVerification = { inVerification: { $in: [false, null] } }
 
-		// an array of javascript objects
-		const pregnancyCenters = await PregnancyCenterModel.aggregate([
-			{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
-			{ $sample: { size: 1 } },
-		])
+	// an array of javascript objects
+	const pregnancyCenters = await PregnancyCenterModel.aggregate([
+		{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
+		{ $sample: { size: 1 } },
+	])
 
-		if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
-			return res.boom.notFound('No pregnancy centers to verify')
-		}
+	if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
+		return res.boom.notFound('No pregnancy centers to verify')
+	}
 
-		// a second lookup is necessary to get a mongoose object to populate
-		const pregnancyCenterId = pregnancyCenters[0]._id
-		const update = { inVerification: req.user._id }
-		const options = { new: true } // returns updated object back
-		const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate(
-			{
-				_id: pregnancyCenterId,
-			},
-			update,
-			options,
+	// a second lookup is necessary to get a mongoose object to populate
+	const pregnancyCenterId = pregnancyCenters[0]._id
+	const update = { inVerification: req.user._id }
+	const options = { new: true } // returns updated object back
+	const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate(
+		{
+			_id: pregnancyCenterId,
+		},
+		update,
+		options,
+	)
+		.populate('primaryContactPerson')
+		.lean()
+
+	res.status(200).json(pregnancyCenter)
+})
+
+server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
+	const newPregnancyCenter = req.body
+
+	try {
+		const createdPregnancyCenter = await createPregnancyCenter(
+			req.user._id,
+			newPregnancyCenter,
 		)
-			.populate('primaryContactPerson')
-			.lean()
-
-		res.status(200).json(pregnancyCenter)
-	}),
-)
-
-server.post(
-	'/api/pregnancy-centers',
-	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
-		const newPregnancyCenter = req.body
-
-		try {
-			const createdPregnancyCenter = await createPregnancyCenter(
-				req.user._id,
-				newPregnancyCenter,
-			)
-			res.status(201).json(createdPregnancyCenter)
-		} catch (err) {
-			log.error(err)
-			return handleError(res, err)
-		}
-	}),
-)
+		res.status(201).json(createdPregnancyCenter)
+	} catch (err) {
+		log.error(err)
+		return handleError(res, err)
+	}
+})
 
 /*
 	Updates an existing pregnancy center, validates data first, adds 'updated' attribute and history model
@@ -256,21 +240,20 @@ server.post(
 server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	(req, res) => {
 		const pregnancyCenterId = req.params.pregnancyCenterId
 		const pregnancyCenterData = req.body
 		pregnancyCenterData['inVerification'] = null
 		try {
-			const updatedPregnancyCenter = await updatePregnancyCenter(
+			const updatedPregnancyCenter = updatePregnancyCenter(
 				req.user._id,
 				pregnancyCenterId,
 				pregnancyCenterData,
-			)
-			res.status(200).json(updatedPregnancyCenter)
+			).then(res.status(200).json(updatedPregnancyCenter))
 		} catch (err) {
 			return handleError(res, err)
 		}
-	}),
+	},
 )
 
 /*
@@ -280,7 +263,7 @@ server.put(
 server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId/out-of-business',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	async (req, res) => {
 		const pregnancyCenterId = req.params.pregnancyCenterId
 		// expected: req.body = { outOfBusiness: true | false }
 		const outOfBusinessObj = req.body
@@ -294,7 +277,7 @@ server.put(
 		} catch (err) {
 			return handleError(res, err)
 		}
-	}),
+	},
 )
 
 /*
@@ -304,7 +287,7 @@ server.put(
 server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId/do-not-list',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	async (req, res) => {
 		const pregnancyCenterId = req.params.pregnancyCenterId
 		// expected: req.body = { doNotList: true | false }
 		const doNotListObj = req.body
@@ -318,7 +301,7 @@ server.put(
 		} catch (err) {
 			return handleError(res, err)
 		}
-	}),
+	},
 )
 
 /*
@@ -329,7 +312,7 @@ server.put(
 server.get(
 	'/api/pregnancy-centers/open-now',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	async (req, res) => {
 		const time = parseInt(req.query.time)
 		const dayOfWeek = parseInt(req.query.day)
 		const query = { outOfBusiness: { $in: [null, false] } }
@@ -351,7 +334,7 @@ server.get(
 		}
 
 		res.status(200).json(pregnancyCentersOpenNow)
-	}),
+	},
 )
 
 /*
@@ -361,7 +344,7 @@ server.get(
 server.get(
 	'/api/pregnancy-centers/:pregnancyCenterId',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	async (req, res) => {
 		const pregnancyCenterId = req.params.pregnancyCenterId
 
 		const pregnancyCenter = await PregnancyCenterModel.findById(
@@ -377,51 +360,41 @@ server.get(
 		}
 
 		res.status(200).json(pregnancyCenter)
-	}),
+	},
 )
 
 /*
  Returns one fqhc that needs verification
  */
-server.get(
-	'/api/fqhcs/verify',
-	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
-		// an array of javascript objects
-		const fqhcs = await FQHCModel.aggregate([
-			{ $match: queries.verificationNotComplete },
-			{ $sample: { size: 1 } },
-		])
+server.get('/api/fqhcs/verify', isLoggedInAPI, async (req, res) => {
+	// an array of javascript objects
+	const fqhcs = await FQHCModel.aggregate([
+		{ $match: queries.verificationNotComplete },
+		{ $sample: { size: 1 } },
+	])
 
-		if (fqhcs.length === 0 || !fqhcs[0]) {
-			return res.boom.notFound(
-				'No federally qualified health centers to verify',
-			)
-		}
+	if (fqhcs.length === 0 || !fqhcs[0]) {
+		return res.boom.notFound('No federally qualified health centers to verify')
+	}
 
-		res.status(200).json(fqhcs[0])
-	}),
-)
+	res.status(200).json(fqhcs[0])
+})
 
 /*
  Updates an existing fqhc, validates data first, adds 'updated' attribute and history model
  Returns the updated fqhc
  */
-server.put(
-	'/api/fqhcs/:fqhcId',
-	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
-		const fqhcId = req.params.fqhcId
-		const fqhcData = req.body
-		fqhcData['inVerification'] = null
-		try {
-			const updatedFqhc = await updateFqhc(req.user._id, fqhcId, fqhcData)
-			res.status(200).json(updatedFqhc)
-		} catch (err) {
-			return handleError(res, err)
-		}
-	}),
-)
+server.put('/api/fqhcs/:fqhcId', isLoggedInAPI, async (req, res) => {
+	const fqhcId = req.params.fqhcId
+	const fqhcData = req.body
+	fqhcData['inVerification'] = null
+	try {
+		const updatedFqhc = await updateFqhc(req.user._id, fqhcId, fqhcData)
+		res.status(200).json(updatedFqhc)
+	} catch (err) {
+		return handleError(res, err)
+	}
+})
 
 /*
 	Updates an existing fqhc's out-of-business boolean, adds 'updated' attribute and history model
@@ -430,7 +403,7 @@ server.put(
 server.put(
 	'/api/fqhcs/:fqhcId/out-of-business',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	async (req, res) => {
 		const fqhcId = req.params.fqhcId
 		// expected: req.body = { outOfBusiness: true | false }
 		const outOfBusinessObj = req.body
@@ -444,7 +417,7 @@ server.put(
 		} catch (err) {
 			return handleError(res, err)
 		}
-	}),
+	},
 )
 
 /*
@@ -454,7 +427,7 @@ server.put(
 server.put(
 	'/api/fqhcs/:fqhcId/do-not-list',
 	isLoggedInAPI,
-	handleRejectedPromise(async (req, res) => {
+	async (req, res) => {
 		const fqhcId = req.params.fqhcId
 		// expected: req.body = { doNotList: true | false }
 		const doNotListObj = req.body
@@ -468,7 +441,7 @@ server.put(
 		} catch (err) {
 			return handleError(res, err)
 		}
-	}),
+	},
 )
 
 server.listen(port, function() {
@@ -508,14 +481,11 @@ server.get('/api/login/check/', (req, res) => {
 	}
 })
 
-server.get(
-	'/api/logout',
-	handleRejectedPromise(async (req, res) => {
-		await releaseDocuments(req.user._id)
-		req.logout()
-		res.send(200)
-	}),
-)
+server.get('/api/logout', async (req, res) => {
+	await releaseDocuments(req.user._id)
+	req.logout()
+	res.send(200)
+})
 
 server.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'))

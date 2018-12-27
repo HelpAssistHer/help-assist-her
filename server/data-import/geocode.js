@@ -12,7 +12,11 @@ const {
 	getLocation,
 	addLocation,
 	saveDoc,
+<<<<<<< HEAD
 	getSafeFullAddress,
+=======
+	getFullAddress,
+>>>>>>> rewrite helpers
 } = require('../util/geocode-helpers')
 
 const { safePipeP } = require('../util/ramda-util')
@@ -29,6 +33,7 @@ mongoose.connect(config.mongo.connectionString).then(
 	},
 )
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const geocodeAndSave = async pregnancyCenter => {
 	try {
@@ -89,14 +94,21 @@ const getFullAddress = pregnancyCenter => {
 	return address
 }
 
+=======
+>>>>>>> rewrite helpers
 const geocodeAndSave = async pregnancyCenter => {
 	try {
 		return safePipeP([
 			getFullAddress,
 			getGoogleGeocode,
 			getLocation,
+<<<<<<< HEAD
 			R.partial(saveLocation, [pregnancyCenter]),
 >>>>>>> updated Ramda and rewrote geocode with a version of pipeWith that checks for isNil or Empty and accepts promises
+=======
+			R.partial(addLocation, [pregnancyCenter]),
+			saveDoc,
+>>>>>>> rewrite helpers
 		])(pregnancyCenter)
 	} catch (err) {
 		log.error(err)
