@@ -19,16 +19,16 @@ const FQHCModel = require('./fqhcs/schema/mongoose-schema')
 const PregnancyCenterModel = require('./pregnancy-centers/schema/mongoose-schema')
 const UserModel = require('./users/schema/mongoose-schema')
 
-const createPregnancyCenter = require('./util/actions/create-pregnancy-center')
-const updateFqhc = require('./util/actions/update-fqhc')
-const releaseDocuments = require('./util/actions/release-documents')
-const updateFqhcDoNotList = './util/actions/update-fqhc-do-not-list'
-const updateFqhcOutOfBusiness = './util/actions/update-fqhc-out-of-business'
-const updatePregnancyCenter = './util/actions/update-pregnancy-center'
-const updatePregnancyCenterDoNotList =
-	'./util/actions/update-pregnancy-center-do-not-list'
-const updatePregnancyCenterOutOfBusiness =
-	'./util/actions/update-pregnancy-center-out-of-business'
+const {
+	createPregnancyCenter,
+	updateFqhc,
+	releaseDocuments,
+	updateFqhcDoNotList,
+	updateFqhcOutOfBusiness,
+	updatePregnancyCenter,
+	updatePregnancyCenterDoNotList,
+	updatePregnancyCenterOutOfBusiness,
+} = require('./util/actions')
 
 const queries = require('./pregnancy-centers/queries')
 
@@ -114,11 +114,11 @@ passport.deserializeUser((objectId, done) => {
 })
 
 // adapted from https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
-let handleRejectedPromise = fn => (...args) =>
-	fn(...args).catch(e => {
-		log.error(e)
-		handleError(args[1], e)
-	})
+// let handleRejectedPromise = fn => (...args) =>
+// 	fn(...args).catch(e => {
+// 		log.error(e)
+// 		handleError(args[1], e)
+// 	})
 
 // TODO: Error handling
 const startDatabase = P.coroutine(function* startDatabase() {
@@ -240,19 +240,17 @@ server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
 server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId',
 	isLoggedInAPI,
-	(req, res) => {
+	async (req, res) => {
 		const pregnancyCenterId = req.params.pregnancyCenterId
 		const pregnancyCenterData = req.body
 		pregnancyCenterData['inVerification'] = null
-		try {
-			const updatedPregnancyCenter = updatePregnancyCenter(
-				req.user._id,
-				pregnancyCenterId,
-				pregnancyCenterData,
-			).then(res.status(200).json(updatedPregnancyCenter))
-		} catch (err) {
-			return handleError(res, err)
-		}
+
+		const updatedPregnancyCenter = await updatePregnancyCenter(
+			req.user._id,
+			pregnancyCenterId,
+			pregnancyCenterData,
+		)
+		res.status(200).json(updatedPregnancyCenter)
 	},
 )
 

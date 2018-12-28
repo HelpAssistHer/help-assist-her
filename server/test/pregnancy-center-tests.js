@@ -1002,7 +1002,7 @@ describe('PregnancyCenters', () => {
 			})
 			await primaryContactPerson.save()
 
-			const initialPRCData = {
+			const initialPCData = {
 				address: {
 					line1: '586 Central Ave.\nAlbany, NY 12206',
 					location: {
@@ -1016,7 +1016,7 @@ describe('PregnancyCenters', () => {
 				website: 'http://www.birthright.org',
 				services: {},
 			}
-			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+			let oldPCObj = await PregnancyCenterModel.create(initialPCData)
 
 			// make sure one person was created
 			const people = await PersonModel.find({})

@@ -1,6 +1,6 @@
 'use strict'
-const locationSchemaJoi = require('../locations/schema/joi-schema')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const locationSchemaJoi = require('../../locations/schema/joi-schema')
+const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
 
 const {
 	validateDocument,
@@ -63,4 +63,4 @@ const updatePregnancyCenterOutOfBusiness = async (
 	return populatePrimaryContact(newPregnancyCenterMongooseObj)
 }
 
-module.exports = { updatePregnancyCenterOutOfBusiness }
+module.exports = updatePregnancyCenterOutOfBusiness

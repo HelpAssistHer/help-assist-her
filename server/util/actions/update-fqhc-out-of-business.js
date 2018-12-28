@@ -3,7 +3,7 @@
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
 const { validateDocument, findByIdAndUpdate } = require('../util')
 
-const locationSchemaJoi = require('../locations/schema/joi-schema')
+const locationSchemaJoi = require('../../locations/schema/joi-schema')
 
 const { getFqhcObj, createFqhcHistory } = require('../fqhc-helpers')
 
@@ -41,4 +41,4 @@ const updateFqhcOutOfBusiness = async (userId, fqhcId, outOfBusinessObj) => {
 	return findByIdAndUpdate(FQHCModel, fqhcId, newFqhcObj)
 }
 
-module.exports = { updateFqhcOutOfBusiness }
+module.exports = updateFqhcOutOfBusiness

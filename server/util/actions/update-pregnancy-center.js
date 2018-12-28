@@ -1,26 +1,34 @@
 'use strict'
+
 const Log = require('log')
 const log = new Log('info')
 const R = require('ramda')
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const { validateAndFillDoc, geocode, checkIfOutOfBusiness } = require('../util')
+const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
+const {
+	validateAndFillDoc,
+	geocode,
+	checkIfOutOfBusiness,
+	createHistories,
+} = require('../util')
 
-const { pipeP } = require('ramda-util')
+const { pipeP } = require('../ramda-util')
 
 const {
-	createPregnancyCenterUpdateHistory,
 	getPregnancyCenterObj,
 	pregnancyCenterFindByIdAndUpdate,
 	makeModelAndPopulate,
 	populatePrimaryContact,
-} = require('pregnancy-center-helpers')
+} = require('../pregnancy-center-helpers')
 
 const updatePregnancyCenter = async (
 	userId,
 	pregnancyCenterId,
 	pregnancyCenterObj,
 ) => {
+	Object.freeze(pregnancyCenterObj)
+
 	const validate = R.partial(validateAndFillDoc, [
 		PregnancyCenterModel,
 		pregnancyCenterSchemaJoi,
@@ -28,27 +36,46 @@ const updatePregnancyCenter = async (
 	])
 
 	const checkIfPCOutOfBusiness = R.partial(checkIfOutOfBusiness, [
+		getPregnancyCenterObj,
 		pregnancyCenterId,
 	])
-	const createUpdateHistory = R.partial(createPregnancyCenterUpdateHistory, [
+	const createUpdateHistory = R.partial(createHistories, [
+		PregnancyCenterHistoryModel,
+		'pregnancyCenterId',
 		userId,
 		getPregnancyCenterObj(pregnancyCenterId),
 	])
-	const updatePregnancyCenter = R.partial(pregnancyCenterFindByIdAndUpdate, [
+	const updatePC = R.partial(pregnancyCenterFindByIdAndUpdate, [
 		pregnancyCenterId,
 	])
 
-	const updateAndSavePregnancyCenter = pipeP(
-		validate,
-		checkIfPCOutOfBusiness,
-		geocode,
-		makeModelAndPopulate,
-		createUpdateHistory, // side effect of saving history records to the database
-		updatePregnancyCenter,
-		populatePrimaryContact,
-	)
+	const x = await validate(pregnancyCenterObj)
+	log.info('validatedObj', x)
+	const checked = await checkIfPCOutOfBusiness(x)
+	log.info('checked', checked)
+	const geocoded = await geocode(checked)
+	log.info('geocoded', geocoded)
+	const a = await makeModelAndPopulate(geocoded)
+	log.info('a ', a)
+	const b = await createUpdateHistory(a)
+	log.info('b ', b)
+	const c = await updatePC(b)
+	log.info('c ', c)
+	const d = await populatePrimaryContact(c)
+	log.info('d ', d)
+	return d
 
-	return updateAndSavePregnancyCenter(pregnancyCenterObj)
+	// const updateAndSavePregnancyCenter = pipeP(
+	// 	validate,
+	// 	checkIfPCOutOfBusiness,
+	// 	geocode,
+	// 	makeModelAndPopulate,
+	// 	createUpdateHistory, // side effect of saving history records to the database
+	// 	updatePC,
+	// 	populatePrimaryContact,
+	// )
+
+	// return updateAndSavePregnancyCenter(pregnancyCenterObj)
 }
 
-module.exports = { updatePregnancyCenter }
+module.exports = updatePregnancyCenter

@@ -13,19 +13,19 @@ const {
 	getGoogleGeocode,
 	getLocation,
 	addLocation,
-	getFullAddress,
+	getSafeFullAddress,
 } = require('../util/geocode-helpers')
 
 const { safePipeP } = require('../util/ramda-util')
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt', 'inVerification']
-const omitKeys = _.omit(keysToIgnore)
+const omitKeys = R.partial(_.omit, [keysToIgnore])
 
 const isEqualOmit = (obj1, obj2) => _.isEqual(omitKeys(obj1), omitKeys(obj2))
 
-const createHistories = (
-	userId,
+const createHistories = async (
 	historyModel,
 	idName,
+	userId,
 	oldDocObj,
 	newDocObj,
 ) => {
@@ -60,17 +60,19 @@ const createHistories = (
 	newDocObj.updated = _.get(oldDocObj, 'updated', {})
 
 	// iterate over keys and values and create 'updated' data and histories
-	const savedHistories = Promise.all(_.map(omitKeys(newDocObj), processKeys))
-	return savedHistories // promise
+	await Promise.all(_.map(omitKeys(newDocObj), processKeys))
+	return newDocObj
 }
 
 const getVerifiedDateUserId = (verifiedData, userId) => {
 	const verifiedDataWithDateUserId = {}
 	_.forOwn(verifiedData, (value, key) => {
-		verifiedDataWithDateUserId[key] = {
-			verified: verifiedData[key]['verified'],
-			userId: userId,
-			date: new Date().toISOString(),
+		if (verifiedData[key]) {
+			verifiedDataWithDateUserId[key] = {
+				verified: verifiedData[key]['verified'],
+				userId: userId,
+				date: new Date().toISOString(),
+			}
 		}
 	})
 	return verifiedDataWithDateUserId
@@ -130,36 +132,34 @@ const handlePrimaryContactPerson = async validatedPregnancyCenter => {
 }
 
 const validateDocument = async (joiSchema, documentObj) => {
-	const { error, validatedData } = await Joi.validate(documentObj, joiSchema, {
+	const { error, value } = await Joi.validate(documentObj, joiSchema, {
 		abortEarly: false,
 	})
 	// await Joi.validate() returns an obj of form { error: null, value: validatedData}
 	if (error) {
 		throw error
 	}
-	return validatedData
+	return value
 }
 
 const validateAndFillDoc = async (model, joiSchema, userId, docObj) => {
 	// validate the incoming data
-	let { error, validatedObj } = await validateDocument(joiSchema, docObj)
-	if (error) {
-		throw error
-	}
-
+	const validatedObj = await validateDocument(joiSchema, docObj)
 	// fill out the `verifiedData` object with the userId and current date
-	validatedObj = getVerifiedDateUserId(validatedObj, userId)
+	validatedObj.verifiedData = getVerifiedDateUserId(
+		validatedObj.verifiedData,
+		userId,
+	)
 	if (model === PregnancyCenterModel) {
-		return handlePrimaryContactPerson(validatedObj)
+		handlePrimaryContactPerson(validatedObj)
 	}
-
 	return validatedObj
 }
 
 const geocode = doc => {
 	try {
 		return safePipeP([
-			getFullAddress,
+			getSafeFullAddress,
 			getGoogleGeocode,
 			getLocation,
 			R.partial(addLocation, [doc]),
@@ -176,6 +176,8 @@ const findByIdAndUpdate = (model, id, obj) => {
 const checkIfOutOfBusiness = async (getDocFunction, id, newDoc) => {
 	// if the original document is outOfBusiness, do not allow updates unless outOfBusiness is being set to false
 	const oldDoc = await getDocFunction(id)
+	log.info('oldDoc', oldDoc)
+	log.info('newDoc', newDoc)
 
 	if (
 		_.get(oldDoc, 'outOfBusiness') &&

@@ -1,13 +1,14 @@
 'use strict'
-
+const Log = require('log')
+const log = new Log('info')
 const _ = require('lodash')
 const R = require('ramda')
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
-const { createHistories, findByIdAndUpdate } = require('util')
+const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
+const { createHistories, findByIdAndUpdate } = require('./util')
 
 const makeModelAndPopulate = obj => {
-	_.omit(
+	return _.omit(
 		new PregnancyCenterModel(obj).populate('primaryContactPerson').toObject(),
 		['_id'],
 	)
@@ -21,12 +22,12 @@ const populatePrimaryContact = pregnancyCenterMongooseObj => {
 
 const getPregnancyCenterObj = id => PregnancyCenterModel.findById(id)
 
-const createPregnancyCenterUpdateHistory = userId =>
-	R.partial(createHistories, [
-		userId,
-		PregnancyCenterHistoryModel,
-		'pregnancyCenterId',
-	])
+const createPregnancyCenterUpdateHistory = R.partial(createHistories, [
+	PregnancyCenterHistoryModel,
+	'pregnancyCenterId',
+])
+
+log.info(typeof findByIdAndUpdate)
 
 const pregnancyCenterFindByIdAndUpdate = R.partial(findByIdAndUpdate, [
 	PregnancyCenterModel,

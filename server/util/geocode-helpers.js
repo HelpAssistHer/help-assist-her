@@ -1,5 +1,6 @@
 'use strict'
 
+const _ = require('lodash')
 const config = require('config')
 const googleMaps = require('@google/maps')
 const R = require('ramda')
@@ -38,20 +39,34 @@ const getLocation = response => {
 }
 
 const addLocation = (doc, location) => {
-	log.info(`saving ${doc.prcName || doc.fqhcName}`)
 	doc.address.location = {
 		type: 'Point',
 		coordinates: [location.lng, location.lat],
 	}
+	log.info(doc)
 	return doc
 }
 
 const saveDoc = doc => {
+	log.info(`saving ${doc.prcName || doc.fqhcName}`)
 	return doc.save() // a promise
 }
 
-const getFullAddress = doc => {
-	const address = doc.getFullAddress()
+function getFullAddress(doc) {
+	if (_.isUndefined(doc.address)) return ''
+	const getProperty = property => _.get(doc.address, property, '')
+
+	return [
+		getProperty('line1'),
+		getProperty('line2'),
+		getProperty('city'),
+		getProperty('state'),
+		getProperty('zip'),
+	].join(' ')
+}
+
+const getSafeFullAddress = doc => {
+	const address = getFullAddress(doc)
 	if (R.isEmpty(address))
 		log.info(`${doc.prcName || doc.fqhCName} has no address`)
 	return address
@@ -62,5 +77,5 @@ module.exports = {
 	getLocation,
 	addLocation,
 	saveDoc,
-	getFullAddress,
+	getSafeFullAddress,
 }

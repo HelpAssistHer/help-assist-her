@@ -38,6 +38,4 @@ const updateFqhc = async (userId, fqhcId, fqhcObj) => {
 	return updateAndSaveFqhc(fqhcObj)
 }
 
-module.exports = {
-	updateFqhc,
-}
+module.exports = updateFqhc

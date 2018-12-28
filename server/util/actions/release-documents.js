@@ -10,4 +10,4 @@ const releaseDocuments = userId => {
 	}) // a promise
 }
 
-module.exports = { releaseDocuments }
+module.exports = releaseDocuments
