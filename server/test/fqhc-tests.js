@@ -319,7 +319,7 @@ describe('FQHCs', () => {
 					err.response,
 					400,
 					'Bad Request',
-					'Cannot edit a outOfBusiness FQHC',
+					'Cannot edit an outOfBusiness FQHC or PregnancyCenter',
 				)
 			}
 		})

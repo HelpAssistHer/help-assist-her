@@ -113,13 +113,6 @@ passport.deserializeUser((objectId, done) => {
 	})
 })
 
-// adapted from https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
-// let handleRejectedPromise = fn => (...args) =>
-// 	fn(...args).catch(e => {
-// 		log.error(e)
-// 		handleError(args[1], e)
-// 	})
-
 // TODO: Error handling
 const startDatabase = P.coroutine(function* startDatabase() {
 	yield mongoose.connect(config.mongo.connectionString)
@@ -141,13 +134,17 @@ server.get('/api/initial-data', (req, res) => {
 	TODO: limits and paging, if necessary
  */
 server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
-	const allPregnancyCenters = await PregnancyCenterModel.find({
-		outOfBusiness: { $in: [null, false] },
-	})
-		.populate('primaryContactPerson')
-		.lean()
-	if (allPregnancyCenters) {
-		res.status(200).json(allPregnancyCenters)
+	try {
+		const allPregnancyCenters = await PregnancyCenterModel.find({
+			outOfBusiness: { $in: [null, false] },
+		})
+			.populate('primaryContactPerson')
+			.lean()
+		if (allPregnancyCenters) {
+			res.status(200).json(allPregnancyCenters)
+		}
+	} catch (err) {
+		return handleError(res, err)
 	}
 })
 
@@ -156,32 +153,36 @@ server.get('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
 server.get('/api/pregnancy-centers/near-me', async (req, res) => {
-	const METERS_PER_MILE = 1609.34
-	const lng = req.query.lng || -73.781332
-	const lat = req.query.lat || 42.6721989
-	const miles = req.query.miles || 5
+	try {
+		const METERS_PER_MILE = 1609.34
+		const lng = req.query.lng || -73.781332
+		const lat = req.query.lat || 42.6721989
+		const miles = req.query.miles || 5
 
-	const pregnancyCentersNearMe = await PregnancyCenterModel.find({
-		'address.location': {
-			$nearSphere: {
-				$geometry: {
-					type: 'Point',
-					coordinates: [lng, lat],
+		const pregnancyCentersNearMe = await PregnancyCenterModel.find({
+			'address.location': {
+				$nearSphere: {
+					$geometry: {
+						type: 'Point',
+						coordinates: [lng, lat],
+					},
+					$maxDistance: miles * METERS_PER_MILE,
 				},
-				$maxDistance: miles * METERS_PER_MILE,
 			},
-		},
-		outOfBusiness: { $in: [null, false] },
-	})
-		.populate('primaryContactPerson')
-		.lean()
+			outOfBusiness: { $in: [null, false] },
+		})
+			.populate('primaryContactPerson')
+			.lean()
 
-	if (pregnancyCentersNearMe.length <= 0) {
-		return res.boom.notFound(
-			`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
-		)
-	} else {
-		res.status(200).json(pregnancyCentersNearMe)
+		if (pregnancyCentersNearMe.length <= 0) {
+			return res.boom.notFound(
+				`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
+			)
+		} else {
+			res.status(200).json(pregnancyCentersNearMe)
+		}
+	} catch (err) {
+		return handleError(res, err)
 	}
 })
 
@@ -189,46 +190,48 @@ server.get('/api/pregnancy-centers/near-me', async (req, res) => {
 	Returns one pregnancy center that needs verification
 */
 server.get('/api/pregnancy-centers/verify', isLoggedInAPI, async (req, res) => {
-	const notInVerification = { inVerification: { $in: [false, null] } }
+	try {
+		const notInVerification = { inVerification: { $in: [false, null] } }
 
-	// an array of javascript objects
-	const pregnancyCenters = await PregnancyCenterModel.aggregate([
-		{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
-		{ $sample: { size: 1 } },
-	])
+		// an array of javascript objects
+		const pregnancyCenters = await PregnancyCenterModel.aggregate([
+			{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
+			{ $sample: { size: 1 } },
+		])
 
-	if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
-		return res.boom.notFound('No pregnancy centers to verify')
+		if (pregnancyCenters.length === 0 || !pregnancyCenters[0]) {
+			return res.boom.notFound('No pregnancy centers to verify')
+		}
+
+		// a second lookup is necessary to get a mongoose object to populate
+		const pregnancyCenterId = pregnancyCenters[0]._id
+		const update = { inVerification: req.user._id }
+		const options = { new: true } // returns updated object back
+		const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate(
+			{
+				_id: pregnancyCenterId,
+			},
+			update,
+			options,
+		)
+			.populate('primaryContactPerson')
+			.lean()
+
+		res.status(200).json(pregnancyCenter)
+	} catch (err) {
+		return handleError(res, err)
 	}
-
-	// a second lookup is necessary to get a mongoose object to populate
-	const pregnancyCenterId = pregnancyCenters[0]._id
-	const update = { inVerification: req.user._id }
-	const options = { new: true } // returns updated object back
-	const pregnancyCenter = await PregnancyCenterModel.findOneAndUpdate(
-		{
-			_id: pregnancyCenterId,
-		},
-		update,
-		options,
-	)
-		.populate('primaryContactPerson')
-		.lean()
-
-	res.status(200).json(pregnancyCenter)
 })
 
 server.post('/api/pregnancy-centers', isLoggedInAPI, async (req, res) => {
-	const newPregnancyCenter = req.body
-
 	try {
+		const newPregnancyCenter = req.body
 		const createdPregnancyCenter = await createPregnancyCenter(
 			req.user._id,
 			newPregnancyCenter,
 		)
 		res.status(201).json(createdPregnancyCenter)
 	} catch (err) {
-		log.error(err)
 		return handleError(res, err)
 	}
 })
@@ -241,16 +244,19 @@ server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId',
 	isLoggedInAPI,
 	async (req, res) => {
-		const pregnancyCenterId = req.params.pregnancyCenterId
-		const pregnancyCenterData = req.body
-		pregnancyCenterData['inVerification'] = null
-
-		const updatedPregnancyCenter = await updatePregnancyCenter(
-			req.user._id,
-			pregnancyCenterId,
-			pregnancyCenterData,
-		)
-		res.status(200).json(updatedPregnancyCenter)
+		try {
+			const pregnancyCenterId = req.params.pregnancyCenterId
+			const pregnancyCenterData = req.body
+			pregnancyCenterData['inVerification'] = null
+			const updatedPregnancyCenter = await updatePregnancyCenter(
+				req.user._id,
+				pregnancyCenterId,
+				pregnancyCenterData,
+			)
+			res.status(200).json(updatedPregnancyCenter)
+		} catch (err) {
+			return handleError(res, err)
+		}
 	},
 )
 
@@ -262,15 +268,16 @@ server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId/out-of-business',
 	isLoggedInAPI,
 	async (req, res) => {
-		const pregnancyCenterId = req.params.pregnancyCenterId
-		// expected: req.body = { outOfBusiness: true | false }
-		const outOfBusinessObj = req.body
 		try {
+			const pregnancyCenterId = req.params.pregnancyCenterId
+			// expected: req.body = { outOfBusiness: true | false }
+			const outOfBusinessObj = req.body
 			const updatedPregnancyCenter = await updatePregnancyCenterOutOfBusiness(
 				req.user._id,
 				pregnancyCenterId,
 				outOfBusinessObj,
 			)
+			log.info('in server', updatedPregnancyCenter)
 			res.status(200).json(updatedPregnancyCenter)
 		} catch (err) {
 			return handleError(res, err)
@@ -286,10 +293,11 @@ server.put(
 	'/api/pregnancy-centers/:pregnancyCenterId/do-not-list',
 	isLoggedInAPI,
 	async (req, res) => {
-		const pregnancyCenterId = req.params.pregnancyCenterId
-		// expected: req.body = { doNotList: true | false }
-		const doNotListObj = req.body
 		try {
+			const pregnancyCenterId = req.params.pregnancyCenterId
+			// expected: req.body = { doNotList: true | false }
+			const doNotListObj = req.body
+
 			const updatedPregnancyCenter = await updatePregnancyCenterDoNotList(
 				req.user._id,
 				pregnancyCenterId,
@@ -311,27 +319,31 @@ server.get(
 	'/api/pregnancy-centers/open-now',
 	isLoggedInAPI,
 	async (req, res) => {
-		const time = parseInt(req.query.time)
-		const dayOfWeek = parseInt(req.query.day)
-		const query = { outOfBusiness: { $in: [null, false] } }
+		try {
+			const time = parseInt(req.query.time)
+			const dayOfWeek = parseInt(req.query.day)
+			const query = { outOfBusiness: { $in: [null, false] } }
 
-		query['hours.' + dayOfWeek + '.open'] = {
-			$lte: time,
-		}
-		query['hours.' + dayOfWeek + '.close'] = {
-			$gte: time,
-		}
+			query['hours.' + dayOfWeek + '.open'] = {
+				$lte: time,
+			}
+			query['hours.' + dayOfWeek + '.close'] = {
+				$gte: time,
+			}
 
-		const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
-			.populate('primaryContactPerson')
-			.lean()
-		if (pregnancyCentersOpenNow.length <= 0) {
-			return res.boom.notFound(
-				`No pregnancy centers open now ${dayOfWeek} ${time}`,
-			)
-		}
+			const pregnancyCentersOpenNow = await PregnancyCenterModel.find(query)
+				.populate('primaryContactPerson')
+				.lean()
+			if (pregnancyCentersOpenNow.length <= 0) {
+				return res.boom.notFound(
+					`No pregnancy centers open now ${dayOfWeek} ${time}`,
+				)
+			}
 
-		res.status(200).json(pregnancyCentersOpenNow)
+			res.status(200).json(pregnancyCentersOpenNow)
+		} catch (err) {
+			return handleError(res, err)
+		}
 	},
 )
 
@@ -343,21 +355,25 @@ server.get(
 	'/api/pregnancy-centers/:pregnancyCenterId',
 	isLoggedInAPI,
 	async (req, res) => {
-		const pregnancyCenterId = req.params.pregnancyCenterId
+		try {
+			const pregnancyCenterId = req.params.pregnancyCenterId
 
-		const pregnancyCenter = await PregnancyCenterModel.findById(
-			pregnancyCenterId,
-		)
-			.populate('primaryContactPerson')
-			.lean()
-
-		if (!pregnancyCenter) {
-			return res.boom.notFound(
-				`No pregnancy center found with id: ${pregnancyCenterId}`,
+			const pregnancyCenter = await PregnancyCenterModel.findById(
+				pregnancyCenterId,
 			)
-		}
+				.populate('primaryContactPerson')
+				.lean()
 
-		res.status(200).json(pregnancyCenter)
+			if (!pregnancyCenter) {
+				return res.boom.notFound(
+					`No pregnancy center found with id: ${pregnancyCenterId}`,
+				)
+			}
+
+			res.status(200).json(pregnancyCenter)
+		} catch (err) {
+			return handleError(res, err)
+		}
 	},
 )
 
@@ -365,17 +381,23 @@ server.get(
  Returns one fqhc that needs verification
  */
 server.get('/api/fqhcs/verify', isLoggedInAPI, async (req, res) => {
-	// an array of javascript objects
-	const fqhcs = await FQHCModel.aggregate([
-		{ $match: queries.verificationNotComplete },
-		{ $sample: { size: 1 } },
-	])
+	try {
+		// an array of javascript objects
+		const fqhcs = await FQHCModel.aggregate([
+			{ $match: queries.verificationNotComplete },
+			{ $sample: { size: 1 } },
+		])
 
-	if (fqhcs.length === 0 || !fqhcs[0]) {
-		return res.boom.notFound('No federally qualified health centers to verify')
+		if (fqhcs.length === 0 || !fqhcs[0]) {
+			return res.boom.notFound(
+				'No federally qualified health centers to verify',
+			)
+		}
+
+		res.status(200).json(fqhcs[0])
+	} catch (err) {
+		return handleError(res, err)
 	}
-
-	res.status(200).json(fqhcs[0])
 })
 
 /*
@@ -383,10 +405,10 @@ server.get('/api/fqhcs/verify', isLoggedInAPI, async (req, res) => {
  Returns the updated fqhc
  */
 server.put('/api/fqhcs/:fqhcId', isLoggedInAPI, async (req, res) => {
-	const fqhcId = req.params.fqhcId
-	const fqhcData = req.body
-	fqhcData['inVerification'] = null
 	try {
+		const fqhcId = req.params.fqhcId
+		const fqhcData = req.body
+		fqhcData['inVerification'] = null
 		const updatedFqhc = await updateFqhc(req.user._id, fqhcId, fqhcData)
 		res.status(200).json(updatedFqhc)
 	} catch (err) {
@@ -402,10 +424,10 @@ server.put(
 	'/api/fqhcs/:fqhcId/out-of-business',
 	isLoggedInAPI,
 	async (req, res) => {
-		const fqhcId = req.params.fqhcId
-		// expected: req.body = { outOfBusiness: true | false }
-		const outOfBusinessObj = req.body
 		try {
+			const fqhcId = req.params.fqhcId
+			// expected: req.body = { outOfBusiness: true | false }
+			const outOfBusinessObj = req.body
 			const updatedFqhc = await updateFqhcOutOfBusiness(
 				req.user._id,
 				fqhcId,
@@ -426,10 +448,11 @@ server.put(
 	'/api/fqhcs/:fqhcId/do-not-list',
 	isLoggedInAPI,
 	async (req, res) => {
-		const fqhcId = req.params.fqhcId
-		// expected: req.body = { doNotList: true | false }
-		const doNotListObj = req.body
 		try {
+			const fqhcId = req.params.fqhcId
+			// expected: req.body = { doNotList: true | false }
+			const doNotListObj = req.body
+
 			const updatedFqhc = await updateFqhcDoNotList(
 				req.user._id,
 				fqhcId,

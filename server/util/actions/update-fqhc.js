@@ -1,17 +1,22 @@
 'use strict'
 const R = require('ramda')
 const fqhcSchemaJoi = require('../../fqhcs/schema/joi-schema')
-const { validateAndFillDoc, geocode, checkIfOutOfBusiness } = require('../util')
+const {
+	validateAndFillDoc,
+	geocode,
+	checkIfOutOfBusiness,
+	findByIdAndUpdate,
+	createHistories,
+} = require('../util')
 
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
+const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
+const getFqhcObj = fqhcId => FQHCModel.findById(fqhcId)
 
-const {
-	getFqhcObj,
-	createFqhcUpdateHistory,
-	fqhcFindByIdAndUpdate,
-} = require('../fqhc-helpers')
+const { pipeP } = require('../ramda-util')
 
 const updateFqhc = async (userId, fqhcId, fqhcObj) => {
+	const oldDoc = await getFqhcObj(fqhcId)
 	const validate = R.partial(validateAndFillDoc, [
 		FQHCModel,
 		fqhcSchemaJoi,
@@ -20,20 +25,24 @@ const updateFqhc = async (userId, fqhcId, fqhcObj) => {
 	const checkIfFqhcOutOfBusiness = R.partial(checkIfOutOfBusiness, [
 		getFqhcObj,
 		fqhcId,
+		oldDoc,
 	])
-	const createUpdateHistory = R.partial(createFqhcUpdateHistory, [
+	const createUpdateHistory = R.partial(createHistories, [
+		FQHCHistoryModel,
+		'fqhcId',
 		userId,
-		getFqhcObj(fqhcId),
+		fqhcId,
+		oldDoc,
 	])
-	const updateFqhc = R.partial(fqhcFindByIdAndUpdate, [fqhcId])
+	const updateFqhc = R.partial(findByIdAndUpdate, [FQHCModel, fqhcId])
 
-	const updateAndSaveFqhc = R.pipeP(
+	const updateAndSaveFqhc = pipeP([
 		validate,
 		checkIfFqhcOutOfBusiness,
 		geocode,
 		createUpdateHistory, // side effect of saving update records to the database
 		updateFqhc,
-	)
+	])
 
 	return updateAndSaveFqhc(fqhcObj)
 }

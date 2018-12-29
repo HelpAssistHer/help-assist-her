@@ -321,6 +321,8 @@ describe('PregnancyCenters', () => {
 			res.body.phone.should.equal('+15184382978')
 			res.body.website.should.equal('http://www.birthright.org')
 			res.body.verifiedData.phone.verified.should.equal(true)
+
+			// why overwrite the date?
 			res.body.verifiedData.phone.date.should.not.equal(
 				'2017-04-16T23:33:17.220Z',
 			)
@@ -420,7 +422,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it.skip('it should return a single pregnancy center where verifiedData.address is null', async () => {
+		it('it should return a single pregnancy center where verifiedData.address is null', async () => {
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
 				lastName: 'Smith',
@@ -764,14 +766,14 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai
 					.request(server)
-					.put('/api/pregnancy-centers/' + oldPCObj._id)
+					.put(`/api/pregnancy-centers/${oldPCObj._id}`)
 					.send(newValues)
 			} catch (err) {
 				assertError(
 					err.response,
 					400,
 					'Bad Request',
-					'Cannot edit a outOfBusiness Pregnancy Center',
+					'Cannot edit an outOfBusiness FQHC or PregnancyCenter',
 				)
 			}
 		})
@@ -1150,7 +1152,7 @@ describe('PregnancyCenters', () => {
  * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
  */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business', () => {
-		it('it should return a single pregnancy center with updated outOfBusiness', async () => {
+		it('it should return a single pregnancy center with updated outOfBusiness with authentication', async () => {
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
 				lastName: 'Smith',
@@ -1182,7 +1184,7 @@ describe('PregnancyCenters', () => {
 			await mockAuthenticate()
 			const res = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: false })
 
 			res.should.have.status(200)
@@ -1204,7 +1206,6 @@ describe('PregnancyCenters', () => {
 				pregnancyCenterId: pc._id,
 			})
 
-			log.info(histories)
 			const fields = _.map(histories, 'field')
 			fields.should.have.members(['outOfBusiness'])
 
@@ -1212,7 +1213,7 @@ describe('PregnancyCenters', () => {
 
 			const res2 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res2.should.have.status(200)
@@ -1230,7 +1231,7 @@ describe('PregnancyCenters', () => {
 
 			const res3 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res3.should.have.status(200)
@@ -1282,7 +1283,7 @@ describe('PregnancyCenters', () => {
 			await mockAuthenticate()
 			const res = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: false })
 
 			res.should.have.status(200)
@@ -1311,7 +1312,7 @@ describe('PregnancyCenters', () => {
 
 			const res2 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res2.should.have.status(200)
@@ -1329,7 +1330,7 @@ describe('PregnancyCenters', () => {
 
 			const res3 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res3.should.have.status(200)

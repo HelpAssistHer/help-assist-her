@@ -43,7 +43,6 @@ const addLocation = (doc, location) => {
 		type: 'Point',
 		coordinates: [location.lng, location.lat],
 	}
-	log.info(doc)
 	return doc
 }
 
@@ -66,6 +65,7 @@ function getFullAddress(doc) {
 }
 
 const getSafeFullAddress = doc => {
+	if (R.isEmpty(doc)) log.info(`doc was empty`)
 	const address = getFullAddress(doc)
 	if (R.isEmpty(address))
 		log.info(`${doc.prcName || doc.fqhCName} has no address`)

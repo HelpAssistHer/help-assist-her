@@ -1,5 +1,6 @@
 'use strict'
 const _ = require('lodash')
+const omit = require('lodash/fp/omit')
 const Joi = require('joi')
 const R = require('ramda')
 const PersonModel = require('../persons/schema/mongoose-schema')
@@ -18,52 +19,82 @@ const {
 
 const { safePipeP } = require('../util/ramda-util')
 const keysToIgnore = ['_id', '__v', 'updated', 'updatedAt', 'inVerification']
-const omitKeys = R.partial(_.omit, [keysToIgnore])
+const omitKeys = R.partial(omit, [keysToIgnore])
 
-const isEqualOmit = (obj1, obj2) => _.isEqual(omitKeys(obj1), omitKeys(obj2))
+const isEqualOmit = (obj1, obj2) => {
+	if (typeof obj1 === Object && typeof obj2 === Object) {
+		return _.isEqual(omitKeys(obj1), omitKeys(obj2))
+	} else {
+		return _.isEqual(obj1, obj2)
+	}
+}
+
+const createHistory = (
+	historyModel,
+	idName,
+	userId,
+	_id,
+	field,
+	newValue,
+	oldValue,
+) => {
+	// don't create a history if no change
+	if (isEqualOmit(newValue, oldValue)) {
+		return null
+	}
+	// make a separate history document
+	const historyObj = new historyModel({
+		[idName]: _id,
+		field: field,
+		newValue: newValue,
+		oldValue: oldValue,
+		userId: userId,
+	})
+	return historyObj.save() // a promise
+}
 
 const createHistories = async (
 	historyModel,
 	idName,
 	userId,
+	_id,
 	oldDocObj,
 	newDocObj,
 ) => {
-	const createHistory = (key, value) => {
-		const historyObj = new historyModel({
-			[idName]: oldDocObj._id,
-			field: key,
-			newValue: value,
-			oldValue: oldDocObj[key],
-			userId: userId,
-		})
-		return historyObj.save() // a promise
-	}
+	const createHistoryFilled = R.partial(createHistory, [
+		historyModel,
+		idName,
+		userId,
+		_id,
+	])
+	const savedP = _.map(omitKeys(newDocObj), (value, key) => {
+		createHistoryFilled(key, value, oldDocObj[key])
+	})
 
-	// doc object is changed
-	const addUpdateData = key => {
-		newDocObj['updated'][key] = {
-			userId: userId,
-			date: new Date().toISOString(),
-		}
-	}
-
-	const processKeys = (value, key) => {
-		// check that the 'new' data isn't exactly the same as old
-		// this prevents us from creating histories for an update with same exact data
-		if (isEqualOmit(oldDocObj[key], value)) return null
-		addUpdateData(key)
-		return createHistory(key, value) // a promise
-	}
-
-	// transfer over `updated` info from previous updates
-	newDocObj.updated = _.get(oldDocObj, 'updated', {})
-
-	// iterate over keys and values and create 'updated' data and histories
-	await Promise.all(_.map(omitKeys(newDocObj), processKeys))
+	// iterate over keys and values and create histories
+	await Promise.all(savedP)
 	return newDocObj
 }
 
+const createUpdatedField = (userId, oldDocObj, newDocObj) => {
+	const updated = _.transform(
+		omitKeys(newDocObj),
+		(result, value, key) => {
+			if (!isEqualOmit(oldDocObj[key], value)) {
+				result[key] = {
+					userId: userId,
+					date: new Date().toISOString(),
+				}
+			}
+		},
+		{},
+	)
+
+	newDocObj.updated = _.assign({}, _.get(oldDocObj, 'updated'), updated)
+	return newDocObj
+}
+
+// this overwrites the date - is that what we want?
 const getVerifiedDateUserId = (verifiedData, userId) => {
 	const verifiedDataWithDateUserId = {}
 	_.forOwn(verifiedData, (value, key) => {
@@ -83,9 +114,10 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 
 	try {
 		if (
-			R.isNil(primaryContactPerson) ||
-			R.isEmpty(primaryContactPerson) ||
-			R.isNil(primaryContactPerson._id)
+			R.isNil(primaryContactPerson) || // undefined or null
+			R.isEmpty(primaryContactPerson) || // empty object
+			(R.isNil(primaryContactPerson._id) &&
+				R.isEmpty(_.omit(primaryContactPerson, '_id'))) // id undefined and nothing else
 		) {
 			return null
 		}
@@ -94,7 +126,7 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 	}
 
 	// Validate for both creating and updating
-	const { error, validatedPrimaryContactPerson } = await Joi.validate(
+	const { error, value } = await Joi.validate(
 		primaryContactPerson,
 		personSchemaJoi,
 		{
@@ -108,7 +140,7 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 	// 2. If there is an _id, then update the existing Person record
 	if (!R.isNil(primaryContactPerson._id)) {
 		return PersonModel.findByIdAndUpdate(
-			validatedPrimaryContactPerson._id,
+			value._id,
 			{ $set: primaryContactPerson },
 			{ new: true },
 		)
@@ -119,16 +151,17 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 	}
 }
 
-const handlePrimaryContactPerson = async validatedPregnancyCenter => {
+const handlePrimaryContactPerson = async pregnancyCenter => {
 	// handle the primaryContactPerson
 	const primaryContactPerson = await updateCreatePrimaryContactPerson(
-		validatedPregnancyCenter.primaryContactPerson,
+		pregnancyCenter.primaryContactPerson,
 	)
 	if (primaryContactPerson) {
-		validatedPregnancyCenter.primaryContactPerson = primaryContactPerson
+		pregnancyCenter.primaryContactPerson = primaryContactPerson
 	} else {
-		delete validatedPregnancyCenter.primaryContactPerson
+		delete pregnancyCenter.primaryContactPerson
 	}
+	return pregnancyCenter
 }
 
 const validateDocument = async (joiSchema, documentObj) => {
@@ -153,6 +186,7 @@ const validateAndFillDoc = async (model, joiSchema, userId, docObj) => {
 	if (model === PregnancyCenterModel) {
 		handlePrimaryContactPerson(validatedObj)
 	}
+	log.info(validatedObj)
 	return validatedObj
 }
 
@@ -173,12 +207,8 @@ const findByIdAndUpdate = (model, id, obj) => {
 	return model.findByIdAndUpdate(id, { $set: obj }, { new: true })
 }
 
-const checkIfOutOfBusiness = async (getDocFunction, id, newDoc) => {
+const checkIfOutOfBusiness = (getDocFunction, id, oldDoc, newDoc) => {
 	// if the original document is outOfBusiness, do not allow updates unless outOfBusiness is being set to false
-	const oldDoc = await getDocFunction(id)
-	log.info('oldDoc', oldDoc)
-	log.info('newDoc', newDoc)
-
 	if (
 		_.get(oldDoc, 'outOfBusiness') &&
 		(!_.has(newDoc.outOfBusiness) || newDoc.outOfBusiness)
@@ -190,26 +220,6 @@ const checkIfOutOfBusiness = async (getDocFunction, id, newDoc) => {
 	return newDoc
 }
 
-const createHistory = async (
-	historyModel,
-	idName,
-	_id,
-	field,
-	newValue,
-	oldValue,
-	userId,
-) => {
-	// make a separate history document
-	const historyObj = new historyModel({
-		[idName]: _id,
-		field: field,
-		newValue: newValue,
-		oldValue: oldValue,
-		userId: userId,
-	})
-	await historyObj.save()
-}
-
 module.exports = {
 	validateDocument,
 	validateAndFillDoc,
@@ -218,4 +228,5 @@ module.exports = {
 	findByIdAndUpdate,
 	checkIfOutOfBusiness,
 	createHistory,
+	createUpdatedField,
 }
