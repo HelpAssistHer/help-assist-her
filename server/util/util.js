@@ -186,7 +186,6 @@ const validateAndFillDoc = async (model, joiSchema, userId, docObj) => {
 	if (model === PregnancyCenterModel) {
 		handlePrimaryContactPerson(validatedObj)
 	}
-	log.info(validatedObj)
 	return validatedObj
 }
 

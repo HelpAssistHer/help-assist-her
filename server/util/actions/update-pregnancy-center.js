@@ -1,8 +1,5 @@
 'use strict'
 
-const assert = require('assert')
-const Log = require('log')
-const log = new Log('info')
 const R = require('ramda')
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')

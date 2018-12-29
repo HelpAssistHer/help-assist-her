@@ -3,9 +3,6 @@
 const { createUpdatedField } = require('../util/util.js')
 const assert = require('assert')
 
-const Log = require('log')
-const log = new Log('info')
-
 //Our parent block
 describe('util', () => {
 	/*

@@ -7,6 +7,7 @@ const {
 	checkIfOutOfBusiness,
 	findByIdAndUpdate,
 	createHistories,
+	createUpdatedField,
 } = require('../util')
 
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
@@ -27,20 +28,24 @@ const updateFqhc = async (userId, fqhcId, fqhcObj) => {
 		fqhcId,
 		oldDoc,
 	])
-	const createUpdateHistory = R.partial(createHistories, [
+	const createFqhcHistories = R.partial(createHistories, [
 		FQHCHistoryModel,
 		'fqhcId',
 		userId,
 		fqhcId,
 		oldDoc,
 	])
+
+	const createFqhcUpdatedField = R.partial(createUpdatedField, [userId, oldDoc])
+
 	const updateFqhc = R.partial(findByIdAndUpdate, [FQHCModel, fqhcId])
 
 	const updateAndSaveFqhc = pipeP([
 		validate,
 		checkIfFqhcOutOfBusiness,
 		geocode,
-		createUpdateHistory, // side effect of saving update records to the database
+		createFqhcHistories, // side effect of saving history records to the database
+		createFqhcUpdatedField,
 		updateFqhc,
 	])
 

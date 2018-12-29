@@ -1,7 +1,6 @@
 const R = require('ramda')
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
 const { validateAndFillDoc, geocode } = require('../util')
-const assert = require('assert')
 
 const { pipeP } = require('../ramda-util')
 

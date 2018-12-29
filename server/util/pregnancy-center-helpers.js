@@ -5,9 +5,6 @@ const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schem
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const { createHistories, findByIdAndUpdate } = require('./util')
 
-const Log = require('log')
-const log = new Log('info')
-
 const makeModelAndPopulate = obj => {
 	return _.omit(
 		new PregnancyCenterModel(obj).populate('primaryContactPerson').toObject(),
