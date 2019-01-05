@@ -80,6 +80,8 @@ const styles = {
 		padding: '2.5px',
 		'border-bottom': '1px solid #979797',
 		width: '105px',
+		display: 'inline',
+		margin: '0 15px',
 	},
 	input: {
 		height: '17px',

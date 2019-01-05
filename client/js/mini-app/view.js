@@ -8,7 +8,7 @@ import { getPregnancyResourceCenters } from './data/action-creators'
 import Header from './header'
 import Instruction from './instruction'
 import ResourceCarousel from './components/resource-carousel'
-import MiniAppFooter from './components/footer'
+import Footer from './components/footer'
 
 class MiniApp extends Component {
 	submit = ({ locationInput }) => {
@@ -37,7 +37,7 @@ class MiniApp extends Component {
 						<MiniAppForm onSubmit={this.submit} />
 					</div>
 				</div>
-				<MiniAppFooter />
+				<Footer />
 			</div>
 		)
 	}

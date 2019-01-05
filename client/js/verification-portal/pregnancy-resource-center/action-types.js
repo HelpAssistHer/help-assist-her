@@ -1,3 +1,4 @@
 export const GET_RESOURCE_TO_VERIFY =
 	'verificationPortal/GET_RESOURCE_TO_VERIFY'
 export const FORM_SUCCESSFULLY_SUBMITTED = 'FORM_SUCCESSFULLY_SUBMITTED'
+export const CLEAR_RESOURCE = 'verificationPortal/CLEAR_RESOURCE'
