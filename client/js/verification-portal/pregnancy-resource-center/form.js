@@ -4,12 +4,11 @@ import injectSheet from 'react-jss'
 
 import Input from '../../components/input'
 import Spacer from '../../components/spacer'
-import Time from '../components/time'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
+import BusinessHours from '../components/business-hours'
 import Services from './services'
 import Toggle from '../../components/toggle'
-import { updateResource } from './action-creators'
 
 const formatPhoneDigits = digits => {
 	if (!digits) {
@@ -51,15 +50,9 @@ const parsePhoneNumber = phoneNumber => {
 
 class VerificationPortalFormClass extends Component {
 	render() {
-		const {
-			classes,
-			handleSubmit,
-			outOfBusiness,
-			doNotList,
-			submitting,
-		} = this.props
+		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
 		return (
-			<form className={classes.form}>
+			<form className={classes.form} onSubmit={handleSubmit}>
 				<div
 					className={
 						outOfBusiness || doNotList ? classes.blockFormEditing : null
@@ -275,33 +268,7 @@ class VerificationPortalFormClass extends Component {
 				<div className={classes.formSection}>
 					<Heading text="HOURS" size="medium" />
 					<Spacer height="50px" />
-					<label>Sunday Hours</label>
-					<Field name="hours[0].open" component={Time} />
-					<Field name="hours[0].close" component={Time} />
-
-					<label>Monday Hours</label>
-					<Field name="hours[1].open" component={Time} />
-					<Field name="hours[1].close" component={Time} />
-
-					<label>Tuesday Hours</label>
-					<Field name="hours[2].open" component={Time} />
-					<Field name="hours[2].close" component={Time} />
-
-					<label>Wednesday Hours</label>
-					<Field name="hours[3].open" component={Time} />
-					<Field name="hours[3].close" component={Time} />
-
-					<label>Thursday Hours</label>
-					<Field name="hours[4].open" component={Time} />
-					<Field name="hours[4].close" component={Time} />
-
-					<label>Friday Hours</label>
-					<Field name="hours[5].open" component={Time} />
-					<Field name="hours[5].close" component={Time} />
-
-					<label>Saturday Hours</label>
-					<Field name="hours[6].open" component={Time} />
-					<Field name="hours[6].close" component={Time} />
+					<BusinessHours />
 				</div>
 
 				<div className={classes.parent}>
@@ -321,8 +288,6 @@ class VerificationPortalFormClass extends Component {
 						buttonText="Save Progress"
 						activeState={false}
 						size="large"
-						disabled={submitting}
-						onClick={handleSubmit(formData => updateResource(formData))}
 					/>
 				</div>
 			</form>
