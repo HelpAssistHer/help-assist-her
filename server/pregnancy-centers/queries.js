@@ -21,4 +21,15 @@ module.exports = {
 			$lt: new Date('2018-10-31'),
 		},
 	},
+	verifiedAfterOct31: {
+		'verifiedData.prcName.date': {
+			$gte: new Date('2018-10-31'),
+		},
+	},
+	fullyVerified: {
+		'verifiedData.prcName.verified': true,
+		'verifiedData.address.verified': true,
+		'verifiedData.phone.verified': true,
+		'verifiedData.website.verified': true,
+	},
 }
