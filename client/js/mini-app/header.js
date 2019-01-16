@@ -79,23 +79,23 @@ const styles = {
 		color: '#abd3f9',
 	},
 	titleTextPhone: {
-		padding: '74px 80px 0px 80px',
+		padding: '21px 48px 0px 48px',
 		'font-family': 'hah-light',
 		'font-size': '40px',
 		'letter-spacing': '-0.5px',
 		'line-height': '48px',
+	},
+	descriptionTextPhone: {
+		padding: '0px 48px 132px 48px',
+		'font-family': 'hah-regular',
+		'font-size': '18px',
+		'line-height': '24px',
 	},
 	titleTextDesktop: {
 		padding: '74px 80px 0px 42px',
 		'font-family': 'hah-regular',
 		'font-size': '80px',
 		'line-height': '76px',
-	},
-	descriptionTextPhone: {
-		padding: '0px 80px 132px 80px',
-		'font-family': 'hah-regular',
-		'font-size': '18px',
-		'line-height': '24px',
 	},
 	descriptionTextDesktop: {
 		padding: '0px 80px 132px 42px',
