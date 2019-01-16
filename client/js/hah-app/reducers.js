@@ -58,6 +58,22 @@ const miniAppReducer = (state = {}, action) => {
 			return state
 	}
 }
+const chcResourceReducer = (state = {}, action) => {
+	switch (action.type) {
+		case 'SUBMIT_CHC_FORM':
+			return {
+				...state,
+				chcFormData: action.chcFormData,
+			}
+		case 'CLEAR_CHC_STATE':
+			return {
+				...state,
+				chcFormData: {},
+			}
+		default:
+			return state
+	}
+}
 
 const localStateReducer = (state = {}, action) => {
 	switch (action.type) {
@@ -73,6 +89,7 @@ const localStateReducer = (state = {}, action) => {
 
 const reducers = {
 	initialData: authenticationReducer,
+	chcResource: chcResourceReducer,
 	resource: resourceReducer,
 	miniApp: miniAppReducer,
 	form: formReducer,

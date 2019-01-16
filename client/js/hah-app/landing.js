@@ -30,20 +30,14 @@ class Landing extends React.Component {
 	}
 }
 const styles = {
-	textTwo: {
-		'font-size': '24px',
-		'letter-spacing': '0.33px',
-		'line-height': '29px',
-		'margin-top': '45px',
-	},
-	textOne: {
-		'font-size': '72px',
-		'letter-spacing': '3px',
-		'line-height': '88px',
-	},
-	logoWhite: {
-		height: '67.07px',
-		width: '338.23px',
+	landing: {
+		margin: '0',
+		height: '100%',
+		width: '100%',
+		'background-image': 'url("./img/background.png")',
+		'background-position': 'center',
+		'background-repeat': 'no-repeat',
+		'background-size': 'cover',
 	},
 	homeScreen: {
 		position: 'absolute',
@@ -57,14 +51,20 @@ const styles = {
 		'font-family': 'Century Gothic',
 		'font-weight': 'bold',
 	},
-	landing: {
-		margin: '0',
-		height: '100%',
-		width: '100%',
-		'background-image': 'url("./img/background.png")',
-		'background-position': 'center',
-		'background-repeat': 'no-repeat',
-		'background-size': 'cover',
+	logoWhite: {
+		height: '67.07px',
+		width: '338.23px',
+	},
+	textOne: {
+		'font-size': '72px',
+		'letter-spacing': '3px',
+		'line-height': '88px',
+	},
+	textTwo: {
+		'font-size': '24px',
+		'letter-spacing': '0.33px',
+		'line-height': '29px',
+		'margin-top': '45px',
 	},
 }
 const LandingWithStyle = injectSheet(styles)(Landing)

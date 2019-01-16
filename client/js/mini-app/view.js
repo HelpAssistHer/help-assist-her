@@ -8,6 +8,7 @@ import { getPregnancyResourceCenters } from './data/action-creators'
 import Header from './header'
 import Instruction from './instruction'
 import ResourceCarousel from './components/resource-carousel'
+import Footer from './components/footer'
 
 class MiniApp extends Component {
 	submit = ({ locationInput }) => {
@@ -17,8 +18,6 @@ class MiniApp extends Component {
 	}
 
 	render() {
-		const { classes } = this.props
-
 		return (
 			<div>
 				<Header />
@@ -31,31 +30,14 @@ class MiniApp extends Component {
 					stepNumber="STEP TWO"
 					stepDescription="Enter your location:"
 				/>
-				<div className={classes.address}>
-					<div className={classes.addressInput}>
-						<MiniAppForm onSubmit={this.submit} />
-					</div>
-				</div>
-				<div className={classes.footer}>Help Assist Her</div>
+				<MiniAppForm onSubmit={this.submit} />
+				<Footer />
 			</div>
 		)
 	}
 }
 
-const styles = {
-	address: {
-		display: 'flex',
-		'justify-content': 'center',
-	},
-	addressInput: {
-		width: '478px',
-	},
-	footer: {
-		height: '188px',
-		'background-color': '#3d65f9',
-		'margin-top': '100px',
-	},
-}
+const styles = {}
 
 const MiniAppStyle = injectSheet(styles)(MiniApp)
 
