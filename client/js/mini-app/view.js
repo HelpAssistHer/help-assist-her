@@ -18,6 +18,8 @@ class MiniApp extends Component {
 	}
 
 	render() {
+		const { classes } = this.props
+
 		return (
 			<div>
 				<Header />
@@ -30,14 +32,26 @@ class MiniApp extends Component {
 					stepNumber="STEP TWO"
 					stepDescription="Enter your location:"
 				/>
-				<MiniAppForm onSubmit={this.submit} />
+				<div className={classes.address}>
+					<div className={classes.addressInput}>
+						<MiniAppForm onSubmit={this.submit} />
+					</div>
+				</div>
 				<Footer />
 			</div>
 		)
 	}
 }
 
-const styles = {}
+const styles = {
+	address: {
+		display: 'flex',
+		'justify-content': 'center',
+	},
+	addressInput: {
+		width: '478px',
+	},
+}
 
 const MiniAppStyle = injectSheet(styles)(MiniApp)
 
