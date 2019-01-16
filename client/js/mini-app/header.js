@@ -3,6 +3,7 @@ import injectSheet from 'react-jss'
 
 import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
+import LogoAndNavigation from './logo-and-navigation'
 
 const Header = ({ classes }) => {
 	const titleText = 'We have your back.'
@@ -12,8 +13,7 @@ const Header = ({ classes }) => {
 
 	return (
 		<div>
-			<Spacer height="100px" />
-
+			<LogoAndNavigation />
 			<Phone>
 				<div className={classes.headerContainerPhone}>
 					<img
@@ -58,10 +58,14 @@ const styles = {
 		display: 'flex',
 		'flex-direction': 'column',
 		'background-color': '#016454',
+		'border-top': '1px solid #3D65F9',
+		'border-bottom': '1px solid #3D65F9',
 	},
 	headerContainerDesktop: {
 		display: 'flex',
 		'background-color': '#016454',
+		'border-top': '4px solid #3D65F9',
+		'border-bottom': '4px solid #3D65F9',
 	},
 	headerTextPhone: {
 		flex: '1 1 0',
