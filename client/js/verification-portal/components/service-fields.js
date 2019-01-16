@@ -13,6 +13,7 @@ const ServiceFields = ({ listOfServices }) => (
 						label={service.name}
 						name={`services.${service.id}`}
 						component={ServicesCheckbox}
+						description={service.description}
 					/>
 				</div>
 			)
