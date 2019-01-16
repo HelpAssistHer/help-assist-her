@@ -6,7 +6,7 @@ import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
 const Header = ({ classes }) => {
-	const titleText = 'We have your back.'
+	const titleText = 'Empower Women with Options.'
 
 	const descriptionText =
 		'We’re here to help you find the local resources you need.'
@@ -86,6 +86,7 @@ const styles = {
 		padding: '74px 80px 0px 80px',
 		'font-family': 'hah-regular',
 		'font-size': '80px',
+		'line-height': '76px',
 	},
 	descriptionTextPhone: {
 		padding: '0px 80px 132px 80px',
