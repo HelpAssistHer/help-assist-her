@@ -86,7 +86,7 @@ const styles = {
 		'line-height': '48px',
 	},
 	titleTextDesktop: {
-		padding: '74px 80px 0px 80px',
+		padding: '74px 80px 0px 42px',
 		'font-family': 'hah-regular',
 		'font-size': '80px',
 		'line-height': '76px',
@@ -98,7 +98,7 @@ const styles = {
 		'line-height': '24px',
 	},
 	descriptionTextDesktop: {
-		padding: '0px 80px 132px 80px',
+		padding: '0px 80px 132px 42px',
 		'font-family': 'hah-regular',
 		'font-size': '24px',
 		'line-height': '33px',
