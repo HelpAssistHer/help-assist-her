@@ -19,6 +19,7 @@ const styles = {
 	verificationPortal: {
 		display: 'flex',
 		'flex-direction': 'row',
+		'background-color': '#fff',
 	},
 	leftSideNav: {
 		flex: '0 0 339px',
