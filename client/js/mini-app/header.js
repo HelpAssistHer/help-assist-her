@@ -9,7 +9,9 @@ const Header = ({ classes }) => {
 	const titleText = 'Empower Women with Options.'
 
 	const descriptionText =
-		'We’re here to help you find the local resources you need.'
+		'We’ve got your back. And your left hand, or your right foot. Whatever you need help ' +
+		'with — we’ll help connect you to a local resource that can provide counseling, screenings, ' +
+		'or more.'
 
 	return (
 		<div>
@@ -81,6 +83,7 @@ const styles = {
 		'font-family': 'hah-light',
 		'font-size': '40px',
 		'letter-spacing': '-0.5px',
+		'line-height': '48px',
 	},
 	titleTextDesktop: {
 		padding: '74px 80px 0px 80px',
@@ -92,11 +95,13 @@ const styles = {
 		padding: '0px 80px 132px 80px',
 		'font-family': 'hah-regular',
 		'font-size': '18px',
+		'line-height': '24px',
 	},
 	descriptionTextDesktop: {
 		padding: '0px 80px 132px 80px',
 		'font-family': 'hah-regular',
 		'font-size': '24px',
+		'line-height': '33px',
 	},
 	imagePhone: {
 		height: '100%',
