@@ -2,18 +2,21 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import { Phone, Desktop } from '../components/breakpoints'
+import Spacer from '../components/spacer'
 
 const Instruction = ({ classes, stepNumber, stepDescription }) => {
 	return (
 		<div className={classes.instructionRoot}>
 			<Phone>
 				<div>
+					<Spacer height="29px" />
 					<div className={classes.stepNumberPhone}>{stepNumber}</div>
 					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
 				</div>
 			</Phone>
 			<Desktop>
 				<div>
+					<Spacer height="67px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
@@ -27,14 +30,12 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 const styles = {
 	instructionRoot: {
 		'text-align': 'center',
-		margin: '40px 0px 60px 0px',
 	},
 	stepNumberPhone: {
 		'font-family': 'hah-bold',
 		'letter-spacing': '2px',
 		'font-size': '10px',
 		color: '#3d65f9',
-		'margin-bottom': '20px',
 	},
 	stepDescriptionPhone: {
 		color: '#000000',
@@ -45,7 +46,6 @@ const styles = {
 		'letter-spacing': '2px',
 		'font-size': '18px',
 		color: '#3d65f9',
-		'margin-bottom': '20px',
 	},
 	stepDescriptionDesktop: {
 		color: '#000000',
