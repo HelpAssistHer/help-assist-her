@@ -8,7 +8,6 @@ import {
 	createLoginAction,
 	createLogoutAction,
 	login,
-	logout,
 } from '../../hah-app/action-creators'
 
 class FacebookLoginButton extends React.Component {
@@ -33,7 +32,7 @@ class FacebookLoginButton extends React.Component {
 	}
 
 	render() {
-		const { classes, facebookAppId, isLoggedIn } = this.props
+		const { classes, facebookAppId } = this.props
 
 		if (!facebookAppId) {
 			return null
