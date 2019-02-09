@@ -6,10 +6,12 @@ import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
 const Header = ({ classes }) => {
-	const titleText = 'We have your back.'
+	const titleText = 'Empower Women with Options.'
 
 	const descriptionText =
-		'We’re here to help you find the local resources you need.'
+		'We’ve got your back. And your left hand, or your right foot. Whatever you need help ' +
+		'with — we’ll help connect you to a local resource that can provide counseling, screenings, ' +
+		'or more.'
 
 	return (
 		<div>
@@ -77,25 +79,29 @@ const styles = {
 		color: '#abd3f9',
 	},
 	titleTextPhone: {
-		padding: '74px 80px 0px 80px',
+		padding: '21px 48px 0px 48px',
 		'font-family': 'hah-light',
 		'font-size': '40px',
 		'letter-spacing': '-0.5px',
-	},
-	titleTextDesktop: {
-		padding: '74px 80px 0px 80px',
-		'font-family': 'hah-regular',
-		'font-size': '80px',
+		'line-height': '48px',
 	},
 	descriptionTextPhone: {
-		padding: '0px 80px 132px 80px',
+		padding: '0px 48px 132px 48px',
 		'font-family': 'hah-regular',
 		'font-size': '18px',
+		'line-height': '24px',
+	},
+	titleTextDesktop: {
+		padding: '74px 80px 0px 42px',
+		'font-family': 'hah-regular',
+		'font-size': '80px',
+		'line-height': '76px',
 	},
 	descriptionTextDesktop: {
-		padding: '0px 80px 132px 80px',
+		padding: '0px 80px 132px 42px',
 		'font-family': 'hah-regular',
 		'font-size': '24px',
+		'line-height': '33px',
 	},
 	imagePhone: {
 		height: '100%',

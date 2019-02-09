@@ -1,11 +1,16 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-const ServicesCheckbox = ({ classes, input, label }) => {
+import Tooltip from './tooltip'
+
+const ServicesCheckbox = ({ classes, input, label, description }) => {
 	return (
 		<div className={classes.root}>
 			<label className={classes.container}>
-				<div className={classes.labelText}>{label}</div>
+				<div className={classes.labelText} data-tip data-for={label}>
+					{label}
+				</div>
+				<Tooltip id={label} heading={label} text={description} />
 				<input type="checkbox" checked={input.value} {...input} />
 				<span className={classes.checkmark} />
 			</label>

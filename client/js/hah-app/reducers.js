@@ -6,6 +6,7 @@ import { UPDATE_LOGIN_STATE, GET_INITIAL_DATA } from './action-types'
 import {
 	GET_RESOURCE_TO_VERIFY,
 	FORM_SUCCESSFULLY_SUBMITTED,
+	CLEAR_RESOURCE,
 } from '../verification-portal/pregnancy-resource-center/action-types'
 import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
 import { DO_NOT_LIST } from '../verification-portal/do-not-list/action-types'
@@ -15,13 +16,11 @@ const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
 		case GET_INITIAL_DATA:
 			return _.assign({}, state, action.initialData)
-
 		case UPDATE_LOGIN_STATE:
 			return _.assign({}, state, {
 				isLoggedIn: action.isLoggedIn,
 				userDisplayName: action.userDisplayName,
 			})
-
 		default:
 			return state
 	}
@@ -41,6 +40,8 @@ const resourceReducer = (state = {}, action) => {
 				...state,
 				doNotList: action.doNotList,
 			}
+		case CLEAR_RESOURCE:
+			return {}
 		default:
 			return state
 	}
@@ -52,6 +53,22 @@ const miniAppReducer = (state = {}, action) => {
 			return {
 				...state,
 				pregnancyResourceCenters: action.pregnancyResourceCenters,
+			}
+		default:
+			return state
+	}
+}
+const chcResourceReducer = (state = {}, action) => {
+	switch (action.type) {
+		case 'SUBMIT_CHC_FORM':
+			return {
+				...state,
+				chcFormData: action.chcFormData,
+			}
+		case 'CLEAR_CHC_STATE':
+			return {
+				...state,
+				chcFormData: {},
 			}
 		default:
 			return state
@@ -72,6 +89,7 @@ const localStateReducer = (state = {}, action) => {
 
 const reducers = {
 	initialData: authenticationReducer,
+	chcResource: chcResourceReducer,
 	resource: resourceReducer,
 	miniApp: miniAppReducer,
 	form: formReducer,

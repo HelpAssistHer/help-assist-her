@@ -1,8 +1,10 @@
 import _ from 'lodash'
 
-import { store } from '../../hah-app/index'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
 import { FORM_SUCCESSFULLY_SUBMITTED } from './action-types'
+import { CLEAR_RESOURCE } from './action-types'
+import { store } from '../../hah-app/index'
+import { change } from 'redux-form'
 
 async function getOneResource() {
 	const response = await fetch(`/api/pregnancy-centers/verify`, {
@@ -22,6 +24,12 @@ function getResource(resource) {
 	}
 }
 
+function clearResource() {
+	return {
+		type: CLEAR_RESOURCE,
+	}
+}
+
 export function setFormStatus(status) {
 	return {
 		type: FORM_SUCCESSFULLY_SUBMITTED,
@@ -29,8 +37,18 @@ export function setFormStatus(status) {
 	}
 }
 
+function resetFormAndResource(dispatch) {
+	_.forEach(
+		store.getState().form.verificationPortal.registeredFields,
+		field => {
+			dispatch(change('verificationPortal', field, null))
+		},
+	)
+	dispatch(clearResource())
+}
 export const getResourceToVerify = () => {
 	return function(dispatch) {
+		resetFormAndResource(dispatch)
 		return getOneResource().then(result => dispatch(getResource(result)))
 	}
 }

@@ -3,7 +3,6 @@ import injectSheet from 'react-jss'
 
 import HeaderModal from './components/header-modal'
 import Spacer from '../components/spacer'
-import LoginButton from '../authentication/facebook-login-button'
 import Tabs from './components/tabs'
 import CommunityHealthCenterForm from './community-health-center'
 import PregnancyResourceCenterForm from './pregnancy-resource-center'
@@ -27,7 +26,6 @@ const ResourceView = ({ formType, classes }) => {
 			<HeaderModal />
 			<Tabs />
 			<Spacer height="63px" />
-			<LoginButton />
 			{getFormComponent({ formType })}
 		</div>
 	)

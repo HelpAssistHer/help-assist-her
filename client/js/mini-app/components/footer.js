@@ -7,7 +7,7 @@ import Spacer from '../../components/spacer'
 import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 import SocialMedia from './social-media'
 
-const MiniAppFooter = ({ classes }) => (
+const Footer = ({ classes }) => (
 	<div>
 		<Phone>
 			<div>
@@ -88,4 +88,4 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(MiniAppFooter)
+export default injectSheet(styles)(Footer)
