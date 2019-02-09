@@ -354,6 +354,15 @@ describe('PregnancyCenters', () => {
 				phone: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('10-15-2018'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
 			})
 
 			// copy of above, but outOfBusiness
@@ -371,6 +380,15 @@ describe('PregnancyCenters', () => {
 				phone: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('10-15-2018'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
 			})
 
 			await PregnancyCenterModel.create({
@@ -386,6 +404,15 @@ describe('PregnancyCenters', () => {
 				email: 'thebridgetolife@verizon.net',
 				website: 'http://www.thebridgetolife.org',
 				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('10-15-2018'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
 			})
 
 			await mockAuthenticate()
