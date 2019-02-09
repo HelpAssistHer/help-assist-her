@@ -356,7 +356,7 @@ describe('PregnancyCenters', () => {
 				services: {},
 				verifiedData: {
 					prcName: {
-						date: new Date('2018-10-15'),
+						date: new Date('2018-11-15'),
 						verified: true,
 					},
 					address: { verified: true },
@@ -382,7 +382,7 @@ describe('PregnancyCenters', () => {
 				services: {},
 				verifiedData: {
 					prcName: {
-						date: new Date('2018-10-15'),
+						date: new Date('2018-11-15'),
 						verified: true,
 					},
 					address: { verified: true },
@@ -406,7 +406,7 @@ describe('PregnancyCenters', () => {
 				services: {},
 				verifiedData: {
 					prcName: {
-						date: new Date('2018-10-15'),
+						date: new Date('2018-11-15'),
 						verified: true,
 					},
 					address: { verified: true },
