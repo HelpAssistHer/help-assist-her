@@ -9,7 +9,7 @@ import {
 import Landing from './landing'
 import VerificationPortalContainer from '../verification-portal'
 import MiniApp from '../mini-app'
-import ResourceList from '../mini-app/components/resource-list'
+import ResourceList from '../mini-app/questions/resource-list'
 import About from './about'
 import Feedback from './feedback'
 import Menu from '../mini-app/components/menu'
