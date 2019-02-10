@@ -1,13 +1,29 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import Instruction from './instruction'
 import MiniAppForm from '../form'
+import { getPregnancyResourceCenters } from '../data/action-creators'
 
-const StepTwo = () => (
-	<div>
-		<Instruction stepNumber="STEP TWO" stepDescription="Enter your location:" />
-		<MiniAppForm onSubmit={this.submit} />
-	</div>
-)
+class StepTwo extends Component {
+	submit = ({ locationInput }) => {
+		const { dispatch, history } = this.props
+		dispatch(getPregnancyResourceCenters(locationInput))
+		history.push('/mini-app/pregnancy-resource-centers')
+	}
 
-export default StepTwo
+	render() {
+		return (
+			<div>
+				<Instruction
+					stepNumber="STEP TWO"
+					stepDescription="Enter your location:"
+				/>
+				<MiniAppForm onSubmit={this.submit} />
+			</div>
+		)
+	}
+}
+
+export default connect()(withRouter(StepTwo))

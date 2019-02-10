@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import injectSheet from 'react-jss'
 
 import StepOne from './step-one'
 import StepTwo from './step-two'
 
-class Questions extends React.Component {
+class Questions extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
