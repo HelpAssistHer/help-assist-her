@@ -45,10 +45,14 @@ const styles = {
 	},
 	logoDesktop: {
 		height: '100px',
-		margin: '0px 134px 0px 42px',
+		padding: '0px 134px 0px 42px',
+		'background-color': '#FFFFFF',
+		'min-width': '90vw',
 		display: 'flex',
 		'align-items': 'center',
 		'justify-content': 'space-between',
+		position: 'fixed',
+		top: '0vh',
 	},
 	hamburgerMenuPhone: {
 		cursor: 'pointer',

@@ -5,6 +5,7 @@ import injectSheet from 'react-jss'
 
 import ResourceCard from './resource-card'
 import LogoAndNavigation from '../logo-and-navigation'
+import Footer from '../components/footer'
 
 const mapStateToProps = state => {
 	return {
@@ -25,6 +26,7 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 					return <ResourceCard key={prc._id} resource={prc} />
 				})}
 			</div>
+			<Footer />
 		</div>
 	)
 }
@@ -36,6 +38,7 @@ const styles = {
 		'font-size': '14px',
 		color: '#99cccc',
 		'text-align': 'center',
+		'margin-top': '100px',
 	},
 }
 

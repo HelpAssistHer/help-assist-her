@@ -68,6 +68,7 @@ const styles = {
 		'background-color': '#016454',
 		'border-top': '4px solid #3D65F9',
 		'border-bottom': '4px solid #3D65F9',
+		'margin-top': '100px',
 	},
 	headerTextPhone: {
 		flex: '1 1 0',
