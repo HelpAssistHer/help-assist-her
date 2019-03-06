@@ -54,6 +54,9 @@ const Footer = ({ classes }) => (
 
 const styles = {
 	footerRootPhone: {
+		position: 'fixed',
+		'min-width': '90vw',
+		bottom: 0,
 		display: 'flex',
 		'justify-content': 'center',
 		'align-items': 'center',
@@ -61,6 +64,9 @@ const styles = {
 		'background-color': '#3D65F9',
 	},
 	footerRootDesktop: {
+		position: 'fixed',
+		'min-width': '90vw',
+		bottom: 0,
 		display: 'grid',
 		'grid-template-columns': '31% 21% 48%',
 		height: '114px',
