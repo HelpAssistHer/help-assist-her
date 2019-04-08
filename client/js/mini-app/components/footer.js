@@ -7,6 +7,8 @@ import Spacer from '../../components/spacer'
 import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 import SocialMedia from './social-media'
 
+const COPYRIGHT_TEXT = 'Help Assist Her 2019'
+
 const Footer = ({ classes }) => (
 	<div>
 		<Phone>
@@ -15,9 +17,7 @@ const Footer = ({ classes }) => (
 				<div className={classes.footerRootPhone}>
 					<SocialMedia iconSize={32} spacerWidth="20px" />
 					<Spacer width="25px" />
-					<div className={classes.copyrightText}>
-						&copy; Help Assist Her 2018
-					</div>
+					<div className={classes.copyrightText}>&copy; {COPYRIGHT_TEXT}</div>
 				</div>
 			</div>
 		</Phone>
@@ -29,9 +29,7 @@ const Footer = ({ classes }) => (
 					<div>
 						<LogoBetaWhite height={25} width={160} />
 						<Spacer height="19px" />
-						<div className={classes.copyrightText}>
-							&copy; Help Assist Her 2018
-						</div>
+						<div className={classes.copyrightText}>&copy; {COPYRIGHT_TEXT}</div>
 					</div>
 
 					<div className={classes.links}>
