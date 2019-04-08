@@ -42,7 +42,7 @@ const Footer = ({ classes }) => (
 					</div>
 
 					<div className={classes.socialMediaFormatting}>
-						<SocialMedia iconSize={41} spacerWidth="14px" />
+						<SocialMedia iconSize={49} spacerWidth="19px" />
 					</div>
 				</div>
 			</div>
