@@ -20,31 +20,20 @@ class Questions extends Component {
 	}
 
 	render() {
-		const buttonClicked = this.state.buttonClicked
+		const { buttonClicked } = this.state
 
-		if (!buttonClicked) {
-			return (
-				<div>
+		return (
+			<div>
+				{!buttonClicked ? (
 					<StepOne
 						buttonClicked={buttonClicked}
 						onResourceChange={this.handleResourceChange}
 					/>
-					<Desktop>
-						<div>
-							<Spacer height="87px" />
-						</div>
-					</Desktop>
-				</div>
-			)
-		}
-
-		return (
-			<div>
-				<StepTwo />
+				) : (
+					<StepTwo />
+				)}
 				<Desktop>
-					<div>
-						<Spacer height="87px" />
-					</div>
+					<Spacer height="87px" />
 				</Desktop>
 			</div>
 		)
