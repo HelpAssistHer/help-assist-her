@@ -3,6 +3,8 @@ import injectSheet from 'react-jss'
 
 import StepOne from './step-one'
 import StepTwo from './step-two'
+import { Desktop } from '../../components/breakpoints'
+import Spacer from '../../components/spacer'
 
 class Questions extends Component {
 	constructor(props) {
@@ -27,6 +29,11 @@ class Questions extends Component {
 						buttonClicked={buttonClicked}
 						onResourceChange={this.handleResourceChange}
 					/>
+					<Desktop>
+						<div>
+							<Spacer height="87px" />
+						</div>
+					</Desktop>
 				</div>
 			)
 		}
@@ -34,6 +41,11 @@ class Questions extends Component {
 		return (
 			<div>
 				<StepTwo />
+				<Desktop>
+					<div>
+						<Spacer height="87px" />
+					</div>
+				</Desktop>
 			</div>
 		)
 	}
