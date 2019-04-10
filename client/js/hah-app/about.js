@@ -18,6 +18,10 @@ const SECOND_PARAGRAPH =
 	'Help Assist Her is a collection of up-to-date, local healthcare resources and ' +
 	'their contact details that will help you get in touch with the care you need.'
 
+const TEAM_HEADING = 'The Team'
+
+const TEAM_BODY = 'The dream team that makes all of this possible!'
+
 const About = ({ classes }) => (
 	<div>
 		<LogoAndNavigation />
@@ -39,6 +43,12 @@ const About = ({ classes }) => (
 					src="../img/women-on-phones.jpg"
 					alt="Women on mobile phones"
 				/>
+				<Spacer height="36px" />
+				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
+				<Spacer height="3px" />
+				<div className={classes.bodyPhone}>
+					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
+				</div>
 			</div>
 		</Phone>
 
@@ -59,6 +69,12 @@ const About = ({ classes }) => (
 					src="../img/women-on-phones.jpg"
 					alt="Women on mobile phones"
 				/>
+				<Spacer height="70px" />
+				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
+				<Spacer height="27px" />
+				<div className={classes.bodyDesktop}>
+					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
+				</div>
 			</div>
 		</Desktop>
 
