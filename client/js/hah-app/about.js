@@ -4,6 +4,7 @@ import injectSheet from 'react-jss'
 import Spacer from '../components/spacer'
 import Footer from '../mini-app/components/footer'
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
+import Team from './team'
 import { Phone, Desktop } from '../components/breakpoints'
 
 const TITLE_TEXT = 'What is Help Assist Her?'
@@ -76,8 +77,18 @@ const About = ({ classes }) => (
 				<div className={classes.bodyDesktop}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
-				<Spacer height="60px" />
+				<Spacer height="65px" />
 			</div>
+		</Desktop>
+
+		<Team />
+
+		<Phone>
+			<Spacer height="36px" />
+		</Phone>
+
+		<Desktop>
+			<Spacer height="60px" />
 		</Desktop>
 
 		<Footer />
