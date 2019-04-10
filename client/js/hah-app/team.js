@@ -20,29 +20,43 @@ const BIO_TEXT =
 const Team = ({ classes }) => (
 	<div>
 		<Phone>
-			<div className={classes.gridContainerPhone}>
-				<div className={classes.gridItem}>
-					<div className={classes.nameAndTitleTextPhone}>
-						{NAME_AND_TITLE_TEXT}
+			<div>
+				<img
+					className={classes.headshot}
+					src="../img/team/karen.png"
+					alt="Karen"
+				/>
+				<div className={classes.gridContainerPhone}>
+					<div className={classes.gridItem}>
+						<div className={classes.nameAndTitleTextPhone}>
+							{NAME_AND_TITLE_TEXT}
+						</div>
+						<Spacer height="14px" />
+						<div className={classes.lineBreakPhone} />
+						<Spacer height="14px" />
+						<div className={classes.bioTextPhone}>{BIO_TEXT}</div>
 					</div>
-					<Spacer height="14px" />
-					<div className={classes.lineBreakPhone} />
-					<Spacer height="14px" />
-					<div className={classes.bioTextPhone}>{BIO_TEXT}</div>
 				</div>
 			</div>
 		</Phone>
 
 		<Desktop>
-			<div className={classes.gridContainerDesktop}>
-				<div className={classes.gridItem}>
-					<div className={classes.nameAndTitleTextDesktop}>
-						{NAME_AND_TITLE_TEXT}
+			<div>
+				<img
+					className={classes.headshot}
+					src="../img/team/karen.png"
+					alt="Karen"
+				/>
+				<div className={classes.gridContainerDesktop}>
+					<div className={classes.gridItem}>
+						<div className={classes.nameAndTitleTextDesktop}>
+							{NAME_AND_TITLE_TEXT}
+						</div>
+						<Spacer height="16px" />
+						<div className={classes.lineBreakDesktop} />
+						<Spacer height="16px" />
+						<div className={classes.bioTextDesktop}>{BIO_TEXT}</div>
 					</div>
-					<Spacer height="16px" />
-					<div className={classes.lineBreakDesktop} />
-					<Spacer height="16px" />
-					<div className={classes.bioTextDesktop}>{BIO_TEXT}</div>
 				</div>
 			</div>
 		</Desktop>
@@ -50,6 +64,10 @@ const Team = ({ classes }) => (
 )
 
 const styles = {
+	headshot: {
+		height: '240px',
+		width: '240px',
+	},
 	gridContainerPhone: {
 		display: 'grid',
 		'grid-template-columns': '5% 90% 5%',
