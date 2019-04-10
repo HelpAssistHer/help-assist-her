@@ -28,7 +28,10 @@ const About = ({ classes }) => (
 				<div className={classes.titlePhone}>{TITLE_TEXT}</div>
 				<Spacer height="28px" />
 				<div className={classes.bodyPhone}>
-					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
+					<div className={classes.bodyTextItem}>
+						{BODY_TEXT}
+						<p>{SECOND_PARAGRAPH}</p>
+					</div>
 				</div>
 			</div>
 		</Phone>
@@ -39,7 +42,10 @@ const About = ({ classes }) => (
 				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
 				<Spacer height="30px" />
 				<div className={classes.bodyDesktop}>
-					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
+					<div className={classes.bodyTextItem}>
+						{BODY_TEXT}
+						<p>{SECOND_PARAGRAPH}</p>
+					</div>
 				</div>
 			</div>
 		</Desktop>
