@@ -2,6 +2,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import { Phone, Desktop } from '../components/breakpoints'
+import Spacer from '../components/spacer'
 
 const NAME_AND_TITLE_TEXT = 'Karen Rose | Executive Director'
 
@@ -17,12 +18,15 @@ const BIO_TEXT =
 	'“Without an illustration, chart, or embedded YouTube video to ease them in, millions were frozen in place, terrified by the sight of one long, unbroken string of English words.'
 
 const Team = ({ classes }) => (
-	<div className={classes.team}>
+	<div>
 		<Phone>
 			<div>
 				<div className={classes.nameAndTitleTextPhone}>
 					{NAME_AND_TITLE_TEXT}
 				</div>
+				<Spacer height="14px" />
+				<div className={classes.lineBreakPhone} />
+				<Spacer height="14px" />
 				<div className={classes.bioTextPhone}>{BIO_TEXT}</div>
 			</div>
 		</Phone>
@@ -32,6 +36,9 @@ const Team = ({ classes }) => (
 				<div className={classes.nameAndTitleTextDesktop}>
 					{NAME_AND_TITLE_TEXT}
 				</div>
+				<Spacer height="16px" />
+				<div className={classes.lineBreakDesktop} />
+				<Spacer height="16px" />
 				<div className={classes.bioTextDesktop}>{BIO_TEXT}</div>
 			</div>
 		</Desktop>
@@ -39,9 +46,6 @@ const Team = ({ classes }) => (
 )
 
 const styles = {
-	team: {
-		'background-color': 'yellow',
-	},
 	nameAndTitleTextPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
@@ -53,6 +57,14 @@ const styles = {
 		'font-family': 'hah-bold',
 		'font-size': '18px',
 		'line-height': '26px',
+	},
+	lineBreakPhone: {
+		width: '35px',
+		'border-top': '1px solid #24A894',
+	},
+	lineBreakDesktop: {
+		width: '84px',
+		'border-top': '3px solid #FFCA34',
 	},
 	bioTextPhone: {
 		color: '#000000',
