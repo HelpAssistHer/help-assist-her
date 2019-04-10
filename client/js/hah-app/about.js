@@ -34,6 +34,11 @@ const About = ({ classes }) => (
 					</div>
 				</div>
 				<Spacer height="36px" />
+				<img
+					className={classes.imagePhone}
+					src="../img/women-on-phones.jpg"
+					alt="Women on mobile phones"
+				/>
 			</div>
 		</Phone>
 
@@ -49,6 +54,11 @@ const About = ({ classes }) => (
 					</div>
 				</div>
 				<Spacer height="60px" />
+				<img
+					className={classes.imageDesktop}
+					src="../img/women-on-phones.jpg"
+					alt="Women on mobile phones"
+				/>
 			</div>
 		</Desktop>
 
@@ -92,6 +102,18 @@ const styles = {
 	bodyTextItem: {
 		'grid-column-start': 2,
 		'grid-column-end': 3,
+	},
+	imagePhone: {
+		height: '100%',
+		width: '100%',
+		'border-top': '1px solid #3D65F9',
+		'border-bottom': '1px solid #3D65F9',
+	},
+	imageDesktop: {
+		height: '100%',
+		width: '100%',
+		'border-top': '3px solid #3D65F9',
+		'border-bottom': '3px solid #3D65F9',
 	},
 }
 
