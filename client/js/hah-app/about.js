@@ -49,6 +49,7 @@ const About = ({ classes }) => (
 				<div className={classes.bodyPhone}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
+				<Spacer height="36px" />
 			</div>
 		</Phone>
 
@@ -75,6 +76,7 @@ const About = ({ classes }) => (
 				<div className={classes.bodyDesktop}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
+				<Spacer height="60px" />
 			</div>
 		</Desktop>
 
