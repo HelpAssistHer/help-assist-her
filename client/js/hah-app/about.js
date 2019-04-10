@@ -33,6 +33,7 @@ const About = ({ classes }) => (
 						<p>{SECOND_PARAGRAPH}</p>
 					</div>
 				</div>
+				<Spacer height="36px" />
 			</div>
 		</Phone>
 
@@ -47,6 +48,7 @@ const About = ({ classes }) => (
 						<p>{SECOND_PARAGRAPH}</p>
 					</div>
 				</div>
+				<Spacer height="60px" />
 			</div>
 		</Desktop>
 
