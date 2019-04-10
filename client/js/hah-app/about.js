@@ -26,6 +26,10 @@ const About = ({ classes }) => (
 			<div>
 				<Spacer height="36px" />
 				<div className={classes.titlePhone}>{TITLE_TEXT}</div>
+				<Spacer height="28px" />
+				<div className={classes.bodyPhone}>
+					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
+				</div>
 			</div>
 		</Phone>
 
@@ -33,6 +37,10 @@ const About = ({ classes }) => (
 			<div>
 				<Spacer height="60px" />
 				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
+				<Spacer height="30px" />
+				<div className={classes.bodyDesktop}>
+					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
+				</div>
 			</div>
 		</Desktop>
 
@@ -54,6 +62,28 @@ const styles = {
 		'font-size': '40px',
 		'line-height': '48px',
 		'text-align': 'center',
+	},
+	bodyPhone: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '20px',
+		'text-align': 'center',
+		display: 'grid',
+		'grid-template-columns': '5% 90% 5%',
+	},
+	bodyDesktop: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '24px',
+		'line-height': '35px',
+		'text-align': 'center',
+		display: 'grid',
+		'grid-template-columns': '20% 60% 20%',
+	},
+	bodyTextItem: {
+		'grid-column-start': 2,
+		'grid-column-end': 3,
 	},
 }
 
