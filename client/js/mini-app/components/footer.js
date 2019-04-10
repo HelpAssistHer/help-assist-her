@@ -13,7 +13,6 @@ const Footer = ({ classes }) => (
 	<div>
 		<Phone>
 			<div>
-				<Spacer height="39px" />
 				<div className={classes.footerRootPhone}>
 					<SocialMedia iconSize={32} spacerWidth="20px" />
 					<Spacer width="25px" />
@@ -24,7 +23,6 @@ const Footer = ({ classes }) => (
 
 		<Desktop>
 			<div>
-				<Spacer height="87px" />
 				<div className={classes.footerRootDesktop}>
 					<div>
 						<LogoBetaWhite height={25} width={160} />
