@@ -20,32 +20,48 @@ const BIO_TEXT =
 const Team = ({ classes }) => (
 	<div>
 		<Phone>
-			<div>
-				<div className={classes.nameAndTitleTextPhone}>
-					{NAME_AND_TITLE_TEXT}
+			<div className={classes.gridContainerPhone}>
+				<div className={classes.gridItem}>
+					<div className={classes.nameAndTitleTextPhone}>
+						{NAME_AND_TITLE_TEXT}
+					</div>
+					<Spacer height="14px" />
+					<div className={classes.lineBreakPhone} />
+					<Spacer height="14px" />
+					<div className={classes.bioTextPhone}>{BIO_TEXT}</div>
 				</div>
-				<Spacer height="14px" />
-				<div className={classes.lineBreakPhone} />
-				<Spacer height="14px" />
-				<div className={classes.bioTextPhone}>{BIO_TEXT}</div>
 			</div>
 		</Phone>
 
 		<Desktop>
-			<div>
-				<div className={classes.nameAndTitleTextDesktop}>
-					{NAME_AND_TITLE_TEXT}
+			<div className={classes.gridContainerDesktop}>
+				<div className={classes.gridItem}>
+					<div className={classes.nameAndTitleTextDesktop}>
+						{NAME_AND_TITLE_TEXT}
+					</div>
+					<Spacer height="16px" />
+					<div className={classes.lineBreakDesktop} />
+					<Spacer height="16px" />
+					<div className={classes.bioTextDesktop}>{BIO_TEXT}</div>
 				</div>
-				<Spacer height="16px" />
-				<div className={classes.lineBreakDesktop} />
-				<Spacer height="16px" />
-				<div className={classes.bioTextDesktop}>{BIO_TEXT}</div>
 			</div>
 		</Desktop>
 	</div>
 )
 
 const styles = {
+	gridContainerPhone: {
+		display: 'grid',
+		'grid-template-columns': '5% 90% 5%',
+	},
+	gridContainerDesktop: {
+		display: 'grid',
+		'grid-template-columns': '20% 60% 20%',
+	},
+	gridItem: {
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+	},
 	nameAndTitleTextPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
