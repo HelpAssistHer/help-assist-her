@@ -28,12 +28,14 @@ const Feedback = ({ classes }) => (
 				<Spacer height="36px" />
 				<div className={classes.titleTextPhone}>{TITLE_TEXT}</div>
 				<Spacer height="28px" />
-				<div className={classes.bodyTextPhone}>
-					{BODY_TEXT_1}
-					<Spacer height="28px" />
-					{BODY_TEXT_2}
-					<Spacer height="28px" />
-					<div className={classes.blueText}>{BODY_TEXT_3}</div>
+				<div className={classes.gridContainerPhone}>
+					<div className={classes.bodyTextPhone}>
+						{BODY_TEXT_1}
+						<Spacer height="28px" />
+						{BODY_TEXT_2}
+						<Spacer height="28px" />
+						<div className={classes.blueText}>{BODY_TEXT_3}</div>
+					</div>
 				</div>
 			</div>
 		</Phone>
@@ -43,12 +45,14 @@ const Feedback = ({ classes }) => (
 				<Spacer height="60px" />
 				<div className={classes.titleTextDesktop}>{TITLE_TEXT}</div>
 				<Spacer height="32px" />
-				<div className={classes.bodyTextDesktop}>
-					{BODY_TEXT_1}
-					<Spacer height="32px" />
-					{BODY_TEXT_2}
-					<Spacer height="32px" />
-					<div className={classes.blueText}>{BODY_TEXT_3}</div>
+				<div className={classes.gridContainerDesktop}>
+					<div className={classes.bodyTextDesktop}>
+						{BODY_TEXT_1}
+						<Spacer height="32px" />
+						{BODY_TEXT_2}
+						<Spacer height="32px" />
+						<div className={classes.blueText}>{BODY_TEXT_3}</div>
+					</div>
 				</div>
 			</div>
 		</Desktop>
@@ -77,12 +81,22 @@ const styles = {
 		'line-height': '48px',
 		'text-align': 'center',
 	},
+	gridContainerPhone: {
+		display: 'grid',
+		'grid-template-columns': '5% 90% 5%',
+	},
+	gridContainerDesktop: {
+		display: 'grid',
+		'grid-template-columns': '20% 60% 20%',
+	},
 	bodyTextPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '14px',
 		'line-height': '20px',
 		'text-align': 'center',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
 	},
 	bodyTextDesktop: {
 		color: '#000000',
@@ -90,6 +104,8 @@ const styles = {
 		'font-size': '24px',
 		'line-height': '35px',
 		'text-align': 'center',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
 	},
 	blueText: {
 		color: '#3D65F9',
