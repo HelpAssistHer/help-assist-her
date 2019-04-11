@@ -1,27 +1,58 @@
-import React from 'react'
+import React, { Component } from 'react'
 import injectSheet from 'react-jss'
 
 import Spacer from '../components/spacer'
 import teamMemberInfo from './team-member-info'
+import TeamMember from './team-member'
 
-const TeamHeadshots = ({ classes }) => (
-	<div className={classes.flex}>
-		{teamMemberInfo.map(teamMember => {
-			return (
-				<div key={teamMember.name} className={classes.flex}>
-					<button className={classes.button}>
-						<img
-							className={classes.headshot}
-							src={teamMember.imageSource}
-							alt={teamMember.name}
-						/>
-						<Spacer width="16px" />
-					</button>
+class TeamHeadshots extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			teamMemberId: 1,
+		}
+	}
+
+	render() {
+		const { classes } = this.props
+		const { teamMemberId } = this.state
+		const { name, title, bio } = teamMemberInfo[teamMemberId]
+
+		return (
+			<div>
+				<div className={classes.flex}>
+					{teamMemberInfo.map(teamMember => {
+						return (
+							<div key={teamMember.id} className={classes.flex}>
+								<button
+									className={classes.button}
+									onClick={() => {
+										this.handleClick(teamMember.id)
+									}}
+								>
+									<img
+										className={classes.headshot}
+										src={teamMember.imageSource}
+										alt={teamMember.name}
+									/>
+									<Spacer width="16px" />
+								</button>
+							</div>
+						)
+					})}
 				</div>
-			)
-		})}
-	</div>
-)
+
+				<TeamMember name={name} title={title} bio={bio} />
+			</div>
+		)
+	}
+
+	handleClick(teamMemberId) {
+		this.setState({
+			teamMemberId,
+		})
+	}
+}
 
 const styles = {
 	flex: {

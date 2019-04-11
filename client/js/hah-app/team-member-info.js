@@ -1,5 +1,6 @@
 module.exports = [
 	{
+		id: 0,
 		name: 'Karen R.',
 		title: 'Executive Director',
 		bio:
@@ -15,12 +16,14 @@ module.exports = [
 		imageSource: '../img/team/karen.png',
 	},
 	{
+		id: 1,
 		name: 'Marylouise M.',
 		title: 'Rock Star Designer',
 		bio: 'Some stuff here',
 		imageSource: '../img/team/karen.png',
 	},
 	{
+		id: 2,
 		name: 'Kate S.',
 		title: 'Rock Star Developer',
 		bio: 'Some stuff here',

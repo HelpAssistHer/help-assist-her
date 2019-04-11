@@ -15,7 +15,7 @@ const BIO_TEXT =
 	'\n' +
 	'“Without an illustration, chart, or embedded YouTube video to ease them in, millions were frozen in place, terrified by the sight of one long, unbroken string of English words.'
 
-const TeamMember = ({ classes, name, title, bio, imageSource }) => (
+const TeamMember = ({ classes, name, title, bio }) => (
 	<div>
 		<Phone>
 			<div className={classes.gridContainerPhone}>
