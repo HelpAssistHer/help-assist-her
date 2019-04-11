@@ -4,8 +4,6 @@ import injectSheet from 'react-jss'
 import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
-const NAME_AND_TITLE_TEXT = 'Karen Rose | Executive Director'
-
 const BIO_TEXT =
 	'I want to start with a story from the Onion. Because really, shouldn’t every talk start with a story from the Onion? This is from earlier this year.\n' +
 	'\n' +
@@ -17,7 +15,7 @@ const BIO_TEXT =
 	'\n' +
 	'“Without an illustration, chart, or embedded YouTube video to ease them in, millions were frozen in place, terrified by the sight of one long, unbroken string of English words.'
 
-const TeamMember = ({ classes }) => (
+const TeamMember = ({ classes, name, title, bio, imageSource }) => (
 	<div>
 		<Phone>
 			<div>
@@ -29,7 +27,7 @@ const TeamMember = ({ classes }) => (
 				<div className={classes.gridContainerPhone}>
 					<div className={classes.gridItem}>
 						<div className={classes.nameAndTitleTextPhone}>
-							{NAME_AND_TITLE_TEXT}
+							{`${name} | ${title}`}
 						</div>
 						<Spacer height="14px" />
 						<div className={classes.lineBreakPhone} />
@@ -50,7 +48,7 @@ const TeamMember = ({ classes }) => (
 				<div className={classes.gridContainerDesktop}>
 					<div className={classes.gridItem}>
 						<div className={classes.nameAndTitleTextDesktop}>
-							{NAME_AND_TITLE_TEXT}
+							{`${name} | ${title}`}
 						</div>
 						<Spacer height="16px" />
 						<div className={classes.lineBreakDesktop} />
