@@ -5,9 +5,10 @@ module.exports = [
 		title: 'Executive Director',
 		bio:
 			'Karen is an engineering manager at a construction tech company in San Francisco. ' +
-			"She's extremely passionate about women's healthcare and hopes to use her skills " +
-			'to help women more easily access healthcare. She also has PCOS and endometriosis, so ' +
-			'knows first hand how in need of technology the healthcare industry is.',
+			'Her own personal struggle with endometriosis and PCOS has made her extremely passionate ' +
+			"about women's healthcare. She is fulfilling her dream by using her skills to help women " +
+			"more easily access good healthcare options. When she isn't staring at a computer screen, " +
+			'she enjoys traveling, running, wine tasting, and camping.',
 		imageSource: '../img/team/karen.png',
 	},
 	{
