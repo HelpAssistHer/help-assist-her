@@ -1,17 +1,99 @@
 import React from 'react'
 import { ReactTypeformEmbed } from 'react-typeform-embed'
+import injectSheet from 'react-jss'
+
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Footer from '../mini-app/components/footer'
+import { Desktop, Phone } from '../components/breakpoints'
+import Spacer from '../components/spacer'
 
-const Feedback = () => (
+const TITLE_TEXT = "We're listening."
+
+const BODY_TEXT_1 =
+	'We want to hear what you have to say. Our goal is to continually ' +
+	"improve women's access to affordable, reliable, and non-violent healthcare options, " +
+	'regardless of their situation.'
+
+const BODY_TEXT_2 = 'Got something you want to tell us? Run into an issue?'
+
+const BODY_TEXT_3 =
+	'How can we make finding local resources the easiest thing to do?'
+
+const Feedback = ({ classes }) => (
 	<div>
 		<LogoAndNavigation />
+
+		<Phone>
+			<div>
+				<Spacer height="36px" />
+				<div className={classes.titleTextPhone}>{TITLE_TEXT}</div>
+				<Spacer height="28px" />
+				<div className={classes.bodyTextPhone}>
+					{BODY_TEXT_1}
+					<Spacer height="28px" />
+					{BODY_TEXT_2}
+					<Spacer height="28px" />
+					<div className={classes.blueText}>{BODY_TEXT_3}</div>
+				</div>
+			</div>
+		</Phone>
+
+		<Desktop>
+			<div>
+				<Spacer height="60px" />
+				<div className={classes.titleTextDesktop}>{TITLE_TEXT}</div>
+				<Spacer height="32px" />
+				<div className={classes.bodyTextDesktop}>
+					{BODY_TEXT_1}
+					<Spacer height="32px" />
+					{BODY_TEXT_2}
+					<Spacer height="32px" />
+					<div className={classes.blueText}>{BODY_TEXT_3}</div>
+				</div>
+			</div>
+		</Desktop>
+
 		<ReactTypeformEmbed
 			url="https://helpassisther.typeform.com/to/pUhArd"
 			style={{ position: 'unset', height: '500px' }}
 		/>
+
 		<Footer />
 	</div>
 )
 
-export default Feedback
+const styles = {
+	titleTextPhone: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '24px',
+		'line-height': '28px',
+		'text-align': 'center',
+	},
+	titleTextDesktop: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '40px',
+		'line-height': '48px',
+		'text-align': 'center',
+	},
+	bodyTextPhone: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '20px',
+		'text-align': 'center',
+	},
+	bodyTextDesktop: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '24px',
+		'line-height': '35px',
+		'text-align': 'center',
+	},
+	blueText: {
+		color: '#3D65F9',
+	},
+}
+
+export default injectSheet(styles)(Feedback)
