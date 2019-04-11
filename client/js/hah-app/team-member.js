@@ -4,17 +4,6 @@ import injectSheet from 'react-jss'
 import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
-const BIO_TEXT =
-	'I want to start with a story from the Onion. Because really, shouldn’t every talk start with a story from the Onion? This is from earlier this year.\n' +
-	'\n' +
-	'The headline reads: “Nation Shudders At Large Block Of Uninterrupted Text.”\n' +
-	'\n' +
-	'“Unable to rest their eyes on a colorful photograph or boldface heading that could be easily skimmed and forgotten, Americans collectively recoiled Monday when confronted with a solid block of uninterrupted text.\n' +
-	'\n' +
-	'“Dumbfounded citizens from Maine to California gazed helplessly at the frightening chunk of print, unsure of what to do next.\n' +
-	'\n' +
-	'“Without an illustration, chart, or embedded YouTube video to ease them in, millions were frozen in place, terrified by the sight of one long, unbroken string of English words.'
-
 const TeamMember = ({ classes, name, title, bio }) => (
 	<div>
 		<Phone>
@@ -26,7 +15,7 @@ const TeamMember = ({ classes, name, title, bio }) => (
 					<Spacer height="14px" />
 					<div className={classes.lineBreakPhone} />
 					<Spacer height="14px" />
-					<div className={classes.bioTextPhone}>{BIO_TEXT}</div>
+					<div className={classes.bioTextPhone}>{bio}</div>
 				</div>
 			</div>
 		</Phone>
@@ -40,7 +29,7 @@ const TeamMember = ({ classes, name, title, bio }) => (
 					<Spacer height="16px" />
 					<div className={classes.lineBreakDesktop} />
 					<Spacer height="16px" />
-					<div className={classes.bioTextDesktop}>{BIO_TEXT}</div>
+					<div className={classes.bioTextDesktop}>{bio}</div>
 				</div>
 			</div>
 		</Desktop>
