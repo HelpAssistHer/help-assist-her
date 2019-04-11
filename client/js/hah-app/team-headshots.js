@@ -9,12 +9,14 @@ const TeamHeadshots = ({ classes }) => (
 		{teamMemberInfo.map(teamMember => {
 			return (
 				<div key={teamMember.name} className={classes.flex}>
-					<img
-						className={classes.headshot}
-						src={teamMember.imageSource}
-						alt={teamMember.name}
-					/>
-					<Spacer width="16px" />
+					<button className={classes.button}>
+						<img
+							className={classes.headshot}
+							src={teamMember.imageSource}
+							alt={teamMember.name}
+						/>
+						<Spacer width="16px" />
+					</button>
 				</div>
 			)
 		})}
@@ -29,6 +31,11 @@ const styles = {
 	headshot: {
 		height: '240px',
 		width: '240px',
+	},
+	button: {
+		cursor: 'pointer',
+		outline: 'none',
+		border: 'none',
 	},
 }
 
