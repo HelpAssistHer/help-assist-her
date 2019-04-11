@@ -5,9 +5,11 @@ import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import teamMemberInfo from './team-member-info'
 import TeamMember from './team-member'
+import TeamHeadshots from './team-headshots'
 
 const Team = ({ classes }) => (
 	<div>
+		<TeamHeadshots />
 		{teamMemberInfo.map(teamMember => {
 			return (
 				<TeamMember
