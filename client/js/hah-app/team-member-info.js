@@ -14,9 +14,16 @@ module.exports = [
 			"\t'“Without an illustration, chart, or embedded YouTube video to ease them in, millions were frozen in place, terrified by the sight of one long, unbroken string of English words.'\n",
 		imageSource: '../img/team/karen.png',
 	},
-	// {
-	// 	name: '',
-	// 	title: '',
-	// 	bio: '',
-	// },
+	{
+		name: 'Marylouise M.',
+		title: 'Rock Star Designer',
+		bio: 'Some stuff here',
+		imageSource: '../img/team/karen.png',
+	},
+	{
+		name: 'Kate S.',
+		title: 'Rock Star Developer',
+		bio: 'Some stuff here',
+		imageSource: '../img/team/karen.png',
+	},
 ]

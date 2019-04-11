@@ -10,6 +10,7 @@ import TeamHeadshots from './team-headshots'
 const Team = ({ classes }) => (
 	<div>
 		<TeamHeadshots />
+
 		{teamMemberInfo.map(teamMember => {
 			return (
 				<TeamMember
