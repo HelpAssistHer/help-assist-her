@@ -20,26 +20,28 @@ class Team extends Component {
 
 		return (
 			<div>
-				<div className={classes.flex}>
-					{teamMemberInfo.map(teamMember => {
-						return (
-							<div key={teamMember.id} className={classes.flex}>
-								<button
-									className={classes.button}
-									onClick={() => {
-										this.handleClick(teamMember.id)
-									}}
-								>
-									<img
-										className={classes.headshot}
-										src={teamMember.imageSource}
-										alt={teamMember.name}
-									/>
-									<Spacer width="16px" />
-								</button>
-							</div>
-						)
-					})}
+				<div className={classes.headshotsContainer}>
+					<div className={classes.flex}>
+						{teamMemberInfo.map(teamMember => {
+							return (
+								<div key={teamMember.id} className={classes.flex}>
+									<button
+										className={classes.button}
+										onClick={() => {
+											this.handleClick(teamMember.id)
+										}}
+									>
+										<img
+											className={classes.headshot}
+											src={teamMember.imageSource}
+											alt={teamMember.name}
+										/>
+										<Spacer width="16px" />
+									</button>
+								</div>
+							)
+						})}
+					</div>
 				</div>
 
 				<TeamMember name={name} title={title} bio={bio} />
@@ -55,6 +57,9 @@ class Team extends Component {
 }
 
 const styles = {
+	headshotsContainer: {
+		overflow: 'scroll',
+	},
 	flex: {
 		display: 'flex',
 		'justify-content': 'center',
