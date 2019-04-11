@@ -12,7 +12,9 @@ const LogoAndNavigation = ({ classes }) => (
 		<Phone>
 			<div className={classes.headerPhone}>
 				<div className={classes.logoPhone}>
-					<LogoBetaBlack height={25} width={160} />
+					<Link to="/mini-app">
+						<LogoBetaBlack height={25} width={160} />
+					</Link>
 					<Link to="/menu" className={classes.hamburgerMenuPhone}>
 						<HamburgerMenu />
 					</Link>
@@ -23,7 +25,9 @@ const LogoAndNavigation = ({ classes }) => (
 		<Desktop>
 			<div className={classes.headerDesktop}>
 				<div className={classes.logoDesktop}>
-					<LogoBetaBlack height={33} width={208} />
+					<Link to="/mini-app">
+						<LogoBetaBlack height={33} width={208} />
+					</Link>
 					<div className={classes.linksDesktop}>
 						<Link to="/about" className={classes.navigationLinkDesktop}>
 							About
