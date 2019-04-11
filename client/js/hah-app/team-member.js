@@ -7,29 +7,35 @@ import Spacer from '../components/spacer'
 const TeamMember = ({ classes, name, title, bio }) => (
 	<div>
 		<Phone>
-			<div className={classes.gridContainerPhone}>
-				<div className={classes.gridItem}>
-					<div className={classes.nameAndTitleTextPhone}>
-						{`${name} | ${title}`}
+			<div>
+				<Spacer height="28px" />
+				<div className={classes.gridContainerPhone}>
+					<div className={classes.gridItem}>
+						<div className={classes.nameAndTitleTextPhone}>
+							{`${name} | ${title}`}
+						</div>
+						<Spacer height="14px" />
+						<div className={classes.lineBreakPhone} />
+						<Spacer height="14px" />
+						<div className={classes.bioTextPhone}>{bio}</div>
 					</div>
-					<Spacer height="14px" />
-					<div className={classes.lineBreakPhone} />
-					<Spacer height="14px" />
-					<div className={classes.bioTextPhone}>{bio}</div>
 				</div>
 			</div>
 		</Phone>
 
 		<Desktop>
-			<div className={classes.gridContainerDesktop}>
-				<div className={classes.gridItem}>
-					<div className={classes.nameAndTitleTextDesktop}>
-						{`${name} | ${title}`}
+			<div>
+				<Spacer height="89px" />
+				<div className={classes.gridContainerDesktop}>
+					<div className={classes.gridItem}>
+						<div className={classes.nameAndTitleTextDesktop}>
+							{`${name} | ${title}`}
+						</div>
+						<Spacer height="16px" />
+						<div className={classes.lineBreakDesktop} />
+						<Spacer height="16px" />
+						<div className={classes.bioTextDesktop}>{bio}</div>
 					</div>
-					<Spacer height="16px" />
-					<div className={classes.lineBreakDesktop} />
-					<Spacer height="16px" />
-					<div className={classes.bioTextDesktop}>{bio}</div>
 				</div>
 			</div>
 		</Desktop>

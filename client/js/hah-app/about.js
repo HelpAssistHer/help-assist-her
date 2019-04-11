@@ -88,7 +88,7 @@ const About = ({ classes }) => (
 		</Phone>
 
 		<Desktop>
-			<Spacer height="60px" />
+			<Spacer height="152px" />
 		</Desktop>
 
 		<Footer />
