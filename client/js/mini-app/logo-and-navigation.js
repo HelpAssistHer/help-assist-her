@@ -38,10 +38,15 @@ const LogoAndNavigation = ({ classes }) => (
 const styles = {
 	logoPhone: {
 		height: '55px',
-		margin: '0px 16px 0px 17px',
+		padding: '0px 16px 0px 17px',
+		'background-color': '#FFFFFF',
+		'min-width': '90vw',
 		display: 'flex',
 		'align-items': 'center',
 		'justify-content': 'space-between',
+		'border-bottom': '1px solid #3D65F9',
+		position: 'fixed',
+		top: '0vh',
 	},
 	logoDesktop: {
 		height: '100px',
@@ -53,6 +58,7 @@ const styles = {
 		'justify-content': 'space-between',
 		position: 'fixed',
 		top: '0vh',
+		'border-bottom': '4px solid #3D65F9',
 	},
 	hamburgerMenuPhone: {
 		cursor: 'pointer',
