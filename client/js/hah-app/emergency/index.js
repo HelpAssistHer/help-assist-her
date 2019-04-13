@@ -78,10 +78,12 @@ const styles = {
 	infoSectionPhone: {
 		'background-color': '#DEA8E0',
 		'border-bottom': '1px solid #3D65F9',
+		'margin-top': '55px',
 	},
 	infoSectionDesktop: {
 		'background-color': '#DEA8E0',
 		'border-bottom': '3px solid #3D65F9',
+		'margin-top': '100px',
 	},
 	titlePhone: {
 		color: '#000000',
