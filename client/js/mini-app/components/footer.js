@@ -7,31 +7,27 @@ import Spacer from '../../components/spacer'
 import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 import SocialMedia from './social-media'
 
+const COPYRIGHT_TEXT = 'Help Assist Her 2019'
+
 const Footer = ({ classes }) => (
 	<div>
 		<Phone>
 			<div>
-				<Spacer height="39px" />
 				<div className={classes.footerRootPhone}>
 					<SocialMedia iconSize={32} spacerWidth="20px" />
 					<Spacer width="25px" />
-					<div className={classes.copyrightText}>
-						&copy; Help Assist Her 2018
-					</div>
+					<div className={classes.copyrightText}>&copy; {COPYRIGHT_TEXT}</div>
 				</div>
 			</div>
 		</Phone>
 
 		<Desktop>
 			<div>
-				<Spacer height="87px" />
 				<div className={classes.footerRootDesktop}>
 					<div>
 						<LogoBetaWhite height={25} width={160} />
 						<Spacer height="19px" />
-						<div className={classes.copyrightText}>
-							&copy; Help Assist Her 2018
-						</div>
+						<div className={classes.copyrightText}>&copy; {COPYRIGHT_TEXT}</div>
 					</div>
 
 					<div className={classes.links}>
@@ -44,7 +40,7 @@ const Footer = ({ classes }) => (
 					</div>
 
 					<div className={classes.socialMediaFormatting}>
-						<SocialMedia iconSize={41} spacerWidth="14px" />
+						<SocialMedia iconSize={49} spacerWidth="19px" />
 					</div>
 				</div>
 			</div>

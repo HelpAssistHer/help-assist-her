@@ -19,7 +19,7 @@ const HahRouter = () => {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/" component={Landing} />
+				<Route exact path="/verification" component={Landing} />
 				<Route exact path="/mini-app" render={() => <MiniApp />} />
 				<Route exact path="/about" component={About} />
 				<Route exact path="/feedback" component={Feedback} />
@@ -59,10 +59,7 @@ const HahRouter = () => {
 						/>
 					)}
 				/>
-				<Redirect
-					from="/verification"
-					to="/verification/pregnancy-resource-center"
-				/>
+				<Redirect from="/" to="/mini-app" />
 			</Switch>
 		</Router>
 	)
