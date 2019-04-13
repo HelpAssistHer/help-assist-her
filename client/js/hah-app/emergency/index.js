@@ -1,10 +1,11 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Spacer from '../components/spacer'
-import Footer from '../mini-app/components/footer'
-import LogoAndNavigation from '../mini-app/logo-and-navigation'
-import { Phone, Desktop } from '../components/breakpoints'
+import Spacer from '../../components/spacer'
+import Footer from '../../mini-app/components/footer'
+import LogoAndNavigation from '../../mini-app/logo-and-navigation'
+import { Phone, Desktop } from '../../components/breakpoints'
+import ListOfResources from './list-of-resources'
 
 const TITLE_TEXT = 'You are not alone. You are loved.'
 
@@ -41,7 +42,6 @@ const Emergency = ({ classes }) => (
 					</div>
 					<Spacer height="25px" />
 				</div>
-				<Spacer height="45px" />sss
 			</div>
 		</Phone>
 
@@ -65,9 +65,10 @@ const Emergency = ({ classes }) => (
 					</div>
 					<Spacer height="45px" />
 				</div>
-				<Spacer height="45px" />sss
 			</div>
 		</Desktop>
+
+		<ListOfResources />
 
 		<Footer />
 	</div>
