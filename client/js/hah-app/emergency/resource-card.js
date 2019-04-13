@@ -4,8 +4,8 @@ import injectSheet from 'react-jss'
 import Spacer from '../../components/spacer'
 import { Phone, Desktop } from '../../components/breakpoints'
 
-const ListOfResources = ({ classes }) => (
-	<div className={classes.background}>List</div>
+const ResourceCard = ({ classes }) => (
+	<div className={classes.background}>Card</div>
 )
 
 const styles = {
@@ -14,4 +14,4 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(ListOfResources)
+export default injectSheet(styles)(ResourceCard)
