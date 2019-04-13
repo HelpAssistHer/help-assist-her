@@ -134,12 +134,12 @@ const styles = {
 	resourceNamePhone: {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
-		width: '75%',
+		width: '60%',
 	},
 	resourceNameDesktop: {
 		'font-family': 'hah-light',
 		'font-size': '24px',
-		width: '75%',
+		width: '60%',
 	},
 	borderPhone: {
 		'border-left': '1px solid #000000',
