@@ -18,16 +18,24 @@ const Emergency = ({ classes }) => (
 		<Phone>
 			<div>
 				<Spacer height="33px" />
+				<div>Phone +</div>
+				<Spacer height="22px" />
 				<div className={classes.titlePhone}>{TITLE_TEXT}</div>
+				<Spacer height="22px" />
 				<div className={classes.bodyPhone}>{BODY_TEXT}</div>
+				<Spacer height="44px" />
 			</div>
 		</Phone>
 
 		<Desktop>
 			<div>
 				<Spacer height="60px" />
+				<div>Phone +</div>
+				<Spacer height="44px" />
 				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
+				<Spacer height="44px" />
 				<div className={classes.bodyDesktop}>{BODY_TEXT}</div>
+				<Spacer height="77px" />
 			</div>
 		</Desktop>
 
