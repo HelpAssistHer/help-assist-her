@@ -4,14 +4,80 @@ import injectSheet from 'react-jss'
 import Spacer from '../../components/spacer'
 import { Phone, Desktop } from '../../components/breakpoints'
 
-const ResourceCard = ({ classes }) => (
-	<div className={classes.background}>Card</div>
-)
+const ResourceCard = ({ classes, resource }) => {
+	const {
+		nameOfResource,
+		phoneNumber,
+		additionalInfo,
+		additionalInfo2,
+	} = resource
+
+	return (
+		<div>
+			<Phone>
+				<div className={classes.cardContainerPhone}>
+					<div className={classes.cardPhone}>
+						<div className={classes.resourceNamePhone}>{nameOfResource}</div>
+						<div className={classes.phoneNumberPhone}>{phoneNumber}</div>
+						<div className={classes.additionalInfoPhone}>
+							{additionalInfo}
+							{additionalInfo2}
+						</div>
+					</div>
+				</div>
+			</Phone>
+
+			<Desktop>
+				<div className={classes.cardContainerDesktop}>
+					<div className={classes.cardDesktop}>
+						<div className={classes.resourceNameDesktop}>{nameOfResource}</div>
+						<div className={classes.phoneNumberDesktop}>{phoneNumber}</div>
+						<div className={classes.additionalInfoDesktop}>
+							{additionalInfo}
+							{additionalInfo2}
+						</div>
+					</div>
+				</div>
+			</Desktop>
+		</div>
+	)
+}
 
 const styles = {
-	background: {
-		'background-color': 'rgba(93,93,93,0.08)',
+	cardContainerPhone: {
+		border: '1px solid #3D65F9',
+		'border-radius': '2px',
+		'background-color': '#FFFFFF',
 	},
+	cardContainerDesktop: {
+		border: '3px solid #3D65F9',
+		'border-radius': '2px',
+		'background-color': '#FFFFFF',
+	},
+	cardPhone: {
+		margin: '20px 0px 0px 35px',
+	},
+	cardDesktop: {
+		margin: '34px 0px 0px 27px',
+	},
+	resourceNamePhone: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '33px',
+		'text-align': 'center',
+	},
+	resourceNameDesktop: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '24px',
+		'line-height': '27px',
+		'text-align': 'center',
+	},
+	phoneNumberPhone: {},
+	phoneNumberDesktop: {},
+	additionalInfoPhone: {},
+	additionalInfoDesktop: {},
 }
 
 export default injectSheet(styles)(ResourceCard)
