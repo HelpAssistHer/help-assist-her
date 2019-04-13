@@ -8,7 +8,6 @@
 		"node": "10.4.0"
 	},
 	"scripts": {
-		"build": "NODE_ENV=production babel-node client/tools/build.js",
 		"build:html": "babel-node client/tools/build-html.js",
 		"clear-iv":
 			"NODE_ENV=localhost node ./server/scripts/clear-in-verification-field.js",
