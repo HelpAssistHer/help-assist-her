@@ -5,6 +5,7 @@ import injectSheet from 'react-jss'
 
 import ResourceCard from './resource-card'
 import LogoAndNavigation from '../logo-and-navigation'
+import Footer from '../components/footer'
 
 const mapStateToProps = state => {
 	return {
@@ -16,15 +17,18 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
 		<div>
 			<LogoAndNavigation />
-			<div className={classes.header}>
-				Your search results have been arranged by closest distance to your
-				location data.
+			<div className={classes.list}>
+				<div className={classes.header}>
+					Your search results have been arranged by closest distance to your
+					location data.
+				</div>
+				<div className={classes.root}>
+					{_.map(pregnancyResourceCenters, prc => {
+						return <ResourceCard key={prc._id} resource={prc} />
+					})}
+				</div>
 			</div>
-			<div className={classes.root}>
-				{_.map(pregnancyResourceCenters, prc => {
-					return <ResourceCard key={prc._id} resource={prc} />
-				})}
-			</div>
+			<Footer />
 		</div>
 	)
 }
@@ -36,6 +40,10 @@ const styles = {
 		'font-size': '14px',
 		color: '#99cccc',
 		'text-align': 'center',
+		'margin-top': '100px',
+	},
+	list: {
+		'min-height': '70vh',
 	},
 }
 
