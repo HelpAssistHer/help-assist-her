@@ -12,7 +12,9 @@ const LogoAndNavigation = ({ classes }) => (
 		<Phone>
 			<div className={classes.headerPhone}>
 				<div className={classes.logoPhone}>
-					<LogoBetaBlack height={25} width={160} />
+					<Link to="/mini-app">
+						<LogoBetaBlack height={25} width={160} />
+					</Link>
 					<Link to="/menu" className={classes.hamburgerMenuPhone}>
 						<HamburgerMenu />
 					</Link>
@@ -23,7 +25,9 @@ const LogoAndNavigation = ({ classes }) => (
 		<Desktop>
 			<div className={classes.headerDesktop}>
 				<div className={classes.logoDesktop}>
-					<LogoBetaBlack height={33} width={208} />
+					<Link to="/mini-app">
+						<LogoBetaBlack height={33} width={208} />
+					</Link>
 					<div className={classes.linksDesktop}>
 						<Link to="/about" className={classes.navigationLinkDesktop}>
 							About
@@ -48,17 +52,27 @@ const styles = {
 	},
 	logoPhone: {
 		height: '55px',
-		margin: '0px 16px 0px 17px',
+		padding: '0 5% 0 5%',
+		'background-color': '#FFFFFF',
+		'min-width': '90vw',
 		display: 'flex',
 		'align-items': 'center',
 		'justify-content': 'space-between',
+		'border-bottom': '1px solid #3D65F9',
+		position: 'fixed',
+		top: '0vh',
 	},
 	logoDesktop: {
 		height: '100px',
-		margin: '0px 134px 0px 42px',
+		padding: '0px 134px 0px 42px',
+		'background-color': '#FFFFFF',
+		'min-width': '90vw',
 		display: 'flex',
 		'align-items': 'center',
 		'justify-content': 'space-between',
+		position: 'fixed',
+		top: '0vh',
+		'border-bottom': '4px solid #3D65F9',
 	},
 	hamburgerMenuPhone: {
 		cursor: 'pointer',
