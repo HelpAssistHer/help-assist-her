@@ -52,7 +52,7 @@ const styles = {
 	},
 	logoPhone: {
 		height: '55px',
-		padding: '0px 16px 0px 17px',
+		padding: '0 5% 0 5%',
 		'background-color': '#FFFFFF',
 		'min-width': '90vw',
 		display: 'flex',
