@@ -61,11 +61,13 @@ const styles = {
 		'flex-direction': 'column',
 		'background-color': '#016454',
 		'border-bottom': '1px solid #3D65F9',
+		'margin-top': '55px',
 	},
 	headerContainerDesktop: {
 		display: 'flex',
 		'background-color': '#016454',
 		'border-bottom': '4px solid #3D65F9',
+		'margin-top': '100px',
 	},
 	headerTextPhone: {
 		flex: '1 1 0',
