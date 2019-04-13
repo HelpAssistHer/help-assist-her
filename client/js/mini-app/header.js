@@ -61,6 +61,7 @@ const styles = {
 		'flex-direction': 'column',
 		'background-color': '#016454',
 		'border-bottom': '1px solid #3D65F9',
+		'margin-top': '30px',
 	},
 	headerContainerDesktop: {
 		display: 'flex',
