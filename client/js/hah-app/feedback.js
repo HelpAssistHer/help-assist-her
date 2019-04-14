@@ -24,7 +24,7 @@ const Feedback = ({ classes }) => (
 		<LogoAndNavigation />
 
 		<Phone>
-			<div>
+			<div className={classes.feedbackPageContainerPhone}>
 				<Spacer height="36px" />
 				<div className={classes.titleTextPhone}>{TITLE_TEXT}</div>
 				<Spacer height="28px" />
@@ -41,7 +41,7 @@ const Feedback = ({ classes }) => (
 		</Phone>
 
 		<Desktop>
-			<div>
+			<div className={classes.feedbackPageContainerDesktop}>
 				<Spacer height="60px" />
 				<div className={classes.titleTextDesktop}>{TITLE_TEXT}</div>
 				<Spacer height="32px" />
@@ -67,6 +67,12 @@ const Feedback = ({ classes }) => (
 )
 
 const styles = {
+	feedbackPageContainerPhone: {
+		margin: '55px 0px 0px 0px',
+	},
+	feedbackPageContainerDesktop: {
+		margin: '100px 0px 0px 0px',
+	},
 	titleTextPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
