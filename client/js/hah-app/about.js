@@ -27,7 +27,7 @@ const About = ({ classes }) => (
 		<LogoAndNavigation />
 
 		<Phone>
-			<div>
+			<div className={classes.aboutPageContainerPhone}>
 				<Spacer height="36px" />
 				<div className={classes.titlePhone}>{TITLE_TEXT}</div>
 				<Spacer height="28px" />
@@ -54,7 +54,7 @@ const About = ({ classes }) => (
 		</Phone>
 
 		<Desktop>
-			<div>
+			<div className={classes.aboutPageContainerDesktop}>
 				<Spacer height="60px" />
 				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
 				<Spacer height="30px" />
@@ -85,6 +85,12 @@ const About = ({ classes }) => (
 )
 
 const styles = {
+	aboutPageContainerPhone: {
+		margin: '55px 0px 0px 0px',
+	},
+	aboutPageContainerDesktop: {
+		margin: '100px 0px 0px 0px',
+	},
 	titlePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
