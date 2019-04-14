@@ -44,12 +44,6 @@ const LogoAndNavigation = ({ classes }) => (
 )
 
 const styles = {
-	headerPhone: {
-		'border-bottom': '1px solid #3D65F9',
-	},
-	headerDesktop: {
-		'border-bottom': '4px solid #3D65F9',
-	},
 	logoPhone: {
 		height: '55px',
 		padding: '0 5% 0 5%',
