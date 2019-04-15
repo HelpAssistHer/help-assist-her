@@ -5,8 +5,11 @@ import classNames from 'classnames'
 
 import Spacer from '../../components/spacer'
 import ChcInactiveIcon from '../../components/icons/icon-components/chc-inactive-icon'
-import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
+import ChcActiveIcon from '../../components/icons/icon-components/chc-inactive-icon'
+import PrcInactiveIcon from '../../components/icons/icon-components/prc-inactive-icon'
+import PrcActiveIcon from '../../components/icons/icon-components/prc-active-icon'
 import { Phone, Desktop } from '../../components/breakpoints'
+import button from '../../components/button'
 
 const resources = [
 	{
@@ -19,13 +22,20 @@ const resources = [
 	},
 ]
 
+const CHC_NAME = 'Community Health Center'
+const PRC_NAME = 'Pregnancy Resource Center'
+
 const iconsPhone = [
 	<ChcInactiveIcon key={1} height={49} width={49} />,
-	<PregnancyIcon key={2} height={49} width={49} />,
+	<PrcActiveIcon key={2} height={49} width={49} />,
 ]
-const iconsDesktop = [
+const inactiveIconsDesktop = [
 	<ChcInactiveIcon key={1} height={127} width={127} />,
-	<PregnancyIcon key={2} height={127} width={127} />,
+	<PrcInactiveIcon key={2} height={127} width={127} />,
+]
+const activeIconsDesktop = [
+	<ChcInactiveIcon key={1} height={127} width={127} />,
+	<PrcActiveIcon key={2} height={127} width={127} />,
 ]
 
 const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
@@ -35,76 +45,21 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 		</Phone>
 
 		<Desktop>
-			<Spacer height="57px" />
-		</Desktop>
-
-		<div className={classes.resourceCarouselRoot}>
-			{_.map(resources, (resource, index) => {
-				const styleWithBorderPhone = classNames(
-					classes.borderPhone,
-					classes.resourceBox,
-				)
-
-				let resourceBoxStylePhone =
-					index === 1 ? styleWithBorderPhone : classes.resourceBox
-
-				if (resource.id === buttonClicked) {
-					resourceBoxStylePhone = classNames(
-						resourceBoxStylePhone,
-						classes.buttonActiveState,
-					)
-				}
-
-				const styleWithBorderDesktop = classNames(
-					classes.borderDesktop,
-					classes.resourceBox,
-				)
-
-				let resourceBoxStyleDesktop =
-					index === 1 ? styleWithBorderDesktop : classes.resourceBox
-
-				if (resource.id === buttonClicked) {
-					resourceBoxStyleDesktop = classNames(
-						resourceBoxStyleDesktop,
-						classes.buttonActiveState,
-					)
-				}
-
-				return (
-					<div key={resource.id}>
-						<Phone>
-							<button
-								className={resourceBoxStylePhone}
-								onClick={() => onResourceChange(resource.id)}
-							>
-								<div className={classes.flex}>
-									{iconsPhone[index]}
-									<Spacer height="9px" />
-									<div className={classes.resourceNamePhone}>
-										{resource.name}
-									</div>
-								</div>
-							</button>
-						</Phone>
-
-						<Desktop>
-							<button
-								className={resourceBoxStyleDesktop}
-								onClick={() => onResourceChange(resource.id)}
-							>
-								<div className={classes.flex}>
-									{iconsDesktop[index]}
-									<Spacer height="20px" />
-									<div className={classes.resourceNameDesktop}>
-										{resource.name}
-									</div>
-								</div>
-							</button>
-						</Desktop>
+			<div>
+				<Spacer height="57px" />
+				<div className={classes.resourceCarouselRoot}>
+					<div className={classes.resourceButton}>
+						<ChcInactiveIcon height={127} width={127} />
+						<div className={classes.resourceNameDesktop}>{CHC_NAME}</div>
 					</div>
-				)
-			})}
-		</div>
+					<div className={classes.borderDesktop} />
+					<div className={classes.resourceButton}>
+						<PrcInactiveIcon height={127} width={127} />
+						<div className={classes.resourceNameDesktop}>{PRC_NAME}</div>
+					</div>
+				</div>
+			</div>
+		</Desktop>
 	</div>
 )
 
@@ -113,33 +68,25 @@ const styles = {
 		display: 'flex',
 		'justify-content': 'center',
 	},
-	flex: {
+	resourceButton: {
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
-	},
-	resourceBox: {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
-		'&:hover': {
-			'background-color': '#3D65F9',
-			color: '#FFFFFF',
-		},
-	},
-	buttonActiveState: {
-		'background-color': '#3D65F9',
-		color: '#FFFFFF',
 	},
 	resourceNamePhone: {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
 		width: '60%',
+		'text-align': 'center',
 	},
 	resourceNameDesktop: {
 		'font-family': 'hah-light',
 		'font-size': '24px',
 		width: '60%',
+		'text-align': 'center',
 	},
 	borderPhone: {
 		'border-left': '1px solid #000000',
