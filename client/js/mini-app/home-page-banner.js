@@ -3,6 +3,8 @@ import injectSheet from 'react-jss'
 
 import { Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
+import additionalServicesData from './additional-services-data'
+import AdditionalServiceCard from './additional-service-card'
 
 const OTHER_SERVICES_DESCRIPTION_TEXT =
 	'We’ve got your back. Among thousands of internet ' +
@@ -24,7 +26,10 @@ const HomePageBanner = ({ classes }) => (
 						{OTHER_SERVICES_DESCRIPTION_TEXT}
 					</div>
 				</div>
-				<Spacer height="56px" />
+				<Spacer height="42px" />
+				{additionalServicesData.map(service => {
+					return <AdditionalServiceCard key={service.id} service={service} />
+				})}
 			</div>
 		</Desktop>
 	</div>
