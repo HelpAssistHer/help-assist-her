@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 import classNames from 'classnames'
 
 import Spacer from '../../components/spacer'
-import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
+import ChcInactiveIcon from '../../components/icons/icon-components/chc-inactive-icon'
 import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
 import { Phone, Desktop } from '../../components/breakpoints'
 
@@ -20,11 +20,11 @@ const resources = [
 ]
 
 const iconsPhone = [
-	<HospitalIcon key={1} height={49} width={49} />,
+	<ChcInactiveIcon key={1} height={49} width={49} />,
 	<PregnancyIcon key={2} height={49} width={49} />,
 ]
 const iconsDesktop = [
-	<HospitalIcon key={1} height={127} width={127} />,
+	<ChcInactiveIcon key={1} height={127} width={127} />,
 	<PregnancyIcon key={2} height={127} width={127} />,
 ]
 
