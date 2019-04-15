@@ -59,10 +59,10 @@ const styles = {
 	logoDesktop: {
 		position: 'fixed',
 		top: '0vh',
-		height: '100px',
-		padding: '0px 134px 0px 42px',
+		height: '67px',
+		padding: '33px 100% 0px 42px',
 		display: 'flex',
-		'align-items': 'center',
+		'align-items': 'baseline',
 		'justify-content': 'space-between',
 		'background-color': '#FFFFFF',
 		'min-width': '90vw',
