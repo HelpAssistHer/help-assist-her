@@ -1,7 +1,5 @@
-import React from 'react'
-import _ from 'lodash'
+import React, { Component } from 'react'
 import injectSheet from 'react-jss'
-import classNames from 'classnames'
 
 import Spacer from '../../components/spacer'
 import ChcInactiveIcon from '../../components/icons/icon-components/chc-inactive-icon'
@@ -9,59 +7,73 @@ import ChcActiveIcon from '../../components/icons/icon-components/chc-inactive-i
 import PrcInactiveIcon from '../../components/icons/icon-components/prc-inactive-icon'
 import PrcActiveIcon from '../../components/icons/icon-components/prc-active-icon'
 import { Phone, Desktop } from '../../components/breakpoints'
-import button from '../../components/button'
-
-const resources = [
-	{
-		id: 'chc',
-		name: 'Community Health Center',
-	},
-	{
-		id: 'prc',
-		name: 'Pregnancy Resource Center',
-	},
-]
 
 const CHC_NAME = 'Community Health Center'
 const PRC_NAME = 'Pregnancy Resource Center'
 
-const iconsPhone = [
-	<ChcInactiveIcon key={1} height={49} width={49} />,
-	<PrcActiveIcon key={2} height={49} width={49} />,
-]
-const inactiveIconsDesktop = [
-	<ChcInactiveIcon key={1} height={127} width={127} />,
-	<PrcInactiveIcon key={2} height={127} width={127} />,
-]
-const activeIconsDesktop = [
-	<ChcInactiveIcon key={1} height={127} width={127} />,
-	<PrcActiveIcon key={2} height={127} width={127} />,
-]
+class ResourceCarousel extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			activeButton: null,
+		}
+		this.handleButtonClick = this.handleButtonClick.bind(this)
+	}
 
-const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
-	<div>
-		<Phone>
-			<Spacer height="26px" />
-		</Phone>
+	handleButtonClick = resource => {
+		this.setState({ buttonClicked: resource })
+	}
 
-		<Desktop>
+	render() {
+		const { classes } = this.props
+		const { buttonClicked } = this.state
+
+		return (
 			<div>
-				<Spacer height="57px" />
-				<div className={classes.resourceCarouselRoot}>
-					<div className={classes.resourceButton}>
-						<ChcInactiveIcon height={127} width={127} />
-						<div className={classes.resourceNameDesktop}>{CHC_NAME}</div>
+				<Phone>
+					<Spacer height="26px" />
+				</Phone>
+
+				<Desktop>
+					<div>
+						<Spacer height="57px" />
+						<div className={classes.resourceCarouselRoot}>
+							<div
+								className={classes.resourceButton}
+								onClick={() => {
+									this.handleButtonClick('chc')
+								}}
+							>
+								{buttonClicked === 'chc' ? (
+									<ChcActiveIcon height={127} width={127} />
+								) : (
+									<ChcInactiveIcon height={127} width={127} />
+								)}
+								<div className={classes.resourceNameDesktop}>{CHC_NAME}</div>
+							</div>
+
+							<div className={classes.borderDesktop} />
+
+							<div
+								className={classes.resourceButton}
+								onClick={() => {
+									this.handleButtonClick('prc')
+								}}
+							>
+								{buttonClicked === 'prc' ? (
+									<PrcActiveIcon height={127} width={127} />
+								) : (
+									<PrcInactiveIcon height={127} width={127} />
+								)}
+								<div className={classes.resourceNameDesktop}>{PRC_NAME}</div>
+							</div>
+						</div>
 					</div>
-					<div className={classes.borderDesktop} />
-					<div className={classes.resourceButton}>
-						<PrcInactiveIcon height={127} width={127} />
-						<div className={classes.resourceNameDesktop}>{PRC_NAME}</div>
-					</div>
-				</div>
+				</Desktop>
 			</div>
-		</Desktop>
-	</div>
-)
+		)
+	}
+}
 
 const styles = {
 	resourceCarouselRoot: {
