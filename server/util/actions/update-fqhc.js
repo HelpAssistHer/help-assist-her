@@ -12,7 +12,10 @@ const {
 
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
 const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
-const getFqhcObj = fqhcId => FQHCModel.findById(fqhcId)
+const getFqhcObj = async fqhcId => {
+	const doc = await FQHCModel.findById(fqhcId)
+	return doc.toObject()
+}
 
 const { pipeP } = require('../ramda-util')
 
