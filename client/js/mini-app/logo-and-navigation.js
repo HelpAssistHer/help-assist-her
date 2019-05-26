@@ -10,25 +10,33 @@ import HamburgerMenu from '../components/icons/icon-components/hamburger-menu'
 const LogoAndNavigation = ({ classes }) => (
 	<div>
 		<Phone>
-			<div className={classes.logoPhone}>
-				<LogoBetaBlack height={25} width={160} />
-				<Link to="/menu" className={classes.hamburgerMenuPhone}>
-					<HamburgerMenu />
-				</Link>
+			<div className={classes.headerPhone}>
+				<div className={classes.logoPhone}>
+					<Link to="/mini-app">
+						<LogoBetaBlack height={25} width={160} />
+					</Link>
+					<Link to="/menu" className={classes.hamburgerMenuPhone}>
+						<HamburgerMenu />
+					</Link>
+				</div>
 			</div>
 		</Phone>
 
 		<Desktop>
-			<div className={classes.logoDesktop}>
-				<LogoBetaBlack height={33} width={208} />
-				<div className={classes.linksDesktop}>
-					<Link to="/about" className={classes.navigationLinkDesktop}>
-						About
+			<div className={classes.headerDesktop}>
+				<div className={classes.logoDesktop}>
+					<Link to="/mini-app">
+						<LogoBetaBlack height={33} width={208} />
 					</Link>
-					<Spacer width="32px" />
-					<Link to="/feedback" className={classes.navigationLinkDesktop}>
-						Feedback
-					</Link>
+					<div className={classes.linksDesktop}>
+						<Link to="/about" className={classes.navigationLinkDesktop}>
+							About
+						</Link>
+						<Spacer width="32px" />
+						<Link to="/feedback" className={classes.navigationLinkDesktop}>
+							Feedback
+						</Link>
+					</div>
 				</div>
 			</div>
 		</Desktop>
@@ -37,18 +45,28 @@ const LogoAndNavigation = ({ classes }) => (
 
 const styles = {
 	logoPhone: {
+		position: 'fixed',
+		top: '0vh',
 		height: '55px',
-		margin: '0px 16px 0px 17px',
+		padding: '0 5% 0 5%',
 		display: 'flex',
 		'align-items': 'center',
 		'justify-content': 'space-between',
+		'background-color': '#FFFFFF',
+		'min-width': '90vw',
+		'border-bottom': '1px solid #3D65F9',
 	},
 	logoDesktop: {
-		height: '100px',
-		margin: '0px 134px 0px 42px',
+		position: 'fixed',
+		top: '0vh',
+		height: '67px',
+		padding: '33px 100% 0px 42px',
 		display: 'flex',
-		'align-items': 'center',
+		'align-items': 'baseline',
 		'justify-content': 'space-between',
+		'background-color': '#FFFFFF',
+		'min-width': '90vw',
+		'border-bottom': '4px solid #3D65F9',
 	},
 	hamburgerMenuPhone: {
 		cursor: 'pointer',

@@ -10,7 +10,9 @@ class Landing extends React.Component {
 		const { classes } = this.props
 		return (
 			<div className={classes.landing}>
-				<Link to="/verification">Verification Portal</Link>
+				<Link to="/verification/pregnancy-resource-center">
+					Verification Portal
+				</Link>
 				<ul className={classes.homeScreen}>
 					<li>
 						<img

@@ -1,0 +1,42 @@
+{
+	"addons": [],
+	"buildpacks": [
+		{
+			"url": "heroku/nodejs"
+		}
+	],
+	"env": {
+		"HAH_DEV_RESTORE_PASSWORD": {
+			"required": true
+		},
+		"HAH_PROD_BACKUP_PASSWORD": {
+			"required": true
+		},
+		"MONGO_DB_CONNECTION": {
+			"required": true
+		},
+		"NODE_ENV": {
+			"required": true
+		},
+		"SESSION_SECRET": {
+			"required": true
+		},
+		"VERIFICATION_PORTAL_FACEBOOK_APP_ID": {
+			"required": true
+		},
+		"VERIFICATION_PORTAL_FACEBOOK_APP_SECRET": {
+			"required": true
+		},
+		"VERIFICATION_PORTAL_GOOGLE_MAPS_KEY": {
+			"required": true
+		}
+	},
+	"formation": {
+		"web": {
+			"quantity": 1
+		}
+	},
+	"name": "help-assist-her",
+	"scripts": {},
+	"stack": "heroku-18"
+}

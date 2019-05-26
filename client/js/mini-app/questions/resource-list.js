@@ -5,8 +5,8 @@ import injectSheet from 'react-jss'
 
 import ResourceCard from './resource-card'
 import LogoAndNavigation from '../logo-and-navigation'
+import Footer from '../components/footer'
 import NoResults from './no-results'
-import Footer from './footer'
 
 const searchResultsMessage =
 	'Your search results have been arranged by closest distance to your location data.'
@@ -29,17 +29,21 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	// 	</div>
 	// )
 
-	const noResultsView = (
-		<div className={classes.noResultsRoot}>
+	return (
+		<div>
 			<LogoAndNavigation />
-			<div className={classes.header}>{searchResultsMessage}</div>
-			<div className={classes.noResults}>
-				{noResultsMessage}
-				<button>Return to Search</button>
+			<div className={classes.list}>
+				<div className={classes.header}>
+					Your search results have been arranged by closest distance to your
+					location data.
+				</div>
+				<div className={classes.root}>
+					{_.map(pregnancyResourceCenters, prc => {
+						return <ResourceCard key={prc._id} resource={prc} />
+					})}
+				</div>
 			</div>
-			<div className={classes.footer}>
-				<Footer />
-			</div>
+			<Footer />
 		</div>
 	)
 
@@ -81,6 +85,10 @@ const styles = {
 		'font-size': '14px',
 		color: '#99cccc',
 		'text-align': 'center',
+		'margin-top': '100px',
+	},
+	list: {
+		'min-height': '70vh',
 	},
 	// footer: {
 	// 	'align-self': 'flex-end',
