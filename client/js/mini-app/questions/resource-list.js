@@ -8,8 +8,10 @@ import Footer from '../components/footer'
 import ValidResults from './valid-results'
 import NoResults from './no-results'
 
-const searchResultsMessage =
+const bannerMessageValidResults =
 	'Your search results have been arranged by closest distance to your location data.'
+const bannerMessageNoResults =
+	'We currently only have resources in the state of New York, but keep checking back for new states!'
 
 const mapStateToProps = state => {
 	return {
@@ -23,7 +25,9 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
 		<div>
 			<LogoAndNavigation />
-			<div className={classes.resultsHeader}>{searchResultsMessage}</div>
+			<div className={classes.bannerMessage}>
+				{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+			</div>
 			{noResults ? (
 				<NoResults />
 			) : (
@@ -37,7 +41,7 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 }
 
 const styles = {
-	resultsHeader: {
+	bannerMessage: {
 		padding: '30px 0px 30px 0px',
 		'background-color': '#3d65f9',
 		'font-size': '14px',

@@ -2,8 +2,6 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 const noResultsMessage = 'No results match your search.'
-const onlyInNyMessage =
-	'We currently only have resources in the state of New York.'
 
 const NoResults = ({ classes }) => {
 	return <div className={classes.noResultsRoot}>{noResultsMessage}</div>
