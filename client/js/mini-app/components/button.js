@@ -7,7 +7,7 @@ import { Phone, Desktop } from '../../components/breakpoints'
 const Button = ({ classes, onClick, buttonText }) => {
 	return (
 		<div>
-			<div className={classes.goButtonRoot}>
+			<div>
 				<Phone>
 					<div>
 						<button
@@ -40,10 +40,6 @@ const Button = ({ classes, onClick, buttonText }) => {
 }
 
 const styles = {
-	// goButtonRoot: {
-	// 	display: 'flex',
-	// 	'justify-content': 'center',
-	// },
 	buttonCommon: {
 		'background-color': '#FFFFFF',
 		'border-radius': '8px',
