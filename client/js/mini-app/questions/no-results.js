@@ -5,17 +5,14 @@ import Button from '../components/button'
 
 const noResultsMessage = 'No results match your search.'
 
-const NoResults = ({ classes }) => {
-	// todo
-	return (
-		<div className={classes.noResultsRoot}>
-			{noResultsMessage}
-			<Link to="/mini-app">
-				<Button buttonText="Return to Search" />
-			</Link>
-		</div>
-	)
-}
+const NoResults = ({ classes }) => (
+	<div className={classes.noResultsRoot}>
+		{noResultsMessage}
+		<Link to="/mini-app">
+			<Button buttonText="Return to Search" />
+		</Link>
+	</div>
+)
 
 const styles = {
 	noResultsRoot: {
@@ -30,7 +27,7 @@ const styles = {
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
 		margin: '56px',
-		padding: '41px 80px 41px 80px', //todo check
+		padding: '41px 80px 41px 80px',
 	},
 }
 
