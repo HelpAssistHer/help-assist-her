@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
+import injectSheet from 'react-jss'
 
 import { Phone, Desktop } from '../components/breakpoints'
-import GoButton from './components/go-button'
+import Button from './components/button'
 import Input from './components/input'
 import Spacer from '../components/spacer'
 
-class MiniAppForm extends Component {
+class MiniAppFormView extends Component {
 	render() {
-		const { handleSubmit } = this.props
+		const { handleSubmit, classes } = this.props
 
 		return (
 			<form onSubmit={handleSubmit}>
@@ -26,12 +27,30 @@ class MiniAppForm extends Component {
 					type="text"
 				/>
 
-				<GoButton />
+				<Phone>
+					<Spacer height="25px" />
+				</Phone>
+				<Desktop>
+					<Spacer height="93px" />
+				</Desktop>
+
+				<div className={classes.goButtonRoot}>
+					<Button buttonText="Go" />
+				</div>
 			</form>
 		)
 	}
 }
 
-export default reduxForm({
+const styles = {
+	goButtonRoot: {
+		display: 'flex',
+		'justify-content': 'center',
+	},
+}
+
+const MiniAppForm = reduxForm({
 	form: 'miniApp',
-})(MiniAppForm)
+})(MiniAppFormView)
+
+export default injectSheet(styles)(MiniAppForm)
