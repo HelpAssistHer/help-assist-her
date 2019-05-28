@@ -65,7 +65,7 @@ const styles = {
 		'font-size': '24px',
 		'letter-spacing': '0.5px',
 		height: '54px',
-		width: '186px',
+		width: '210px',
 	},
 }
 
