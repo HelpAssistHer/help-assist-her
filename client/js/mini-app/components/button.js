@@ -3,17 +3,13 @@ import injectSheet from 'react-jss'
 import classnames from 'classnames'
 
 import { Phone, Desktop } from '../../components/breakpoints'
-import Spacer from '../../components/spacer'
 
-const GoButton = ({ classes, onClick }) => {
-	const buttonText = 'GO'
-
+const Button = ({ classes, onClick, buttonText }) => {
 	return (
 		<div>
-			<div className={classes.goButtonRoot}>
+			<div>
 				<Phone>
 					<div>
-						<Spacer height="25px" />
 						<button
 							className={classnames(classes.buttonCommon, classes.buttonPhone)}
 							type="submit"
@@ -26,7 +22,6 @@ const GoButton = ({ classes, onClick }) => {
 
 				<Desktop>
 					<div>
-						<Spacer height="93px" />
 						<button
 							className={classnames(
 								classes.buttonCommon,
@@ -45,10 +40,6 @@ const GoButton = ({ classes, onClick }) => {
 }
 
 const styles = {
-	goButtonRoot: {
-		display: 'flex',
-		'justify-content': 'center',
-	},
 	buttonCommon: {
 		'background-color': '#FFFFFF',
 		'border-radius': '8px',
@@ -78,4 +69,4 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(GoButton)
+export default injectSheet(styles)(Button)
