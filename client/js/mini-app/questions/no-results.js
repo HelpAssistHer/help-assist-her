@@ -11,7 +11,7 @@ const NoResults = ({ classes }) => {
 		<div className={classes.noResultsRoot}>
 			{noResultsMessage}
 			<Link to="/mini-app2">
-				<Button buttonText="Back to Search" />
+				<Button buttonText="Return to Search" />
 			</Link>
 		</div>
 	)
@@ -19,6 +19,8 @@ const NoResults = ({ classes }) => {
 
 const styles = {
 	noResultsRoot: {
+		display: 'flex',
+		'justify-content': 'space-between',
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '33px',
