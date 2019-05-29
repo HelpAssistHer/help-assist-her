@@ -5,7 +5,7 @@ import ResourceCard from './resource-card'
 
 const ValidResults = ({ classes, pregnancyResourceCenters }) => {
 	return (
-		<div className={classes.list}>
+		<div className={classes.validResultsRoot}>
 			{_.map(pregnancyResourceCenters, prc => {
 				return <ResourceCard key={prc._id} resource={prc} />
 			})}
@@ -14,10 +14,9 @@ const ValidResults = ({ classes, pregnancyResourceCenters }) => {
 }
 
 const styles = {
-	list: {
-		'min-height': '70vh',
+	validResultsRoot: {
+		padding: '48px',
 	},
-	// todo is this even used?
 }
 
 export default injectSheet(styles)(ValidResults)
