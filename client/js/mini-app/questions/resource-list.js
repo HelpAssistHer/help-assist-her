@@ -23,7 +23,7 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	const noResults = _.get(pregnancyResourceCenters, 'statusCode') === 404
 
 	return (
-		<div>
+		<div className={classes.resourceListViewRoot}>
 			<LogoAndNavigation />
 			<div className={classes.bannerMessage}>
 				{noResults ? bannerMessageNoResults : bannerMessageValidResults}
@@ -45,6 +45,11 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 }
 
 const styles = {
+	resourceListViewRoot: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'min-height': '100vh',
+	},
 	bannerMessage: {
 		padding: '30px 0px 30px 0px',
 		'background-color': '#3d65f9',
@@ -58,8 +63,7 @@ const styles = {
 		padding: '56px',
 	},
 	resultsFooter: {
-		width: '100%',
-		'align-self': 'flex-end',
+		'margin-top': 'auto',
 	},
 }
 
