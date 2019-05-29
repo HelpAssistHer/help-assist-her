@@ -26,7 +26,6 @@ const styles = {
 		border: '3px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
-		margin: '56px',
 		padding: '41px 80px 41px 80px',
 	},
 }

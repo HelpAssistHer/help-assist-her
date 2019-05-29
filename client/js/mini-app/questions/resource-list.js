@@ -28,11 +28,15 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 			<div className={classes.bannerMessage}>
 				{noResults ? bannerMessageNoResults : bannerMessageValidResults}
 			</div>
+
 			{noResults ? (
-				<NoResults />
+				<div className={classes.noResultsView}>
+					<NoResults />
+				</div>
 			) : (
 				<ValidResults pregnancyResourceCenters={pregnancyResourceCenters} />
 			)}
+
 			<div className={classes.resultsFooter}>
 				<Footer />
 			</div>
@@ -48,6 +52,10 @@ const styles = {
 		color: '#99cccc',
 		'text-align': 'center',
 		'margin-top': '100px',
+	},
+	noResultsView: {
+		'background-color': 'rgba(93,93,93,0.08)',
+		padding: '56px',
 	},
 	resultsFooter: {
 		width: '100%',
