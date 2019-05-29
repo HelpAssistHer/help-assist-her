@@ -1,21 +1,53 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 import { Link } from 'react-router-dom'
+
 import Button from '../components/button'
+import { Phone, Desktop } from '../../components/breakpoints'
+import Spacer from '../../components/spacer'
 
 const noResultsMessage = 'No results match your search.'
+const buttonText = 'Return to Search'
 
 const NoResults = ({ classes }) => (
-	<div className={classes.noResultsRoot}>
-		{noResultsMessage}
-		<Link to="/mini-app">
-			<Button buttonText="Return to Search" />
-		</Link>
+	<div>
+		<Phone>
+			<div className={classes.noResultsPhone}>
+				{noResultsMessage}
+				<Spacer height="20px" />
+				<Link to="/mini-app">
+					<Button buttonText={buttonText} />
+				</Link>
+			</div>
+		</Phone>
+
+		<Desktop>
+			<div className={classes.noResultsDesktop}>
+				{noResultsMessage}
+				<Link to="/mini-app">
+					<Button buttonText={buttonText} />
+				</Link>
+			</div>
+		</Desktop>
 	</div>
 )
 
 const styles = {
-	noResultsRoot: {
+	noResultsPhone: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'justify-content': 'space-between',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '20px',
+		'line-height': '23px',
+		'letter-spacing': '0.25px',
+		border: '1px solid #3D65F9',
+		'border-radius': '2px',
+		'background-color': '#FFFFFF',
+		padding: '24px',
+	},
+	noResultsDesktop: {
 		display: 'flex',
 		'justify-content': 'space-between',
 		'align-items': 'center',

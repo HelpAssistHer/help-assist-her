@@ -58,14 +58,14 @@ const styles = {
 		border: '1px solid #3D65F9',
 		'font-size': '14px',
 		height: '31px',
-		width: '96px',
+		width: '130px',
 	},
 	buttonDesktop: {
 		border: '2px solid #3D65F9',
 		'font-size': '24px',
 		'letter-spacing': '0.5px',
 		height: '54px',
-		width: '210px',
+		width: '230px',
 	},
 }
 
