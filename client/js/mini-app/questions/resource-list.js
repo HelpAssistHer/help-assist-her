@@ -49,6 +49,7 @@ const styles = {
 		display: 'flex',
 		'flex-direction': 'column',
 		'min-height': '100vh',
+		'background-color': 'rgba(93,93,93,0.08)',
 	},
 	bannerMessage: {
 		padding: '30px 0px 30px 0px',
@@ -59,7 +60,6 @@ const styles = {
 		'margin-top': '100px',
 	},
 	noResultsView: {
-		'background-color': 'rgba(93,93,93,0.08)',
 		padding: '56px',
 	},
 	resultsFooter: {
