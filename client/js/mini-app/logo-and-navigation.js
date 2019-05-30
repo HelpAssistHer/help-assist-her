@@ -41,7 +41,7 @@ const LogoAndNavigation = ({ classes }) => (
 					</Link>
 					<Spacer width="52px" />
 					<Link to="/emergency">
-						<EmergencyPhoneIcon />
+						<EmergencyPhoneIcon height={38} width={38} />
 					</Link>
 				</div>
 			</div>
