@@ -58,6 +58,7 @@ const Header = ({ classes }) => {
 const styles = {
 	headerContainerPhone: {
 		display: 'flex',
+		'text-align': 'center',
 		'flex-direction': 'column',
 		'background-color': '#016454',
 		'border-bottom': '1px solid #3D65F9',
@@ -65,6 +66,7 @@ const styles = {
 	},
 	headerContainerDesktop: {
 		display: 'flex',
+		'text-align': 'center',
 		'background-color': '#016454',
 		'border-bottom': '4px solid #3D65F9',
 		'margin-top': '100px',
