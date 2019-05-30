@@ -3,6 +3,8 @@ import injectSheet from 'react-jss'
 
 import StepOne from './step-one'
 import StepTwo from './step-two'
+import { Desktop } from '../../components/breakpoints'
+import Spacer from '../../components/spacer'
 
 class Questions extends Component {
 	constructor(props) {
@@ -18,22 +20,21 @@ class Questions extends Component {
 	}
 
 	render() {
-		const buttonClicked = this.state.buttonClicked
+		const { buttonClicked } = this.state
 
-		if (!buttonClicked) {
-			return (
-				<div>
+		return (
+			<div>
+				{!buttonClicked ? (
 					<StepOne
 						buttonClicked={buttonClicked}
 						onResourceChange={this.handleResourceChange}
 					/>
-				</div>
-			)
-		}
-
-		return (
-			<div>
-				<StepTwo />
+				) : (
+					<StepTwo />
+				)}
+				<Desktop>
+					<Spacer height="87px" />
+				</Desktop>
 			</div>
 		)
 	}
