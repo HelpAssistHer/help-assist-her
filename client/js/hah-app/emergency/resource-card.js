@@ -1,7 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Spacer from '../../components/spacer'
 import { Phone, Desktop } from '../../components/breakpoints'
 
 const ResourceCard = ({ classes, resource }) => {
