@@ -40,7 +40,9 @@ const LogoAndNavigation = ({ classes }) => (
 						Feedback
 					</Link>
 					<Spacer width="52px" />
-					<EmergencyPhoneIcon />
+					<Link to="/emergency">
+						<EmergencyPhoneIcon />
+					</Link>
 				</div>
 			</div>
 		</Desktop>
