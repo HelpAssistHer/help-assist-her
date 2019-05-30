@@ -69,14 +69,23 @@ const styles = {
 	resourceNameDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
+		'font-size': '33px',
+		'line-height': '44px',
+	},
+	phoneNumberDesktop: {
+		color: '#3D65F9',
+		'font-family': 'hah-regular',
+		'font-size': '40px',
+		'line-height': '41px',
+	},
+	additionalInfoDesktop: {
+		color: 'rgba(93,93,93,0.61)',
+		'font-family': 'hah-regular',
 		'font-size': '24px',
 		'line-height': '27px',
-		'text-align': 'center',
 	},
 	phoneNumberPhone: {},
-	phoneNumberDesktop: {},
 	additionalInfoPhone: {},
-	additionalInfoDesktop: {},
 }
 
 export default injectSheet(styles)(ResourceCard)
