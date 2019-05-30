@@ -6,37 +6,41 @@ import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoBetaBlack from '../components/icons/icon-components/logo-beta-black'
 import HamburgerMenu from '../components/icons/icon-components/hamburger-menu'
+import EmergencyPhoneIcon from '../components/icons/icon-components/emergency-phone-icon'
 
 const LogoAndNavigation = ({ classes }) => (
 	<div>
 		<Phone>
 			<div className={classes.headerPhone}>
-				<div className={classes.logoPhone}>
-					<Link to="/mini-app">
-						<LogoBetaBlack height={25} width={160} />
-					</Link>
-					<Link to="/menu" className={classes.hamburgerMenuPhone}>
-						<HamburgerMenu />
-					</Link>
-				</div>
+				<Link to="/mini-app" className={classes.logoPhone}>
+					<LogoBetaBlack height={25} width={160} />
+				</Link>
+
+				<Link to="/emergency" className={classes.emergencyIconPhone}>
+					<EmergencyPhoneIcon height={24} width={24} />
+				</Link>
+
+				<Link to="/menu" className={classes.hamburgerMenuPhone}>
+					<HamburgerMenu />
+				</Link>
 			</div>
 		</Phone>
 
 		<Desktop>
 			<div className={classes.headerDesktop}>
-				<div className={classes.logoDesktop}>
-					<Link to="/mini-app">
-						<LogoBetaBlack height={33} width={208} />
+				<Link to="/mini-app">
+					<LogoBetaBlack height={33} width={208} />
+				</Link>
+				<div className={classes.linksDesktop}>
+					<Link to="/about" className={classes.navigationLinkDesktop}>
+						About
 					</Link>
-					<div className={classes.linksDesktop}>
-						<Link to="/about" className={classes.navigationLinkDesktop}>
-							About
-						</Link>
-						<Spacer width="32px" />
-						<Link to="/feedback" className={classes.navigationLinkDesktop}>
-							Feedback
-						</Link>
-					</div>
+					<Spacer width="32px" />
+					<Link to="/feedback" className={classes.navigationLinkDesktop}>
+						Feedback
+					</Link>
+					<Spacer width="52px" />
+					<EmergencyPhoneIcon />
 				</div>
 			</div>
 		</Desktop>
@@ -44,19 +48,34 @@ const LogoAndNavigation = ({ classes }) => (
 )
 
 const styles = {
-	logoPhone: {
+	headerPhone: {
+		display: 'grid',
+		'grid-template-columns': '70% 15% 15%',
+		'align-items': 'center',
+		'justify-items': 'end',
 		position: 'fixed',
 		top: '0vh',
 		height: '55px',
 		padding: '0 5% 0 5%',
-		display: 'flex',
-		'align-items': 'center',
-		'justify-content': 'space-between',
 		'background-color': '#FFFFFF',
 		'min-width': '90vw',
 		'border-bottom': '1px solid #3D65F9',
 	},
-	logoDesktop: {
+	logoPhone: {
+		'grid-column-start': 1,
+		'grid-column-end': 2,
+		'justify-self': 'start',
+	},
+	emergencyIconPhone: {
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+	},
+	hamburgerMenuPhone: {
+		cursor: 'pointer',
+		'grid-column-start': 3,
+		'grid-column-end': 4,
+	},
+	headerDesktop: {
 		position: 'fixed',
 		top: '0vh',
 		height: '67px',
@@ -68,11 +87,9 @@ const styles = {
 		'min-width': '90vw',
 		'border-bottom': '4px solid #3D65F9',
 	},
-	hamburgerMenuPhone: {
-		cursor: 'pointer',
-	},
 	linksDesktop: {
 		display: 'flex',
+		'align-items': 'center',
 	},
 	navigationLinkDesktop: {
 		'font-family': 'hah-regular',
