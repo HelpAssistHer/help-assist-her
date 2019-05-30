@@ -5,9 +5,11 @@ import { Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
 const OTHER_SERVICES_DESCRIPTION_TEXT =
-	'We’ve got your back. Among thousands of internet ' +
-	'search results, pamphlets, handouts, even old school phone books, we’ve found trustworthy ' +
-	'non-violent and holistic healthcare providers.'
+	"Google just isn't cutting it. Whether you're home or traveling, need " +
+	'care for yourself or are doing some research for a loved one, we want ' +
+	'to make sure you get access to reliable resources. Starting with pregnancy ' +
+	'and basic medical care is just that, a start. Our beta will launch in New ' +
+	"York, but after that, we're coming to you."
 
 const HomePageBanner = ({ classes }) => (
 	<div>
