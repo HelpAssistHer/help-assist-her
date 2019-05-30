@@ -62,9 +62,8 @@ const styles = {
 	resourceNamePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '14px',
-		'line-height': '33px',
-		'text-align': 'center',
+		'font-size': '16px',
+		'line-height': '21px',
 	},
 	resourceNameDesktop: {
 		color: '#000000',
@@ -72,11 +71,23 @@ const styles = {
 		'font-size': '33px',
 		'line-height': '44px',
 	},
+	phoneNumberPhone: {
+		color: '#3D65F9',
+		'font-family': 'hah-regular',
+		'font-size': '22px',
+		'line-height': '22px',
+	},
 	phoneNumberDesktop: {
 		color: '#3D65F9',
 		'font-family': 'hah-regular',
 		'font-size': '40px',
 		'line-height': '41px',
+	},
+	additionalInfoPhone: {
+		color: 'rgba(93,93,93,0.61)',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '33px',
 	},
 	additionalInfoDesktop: {
 		color: 'rgba(93,93,93,0.61)',
@@ -84,8 +95,6 @@ const styles = {
 		'font-size': '24px',
 		'line-height': '27px',
 	},
-	phoneNumberPhone: {},
-	additionalInfoPhone: {},
 }
 
 export default injectSheet(styles)(ResourceCard)
