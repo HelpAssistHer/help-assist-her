@@ -6,6 +6,7 @@ import Footer from '../../mini-app/components/footer'
 import LogoAndNavigation from '../../mini-app/logo-and-navigation'
 import { Phone, Desktop } from '../../components/breakpoints'
 import ListOfResources from './list-of-resources'
+import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
 
 const TITLE_TEXT = 'You are not alone. You are loved.'
 
@@ -26,7 +27,7 @@ const Emergency = ({ classes }) => (
 			<div>
 				<div className={classes.infoSectionPhone}>
 					<Spacer height="33px" />
-					<div>Phone +</div>
+					<EmergencyPhoneIcon height={48} width={48} />
 					<Spacer height="22px" />
 					<div className={classes.titlePhone}>{TITLE_TEXT}</div>
 					<Spacer height="22px" />
@@ -49,7 +50,7 @@ const Emergency = ({ classes }) => (
 			<div>
 				<div className={classes.infoSectionDesktop}>
 					<Spacer height="60px" />
-					<div>Phone +</div>
+					<EmergencyPhoneIcon height={82} width={82} />
 					<Spacer height="44px" />
 					<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
 					<Spacer height="44px" />
@@ -76,11 +77,17 @@ const Emergency = ({ classes }) => (
 
 const styles = {
 	infoSectionPhone: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
 		'background-color': '#DEA8E0',
 		'border-bottom': '1px solid #3D65F9',
 		'margin-top': '55px',
 	},
 	infoSectionDesktop: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
 		'background-color': '#DEA8E0',
 		'border-bottom': '3px solid #3D65F9',
 		'margin-top': '100px',
