@@ -44,11 +44,15 @@ const ResourceCard = ({ classes, resource }) => {
 
 const styles = {
 	cardContainerPhone: {
+		height: '150px',
+		width: '300px',
 		border: '1px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
 	},
 	cardContainerDesktop: {
+		height: '360px',
+		width: '460px',
 		border: '3px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
