@@ -1,15 +1,15 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import _ from 'lodash'
 
 import resourceData from './resource-data'
 import ResourceCard from './resource-card'
 
-const resource1 = resourceData[0]
-
 const ListOfResources = ({ classes }) => (
 	<div className={classes.background}>
-		List
-		<ResourceCard resource={resource1} />
+		{_.map(resourceData, resource => (
+			<ResourceCard key={resource.nameOfResource} resource={resource} />
+		))}
 	</div>
 )
 
