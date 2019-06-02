@@ -19,7 +19,9 @@ const ResourceCard = ({ classes, resource }) => {
 					<div className={classes.cardPhone}>
 						<div className={classes.resourceNamePhone}>{nameOfResource}</div>
 						<Spacer height="15px" />
-						<div className={classes.phoneNumberPhone}>{phoneNumber}</div>
+						<a className={classes.phoneNumberPhone} href={`tel:${phoneNumber}`}>
+							{phoneNumber}
+						</a>
 						<div className={classes.additionalInfoPhone}>
 							{additionalInfo}
 							{additionalInfo2}
@@ -33,7 +35,12 @@ const ResourceCard = ({ classes, resource }) => {
 					<div className={classes.cardDesktop}>
 						<div className={classes.resourceNameDesktop}>{nameOfResource}</div>
 						<Spacer height="30px" />
-						<div className={classes.phoneNumberDesktop}>{phoneNumber}</div>
+						<a
+							className={classes.phoneNumberDesktop}
+							href={`tel:${phoneNumber}`}
+						>
+							{phoneNumber}
+						</a>
 						<Spacer height="12px" />
 						<div className={classes.additionalInfoDesktop}>
 							{additionalInfo}
@@ -53,6 +60,7 @@ const styles = {
 		border: '1px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
+		margin: '5px',
 	},
 	cardContainerDesktop: {
 		height: '360px',
@@ -60,6 +68,7 @@ const styles = {
 		border: '3px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
+		margin: '10px 10px 10px 13px',
 	},
 	cardPhone: {
 		margin: '25px 35px 0px 35px',
