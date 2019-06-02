@@ -14,38 +14,7 @@ export default function EmergencyPhoneIcon(props) {
 			{/* Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch */}
 			<title>Emergency_Mobile</title>
 			<desc>Created with Sketch.</desc>
-			<defs>
-				<filter
-					x="-18.4%"
-					y="-13.2%"
-					width="136.8%"
-					height="136.8%"
-					filterUnits="objectBoundingBox"
-					id="filter-1"
-				>
-					<feOffset
-						dx={0}
-						dy={2}
-						in="SourceAlpha"
-						result="shadowOffsetOuter1"
-					/>
-					<feGaussianBlur
-						stdDeviation={2}
-						in="shadowOffsetOuter1"
-						result="shadowBlurOuter1"
-					/>
-					<feColorMatrix
-						values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.3 0"
-						type="matrix"
-						in="shadowBlurOuter1"
-						result="shadowMatrixOuter1"
-					/>
-					<feMerge>
-						<feMergeNode in="shadowMatrixOuter1" />
-						<feMergeNode in="SourceGraphic" />
-					</feMerge>
-				</filter>
-			</defs>
+			<defs />
 			<g
 				id="Symbols"
 				stroke="none"
@@ -54,7 +23,7 @@ export default function EmergencyPhoneIcon(props) {
 				fillRule="evenodd"
 			>
 				<g id="Emergency_Mobile">
-					<g id="Group-7" filter="url(#filter-1)">
+					<g id="Group-7">
 						<circle id="Oval-2" fill="#F5430C" cx={19} cy={19} r={19} />
 						<g
 							id="Helpline-Logo"
