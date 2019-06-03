@@ -69,7 +69,17 @@ const Emergency = ({ classes }) => (
 			</div>
 		</Desktop>
 
-		<ListOfResources />
+		<Phone>
+			<div className={classes.listOfResourcesContainerPhone}>
+				<ListOfResources />
+			</div>
+		</Phone>
+
+		<Desktop>
+			<div className={classes.listOfResourcesContainerDesktop}>
+				<ListOfResources />
+			</div>
+		</Desktop>
 
 		<Footer />
 	</div>
@@ -142,6 +152,14 @@ const styles = {
 	},
 	emergencyNumber: {
 		color: '#3D65F9',
+	},
+	listOfResourcesContainerPhone: {
+		padding: '20px 0px',
+		'background-color': 'rgba(93,93,93,0.08)',
+	},
+	listOfResourcesContainerDesktop: {
+		padding: '46px 0px',
+		'background-color': 'rgba(93,93,93,0.08)',
 	},
 }
 

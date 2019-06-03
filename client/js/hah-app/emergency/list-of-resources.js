@@ -18,13 +18,6 @@ const styles = {
 		display: 'flex',
 		'flex-wrap': 'wrap',
 		'justify-content': 'center',
-		'background-color': 'rgba(93,93,93,0.08)',
-	},
-	paddingPhone: {
-		padding: '20px 0px',
-	},
-	paddingDesktop: {
-		padding: '46px 0px',
 	},
 }
 
