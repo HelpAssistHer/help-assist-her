@@ -56,7 +56,7 @@ const ResourceCard = ({ classes, resource }) => {
 
 const styles = {
 	cardContainerPhone: {
-		height: '150px',
+		height: '190px',
 		width: '300px',
 		border: '1px solid #3D65F9',
 		'border-radius': '2px',
@@ -105,7 +105,6 @@ const styles = {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
 		'font-size': '14px',
-		'line-height': '33px',
 	},
 	additionalInfoDesktop: {
 		color: 'rgba(93,93,93,0.61)',
@@ -117,7 +116,6 @@ const styles = {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
 		'font-size': '14px',
-		'line-height': '33px',
 	},
 	websiteDesktop: {
 		color: 'rgba(93,93,93,0.61)',
