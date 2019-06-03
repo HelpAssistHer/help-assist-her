@@ -5,12 +5,7 @@ import { Phone, Desktop } from '../../components/breakpoints'
 import Spacer from '../../components/spacer'
 
 const ResourceCard = ({ classes, resource }) => {
-	const {
-		nameOfResource,
-		phoneNumber,
-		additionalInfo,
-		additionalInfo2,
-	} = resource
+	const { nameOfResource, phoneNumber, additionalInfo, website } = resource
 
 	return (
 		<div>
@@ -22,9 +17,11 @@ const ResourceCard = ({ classes, resource }) => {
 						<a className={classes.phoneNumberPhone} href={`tel:${phoneNumber}`}>
 							{phoneNumber}
 						</a>
-						<div className={classes.additionalInfoPhone}>
-							{additionalInfo}
-							{additionalInfo2}
+						<div className={classes.additionalInfoPhone}>{additionalInfo}</div>
+						<div className={classes.websitePhone}>
+							<a href={website} target="_blank" rel="noopener noreferrer">
+								{website}
+							</a>
 						</div>
 					</div>
 				</div>
@@ -44,7 +41,11 @@ const ResourceCard = ({ classes, resource }) => {
 						<Spacer height="12px" />
 						<div className={classes.additionalInfoDesktop}>
 							{additionalInfo}
-							{additionalInfo2}
+						</div>
+						<div className={classes.websiteDesktop}>
+							<a href={website} target="_blank" rel="noopener noreferrer">
+								{website}
+							</a>
 						</div>
 					</div>
 				</div>
@@ -107,6 +108,18 @@ const styles = {
 		'line-height': '33px',
 	},
 	additionalInfoDesktop: {
+		color: 'rgba(93,93,93,0.61)',
+		'font-family': 'hah-regular',
+		'font-size': '24px',
+		'line-height': '27px',
+	},
+	websitePhone: {
+		color: 'rgba(93,93,93,0.61)',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '33px',
+	},
+	websiteDesktop: {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
 		'font-size': '24px',
