@@ -6,12 +6,11 @@ import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
 const Header = ({ classes }) => {
-	const titleText = 'Empower Women with Options.'
+	const titleText1 = 'Empower Women'
+	const titleText2 = 'with Options.'
 
 	const descriptionText =
-		'We’ve got your back. And your left hand, or your right foot. Whatever you need help ' +
-		'with — we’ll help connect you to a local resource that can provide counseling, screenings, ' +
-		'or more.'
+		"Bringing reliable and comprehensive women's healthcare resources to your fingertips."
 
 	return (
 		<div>
@@ -25,7 +24,7 @@ const Header = ({ classes }) => {
 					/>
 
 					<div className={classes.headerTextPhone}>
-						<div className={classes.titleTextPhone}>{titleText}</div>
+						<div className={classes.titleTextPhone}>{titleText1}</div>
 						<Spacer height="40px" />
 						<div className={classes.descriptionTextPhone}>
 							{descriptionText}
@@ -37,7 +36,11 @@ const Header = ({ classes }) => {
 			<Desktop>
 				<div className={classes.headerContainerDesktop}>
 					<div className={classes.headerTextDesktop}>
-						<div className={classes.titleTextDesktop}>{titleText}</div>
+						<div className={classes.titleTextDesktop}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
 						<Spacer height="40px" />
 						<div className={classes.descriptionTextDesktop}>
 							{descriptionText}
@@ -78,7 +81,8 @@ const styles = {
 	},
 	headerTextDesktop: {
 		flex: '1 1 0',
-		color: '#abd3f9',
+		color: '#F5EDE6',
+		'text-align': 'center',
 	},
 	titleTextPhone: {
 		padding: '21px 48px 0px 48px',
@@ -87,23 +91,23 @@ const styles = {
 		'letter-spacing': '-0.5px',
 		'line-height': '48px',
 	},
+	titleTextDesktop: {
+		padding: '89px 70px 0px 70px',
+		'font-family': 'hah-regular',
+		'font-size': '70px',
+		'line-height': '80px',
+	},
 	descriptionTextPhone: {
 		padding: '0px 48px 132px 48px',
 		'font-family': 'hah-regular',
 		'font-size': '18px',
 		'line-height': '24px',
 	},
-	titleTextDesktop: {
-		padding: '74px 80px 0px 42px',
-		'font-family': 'hah-regular',
-		'font-size': '80px',
-		'line-height': '76px',
-	},
 	descriptionTextDesktop: {
-		padding: '0px 80px 132px 42px',
+		padding: '0px 80px',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
-		'line-height': '33px',
+		'font-size': '25px',
+		'line-height': '32px',
 	},
 	imagePhone: {
 		height: '100%',
