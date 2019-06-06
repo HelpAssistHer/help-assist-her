@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
@@ -32,6 +32,28 @@ const Header = ({ classes }) => {
 					</div>
 				</div>
 			</Phone>
+
+			<Tablet>
+				<div className={classes.headerContainerTablet}>
+					<div className={classes.headerTextTablet}>
+						<div className={classes.titleTextTablet}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
+						<Spacer height="40px" />
+						<div className={classes.descriptionTextTablet}>
+							{descriptionText}
+						</div>
+					</div>
+
+					<img
+						className={classes.imageTablet}
+						src="../img/two-women-hugging.jpg"
+						alt="Two Close Friends"
+					/>
+				</div>
+			</Tablet>
 
 			<Desktop>
 				<div className={classes.headerContainerDesktop}>
@@ -64,25 +86,33 @@ const styles = {
 		'text-align': 'center',
 		'flex-direction': 'column',
 		'background-color': '#016454',
-		'border-bottom': '1px solid #3D65F9',
 		'margin-top': '55px',
 	},
-	headerContainerDesktop: {
+	headerContainerTablet: {
+		height: '700px',
 		display: 'flex',
+		'align-items': 'center',
 		'text-align': 'center',
 		'background-color': '#016454',
-		'border-bottom': '4px solid #3D65F9',
-		'margin-top': '100px',
+	},
+	headerContainerDesktop: {
+		height: '700px',
+		display: 'flex',
+		'align-items': 'center',
+		'text-align': 'center',
+		'background-color': '#016454',
 	},
 	headerTextPhone: {
 		flex: '1 1 0',
 		color: '#abd3f9',
-		'text-align': 'center',
+	},
+	headerTextTablet: {
+		flex: '1 1 0',
+		color: '#F5EDE6',
 	},
 	headerTextDesktop: {
 		flex: '1 1 0',
 		color: '#F5EDE6',
-		'text-align': 'center',
 	},
 	titleTextPhone: {
 		padding: '21px 48px 0px 48px',
@@ -90,6 +120,11 @@ const styles = {
 		'font-size': '40px',
 		'letter-spacing': '-0.5px',
 		'line-height': '48px',
+	},
+	titleTextTablet: {
+		'font-family': 'hah-regular',
+		'font-size': '50px',
+		'line-height': '60px',
 	},
 	titleTextDesktop: {
 		padding: '89px 70px 0px 70px',
@@ -103,6 +138,11 @@ const styles = {
 		'font-size': '18px',
 		'line-height': '24px',
 	},
+	descriptionTextTablet: {
+		'font-family': 'hah-regular',
+		'font-size': '22px',
+		'line-height': '29px',
+	},
 	descriptionTextDesktop: {
 		padding: '0px 80px',
 		'font-family': 'hah-regular',
@@ -113,8 +153,12 @@ const styles = {
 		height: '100%',
 		width: '100%',
 	},
+	imageTablet: {
+		height: '100%',
+		width: '50%',
+	},
 	imageDesktop: {
-		height: '50%',
+		height: '100%',
 		width: '50%',
 	},
 }
