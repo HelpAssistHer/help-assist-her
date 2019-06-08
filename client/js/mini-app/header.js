@@ -19,7 +19,7 @@ const Header = ({ classes }) => {
 				<div className={classes.headerContainerPhone}>
 					<img
 						className={classes.imagePhone}
-						src="../img/two-women-hugging.jpg"
+						src="../img/close-friends.jpg"
 						alt="Two Close Friends"
 					/>
 
@@ -49,7 +49,7 @@ const Header = ({ classes }) => {
 
 					<img
 						className={classes.imageTablet}
-						src="../img/two-women-hugging.jpg"
+						src="../img/close-friends.jpg"
 						alt="Two Close Friends"
 					/>
 				</div>
@@ -71,7 +71,7 @@ const Header = ({ classes }) => {
 
 					<img
 						className={classes.imageDesktop}
-						src="../img/two-women-hugging.jpg"
+						src="../img/close-friends.jpg"
 						alt="Two Close Friends"
 					/>
 				</div>
@@ -95,6 +95,7 @@ const styles = {
 		'align-items': 'center',
 		'text-align': 'center',
 		'background-color': '#016454',
+		overflow: 'hidden',
 	},
 	headerContainerDesktop: {
 		height: '570px',
@@ -103,6 +104,7 @@ const styles = {
 		'align-items': 'center',
 		'text-align': 'center',
 		'background-color': '#016454',
+		overflow: 'hidden',
 	},
 	headerTextPhone: {
 		// flex: '1 1 0',
@@ -164,11 +166,9 @@ const styles = {
 		width: '100%',
 	},
 	imageTablet: {
-		height: '100%',
 		width: '50%',
 	},
 	imageDesktop: {
-		height: '100%',
 		width: '50%',
 	},
 }
