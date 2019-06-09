@@ -24,8 +24,12 @@ const Header = ({ classes }) => {
 					/>
 
 					<div className={classes.headerTextPhone}>
-						<div className={classes.titleTextPhone}>{titleText1}</div>
-						<Spacer height="40px" />
+						<div className={classes.titleTextPhone}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
+						<Spacer height="20px" />
 						<div className={classes.descriptionTextPhone}>
 							{descriptionText}
 						</div>
@@ -89,7 +93,7 @@ const styles = {
 		'margin-top': '55px',
 	},
 	headerContainerTablet: {
-		height: '570px',
+		height: '650px',
 		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'flex',
 		'align-items': 'center',
@@ -98,7 +102,7 @@ const styles = {
 		overflow: 'hidden',
 	},
 	headerContainerDesktop: {
-		height: '570px',
+		height: '650px',
 		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'flex',
 		'align-items': 'center',
@@ -106,9 +110,13 @@ const styles = {
 		'background-color': '#016454',
 		overflow: 'hidden',
 	},
+	// todo combine all these
 	headerTextPhone: {
-		// flex: '1 1 0',
-		color: '#abd3f9',
+		flex: '1 1 0',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		color: '#F5EDE6',
 	},
 	headerTextTablet: {
 		flex: '1 1 0',
@@ -144,7 +152,7 @@ const styles = {
 		'line-height': '80px',
 	},
 	descriptionTextPhone: {
-		padding: '0px 48px 132px 48px',
+		// padding: '0px 48px 132px 48px',
 		'font-family': 'hah-regular',
 		'font-size': '18px',
 		'line-height': '24px',
@@ -162,7 +170,7 @@ const styles = {
 		'line-height': '32px',
 	},
 	imagePhone: {
-		height: '100%',
+		// height: '100%',
 		width: '100%',
 	},
 	imageTablet: {
