@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
 const TITLE_1_TEXT = 'Always there.'
@@ -15,6 +15,24 @@ const DESCRIPTION_TEXT =
 
 const HomePageBanner = ({ classes }) => (
 	<div>
+		<Phone>
+			<div>
+				<div className={classes.bannerPhone}>
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="26px" />
+					<div className={classes.descriptionContainerPhone}>
+						<div className={classes.descriptionTextPhone}>
+							{DESCRIPTION_TEXT}
+						</div>
+					</div>
+				</div>
+			</div>
+		</Phone>
+
 		<Desktop>
 			<div>
 				<div className={classes.bannerDesktop}>
@@ -24,8 +42,10 @@ const HomePageBanner = ({ classes }) => (
 						{TITLE_2_TEXT}
 					</div>
 					<Spacer height="48px" />
-					<div className={classes.descriptionContainer}>
-						<div className={classes.descriptionText}>{DESCRIPTION_TEXT}</div>
+					<div className={classes.descriptionContainerDesktop}>
+						<div className={classes.descriptionTextDesktop}>
+							{DESCRIPTION_TEXT}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -34,6 +54,19 @@ const HomePageBanner = ({ classes }) => (
 )
 
 const styles = {
+	bannerPhone: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'justify-content': 'center',
+		height: '328px',
+		'background-color': '#F5EDE6',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '30px',
+		'line-height': '33px',
+		'text-align': 'center',
+	},
 	bannerDesktop: {
 		display: 'flex',
 		'flex-direction': 'column',
@@ -48,11 +81,24 @@ const styles = {
 		'letter-spacing': '-0.1px',
 		'text-align': 'center',
 	},
-	descriptionContainer: {
+	descriptionContainerPhone: {
+		display: 'grid',
+		'grid-template-columns': '10% 80% 10%',
+	},
+	descriptionContainerDesktop: {
 		display: 'grid',
 		'grid-template-columns': '20% 60% 20%',
 	},
-	descriptionText: {
+	descriptionTextPhone: {
+		color: 'rgba(0,0,0,0.95)',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '20px',
+		'text-align': 'center',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+	},
+	descriptionTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '24px',
