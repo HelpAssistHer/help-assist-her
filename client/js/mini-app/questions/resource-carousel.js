@@ -78,7 +78,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 								onClick={() => onResourceChange(resource.id)}
 							>
 								<div className={classes.flex}>
-									{iconsPhone[index]}
+									<div className={classes.icons}>{iconsPhone[index]}</div>
 									<Spacer height="9px" />
 									<div className={classes.resourceNamePhone}>
 										{resource.name}
@@ -93,7 +93,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 								onClick={() => onResourceChange(resource.id)}
 							>
 								<div className={classes.flex}>
-									{iconsDesktop[index]}
+									<div className={classes.icons}>{iconsDesktop[index]}</div>
 									<Spacer height="20px" />
 									<div className={classes.resourceNameDesktop}>
 										{resource.name}
@@ -109,6 +109,12 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 )
 
 const styles = {
+	icons: {
+		'&:hover': {
+			'border-radius': '50%',
+			'background-color': '#DEA8E0',
+		},
+	},
 	resourceCarouselRoot: {
 		display: 'flex',
 		'justify-content': 'center',
@@ -122,10 +128,6 @@ const styles = {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
-		'&:hover': {
-			'background-color': '#3D65F9',
-			color: '#FFFFFF',
-		},
 	},
 	buttonActiveState: {
 		'background-color': '#3D65F9',
