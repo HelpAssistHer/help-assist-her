@@ -1,10 +1,12 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
-const OTHER_SERVICES_DESCRIPTION_TEXT =
+const TITLE_1_TEXT = 'Always there.'
+const TITLE_2_TEXT = 'Just for you.'
+const DESCRIPTION_TEXT =
 	"Google just isn't cutting it. Whether you're home or traveling, need " +
 	'care for yourself or are doing some research for a loved one, we want ' +
 	'to make sure you get access to reliable resources. Starting with pregnancy ' +
@@ -16,17 +18,16 @@ const HomePageBanner = ({ classes }) => (
 		<Desktop>
 			<div>
 				<div className={classes.bannerDesktop}>
-					Always there.
-					<br />
-					Just for you.
-				</div>
-				<Spacer height="72px" />
-				<div className={classes.textContainer}>
-					<div className={classes.otherServicesDescription}>
-						{OTHER_SERVICES_DESCRIPTION_TEXT}
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="48px" />
+					<div className={classes.descriptionContainer}>
+						<div className={classes.descriptionText}>{DESCRIPTION_TEXT}</div>
 					</div>
 				</div>
-				<Spacer height="56px" />
 			</div>
 		</Desktop>
 	</div>
@@ -35,24 +36,23 @@ const HomePageBanner = ({ classes }) => (
 const styles = {
 	bannerDesktop: {
 		display: 'flex',
+		'flex-direction': 'column',
 		'align-items': 'center',
 		'justify-content': 'center',
-		height: '235px',
-		'background-color': '#DEA8E0',
-		'border-top': '4px solid #3D65F9',
-		'border-bottom': '4px solid #3D65F9',
-		color: '#3D65F9',
+		height: '675px',
+		'background-color': '#F5EDE6',
+		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '80px',
 		'line-height': '94px',
 		'letter-spacing': '-0.1px',
 		'text-align': 'center',
 	},
-	textContainer: {
+	descriptionContainer: {
 		display: 'grid',
 		'grid-template-columns': '20% 60% 20%',
 	},
-	otherServicesDescription: {
+	descriptionText: {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '24px',
