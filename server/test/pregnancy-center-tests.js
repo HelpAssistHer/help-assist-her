@@ -602,6 +602,104 @@ describe('PregnancyCenters', () => {
 		})
 	})
 
+	describe('/GET /api/pregnancy-centers/verify', () => {
+		it('should return a pregnancy center that has no verification data for prcName', async () => {
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				outOfBusiness: true,
+				prcName: 'No verification data',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {},
+			})
+
+			await mockAuthenticate()
+
+			const res = await chai
+				.request(server)
+				.get('/api/pregnancy-centers/verify')
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('outOfBusiness')
+			res.body.prcName.should.be.eql('No verification data')
+		})
+
+		it('should return a pregnancy center that was verified before 10-31-2018', async () => {
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				outOfBusiness: true,
+				prcName: 'Verified before 10-31-18',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2017-08-15'),
+						verified: true,
+					},
+				},
+			})
+
+			await mockAuthenticate()
+
+			const res = await chai
+				.request(server)
+				.get('/api/pregnancy-centers/verify')
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('outOfBusiness')
+			res.body.prcName.should.be.eql('Verified before 10-31-18')
+		})
+
+		it('should NOT return a pregnancy center that was verified after 10-31-2018', async () => {
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				outOfBusiness: true,
+				prcName: 'Verified after 10-31-18',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-12-01'),
+						verified: true,
+					},
+				},
+			})
+
+			await mockAuthenticate()
+
+			try {
+				await chai.request(server).get('/api/pregnancy-centers/verify')
+			} catch (err) {
+				assertError(err.response, 404, 'Not Found')
+			}
+		})
+	})
+
 	/*
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
