@@ -431,45 +431,8 @@ describe('PregnancyCenters', () => {
 		})
 	})
 
-	describe('/pregnancy-centers/near-me only returns a verified resource', () => {
-		it('the resource is verified after 10-31-18 so it should be returned', async () => {
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'Birthright of Albany',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await mockAuthenticate()
-			const res = await chai
-				.request(server)
-				.get(
-					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
-				)
-
-			res.should.have.status(200)
-			res.body.should.be.a('array')
-			res.body.length.should.be.eql(1)
-			res.body[0].prcName.should.be.eql('Birthright of Albany')
-		})
-
-		it('the resource is verified before 10-31-18 so it should NOT be returned', async () => {
+	describe('/pregnancy-centers/near-me', async () => {
+		it('the near-me endpoint should only return verified resources', async () => {
 			// Verified before 10-31-18
 			await PregnancyCenterModel.create({
 				address: {
