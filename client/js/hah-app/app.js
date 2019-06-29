@@ -24,6 +24,7 @@ class App extends Component {
 const styles = {
 	app: {
 		height: '100%',
+		margin: '0',
 	},
 }
 

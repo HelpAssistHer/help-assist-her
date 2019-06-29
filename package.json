@@ -8,7 +8,6 @@
 		"node": "10.4.0"
 	},
 	"scripts": {
-		"build": "NODE_ENV=production babel-node client/tools/build.js",
 		"build:html": "babel-node client/tools/build-html.js",
 		"clear-iv":
 			"NODE_ENV=localhost node ./server/scripts/clear-in-verification-field.js",
@@ -76,7 +75,7 @@
 		"passport-facebook-token": "^3.3.0",
 		"preact": "^6.4.0",
 		"preact-compat": "^3.9.3",
-		"ramda": "^0.25.0",
+		"ramda": "0.26.1",
 		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
 		"react-facebook-login": "^3.6.1",
@@ -85,6 +84,8 @@
 		"react-responsive": "^5.0.0",
 		"react-router-dom": "^4.1.1",
 		"react-router-tabs": "^1.2.0",
+		"react-tooltip": "^3.6.1",
+		"react-typeform-embed": "^0.2.0",
 		"redux": "^3.6.0",
 		"redux-form": "^7.1.2",
 		"redux-thunk": "^2.2.0"
