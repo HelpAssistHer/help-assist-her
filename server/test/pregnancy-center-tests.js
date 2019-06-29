@@ -431,7 +431,7 @@ describe('PregnancyCenters', () => {
 		})
 	})
 
-	describe('/pregnancy-centers/near-me', async () => {
+	describe('/pregnancy-centers/near-me', () => {
 		it('the near-me endpoint should only return verified resources', async () => {
 			// Verified before 10-31-18
 			await PregnancyCenterModel.create({
