@@ -45,7 +45,7 @@ router.get('/near-me', async (req, res) => {
 		const lat = req.query.lat || 42.6721989
 		const miles = req.query.miles || 5
 
-		const pregnancyCentersNearMe = await PregnancyCenterModel.find({
+		const locationQuery = {
 			'address.location': {
 				$nearSphere: {
 					$geometry: {
@@ -55,10 +55,22 @@ router.get('/near-me', async (req, res) => {
 					$maxDistance: miles * METERS_PER_MILE,
 				},
 			},
+		}
+
+		const outOfBusinessQuery = {
 			outOfBusiness: { $in: [null, false] },
-		})
-			.populate('primaryContactPerson')
-			.lean()
+		}
+
+		const fullQuery = _.merge(
+			locationQuery,
+			outOfBusinessQuery,
+			queries.fullyVerified,
+			queries.verifiedAfterOct31,
+		)
+
+		const pregnancyCentersNearMe = await PregnancyCenterModel.find(
+			fullQuery,
+		).lean()
 
 		if (pregnancyCentersNearMe.length <= 0) {
 			return res.boom.notFound(
