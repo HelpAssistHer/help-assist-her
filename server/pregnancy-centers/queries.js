@@ -16,10 +16,19 @@ module.exports = {
 		],
 	},
 	anything: {},
-	verificationBeforeOct31: {
-		'verifiedData.prcName.date': {
-			$lt: new Date('2018-10-31'),
-		},
+	verificationBeforeOct31orNone: {
+		$or: [
+			{
+				'verifiedData.prcName.date': {
+					$lt: new Date('2018-10-31'),
+				},
+			},
+			{
+				'verifiedData.prcName.date': {
+					$exists: false,
+				},
+			},
+		],
 	},
 	verifiedAfterOct31: {
 		'verifiedData.prcName.date': {

@@ -1,18 +1,14 @@
 const router = require('express').Router()
-
 const _ = require('lodash')
 
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-
 const {
 	createPregnancyCenter,
 	updatePregnancyCenter,
 	updatePregnancyCenterDoNotList,
 	updatePregnancyCenterOutOfBusiness,
 } = require('../../util/actions')
-
 const queries = require('../../pregnancy-centers/queries')
-
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
 /*
@@ -93,7 +89,12 @@ router.get('/verify', isLoggedInAPI, async (req, res) => {
 
 		// an array of javascript objects
 		const pregnancyCenters = await PregnancyCenterModel.aggregate([
-			{ $match: _.merge(queries.verificationBeforeOct31, notInVerification) },
+			{
+				$match: _.merge(
+					queries.verificationBeforeOct31orNone,
+					notInVerification,
+				),
+			},
 			{ $sample: { size: 1 } },
 		])
 
