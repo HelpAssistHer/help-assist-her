@@ -8,8 +8,8 @@ const mongoose = require('mongoose')
 const P = require('bluebird')
 const stringify = require('csv-stringify')
 
-const pregnancyCenterServices = require('../pregnancy-centers/pregnancy-center-services')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const pregnancyCenterServices = require('../../pregnancy-centers/pregnancy-center-services')
+const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
 
 mongoose.Promise = require('bluebird')
 const log = new Log('info')
