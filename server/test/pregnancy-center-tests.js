@@ -508,7 +508,6 @@ describe('PregnancyCenters', () => {
 					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
 				)
 
-			console.log('prc name', res.body[0].prcName)
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
