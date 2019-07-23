@@ -6,11 +6,11 @@ import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
 const Header = ({ classes }) => {
-	const titleText1 = 'Empower Women'
+	const titleText1 = 'Empowering Women'
 	const titleText2 = 'with Options.'
 
 	const descriptionText =
-		"Bringing reliable and comprehensive women's healthcare resources to your fingertips."
+		'Verified and affordable women’s healthcare and wellness resources at your fingertips, right when you need them most. We take the headache out of finding care you can trust.'
 
 	return (
 		<div>
@@ -19,7 +19,7 @@ const Header = ({ classes }) => {
 				<div className={classes.headerContainerPhone}>
 					<img
 						className={classes.imagePhone}
-						src="../img/close-friends.jpg"
+						src="../img/close-friends.png"
 						alt="Two Close Friends"
 					/>
 
@@ -53,7 +53,7 @@ const Header = ({ classes }) => {
 
 					<img
 						className={classes.imageTablet}
-						src="../img/close-friends.jpg"
+						src="../img/close-friends.png"
 						alt="Two Close Friends"
 					/>
 				</div>
@@ -75,7 +75,7 @@ const Header = ({ classes }) => {
 
 					<img
 						className={classes.imageDesktop}
-						src="../img/close-friends.jpg"
+						src="../img/close-friends.png"
 						alt="Two Close Friends"
 					/>
 				</div>
@@ -148,8 +148,8 @@ const styles = {
 	titleTextDesktop: {
 		'max-width': '450px',
 		'font-family': 'hah-regular',
-		'font-size': '70px',
-		'line-height': '80px',
+		'font-size': '60px', // changed this
+		'line-height': '70px', // changed this
 	},
 	descriptionTextPhone: {
 		// padding: '0px 48px 132px 48px',
@@ -164,10 +164,10 @@ const styles = {
 		'line-height': '29px',
 	},
 	descriptionTextDesktop: {
-		'max-width': '40vw',
-		'font-family': 'hah-regular',
-		'font-size': '25px',
-		'line-height': '32px',
+		'max-width': '30vw', // changed this
+		'font-family': 'hah-light',
+		'font-size': '18px', // changed this
+		'line-height': '26px', // changed this
 	},
 	imagePhone: {
 		// height: '100%',
