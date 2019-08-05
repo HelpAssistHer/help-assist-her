@@ -68,6 +68,7 @@ const createHistories = async (
 		_id,
 	])
 	const savedP = _.map(omitKeys(newDocObj), (value, key) => {
+		console.log(key, value)
 		createHistoryFilled(key, value, oldDocObj[key])
 	})
 
