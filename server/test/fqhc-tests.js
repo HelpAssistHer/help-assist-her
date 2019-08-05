@@ -248,6 +248,7 @@ describe('FQHCs', () => {
 				fqhcId: oldFQHC._id,
 			})
 			const fields = _.map(histories, 'field')
+			console.log(fields)
 			fields.should.have.members([
 				'fqhcName',
 				'phone',
