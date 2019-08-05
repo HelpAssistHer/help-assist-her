@@ -248,32 +248,6 @@ describe('FQHCs', () => {
 				fqhcId: oldFQHC._id,
 			})
 			const fields = _.map(histories, 'field')
-			// [ 'address', 'phone', 'services', 'website' ]
-			// missing fqhcName, verifiedData
-
-			// second time:
-			// [ 'fqhcName', 'phone', 'website', 'verifiedData', 'address' ]
-			// missing verifiedData
-
-			console.log(fields)
-
-			// do it again
-			const histories2 = await FQHCHistoryModel.find({
-				fqhcId: oldFQHC._id,
-			})
-			const fields2 = _.map(histories, 'field')
-
-			console.log(fields2)
-
-			fields2.should.have.members([
-				'fqhcName',
-				'phone',
-				'website',
-				'services',
-				'verifiedData',
-				'address',
-			])
-
 			fields.should.have.members([
 				'fqhcName',
 				'phone',
