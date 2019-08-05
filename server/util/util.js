@@ -38,6 +38,8 @@ const createHistory = (
 	newValue,
 	oldValue,
 ) => {
+	console.log('----- old:', oldValue, 'new', newValue)
+
 	// don't create a history if no change
 	if (isEqualOmit(newValue, oldValue)) {
 		return null
