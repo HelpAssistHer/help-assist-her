@@ -42,8 +42,11 @@ const createHistory = (
 
 	// don't create a history if no change
 	if (isEqualOmit(newValue, oldValue)) {
+		console.log('--isEqualOmit old:', oldValue, 'new', newValue)
 		return null
 	}
+
+	console.log('--notEqualOmit old:', oldValue, 'new', newValue)
 	// make a separate history document
 	const historyObj = new historyModel({
 		[idName]: _id,
@@ -69,9 +72,9 @@ const createHistories = async (
 		userId,
 		_id,
 	])
-	const savedP = _.map(omitKeys(newDocObj), (value, key) => {
+	const savedP = _.map(omitKeys(newDocObj), async (value, key) => {
 		console.log(key, value)
-		createHistoryFilled(key, value, oldDocObj[key])
+		await createHistoryFilled(key, value, oldDocObj[key])
 	})
 
 	// iterate over keys and values and create histories
