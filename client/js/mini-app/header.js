@@ -158,10 +158,10 @@ const styles = {
 		'line-height': '24px',
 	},
 	descriptionTextTablet: {
-		'max-width': '40vw',
-		'font-family': 'hah-regular',
-		'font-size': '22px',
-		'line-height': '29px',
+		'max-width': '30vw', // changed this
+		'font-family': 'hah-light', // changed this
+		'font-size': '18px', // changed this
+		'line-height': '26px', // changed this
 	},
 	descriptionTextDesktop: {
 		'max-width': '30vw', // changed this
