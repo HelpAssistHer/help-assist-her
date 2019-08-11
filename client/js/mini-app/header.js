@@ -51,13 +51,11 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<div className={classes.test}>
-						<img
-							className={classes.imageTablet}
-							src="../img/julia-with-flowers.jpg"
-							alt="Woman with flowers"
-						/>
-					</div>
+					<img
+						className={classes.imageTablet}
+						src="../img/julia-with-flowers.jpg"
+						alt="Woman with flowers"
+					/>
 				</div>
 			</Tablet>
 
@@ -75,13 +73,11 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<div className={classes.test}>
-						<img
-							className={classes.imageDesktop}
-							src="../img/julia-with-flowers.jpg"
-							alt="Woman with flowers"
-						/>
-					</div>
+					<img
+						className={classes.imageDesktop}
+						src="../img/julia-with-flowers.jpg"
+						alt="Woman with flowers"
+					/>
 				</div>
 			</Desktop>
 		</div>
@@ -89,11 +85,6 @@ const Header = ({ classes }) => {
 }
 
 const styles = {
-	test: {
-		'background-color': 'red',
-		width: '50%',
-		height: '100%',
-	},
 	headerContainerPhone: {
 		display: 'flex',
 		'text-align': 'center',
@@ -102,7 +93,7 @@ const styles = {
 		'margin-top': '55px',
 	},
 	headerContainerTablet: {
-		height: '650px',
+		height: '68vh',
 		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'flex',
 		'align-items': 'center',
@@ -111,7 +102,7 @@ const styles = {
 		overflow: 'hidden',
 	},
 	headerContainerDesktop: {
-		height: '650px',
+		height: '85vh',
 		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'flex',
 		'align-items': 'center',
@@ -179,14 +170,15 @@ const styles = {
 		'line-height': '26px', // changed this
 	},
 	imagePhone: {
-		// height: '100%',
 		width: '100%',
 	},
 	imageTablet: {
-		height: '100%',
+		width: '50%',
+		'object-fit': 'contain',
 	},
 	imageDesktop: {
-		height: '100%',
+		width: '50%',
+		'object-fit': 'contain',
 	},
 }
 
