@@ -51,11 +51,13 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<img
-						className={classes.imageTablet}
-						src="../img/close-friends.png"
-						alt="Two Close Friends"
-					/>
+					<div className={classes.test}>
+						<img
+							className={classes.imageTablet}
+							src="../img/julia-with-flowers.jpg"
+							alt="Woman with flowers"
+						/>
+					</div>
 				</div>
 			</Tablet>
 
@@ -73,11 +75,13 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<img
-						className={classes.imageDesktop}
-						src="../img/close-friends.png"
-						alt="Two Close Friends"
-					/>
+					<div className={classes.test}>
+						<img
+							className={classes.imageDesktop}
+							src="../img/julia-with-flowers.jpg"
+							alt="Woman with flowers"
+						/>
+					</div>
 				</div>
 			</Desktop>
 		</div>
@@ -85,6 +89,11 @@ const Header = ({ classes }) => {
 }
 
 const styles = {
+	test: {
+		'background-color': 'red',
+		width: '50%',
+		height: '100%',
+	},
 	headerContainerPhone: {
 		display: 'flex',
 		'text-align': 'center',
@@ -174,10 +183,10 @@ const styles = {
 		width: '100%',
 	},
 	imageTablet: {
-		width: '50%',
+		height: '100%',
 	},
 	imageDesktop: {
-		width: '50%',
+		height: '100%',
 	},
 }
 
