@@ -60,11 +60,12 @@ const ResourceCard = ({ classes, resource }) => {
 
 const styles = {
 	resourceCardRoot: {
-		border: '20px solid rgb(93, 93, 93, .08)',
+		padding: '8px 0px',
 	},
 	resourceCardBorder: {
 		border: '2px solid #3d65f9',
 		'border-radius': '2px',
+		'background-color': '#FFFFFF',
 	},
 	resourceName: {
 		margin: '24px 0px 0px 30px',
