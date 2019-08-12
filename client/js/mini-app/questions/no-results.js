@@ -3,7 +3,7 @@ import injectSheet from 'react-jss'
 import { Link } from 'react-router-dom'
 
 import Button from '../components/button'
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import Spacer from '../../components/spacer'
 
 const noResultsMessage = 'No results match your search.'
@@ -20,6 +20,15 @@ const NoResults = ({ classes }) => (
 				</Link>
 			</div>
 		</Phone>
+
+		<Tablet>
+			<div className={classes.noResultsDesktop}>
+				{noResultsMessage}
+				<Link to="/mini-app">
+					<Button buttonText={buttonText} />
+				</Link>
+			</div>
+		</Tablet>
 
 		<Desktop>
 			<div className={classes.noResultsDesktop}>
