@@ -19,11 +19,11 @@ const Header = ({ classes }) => {
 				<div className={classes.headerContainerPhone}>
 					<img
 						className={classes.imagePhone}
-						src="../img/close-friends.png"
+						src="../img/julia-with-flowers.jpg"
 						alt="Two Close Friends"
 					/>
 
-					<div className={classes.headerTextPhone}>
+					<div className={classes.headerText}>
 						<div className={classes.titleTextPhone}>
 							{titleText1}
 							<br />
@@ -39,7 +39,7 @@ const Header = ({ classes }) => {
 
 			<Tablet>
 				<div className={classes.headerContainerTablet}>
-					<div className={classes.headerTextTablet}>
+					<div className={classes.headerText}>
 						<div className={classes.titleTextTablet}>
 							{titleText1}
 							<br />
@@ -61,7 +61,7 @@ const Header = ({ classes }) => {
 
 			<Desktop>
 				<div className={classes.headerContainerDesktop}>
-					<div className={classes.headerTextDesktop}>
+					<div className={classes.headerText}>
 						<div className={classes.titleTextDesktop}>
 							{titleText1}
 							<br />
@@ -110,22 +110,7 @@ const styles = {
 		'background-color': '#016454',
 		overflow: 'hidden',
 	},
-	// todo combine all these
-	headerTextPhone: {
-		flex: '1 1 0',
-		display: 'flex',
-		'flex-direction': 'column',
-		'align-items': 'center',
-		color: '#F5EDE6',
-	},
-	headerTextTablet: {
-		flex: '1 1 0',
-		display: 'flex',
-		'flex-direction': 'column',
-		'align-items': 'center',
-		color: '#F5EDE6',
-	},
-	headerTextDesktop: {
+	headerText: {
 		flex: '1 1 0',
 		display: 'flex',
 		'flex-direction': 'column',
