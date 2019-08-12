@@ -118,7 +118,6 @@ const styles = {
 		color: '#F5EDE6',
 	},
 	titleTextPhone: {
-		// padding: '21px 48px 0px 48px',
 		'font-family': 'hah-light',
 		'font-size': '40px',
 		'letter-spacing': '-0.5px',
@@ -133,26 +132,25 @@ const styles = {
 	titleTextDesktop: {
 		'max-width': '450px',
 		'font-family': 'hah-regular',
-		'font-size': '60px', // changed this
-		'line-height': '70px', // changed this
+		'font-size': '60px',
+		'line-height': '70px',
 	},
 	descriptionTextPhone: {
-		// padding: '0px 48px 132px 48px',
 		'font-family': 'hah-regular',
 		'font-size': '18px',
 		'line-height': '24px',
 	},
 	descriptionTextTablet: {
-		'max-width': '30vw', // changed this
-		'font-family': 'hah-light', // changed this
-		'font-size': '18px', // changed this
-		'line-height': '26px', // changed this
+		'max-width': '30vw',
+		'font-family': 'hah-light',
+		'font-size': '18px',
+		'line-height': '26px',
 	},
 	descriptionTextDesktop: {
-		'max-width': '30vw', // changed this
+		'max-width': '30vw',
 		'font-family': 'hah-light',
-		'font-size': '18px', // changed this
-		'line-height': '26px', // changed this
+		'font-size': '18px',
+		'line-height': '26px',
 	},
 	imagePhone: {
 		width: '100%',
