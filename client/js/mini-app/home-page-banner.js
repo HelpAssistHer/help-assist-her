@@ -1,17 +1,16 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
 const TITLE_1_TEXT = 'Always there.'
 const TITLE_2_TEXT = 'Just for you.'
 const DESCRIPTION_TEXT =
-	"Google just isn't cutting it. Whether you're home or traveling, need " +
-	'care for yourself or are doing some research for a loved one, we want ' +
-	'to make sure you get access to reliable resources. Starting with pregnancy ' +
-	'and basic medical care is just that, a start. Our beta will launch in New ' +
-	"York, but after that, we're coming to you."
+	'Sorting through google search results just isn’t cutting it. Whether you’re home or traveling, ' +
+	'need care yourself or are doing some research for a loved one, we want to make sure you get ' +
+	'access to trustworthy healthcare resources. Starting with resource information for pregnancy and ' +
+	'basic medical care is just that, a start. Our beta site will launch in New York, but after that, we’re coming to you.'
 
 const HomePageBanner = ({ classes }) => (
 	<div>
@@ -32,6 +31,24 @@ const HomePageBanner = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<Tablet>
+			<div>
+				<div className={classes.bannerDesktop}>
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="48px" />
+					<div className={classes.descriptionContainerDesktop}>
+						<div className={classes.descriptionTextDesktop}>
+							{DESCRIPTION_TEXT}
+						</div>
+					</div>
+				</div>
+			</div>
+		</Tablet>
 
 		<Desktop>
 			<div>
