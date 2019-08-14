@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import Spacer from '../../components/spacer'
 
 const ResourceCard = ({ classes, resource }) => {
@@ -26,6 +26,30 @@ const ResourceCard = ({ classes, resource }) => {
 					</div>
 				</div>
 			</Phone>
+
+			<Tablet>
+				<div className={classes.cardContainerDesktop}>
+					<div className={classes.cardDesktop}>
+						<div className={classes.resourceNameDesktop}>{nameOfResource}</div>
+						<Spacer height="30px" />
+						<a
+							className={classes.phoneNumberDesktop}
+							href={`tel:${phoneNumber}`}
+						>
+							{phoneNumber}
+						</a>
+						<Spacer height="12px" />
+						<div className={classes.additionalInfoDesktop}>
+							{additionalInfo}
+						</div>
+						<div className={classes.websiteDesktop}>
+							<a href={website} target="_blank" rel="noopener noreferrer">
+								{website}
+							</a>
+						</div>
+					</div>
+				</div>
+			</Tablet>
 
 			<Desktop>
 				<div className={classes.cardContainerDesktop}>
@@ -122,6 +146,7 @@ const styles = {
 		'font-family': 'hah-regular',
 		'font-size': '24px',
 		'line-height': '27px',
+		'overflow-wrap': 'break-word',
 	},
 }
 

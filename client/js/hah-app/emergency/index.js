@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 import Spacer from '../../components/spacer'
 import Footer from '../../mini-app/components/footer'
 import LogoAndNavigation from '../../mini-app/logo-and-navigation'
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import ListOfResources from './list-of-resources'
 import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
 
@@ -46,6 +46,29 @@ const Emergency = ({ classes }) => (
 			</div>
 		</Phone>
 
+		<Tablet>
+			<div>
+				<div className={classes.infoSectionDesktop}>
+					<Spacer height="60px" />
+					<EmergencyPhoneIcon height={82} width={82} />
+					<Spacer height="44px" />
+					<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
+					<Spacer height="44px" />
+					<div className={classes.bodyDesktop}>{BODY_TEXT}</div>
+					<Spacer height="77px" />
+				</div>
+				<div className={classes.call911SectionDesktop}>
+					<Spacer height="45px" />
+					<div className={classes.textContainer}>
+						{CALL_EMERGENCY_TEXT}&nbsp;
+						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
+						{PERIOD}
+					</div>
+					<Spacer height="45px" />
+				</div>
+			</div>
+		</Tablet>
+
 		<Desktop>
 			<div>
 				<div className={classes.infoSectionDesktop}>
@@ -74,6 +97,12 @@ const Emergency = ({ classes }) => (
 				<ListOfResources />
 			</div>
 		</Phone>
+
+		<Tablet>
+			<div className={classes.listOfResourcesContainerDesktop}>
+				<ListOfResources />
+			</div>
+		</Tablet>
 
 		<Desktop>
 			<div className={classes.listOfResourcesContainerDesktop}>
