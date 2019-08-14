@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import Spacer from '../../components/spacer'
 import LogoBetaWhite from '../../components/icons/icon-components/logo-beta-white'
 import SocialMedia from './social-media'
@@ -20,6 +20,31 @@ const Footer = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<Tablet>
+			<div>
+				<div className={classes.footerRootDesktop}>
+					<div>
+						<LogoBetaWhite height={25} width={160} />
+						<Spacer height="19px" />
+						<div className={classes.copyrightText}>&copy; {COPYRIGHT_TEXT}</div>
+					</div>
+
+					<div className={classes.links}>
+						<Link to="/about" className={classes.navigationLink}>
+							About
+						</Link>
+						<Link to="/feedback" className={classes.navigationLink}>
+							Feedback
+						</Link>
+					</div>
+
+					<div className={classes.socialMediaFormatting}>
+						<SocialMedia iconSize={49} spacerWidth="19px" />
+					</div>
+				</div>
+			</div>
+		</Tablet>
 
 		<Desktop>
 			<div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 import Button from './components/button'
 import Input from './components/input'
 import Spacer from '../components/spacer'
@@ -16,6 +16,9 @@ class MiniAppFormView extends Component {
 				<Phone>
 					<Spacer height="13px" />
 				</Phone>
+				<Tablet>
+					<Spacer height="92px" />
+				</Tablet>
 				<Desktop>
 					<Spacer height="92px" />
 				</Desktop>
@@ -30,6 +33,9 @@ class MiniAppFormView extends Component {
 				<Phone>
 					<Spacer height="25px" />
 				</Phone>
+				<Tablet>
+					<Spacer height="93px" />
+				</Tablet>
 				<Desktop>
 					<Spacer height="93px" />
 				</Desktop>

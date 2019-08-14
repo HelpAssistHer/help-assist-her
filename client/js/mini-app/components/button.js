@@ -2,7 +2,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import classnames from 'classnames'
 
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 
 const Button = ({ classes, onClick, buttonText }) => {
 	return (
@@ -19,6 +19,21 @@ const Button = ({ classes, onClick, buttonText }) => {
 						</button>
 					</div>
 				</Phone>
+
+				<Tablet>
+					<div>
+						<button
+							className={classnames(
+								classes.buttonCommon,
+								classes.buttonDesktop,
+							)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
+				</Tablet>
 
 				<Desktop>
 					<div>
