@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
@@ -33,6 +33,24 @@ const Header = ({ classes }) => {
 					</div>
 				</div>
 			</Phone>
+
+			<Tablet>
+				<div className={classes.headerContainerDesktop}>
+					<div className={classes.headerTextDesktop}>
+						<div className={classes.titleTextDesktop}>{titleText}</div>
+						<Spacer height="40px" />
+						<div className={classes.descriptionTextDesktop}>
+							{descriptionText}
+						</div>
+					</div>
+
+					<img
+						className={classes.imageDesktop}
+						src="../img/two-women-hugging.jpg"
+						alt="Two Close Friends"
+					/>
+				</div>
+			</Tablet>
 
 			<Desktop>
 				<div className={classes.headerContainerDesktop}>

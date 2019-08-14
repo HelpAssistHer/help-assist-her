@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import Spacer from '../../components/spacer'
 import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
 import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 
 const resources = [
 	{
@@ -33,6 +33,10 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 		<Phone>
 			<Spacer height="26px" />
 		</Phone>
+
+		<Tablet>
+			<Spacer height="57px" />
+		</Tablet>
 
 		<Desktop>
 			<Spacer height="57px" />
@@ -86,6 +90,21 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 								</div>
 							</button>
 						</Phone>
+
+						<Tablet>
+							<button
+								className={resourceBoxStyleDesktop}
+								onClick={() => onResourceChange(resource.id)}
+							>
+								<div className={classes.flex}>
+									{iconsDesktop[index]}
+									<Spacer height="20px" />
+									<div className={classes.resourceNameDesktop}>
+										{resource.name}
+									</div>
+								</div>
+							</button>
+						</Tablet>
 
 						<Desktop>
 							<button
