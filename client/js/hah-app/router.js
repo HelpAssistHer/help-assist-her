@@ -12,6 +12,7 @@ import MiniApp from '../mini-app'
 import ResourceList from '../mini-app/questions/resource-list'
 import About from './about'
 import Feedback from './feedback'
+import Emergency from './emergency'
 import Menu from '../mini-app/components/menu'
 import { formTypes } from '../verification-portal/constants'
 
@@ -24,6 +25,7 @@ const HahRouter = () => {
 				<Route exact path="/about" component={About} />
 				<Route exact path="/feedback" component={Feedback} />
 				<Route exact path="/menu" component={Menu} />
+				<Route exact path="/emergency" component={Emergency} />
 				<Route
 					exact
 					path="/mini-app/pregnancy-resource-centers"
