@@ -321,6 +321,8 @@ describe('PregnancyCenters', () => {
 			res.body.phone.should.equal('+15184382978')
 			res.body.website.should.equal('http://www.birthright.org')
 			res.body.verifiedData.phone.verified.should.equal(true)
+
+			// why overwrite the date?
 			res.body.verifiedData.phone.date.should.not.equal(
 				'2017-04-16T23:33:17.220Z',
 			)
@@ -354,6 +356,15 @@ describe('PregnancyCenters', () => {
 				phone: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-11-15'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
 			})
 
 			// copy of above, but outOfBusiness
@@ -371,6 +382,15 @@ describe('PregnancyCenters', () => {
 				phone: '+15184382978',
 				website: 'http://www.birthright.org',
 				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-11-15'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
 			})
 
 			await PregnancyCenterModel.create({
@@ -386,6 +406,15 @@ describe('PregnancyCenters', () => {
 				email: 'thebridgetolife@verizon.net',
 				website: 'http://www.thebridgetolife.org',
 				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-11-15'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
 			})
 
 			await mockAuthenticate()
@@ -398,8 +427,91 @@ describe('PregnancyCenters', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('array')
 			res.body.length.should.be.eql(1)
-			res.body[0].prcName.should.equal('Birthright of Albany')
-			res.body[0].primaryContactPerson.firstName.should.equal('Joanna')
+			res.body[0].prcName.should.be.eql('Birthright of Albany')
+		})
+	})
+
+	describe('/pregnancy-centers/near-me', () => {
+		it('the near-me endpoint should only return verified resources', async () => {
+			// Verified before 10-31-18
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				prcName: 'Verified before 10-31-18',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-08-01'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
+			})
+
+			// Verified after 10-31-18
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				prcName: 'Verified after 10-31-18',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-11-01'),
+						verified: true,
+					},
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
+			})
+
+			// No verification data for prcName
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				prcName: 'No verification data for prcName',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					address: { verified: true },
+					phone: { verified: true },
+					website: { verified: true },
+				},
+			})
+
+			await mockAuthenticate()
+			const res = await chai
+				.request(server)
+				.get(
+					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
+				)
+
+			res.should.have.status(200)
+			res.body.should.be.a('array')
+			res.body.length.should.be.eql(1)
+			res.body[0].prcName.should.be.eql('Verified after 10-31-18')
 		})
 	})
 
@@ -486,6 +598,104 @@ describe('PregnancyCenters', () => {
 			res.body.should.have.property('prcName')
 			res.body.should.have.property('outOfBusiness')
 			res.body.primaryContactPerson.should.have.property('firstName')
+		})
+	})
+
+	describe('/GET /api/pregnancy-centers/verify', () => {
+		it('should return a pregnancy center that has no verification data for prcName', async () => {
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				outOfBusiness: true,
+				prcName: 'No verification data',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {},
+			})
+
+			await mockAuthenticate()
+
+			const res = await chai
+				.request(server)
+				.get('/api/pregnancy-centers/verify')
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('outOfBusiness')
+			res.body.prcName.should.be.eql('No verification data')
+		})
+
+		it('should return a pregnancy center that was verified before 10-31-2018', async () => {
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				outOfBusiness: true,
+				prcName: 'Verified before 10-31-18',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2017-08-15'),
+						verified: true,
+					},
+				},
+			})
+
+			await mockAuthenticate()
+
+			const res = await chai
+				.request(server)
+				.get('/api/pregnancy-centers/verify')
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('outOfBusiness')
+			res.body.prcName.should.be.eql('Verified before 10-31-18')
+		})
+
+		it('should NOT return a pregnancy center that was verified after 10-31-2018', async () => {
+			await PregnancyCenterModel.create({
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				outOfBusiness: true,
+				prcName: 'Verified after 10-31-18',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				verifiedData: {
+					prcName: {
+						date: new Date('2018-12-01'),
+						verified: true,
+					},
+				},
+			})
+
+			await mockAuthenticate()
+
+			try {
+				await chai.request(server).get('/api/pregnancy-centers/verify')
+			} catch (err) {
+				assertError(err.response, 404, 'Not Found')
+			}
 		})
 	})
 
@@ -764,14 +974,14 @@ describe('PregnancyCenters', () => {
 			try {
 				await chai
 					.request(server)
-					.put('/api/pregnancy-centers/' + oldPCObj._id)
+					.put(`/api/pregnancy-centers/${oldPCObj._id}`)
 					.send(newValues)
 			} catch (err) {
 				assertError(
 					err.response,
 					400,
 					'Bad Request',
-					'Cannot edit a outOfBusiness Pregnancy Center',
+					'Cannot edit an outOfBusiness FQHC or PregnancyCenter',
 				)
 			}
 		})
@@ -1002,7 +1212,7 @@ describe('PregnancyCenters', () => {
 			})
 			await primaryContactPerson.save()
 
-			const initialPRCData = {
+			const initialPCData = {
 				address: {
 					line1: '586 Central Ave.\nAlbany, NY 12206',
 					location: {
@@ -1016,7 +1226,7 @@ describe('PregnancyCenters', () => {
 				website: 'http://www.birthright.org',
 				services: {},
 			}
-			let oldPCObj = await PregnancyCenterModel.create(initialPRCData)
+			let oldPCObj = await PregnancyCenterModel.create(initialPCData)
 
 			// make sure one person was created
 			const people = await PersonModel.find({})
@@ -1150,7 +1360,7 @@ describe('PregnancyCenters', () => {
  * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
  */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business', () => {
-		it('it should return a single pregnancy center with updated outOfBusiness', async () => {
+		it('it should return a single pregnancy center with updated outOfBusiness with authentication', async () => {
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
 				lastName: 'Smith',
@@ -1182,7 +1392,7 @@ describe('PregnancyCenters', () => {
 			await mockAuthenticate()
 			const res = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: false })
 
 			res.should.have.status(200)
@@ -1204,7 +1414,6 @@ describe('PregnancyCenters', () => {
 				pregnancyCenterId: pc._id,
 			})
 
-			log.info(histories)
 			const fields = _.map(histories, 'field')
 			fields.should.have.members(['outOfBusiness'])
 
@@ -1212,7 +1421,7 @@ describe('PregnancyCenters', () => {
 
 			const res2 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res2.should.have.status(200)
@@ -1230,7 +1439,7 @@ describe('PregnancyCenters', () => {
 
 			const res3 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res3.should.have.status(200)
@@ -1282,7 +1491,7 @@ describe('PregnancyCenters', () => {
 			await mockAuthenticate()
 			const res = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: false })
 
 			res.should.have.status(200)
@@ -1311,7 +1520,7 @@ describe('PregnancyCenters', () => {
 
 			const res2 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res2.should.have.status(200)
@@ -1329,7 +1538,7 @@ describe('PregnancyCenters', () => {
 
 			const res3 = await chai
 				.request(server)
-				.put('/api/pregnancy-centers/' + pc._id + '/out-of-business')
+				.put(`/api/pregnancy-centers/${pc._id}/out-of-business`)
 				.send({ outOfBusiness: true })
 
 			res3.should.have.status(200)
