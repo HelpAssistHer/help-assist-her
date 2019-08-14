@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Footer from '../mini-app/components/footer'
-import { Desktop, Phone } from '../components/breakpoints'
+import { Desktop, Tablet, Phone } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
 const TITLE_TEXT = "We're listening."
@@ -39,6 +39,23 @@ const Feedback = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<Tablet>
+			<div className={classes.feedbackPageContainerDesktop}>
+				<Spacer height="60px" />
+				<div className={classes.titleTextDesktop}>{TITLE_TEXT}</div>
+				<Spacer height="32px" />
+				<div className={classes.gridContainerDesktop}>
+					<div className={classes.bodyTextDesktop}>
+						{BODY_TEXT_1}
+						<Spacer height="32px" />
+						{BODY_TEXT_2}
+						<Spacer height="32px" />
+						<div className={classes.blueText}>{BODY_TEXT_3}</div>
+					</div>
+				</div>
+			</div>
+		</Tablet>
 
 		<Desktop>
 			<div className={classes.feedbackPageContainerDesktop}>
