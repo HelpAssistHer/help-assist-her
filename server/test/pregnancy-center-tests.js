@@ -532,7 +532,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /GET /api/pregnancy-centers/verify route with authentication
 	 */
 	describe('/GET /api/pregnancy-centers/verify', () => {
-		it.skip('it should return a single pregnancy center where verifiedData.address is null', async () => {
+		it('it should return a single pregnancy center where verifiedData.address is null', async () => {
 			const primaryContactPerson = new PersonModel({
 				firstName: 'Joanna',
 				lastName: 'Smith',
