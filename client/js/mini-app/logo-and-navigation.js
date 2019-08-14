@@ -74,6 +74,7 @@ const styles = {
 		'background-color': '#FFFFFF',
 		'min-width': '90vw',
 		'border-bottom': '1px solid #3D65F9',
+		'z-index': 1,
 	},
 	logoDesktop: {
 		position: 'fixed',
@@ -86,6 +87,7 @@ const styles = {
 		'background-color': '#FFFFFF',
 		'min-width': '90vw',
 		'border-bottom': '4px solid #3D65F9',
+		'z-index': 1,
 	},
 	hamburgerMenuPhone: {
 		cursor: 'pointer',
