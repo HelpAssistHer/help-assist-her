@@ -1,56 +1,121 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
-const OTHER_SERVICES_DESCRIPTION_TEXT =
-	'We’ve got your back. Among thousands of internet ' +
-	'search results, pamphlets, handouts, even old school phone books, we’ve found trustworthy ' +
-	'non-violent and holistic healthcare providers.'
+const TITLE_1_TEXT = 'Always there.'
+const TITLE_2_TEXT = 'Just for you.'
+const DESCRIPTION_TEXT =
+	'Sorting through google search results just isn’t cutting it. Whether you’re home or traveling, ' +
+	'need care yourself or are doing some research for a loved one, we want to make sure you get ' +
+	'access to trustworthy healthcare resources. Starting with resource information for pregnancy and ' +
+	'basic medical care is just that, a start. Our beta site will launch in New York, but after that, we’re coming to you.'
 
 const HomePageBanner = ({ classes }) => (
 	<div>
+		<Phone>
+			<div>
+				<div className={classes.bannerPhone}>
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="26px" />
+					<div className={classes.descriptionContainerPhone}>
+						<div className={classes.descriptionTextPhone}>
+							{DESCRIPTION_TEXT}
+						</div>
+					</div>
+				</div>
+			</div>
+		</Phone>
+
+		<Tablet>
+			<div>
+				<div className={classes.bannerDesktop}>
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="48px" />
+					<div className={classes.descriptionContainerDesktop}>
+						<div className={classes.descriptionTextDesktop}>
+							{DESCRIPTION_TEXT}
+						</div>
+					</div>
+				</div>
+			</div>
+		</Tablet>
+
 		<Desktop>
 			<div>
 				<div className={classes.bannerDesktop}>
-					Always there.
-					<br />
-					Just for you.
-				</div>
-				<Spacer height="72px" />
-				<div className={classes.textContainer}>
-					<div className={classes.otherServicesDescription}>
-						{OTHER_SERVICES_DESCRIPTION_TEXT}
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="48px" />
+					<div className={classes.descriptionContainerDesktop}>
+						<div className={classes.descriptionTextDesktop}>
+							{DESCRIPTION_TEXT}
+						</div>
 					</div>
 				</div>
-				<Spacer height="56px" />
 			</div>
 		</Desktop>
 	</div>
 )
 
 const styles = {
-	bannerDesktop: {
+	bannerPhone: {
 		display: 'flex',
+		'flex-direction': 'column',
 		'align-items': 'center',
 		'justify-content': 'center',
-		height: '235px',
-		'background-color': '#DEA8E0',
-		'border-top': '4px solid #3D65F9',
-		'border-bottom': '4px solid #3D65F9',
-		color: '#3D65F9',
+		height: '328px',
+		'background-color': '#F5EDE6',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '30px',
+		'line-height': '33px',
+		'text-align': 'center',
+	},
+	bannerDesktop: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'justify-content': 'center',
+		height: '675px',
+		'background-color': '#F5EDE6',
+		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '80px',
 		'line-height': '94px',
 		'letter-spacing': '-0.1px',
 		'text-align': 'center',
 	},
-	textContainer: {
+	descriptionContainerPhone: {
+		display: 'grid',
+		'grid-template-columns': '10% 80% 10%',
+	},
+	descriptionContainerDesktop: {
 		display: 'grid',
 		'grid-template-columns': '20% 60% 20%',
 	},
-	otherServicesDescription: {
+	descriptionTextPhone: {
+		color: 'rgba(0,0,0,0.95)',
+		'font-family': 'hah-regular',
+		'font-size': '14px',
+		'line-height': '20px',
+		'text-align': 'center',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+	},
+	descriptionTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '24px',

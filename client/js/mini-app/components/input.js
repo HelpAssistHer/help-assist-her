@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 
 const Input = ({ classes, input, type, placeholder }) => {
 	return (
@@ -16,6 +16,17 @@ const Input = ({ classes, input, type, placeholder }) => {
 					/>
 				</div>
 			</Phone>
+
+			<Tablet>
+				<div className={classes.borderDesktop}>
+					<input
+						className={classes.inputDesktop}
+						type={type}
+						placeholder={placeholder}
+						{...input}
+					/>
+				</div>
+			</Tablet>
 
 			<Desktop>
 				<div className={classes.borderDesktop}>
