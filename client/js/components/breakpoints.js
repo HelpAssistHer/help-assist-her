@@ -8,9 +8,11 @@ const TABLET_MAX = 1023
 const DESKTOP_MIN = 1024
 
 const Desktop = props => <Responsive {...props} minWidth={DESKTOP_MIN} />
+
 const Tablet = props => (
 	<Responsive {...props} minWidth={TABLET_MIN} maxWidth={TABLET_MAX} />
 )
+
 const Phone = props => (
 	<Responsive {...props} minWidth={PHONE_MIN} maxWidth={PHONE_MAX} />
 )

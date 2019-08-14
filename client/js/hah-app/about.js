@@ -5,7 +5,7 @@ import Spacer from '../components/spacer'
 import Footer from '../mini-app/components/footer'
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Team from './team'
-import { Phone, Desktop } from '../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../components/breakpoints'
 
 const TITLE_TEXT = 'What is Help Assist Her?'
 
@@ -54,6 +54,33 @@ const About = ({ classes }) => (
 			</div>
 		</Phone>
 
+		<Tablet>
+			<div className={classes.aboutPageContainerDesktop}>
+				<Spacer height="60px" />
+				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
+				<Spacer height="30px" />
+				<div className={classes.bodyDesktop}>
+					<div className={classes.bodyTextItem}>
+						{BODY_TEXT}
+						<p>{SECOND_PARAGRAPH}</p>
+					</div>
+				</div>
+				<Spacer height="60px" />
+				<img
+					className={classes.imageDesktop}
+					src="../img/women-on-phones.jpg"
+					alt="Women on mobile phones"
+				/>
+				<Spacer height="70px" />
+				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
+				<Spacer height="27px" />
+				<div className={classes.bodyDesktop}>
+					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
+				</div>
+				<Spacer height="65px" />
+			</div>
+		</Tablet>
+
 		<Desktop>
 			<div className={classes.aboutPageContainerDesktop}>
 				<Spacer height="60px" />
@@ -86,6 +113,10 @@ const About = ({ classes }) => (
 		<Phone>
 			<Spacer height="36px" />
 		</Phone>
+
+		<Tablet>
+			<Spacer height="152px" />
+		</Tablet>
 
 		<Desktop>
 			<Spacer height="152px" />
