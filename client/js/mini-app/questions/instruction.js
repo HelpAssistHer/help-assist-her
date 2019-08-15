@@ -9,16 +9,18 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 		<div className={classes.instructionRoot}>
 			<Phone>
 				<div>
-					<Spacer height="29px" />
+					<Spacer height="70px" />
 					<div className={classes.stepNumberPhone}>{stepNumber}</div>
+					<Spacer height="10px" />
 					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
 				</div>
 			</Phone>
 
 			<Tablet>
 				<div>
-					<Spacer height="67px" />
+					<Spacer height="100px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
+					<Spacer height="30px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -27,8 +29,9 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 
 			<Desktop>
 				<div>
-					<Spacer height="67px" />
+					<Spacer height="100px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
+					<Spacer height="30px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -41,19 +44,15 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 const styles = {
 	instructionRoot: {
 		'text-align': 'center',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
 	},
 	stepNumberPhone: {
 		'font-family': 'hah-bold',
 		'letter-spacing': '2px',
 		'font-size': '10px',
 		color: '#3d65f9',
-		height: '20px',
-		'line-height': '20px',
-	},
-	stepDescriptionPhone: {
-		'font-family': 'hah-regular',
-		color: '#000000',
-		'font-size': '14px',
 		height: '20px',
 		'line-height': '20px',
 	},
@@ -65,12 +64,21 @@ const styles = {
 		height: '40px',
 		'line-height': '40px',
 	},
+	stepDescriptionPhone: {
+		'font-family': 'hah-regular',
+		color: '#000000',
+		'font-size': '14px',
+		height: '20px',
+		'line-height': '20px',
+		'max-width': '225px',
+	},
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',
 		color: '#000000',
-		'font-size': '25px',
+		'font-size': '30px',
 		height: '40px',
 		'line-height': '40px',
+		'max-width': '500px',
 	},
 }
 

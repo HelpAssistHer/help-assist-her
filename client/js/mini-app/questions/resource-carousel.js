@@ -1,7 +1,5 @@
 import React from 'react'
-import _ from 'lodash'
 import injectSheet from 'react-jss'
-import classNames from 'classnames'
 
 import Spacer from '../../components/spacer'
 import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
@@ -19,126 +17,149 @@ const resources = [
 	},
 ]
 
-const iconsPhone = [
-	<HospitalIcon key={1} height={49} width={49} />,
-	<PregnancyIcon key={2} height={49} width={49} />,
-]
-const iconsDesktop = [
-	<HospitalIcon key={1} height={127} width={127} />,
-	<PregnancyIcon key={2} height={127} width={127} />,
-]
-
-const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
+const ResourceCarousel = ({ classes, onResourceChange }) => (
 	<div>
 		<Phone>
-			<Spacer height="26px" />
+			<div className={classes.resourceCarouselRootPhone}>
+				<div className={classes.resourceButtonsPhone}>
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<HospitalIcon key={1} height={49} width={49} />
+							</div>
+							<Spacer height="9px" />
+							<div className={classes.resourceNamePhone}>
+								{resources[0].name}
+							</div>
+						</div>
+					</button>
+
+					<div className={classes.orPhone}>or</div>
+
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<PregnancyIcon key={2} height={49} width={49} />
+							</div>
+							<Spacer height="9px" />
+							<div className={classes.resourceNamePhone}>
+								{resources[1].name}
+							</div>
+						</div>
+					</button>
+				</div>
+			</div>
 		</Phone>
 
 		<Tablet>
-			<Spacer height="57px" />
+			<div className={classes.paddingDesktop}>
+				<div className={classes.resourceButtonsDesktop}>
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<HospitalIcon key={1} height={127} width={127} />
+							</div>
+							<Spacer height="20px" />
+							<div className={classes.resourceNameDesktop}>
+								{resources[0].name}
+							</div>
+						</div>
+					</button>
+
+					<div className={classes.orDesktop}>or</div>
+
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<PregnancyIcon key={2} height={127} width={127} />
+							</div>
+							<Spacer height="20px" />
+							<div className={classes.resourceNameDesktop}>
+								{resources[1].name}
+							</div>
+						</div>
+					</button>
+				</div>
+			</div>
 		</Tablet>
 
 		<Desktop>
-			<Spacer height="57px" />
+			<div className={classes.paddingDesktop}>
+				<div className={classes.resourceButtonsDesktop}>
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<HospitalIcon key={1} height={127} width={127} />
+							</div>
+							<Spacer height="20px" />
+							<div className={classes.resourceNameDesktop}>
+								{resources[0].name}
+							</div>
+						</div>
+					</button>
+
+					<div className={classes.orDesktop}>or</div>
+
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<PregnancyIcon key={2} height={127} width={127} />
+							</div>
+							<Spacer height="20px" />
+							<div className={classes.resourceNameDesktop}>
+								{resources[1].name}
+							</div>
+						</div>
+					</button>
+				</div>
+			</div>
 		</Desktop>
-
-		<div className={classes.resourceCarouselRoot}>
-			{_.map(resources, (resource, index) => {
-				const styleWithBorderPhone = classNames(
-					classes.borderPhone,
-					classes.resourceBox,
-				)
-
-				let resourceBoxStylePhone =
-					index === 1 ? styleWithBorderPhone : classes.resourceBox
-
-				if (resource.id === buttonClicked) {
-					resourceBoxStylePhone = classNames(
-						resourceBoxStylePhone,
-						classes.buttonActiveState,
-					)
-				}
-
-				const styleWithBorderDesktop = classNames(
-					classes.borderDesktop,
-					classes.resourceBox,
-				)
-
-				let resourceBoxStyleDesktop =
-					index === 1 ? styleWithBorderDesktop : classes.resourceBox
-
-				if (resource.id === buttonClicked) {
-					resourceBoxStyleDesktop = classNames(
-						resourceBoxStyleDesktop,
-						classes.buttonActiveState,
-					)
-				}
-
-				return (
-					<div key={resource.id}>
-						<Phone>
-							<button
-								className={resourceBoxStylePhone}
-								onClick={() => onResourceChange(resource.id)}
-							>
-								<div className={classes.flex}>
-									<div className={classes.icons}>{iconsPhone[index]}</div>
-									<Spacer height="9px" />
-									<div className={classes.resourceNamePhone}>
-										{resource.name}
-									</div>
-								</div>
-							</button>
-						</Phone>
-
-						<Tablet>
-							<button
-								className={resourceBoxStyleDesktop}
-								onClick={() => onResourceChange(resource.id)}
-							>
-								<div className={classes.flex}>
-									{iconsDesktop[index]}
-									<Spacer height="20px" />
-									<div className={classes.resourceNameDesktop}>
-										{resource.name}
-									</div>
-								</div>
-							</button>
-						</Tablet>
-
-						<Desktop>
-							<button
-								className={resourceBoxStyleDesktop}
-								onClick={() => onResourceChange(resource.id)}
-							>
-								<div className={classes.flex}>
-									<div className={classes.icons}>{iconsDesktop[index]}</div>
-									<Spacer height="20px" />
-									<div className={classes.resourceNameDesktop}>
-										{resource.name}
-									</div>
-								</div>
-							</button>
-						</Desktop>
-					</div>
-				)
-			})}
-		</div>
 	</div>
 )
 
 const styles = {
+	resourceCarouselRootPhone: {
+		display: 'flex',
+		'justify-content': 'center',
+		padding: '50px 0px 0px 0px',
+	},
+	paddingDesktop: {
+		padding: '100px 0px 50px 0px',
+	},
 	icons: {
 		'&:hover': {
 			'border-radius': '50%',
 			'background-color': '#DEA8E0',
 		},
 	},
-	resourceCarouselRoot: {
+	resourceButtonsPhone: {
+		display: 'flex',
+		'justify-content': 'center',
+		'max-width': '275px',
+	},
+	resourceButtonsDesktop: {
 		display: 'flex',
 		'justify-content': 'center',
 	},
-	flex: {
+	flexColumn: {
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
@@ -162,11 +183,21 @@ const styles = {
 		'font-size': '24px',
 		width: '60%',
 	},
-	borderPhone: {
-		'border-left': '1px solid #000000',
+	orPhone: {
+		'font-family': 'hah-regular',
+		color: 'rgba(0,0,0,0.95)',
+		'font-size': '14px',
+		'line-height': '20px',
+		'text-align': 'center',
+		padding: '15px 0px',
 	},
-	borderDesktop: {
-		'border-left': '2px solid #000000',
+	orDesktop: {
+		'font-family': 'hah-regular',
+		color: 'rgba(0,0,0,0.95)',
+		'font-size': '30px',
+		'line-height': '40px',
+		'text-align': 'center',
+		padding: '45px 0px',
 	},
 }
 
