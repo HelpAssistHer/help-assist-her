@@ -20,8 +20,8 @@ const resources = [
 const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 	<div>
 		<Phone>
-			<div className={classes.paddingPhone}>
-				<div className={classes.flex}>
+			<div className={classes.resourceCarouselRootPhone}>
+				<div className={classes.resourceButtonsPhone}>
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
@@ -59,7 +59,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 
 		<Tablet>
 			<div className={classes.paddingDesktop}>
-				<div className={classes.flex}>
+				<div className={classes.resourceButtonsDesktop}>
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
@@ -97,7 +97,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 
 		<Desktop>
 			<div className={classes.paddingDesktop}>
-				<div className={classes.flex}>
+				<div className={classes.resourceButtonsDesktop}>
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
@@ -136,7 +136,9 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 )
 
 const styles = {
-	paddingPhone: {
+	resourceCarouselRootPhone: {
+		display: 'flex',
+		'justify-content': 'center',
 		padding: '50px 0px 70px 0px',
 	},
 	paddingDesktop: {
@@ -148,7 +150,12 @@ const styles = {
 			'background-color': '#DEA8E0',
 		},
 	},
-	flex: {
+	resourceButtonsPhone: {
+		display: 'flex',
+		'justify-content': 'center',
+		'max-width': '275px',
+	},
+	resourceButtonsDesktop: {
 		display: 'flex',
 		'justify-content': 'center',
 	},
