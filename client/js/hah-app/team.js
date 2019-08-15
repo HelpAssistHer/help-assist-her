@@ -73,6 +73,10 @@ const styles = {
 	headshot: {
 		height: '240px',
 		width: '240px',
+		border: '3px solid #FFFFFF',
+		'&:hover': {
+			border: '3px solid #FFCA34',
+		},
 	},
 	button: {
 		cursor: 'pointer',
