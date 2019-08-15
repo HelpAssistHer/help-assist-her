@@ -139,7 +139,7 @@ const styles = {
 	resourceCarouselRootPhone: {
 		display: 'flex',
 		'justify-content': 'center',
-		padding: '50px 0px 70px 0px',
+		padding: '50px 0px 0px 0px',
 	},
 	paddingDesktop: {
 		padding: '100px 0px 50px 0px',

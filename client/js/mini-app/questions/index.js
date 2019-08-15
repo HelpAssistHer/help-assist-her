@@ -3,7 +3,7 @@ import injectSheet from 'react-jss'
 
 import StepOne from './step-one'
 import StepTwo from './step-two'
-import { Tablet, Desktop } from '../../components/breakpoints'
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import Spacer from '../../components/spacer'
 
 class Questions extends Component {
@@ -32,6 +32,9 @@ class Questions extends Component {
 				) : (
 					<StepTwo />
 				)}
+				<Phone>
+					<Spacer height="70px" />
+				</Phone>
 				<Tablet>
 					<Spacer height="87px" />
 				</Tablet>
