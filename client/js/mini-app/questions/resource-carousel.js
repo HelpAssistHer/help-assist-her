@@ -17,7 +17,7 @@ const resources = [
 	},
 ]
 
-const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
+const ResourceCarousel = ({ classes, onResourceChange }) => (
 	<div>
 		<Phone>
 			<div className={classes.resourceCarouselRootPhone}>
