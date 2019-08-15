@@ -18,7 +18,7 @@ class StepTwo extends Component {
 			<div>
 				<Instruction
 					stepNumber="STEP TWO"
-					stepDescription="Enter your location:"
+					stepDescription="Where do you need access to care?"
 				/>
 				<MiniAppForm onSubmit={this.submit} />
 			</div>
