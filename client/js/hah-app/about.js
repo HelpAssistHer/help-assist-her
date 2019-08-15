@@ -10,14 +10,10 @@ import { Phone, Tablet, Desktop } from '../components/breakpoints'
 const TITLE_TEXT = 'What is Help Assist Her?'
 
 const BODY_TEXT =
-	'Some women may need help navigating the myriad of healthcare resources out there. ' +
-	"(Honestly, why isn't this easier?) Others may not know what facilities are available in their area. " +
-	'Help Assist Her is designed to help you or someone you know locate a holistic healthcare provider to address ' +
-	'your personal needs. Help Assist Her is here to connect you with them.'
-
-const SECOND_PARAGRAPH =
-	'Help Assist Her is a collection of up-to-date, local healthcare resources and ' +
-	'their contact details that will help you get in touch with the care you need.'
+	'Let’s face it, googling for answers just isn’t cutting it. We could all use a little help navigating and assessing the myriad of ' +
+	"women's healthcare resources out there. Whether you don’t know yet what you’re looking for or just don’t know where to find it in " +
+	'your area, Help Assist Her is designed to simplify the process. Our database is being constantly verified and updated so that you or ' +
+	'someone you love can locate the healthcare provider you need.'
 
 const TEAM_HEADING = 'The Team'
 
@@ -33,10 +29,7 @@ const About = ({ classes }) => (
 				<div className={classes.titlePhone}>{TITLE_TEXT}</div>
 				<Spacer height="28px" />
 				<div className={classes.bodyPhone}>
-					<div className={classes.bodyTextItem}>
-						{BODY_TEXT}
-						<p>{SECOND_PARAGRAPH}</p>
-					</div>
+					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="36px" />
 				<img
@@ -60,10 +53,7 @@ const About = ({ classes }) => (
 				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
 				<Spacer height="30px" />
 				<div className={classes.bodyDesktop}>
-					<div className={classes.bodyTextItem}>
-						{BODY_TEXT}
-						<p>{SECOND_PARAGRAPH}</p>
-					</div>
+					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="60px" />
 				<img
@@ -87,10 +77,7 @@ const About = ({ classes }) => (
 				<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
 				<Spacer height="30px" />
 				<div className={classes.bodyDesktop}>
-					<div className={classes.bodyTextItem}>
-						{BODY_TEXT}
-						<p>{SECOND_PARAGRAPH}</p>
-					</div>
+					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="60px" />
 				<img
