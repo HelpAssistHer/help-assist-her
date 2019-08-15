@@ -9,8 +9,9 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 		<div className={classes.instructionRoot}>
 			<Phone>
 				<div>
-					<Spacer height="29px" />
+					<Spacer height="70px" />
 					<div className={classes.stepNumberPhone}>{stepNumber}</div>
+					<Spacer height="10px" />
 					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
 				</div>
 			</Phone>
@@ -55,13 +56,6 @@ const styles = {
 		height: '20px',
 		'line-height': '20px',
 	},
-	stepDescriptionPhone: {
-		'font-family': 'hah-regular',
-		color: '#000000',
-		'font-size': '14px',
-		height: '20px',
-		'line-height': '20px',
-	},
 	stepNumberDesktop: {
 		'font-family': 'hah-bold',
 		'letter-spacing': '5px',
@@ -69,6 +63,14 @@ const styles = {
 		color: '#3d65f9',
 		height: '40px',
 		'line-height': '40px',
+	},
+	stepDescriptionPhone: {
+		'font-family': 'hah-regular',
+		color: '#000000',
+		'font-size': '14px',
+		height: '20px',
+		'line-height': '20px',
+		'max-width': '225px',
 	},
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',

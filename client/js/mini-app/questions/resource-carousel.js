@@ -1,7 +1,5 @@
 import React from 'react'
-import _ from 'lodash'
 import injectSheet from 'react-jss'
-import classNames from 'classnames'
 
 import Spacer from '../../components/spacer'
 import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
@@ -19,34 +17,48 @@ const resources = [
 	},
 ]
 
-const iconsPhone = [
-	<HospitalIcon key={1} height={49} width={49} />,
-	<PregnancyIcon key={2} height={49} width={49} />,
-]
-const iconsDesktop = [
-	<HospitalIcon key={1} height={127} width={127} />,
-	<PregnancyIcon key={2} height={127} width={127} />,
-]
-
 const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 	<div>
-		{/*<Phone>*/}
-		{/*<button*/}
-		{/*className={resourceBoxStylePhone}*/}
-		{/*onClick={() => onResourceChange(resource.id)}*/}
-		{/*>*/}
-		{/*<div className={classes.flexColumn}>*/}
-		{/*<div className={classes.icons}>{iconsPhone[index]}</div>*/}
-		{/*<Spacer height="9px" />*/}
-		{/*<div className={classes.resourceNamePhone}>*/}
-		{/*{resource.name}*/}
-		{/*</div>*/}
-		{/*</div>*/}
-		{/*</button>*/}
-		{/*</Phone>*/}
+		<Phone>
+			<div className={classes.paddingPhone}>
+				<div className={classes.flex}>
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<HospitalIcon key={1} height={49} width={49} />
+							</div>
+							<Spacer height="9px" />
+							<div className={classes.resourceNamePhone}>
+								{resources[0].name}
+							</div>
+						</div>
+					</button>
+
+					<div className={classes.orPhone}>or</div>
+
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.icons}>
+								<PregnancyIcon key={2} height={49} width={49} />
+							</div>
+							<Spacer height="9px" />
+							<div className={classes.resourceNamePhone}>
+								{resources[1].name}
+							</div>
+						</div>
+					</button>
+				</div>
+			</div>
+		</Phone>
 
 		<Tablet>
-			<div className={classes.padding}>
+			<div className={classes.paddingDesktop}>
 				<div className={classes.flex}>
 					<button
 						className={classes.resourceBox}
@@ -63,7 +75,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 						</div>
 					</button>
 
-					<div className={classes.or}>or</div>
+					<div className={classes.orDesktop}>or</div>
 
 					<button
 						className={classes.resourceBox}
@@ -84,7 +96,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 		</Tablet>
 
 		<Desktop>
-			<div className={classes.padding}>
+			<div className={classes.paddingDesktop}>
 				<div className={classes.flex}>
 					<button
 						className={classes.resourceBox}
@@ -101,7 +113,7 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 						</div>
 					</button>
 
-					<div className={classes.or}>or</div>
+					<div className={classes.orDesktop}>or</div>
 
 					<button
 						className={classes.resourceBox}
@@ -124,7 +136,10 @@ const ResourceCarousel = ({ classes, buttonClicked, onResourceChange }) => (
 )
 
 const styles = {
-	padding: {
+	paddingPhone: {
+		padding: '50px 0px 70px 0px',
+	},
+	paddingDesktop: {
 		padding: '100px 0px 50px 0px',
 	},
 	icons: {
@@ -161,7 +176,15 @@ const styles = {
 		'font-size': '24px',
 		width: '60%',
 	},
-	or: {
+	orPhone: {
+		'font-family': 'hah-regular',
+		color: 'rgba(0,0,0,0.95)',
+		'font-size': '14px',
+		'line-height': '20px',
+		'text-align': 'center',
+		padding: '15px 0px',
+	},
+	orDesktop: {
 		'font-family': 'hah-regular',
 		color: 'rgba(0,0,0,0.95)',
 		'font-size': '30px',
