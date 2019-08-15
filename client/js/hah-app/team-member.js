@@ -90,7 +90,7 @@ const styles = {
 	},
 	lineBreakDesktop: {
 		width: '84px',
-		'border-top': '3px solid #FFCA34',
+		'border-top': '3px solid #24A894',
 	},
 	bioTextPhone: {
 		color: '#000000',

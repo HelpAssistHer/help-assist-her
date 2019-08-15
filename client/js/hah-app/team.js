@@ -73,9 +73,9 @@ const styles = {
 	headshot: {
 		height: '240px',
 		width: '240px',
-		border: '3px solid #FFFFFF',
+		border: '2px solid #FFFFFF',
 		'&:hover': {
-			border: '3px solid #FFCA34',
+			border: '2px solid #24A894',
 		},
 	},
 	button: {
