@@ -17,8 +17,9 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 
 			<Tablet>
 				<div>
-					<Spacer height="67px" />
+					<Spacer height="100px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
+					<Spacer height="30px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -27,8 +28,9 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 
 			<Desktop>
 				<div>
-					<Spacer height="67px" />
+					<Spacer height="100px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
+					<Spacer height="30px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -41,6 +43,9 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 const styles = {
 	instructionRoot: {
 		'text-align': 'center',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
 	},
 	stepNumberPhone: {
 		'font-family': 'hah-bold',
@@ -68,9 +73,10 @@ const styles = {
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',
 		color: '#000000',
-		'font-size': '25px',
+		'font-size': '30px',
 		height: '40px',
 		'line-height': '40px',
+		'max-width': '500px',
 	},
 }
 
