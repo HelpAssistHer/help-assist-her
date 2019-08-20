@@ -24,7 +24,7 @@ module.exports = [
 	{
 		id: 2,
 		name: 'Marylouise M.',
-		title: 'Graphic Designer',
+		title: 'Lead Graphic Designer',
 		bio: 'Some stuff here',
 		imageSource: '../img/team/marylouise.jpg',
 	},
@@ -52,7 +52,10 @@ module.exports = [
 		id: 5,
 		name: 'Julia F.',
 		title: 'Graphic Designer',
-		bio: 'Some stuff here',
+		bio:
+			'Julia (Hoo-Lee-Yah) is a graphic designer and actress based in San Francisco, California. She is constantly searching ' +
+			'for new and exciting opportunities to grow her understanding of design and her ability to create functional and beautiful ' +
+			'visual solutions. She is currently a freelance graphic designer and is pursuing her BFA in Graphic Design at the Academy of Art University.',
 		imageSource: '../img/team/julia.jpg',
 	},
 	{

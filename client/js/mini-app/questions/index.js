@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import injectSheet from 'react-jss'
 
+import { Phone, Tablet, Desktop } from '../../components/breakpoints'
+
 import StepOne from './step-one'
 import StepTwo from './step-two'
-import { Phone, Tablet, Desktop } from '../../components/breakpoints'
-import Spacer from '../../components/spacer'
 
 class Questions extends Component {
 	constructor(props) {
 		super(props)
+		this.handleResourceChange = this.handleResourceChange.bind(this)
 		this.state = {
 			buttonClicked: null,
 		}
-		this.handleResourceChange = this.handleResourceChange.bind(this)
 	}
 
 	handleResourceChange = resource => {
@@ -21,31 +21,60 @@ class Questions extends Component {
 
 	render() {
 		const { buttonClicked } = this.state
+		const { classes } = this.props
 
 		return (
 			<div>
-				{!buttonClicked ? (
-					<StepOne
-						buttonClicked={buttonClicked}
-						onResourceChange={this.handleResourceChange}
-					/>
-				) : (
-					<StepTwo />
-				)}
 				<Phone>
-					<Spacer height="70px" />
+					<div className={classes.searchCardRootPhone}>
+						{!buttonClicked ? (
+							<StepOne
+								buttonClicked={buttonClicked}
+								onResourceChange={this.handleResourceChange}
+							/>
+						) : (
+							<StepTwo onResourceChange={this.handleResourceChange} />
+						)}
+					</div>
 				</Phone>
+
 				<Tablet>
-					<Spacer height="87px" />
+					<div className={classes.searchCardRootDesktop}>
+						{!buttonClicked ? (
+							<StepOne
+								buttonClicked={buttonClicked}
+								onResourceChange={this.handleResourceChange}
+							/>
+						) : (
+							<StepTwo onResourceChange={this.handleResourceChange} />
+						)}
+					</div>
 				</Tablet>
+
 				<Desktop>
-					<Spacer height="87px" />
+					<div className={classes.searchCardRootDesktop}>
+						{!buttonClicked ? (
+							<StepOne
+								buttonClicked={buttonClicked}
+								onResourceChange={this.handleResourceChange}
+							/>
+						) : (
+							<StepTwo onResourceChange={this.handleResourceChange} />
+						)}
+					</div>
 				</Desktop>
 			</div>
 		)
 	}
 }
 
-const styles = {}
+const styles = {
+	searchCardRootPhone: {
+		margin: '35px 0px 35px 0px',
+	},
+	searchCardRootDesktop: {
+		margin: '100px 0px 100px 0px',
+	},
+}
 
 export default injectSheet(styles)(Questions)

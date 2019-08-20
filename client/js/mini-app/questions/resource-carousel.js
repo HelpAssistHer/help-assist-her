@@ -41,7 +41,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 
 					<button
 						className={classes.resourceBox}
-						onClick={() => onResourceChange(resources[0].id)}
+						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
 							<div className={classes.icons}>
@@ -79,7 +79,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 
 					<button
 						className={classes.resourceBox}
-						onClick={() => onResourceChange(resources[0].id)}
+						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
 							<div className={classes.icons}>
@@ -117,7 +117,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 
 					<button
 						className={classes.resourceBox}
-						onClick={() => onResourceChange(resources[0].id)}
+						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
 							<div className={classes.icons}>
@@ -142,7 +142,7 @@ const styles = {
 		padding: '50px 0px 0px 0px',
 	},
 	paddingDesktop: {
-		padding: '100px 0px 50px 0px',
+		padding: '100px 0px 0px 0px',
 	},
 	icons: {
 		'&:hover': {
