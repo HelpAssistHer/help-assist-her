@@ -48,7 +48,10 @@ class StepTwo extends Component {
 
 				<Desktop>
 					<div className={classes.stepTwoContainer}>
-						<div className={classes.backButtonDesktop} />
+						<button
+							className={classes.backButtonDesktop}
+							onClick={console.log('Hi')}
+						/>
 						<div>
 							<Instruction
 								stepNumber="STEP TWO"
@@ -73,18 +76,26 @@ const styles = {
 		'justify-self': 'center',
 		height: '15px',
 		width: '15px',
-		'border-left': '1px solid #000000',
+		'border-top': 'none',
+		'border-right': 'none',
 		'border-bottom': '1px solid #000000',
+		'border-left': '1px solid #000000',
 		transform: 'rotate(45deg)',
+		cursor: 'pointer',
+		outline: 'none',
 	},
 	backButtonDesktop: {
 		'align-self': 'center',
 		'justify-self': 'center',
 		height: '30px',
 		width: '30px',
-		'border-left': '2px solid #000000',
+		'border-top': 'none',
+		'border-right': 'none',
 		'border-bottom': '2px solid #000000',
+		'border-left': '2px solid #000000',
 		transform: 'rotate(45deg)',
+		cursor: 'pointer',
+		outline: 'none',
 	},
 }
 
