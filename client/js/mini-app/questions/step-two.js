@@ -6,6 +6,7 @@ import injectSheet from 'react-jss'
 import Instruction from './instruction'
 import MiniAppForm from '../form'
 import { getPregnancyResourceCenters } from '../data/action-creators'
+import { Desktop, Phone, Tablet } from '../../components/breakpoints'
 
 class StepTwo extends Component {
 	submit = ({ locationInput }) => {
@@ -18,15 +19,45 @@ class StepTwo extends Component {
 		const { classes } = this.props
 
 		return (
-			<div className={classes.stepTwoContainer}>
-				<div className={classes.backButton} />
-				<div>
-					<Instruction
-						stepNumber="STEP TWO"
-						stepDescription="Where do you need access to care?"
-					/>
-					<MiniAppForm onSubmit={this.submit} />
-				</div>
+			<div>
+				<Phone>
+					<div className={classes.stepTwoContainer}>
+						<div className={classes.backButtonPhone} />
+						<div>
+							<Instruction
+								stepNumber="STEP TWO"
+								stepDescription="Where do you need access to care?"
+							/>
+							<MiniAppForm onSubmit={this.submit} />
+						</div>
+					</div>
+				</Phone>
+
+				<Tablet>
+					<div className={classes.stepTwoContainer}>
+						<div className={classes.backButtonDesktop} />
+						<div>
+							<Instruction
+								stepNumber="STEP TWO"
+								stepDescription="Where do you need access to care?"
+							/>
+							<MiniAppForm onSubmit={this.submit} />
+						</div>
+					</div>
+				</Tablet>
+
+				<Desktop>
+					<div className={classes.stepTwoContainer}>
+						<div className={classes.backButtonDesktop} />
+						<div>
+							<Instruction
+								stepNumber="STEP TWO"
+								stepDescription="Where do you need access to care?"
+							/>
+							<MiniAppForm onSubmit={this.submit} />
+						</div>
+					</div>
+				</Desktop>
 			</div>
 		)
 	}
@@ -37,7 +68,16 @@ const styles = {
 		display: 'grid',
 		'grid-template-columns': '20% 60% 20%',
 	},
-	backButton: {
+	backButtonPhone: {
+		'align-self': 'center',
+		'justify-self': 'center',
+		height: '15px',
+		width: '15px',
+		'border-left': '1px solid #000000',
+		'border-bottom': '1px solid #000000',
+		transform: 'rotate(45deg)',
+	},
+	backButtonDesktop: {
 		'align-self': 'center',
 		'justify-self': 'center',
 		height: '30px',
