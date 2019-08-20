@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import injectSheet from 'react-jss'
 
 import Instruction from './instruction'
 import MiniAppForm from '../form'
@@ -14,8 +15,11 @@ class StepTwo extends Component {
 	}
 
 	render() {
+		const { classes } = this.props
+
 		return (
 			<div>
+				<div className={classes.backButton} />
 				<Instruction
 					stepNumber="STEP TWO"
 					stepDescription="Where do you need access to care?"
@@ -26,4 +30,16 @@ class StepTwo extends Component {
 	}
 }
 
-export default connect()(withRouter(StepTwo))
+const styles = {
+	backButton: {
+		height: '30px',
+		width: '30px',
+		'border-left': '2px solid #000000',
+		'border-bottom': '2px solid #000000',
+		transform: 'rotate(45deg)',
+	},
+}
+
+const StepTwoWithStyle = injectSheet(styles)(StepTwo)
+
+export default connect()(withRouter(StepTwoWithStyle))
