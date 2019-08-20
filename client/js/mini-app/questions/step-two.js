@@ -16,13 +16,16 @@ class StepTwo extends Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, onResourceChange } = this.props
 
 		return (
 			<div>
 				<Phone>
 					<div className={classes.stepTwoContainer}>
-						<div className={classes.backButtonPhone} />
+						<button
+							className={classes.backButtonDesktop}
+							onClick={() => onResourceChange(null)}
+						/>
 						<div>
 							<Instruction
 								stepNumber="STEP TWO"
@@ -35,7 +38,10 @@ class StepTwo extends Component {
 
 				<Tablet>
 					<div className={classes.stepTwoContainer}>
-						<div className={classes.backButtonDesktop} />
+						<button
+							className={classes.backButtonDesktop}
+							onClick={() => onResourceChange(null)}
+						/>
 						<div>
 							<Instruction
 								stepNumber="STEP TWO"
@@ -50,7 +56,7 @@ class StepTwo extends Component {
 					<div className={classes.stepTwoContainer}>
 						<button
 							className={classes.backButtonDesktop}
-							onClick={console.log('Hi')}
+							onClick={() => onResourceChange(null)}
 						/>
 						<div>
 							<Instruction

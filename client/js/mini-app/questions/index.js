@@ -9,10 +9,10 @@ import StepTwo from './step-two'
 class Questions extends Component {
 	constructor(props) {
 		super(props)
+		this.handleResourceChange = this.handleResourceChange.bind(this)
 		this.state = {
 			buttonClicked: null,
 		}
-		this.handleResourceChange = this.handleResourceChange.bind(this)
 	}
 
 	handleResourceChange = resource => {
@@ -33,7 +33,7 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo />
+							<StepTwo onResourceChange={this.handleResourceChange} />
 						)}
 					</div>
 				</Phone>
@@ -46,7 +46,7 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo />
+							<StepTwo onResourceChange={this.handleResourceChange} />
 						)}
 					</div>
 				</Tablet>
@@ -59,7 +59,7 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo />
+							<StepTwo onResourceChange={this.handleResourceChange} />
 						)}
 					</div>
 				</Desktop>
