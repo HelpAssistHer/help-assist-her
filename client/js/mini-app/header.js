@@ -87,7 +87,7 @@ const Header = ({ classes }) => {
 
 const styles = {
 	headerContainerPhone: {
-		height: '60vw',
+		height: '300px',
 		display: 'flex',
 		'align-items': 'center',
 		'text-align': 'center',
