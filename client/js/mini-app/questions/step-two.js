@@ -18,20 +18,28 @@ class StepTwo extends Component {
 		const { classes } = this.props
 
 		return (
-			<div>
+			<div className={classes.stepTwoContainer}>
 				<div className={classes.backButton} />
-				<Instruction
-					stepNumber="STEP TWO"
-					stepDescription="Where do you need access to care?"
-				/>
-				<MiniAppForm onSubmit={this.submit} />
+				<div>
+					<Instruction
+						stepNumber="STEP TWO"
+						stepDescription="Where do you need access to care?"
+					/>
+					<MiniAppForm onSubmit={this.submit} />
+				</div>
 			</div>
 		)
 	}
 }
 
 const styles = {
+	stepTwoContainer: {
+		display: 'grid',
+		'grid-template-columns': '20% 60% 20%',
+	},
 	backButton: {
+		'align-self': 'center',
+		'justify-self': 'center',
 		height: '30px',
 		width: '30px',
 		'border-left': '2px solid #000000',
