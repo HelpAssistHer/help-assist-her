@@ -9,7 +9,6 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 		<div className={classes.instructionRoot}>
 			<Phone>
 				<div>
-					<Spacer height="70px" />
 					<div className={classes.stepNumberPhone}>{stepNumber}</div>
 					<Spacer height="10px" />
 					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
@@ -18,7 +17,6 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 
 			<Tablet>
 				<div>
-					<Spacer height="100px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
 					<Spacer height="30px" />
 					<div className={classes.stepDescriptionDesktop}>
@@ -29,7 +27,6 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 
 			<Desktop>
 				<div>
-					<Spacer height="100px" />
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
 					<Spacer height="30px" />
 					<div className={classes.stepDescriptionDesktop}>

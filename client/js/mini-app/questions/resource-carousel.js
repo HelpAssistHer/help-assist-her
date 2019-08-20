@@ -142,7 +142,7 @@ const styles = {
 		padding: '50px 0px 0px 0px',
 	},
 	paddingDesktop: {
-		padding: '100px 0px 50px 0px',
+		padding: '100px 0px 0px 0px',
 	},
 	icons: {
 		'&:hover': {
