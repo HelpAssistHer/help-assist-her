@@ -16,22 +16,23 @@ const Header = ({ classes }) => {
 		<div>
 			<LogoAndNavigation />
 			<Phone>
-				<div className={classes.headerContainerPhone}>
+				<div>
 					<img
 						className={classes.imagePhone}
-						src="../img/julia-with-flowers.jpg"
+						src="../img/julia-with-flowers-phone.jpg"
 						alt="Two Close Friends"
 					/>
-
-					<div className={classes.headerText}>
-						<div className={classes.titleTextPhone}>
-							{titleText1}
-							<br />
-							{titleText2}
-						</div>
-						<Spacer height="20px" />
-						<div className={classes.descriptionTextPhone}>
-							{descriptionText}
+					<div className={classes.headerContainerPhone}>
+						<div className={classes.headerText}>
+							<div className={classes.titleTextPhone}>
+								{titleText1}
+								<br />
+								{titleText2}
+							</div>
+							<Spacer height="20px" />
+							<div className={classes.descriptionTextPhone}>
+								{descriptionText}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -86,11 +87,13 @@ const Header = ({ classes }) => {
 
 const styles = {
 	headerContainerPhone: {
+		height: '300px',
 		display: 'flex',
+		'align-items': 'center',
 		'text-align': 'center',
 		'flex-direction': 'column',
 		'background-color': '#016454',
-		'margin-top': '55px',
+		'margin-top': '-5px',
 	},
 	headerContainerTablet: {
 		height: '68vh',
@@ -115,13 +118,14 @@ const styles = {
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
+		'justify-content': 'center',
 		color: '#F5EDE6',
 	},
 	titleTextPhone: {
+		'max-width': '250px',
 		'font-family': 'hah-light',
-		'font-size': '40px',
-		'letter-spacing': '-0.5px',
-		'line-height': '48px',
+		'font-size': '30px',
+		'line-height': '33px',
 	},
 	titleTextTablet: {
 		'max-width': '350px',
@@ -136,9 +140,10 @@ const styles = {
 		'line-height': '70px',
 	},
 	descriptionTextPhone: {
+		'max-width': '270px',
 		'font-family': 'hah-regular',
-		'font-size': '18px',
-		'line-height': '24px',
+		'font-size': '14px',
+		'line-height': '20px',
 	},
 	descriptionTextTablet: {
 		'max-width': '30vw',
@@ -154,6 +159,7 @@ const styles = {
 	},
 	imagePhone: {
 		width: '100%',
+		'margin-top': '55px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
 		width: '50%',

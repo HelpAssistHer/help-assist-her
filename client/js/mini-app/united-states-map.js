@@ -55,11 +55,9 @@ const styles = {
 	},
 	responsiveMap: {
 		'max-width': '100%',
-		height: 'auto',
 	},
 	responsiveMapDesktop: {
 		'max-width': '80%',
-		height: 'auto',
 	},
 }
 
