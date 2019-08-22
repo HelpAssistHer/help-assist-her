@@ -76,7 +76,6 @@
 		"preact": "^6.4.0",
 		"preact-compat": "^3.9.3",
 		"ramda": "0.26.1",
-		"react": "^15.5.4",
 		"react-dom": "^15.5.4",
 		"react-facebook-login": "^3.6.1",
 		"react-jss": "^6.1.1",
