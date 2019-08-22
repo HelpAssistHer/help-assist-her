@@ -66,7 +66,7 @@
 		"log": "^1.4.0",
 		"mapbox": "^1.0.0-beta5",
 		"mocha": "^3.2.0",
-		"moment": "^2.18.1",
+		"moment": "2.19.3",
 		"mongodb": "^2.2.16",
 		"mongodb-extended-json": "^1.9.0",
 		"mongoose": "^5.0.16",
