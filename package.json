@@ -87,7 +87,7 @@
 		"react-tooltip": "^3.10.0",
 		"react-typeform-embed": "^0.2.1",
 		"redux": "^4.0.4",
-		"redux-form": "^7.1.2",
+		"redux-form": "^8.2.6",
 		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
