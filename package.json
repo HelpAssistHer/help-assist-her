@@ -88,8 +88,7 @@
 		"react-typeform-embed": "^0.2.1",
 		"redux": "^3.6.0",
 		"redux-form": "^7.1.2",
-		"redux-thunk": "^2.2.0",
-		"svg-to-react-cli": "^1.5.0"
+		"redux-thunk": "^2.2.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.0.0-rc.2",
@@ -119,6 +118,7 @@
 		"react-addons-test-utils": "15.3.2",
 		"react-test-renderer": "15.3.2",
 		"style-loader": "^0.22.1",
+		"svg-to-react-cli": "^1.5.0",
 		"webpack": "^4.17.1",
 		"webpack-cli": "^3.1.0"
 	}
