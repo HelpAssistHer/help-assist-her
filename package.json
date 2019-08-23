@@ -82,7 +82,6 @@
 		"react-jss": "^8.6.1",
 		"react-redux": "^5.0.4",
 		"react-responsive": "^5.0.0",
-		"react-router-dom": "^4.1.1",
 		"react-router-tabs": "^1.2.0",
 		"react-tooltip": "^3.6.1",
 		"react-typeform-embed": "^0.2.0",
