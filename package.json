@@ -88,7 +88,8 @@
 		"react-typeform-embed": "^0.2.1",
 		"redux": "^3.6.0",
 		"redux-form": "^7.1.2",
-		"redux-thunk": "^2.2.0"
+		"redux-thunk": "^2.2.0",
+		"svg-to-react-cli": "^1.5.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.0.0-rc.2",
