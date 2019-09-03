@@ -3,11 +3,9 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
-const Log = require('log')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
-const log = new Log('info')
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
 const server = require('../../server')
 const PersonModel = require('../../persons/schema/mongoose-schema')
@@ -318,8 +316,6 @@ describe('/pregnancy-centers/near-me filter combinations', () => {
 			prcName: 'some valid',
 		}
 
-		log.info(pregnancyCenter)
-
 		await PregnancyCenterModel.create(pregnancyCenter)
 
 		await mockAuthenticate()
@@ -349,8 +345,6 @@ describe('/pregnancy-centers/near-me filter combinations', () => {
 			prcName: 'outOfBusiness',
 		}
 
-		log.info(pregnancyCenter)
-
 		await PregnancyCenterModel.create(pregnancyCenter)
 
 		await mockAuthenticate()
@@ -379,8 +373,6 @@ describe('/pregnancy-centers/near-me filter combinations', () => {
 			...doNotList,
 			prcName: 'Do not list',
 		}
-
-		log.info(pregnancyCenter)
 
 		await PregnancyCenterModel.create(pregnancyCenter)
 
