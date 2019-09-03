@@ -115,7 +115,7 @@
 		"pretty-quick": "^1.5.1",
 		"react-addons-test-utils": "^15.6.2",
 		"react-test-renderer": "^16.9.0",
-		"style-loader": "^0.22.1",
+		"style-loader": "^1.0.0",
 		"svg-to-react-cli": "^1.5.0",
 		"webpack": "^4.39.3",
 		"webpack-cli": "^3.3.7"
