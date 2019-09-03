@@ -4,13 +4,11 @@
 const _ = require('lodash')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const Log = require('log')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
-const log = new Log('info')
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
 const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
 const server = require('../../server')
