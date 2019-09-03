@@ -113,7 +113,7 @@
 		"jsdom": "9.5.0",
 		"prettier": "1.12.1",
 		"pretty-quick": "^1.5.1",
-		"react-addons-test-utils": "15.3.2",
+		"react-addons-test-utils": "^15.6.2",
 		"react-test-renderer": "^16.9.0",
 		"style-loader": "^0.22.1",
 		"svg-to-react-cli": "^1.5.0",
