@@ -73,8 +73,6 @@
 		"morgan": "^1.8.1",
 		"passport": "^0.3.2",
 		"passport-facebook-token": "^3.3.0",
-		"preact": "^6.4.0",
-		"preact-compat": "^3.9.3",
 		"ramda": "0.26.1",
 		"react": "^16.9.0",
 		"react-dom": "^16.9.0",
