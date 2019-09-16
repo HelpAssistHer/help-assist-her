@@ -1,7 +1,6 @@
 'use strict'
 const _ = require('lodash')
 const omit = require('lodash/fp/omit')
-const Joi = require('joi')
 const R = require('ramda')
 const PersonModel = require('../persons/schema/mongoose-schema')
 const personSchemaJoi = require('../persons/schema/joi-schema')
@@ -126,9 +125,8 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 	}
 
 	// Validate for both creating and updating
-	const { error, value } = await Joi.validate(
+	const { error, value } = await personSchemaJoi.validate(
 		primaryContactPerson,
-		personSchemaJoi,
 		{
 			abortEarly: false,
 		},
@@ -165,10 +163,9 @@ const handlePrimaryContactPerson = async pregnancyCenter => {
 }
 
 const validateDocument = async (joiSchema, documentObj) => {
-	const { error, value } = await Joi.validate(documentObj, joiSchema, {
+	const { error, value } = await joiSchema.validate(documentObj, {
 		abortEarly: false,
 	})
-	// await Joi.validate() returns an obj of form { error: null, value: validatedData}
 	if (error) {
 		throw error
 	}

@@ -61,7 +61,6 @@
 		"express-boom": "^2.0.0",
 		"express-session": "^1.15.2",
 		"history": "^4.4.0",
-		"joi-phone-validator": "^1.0.0",
 		"lodash": "4.17.13",
 		"log": "^1.4.0",
 		"mapbox": "^1.0.0-beta5",

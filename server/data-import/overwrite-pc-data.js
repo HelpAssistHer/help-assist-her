@@ -3,7 +3,6 @@
 const config = require('config')
 const EJSON = require('mongodb-extended-json')
 const fs = require('fs')
-const Joi = require('joi')
 const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
@@ -38,7 +37,7 @@ const getPregnancyCenterData = async () => {
 }
 
 const validateAndAddLocation = async (joiSchema, model, doc) => {
-	let result = await Joi.validate(doc, joiSchema, {
+	let result = await joiSchema.validate(doc, {
 		abortEarly: false,
 	})
 

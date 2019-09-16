@@ -1,8 +1,7 @@
 'use strict'
 
-const Joi = require('joi')
-const phoneValidator = require('joi-phone-validator')
-
+const Joi = require('@hapi/joi')
+const isObjectId = require('../../util/is-object-id')
 const helpers = require('../../pregnancy-centers/schema/helpers.js')
 const {
 	addressSchemaJoi,
@@ -19,12 +18,16 @@ const fqhcSchemaJoi = Joi.object().keys({
 	doNotList: Joi.boolean(),
 	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
-	inVerification: Joi.string().allow(null),
+	inVerification: Joi.any()
+		.custom(isObjectId)
+		.allow(null),
 	fqhcName: Joi.string(),
 	notes: Joi.string(),
 	otherServices: Joi.string(),
 	outOfBusiness: Joi.boolean(),
-	phone: phoneValidator.phone().validate(),
+	phone: Joi.string()
+		.trim()
+		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/),
 	services: helpers.getPregnancyCenterServicesSchema(Joi.boolean()),
 	verifiedData: {
 		address: dateUserActionSchemaJoi,
