@@ -1,6 +1,7 @@
 'use strict'
 
 const config = require('config')
+// Note that EJSON was updated without testing
 const EJSON = require('mongodb-extjson')
 const fs = require('fs')
 const Joi = require('joi')
