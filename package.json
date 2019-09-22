@@ -68,7 +68,7 @@
 		"mocha": "^3.2.0",
 		"moment": "2.19.3",
 		"mongodb": "^2.2.16",
-		"mongodb-extended-json": "^1.9.0",
+		"mongodb-extjson": "^3.0.3",
 		"mongoose": "^5.0.16",
 		"morgan": "^1.8.1",
 		"passport": "^0.3.2",
