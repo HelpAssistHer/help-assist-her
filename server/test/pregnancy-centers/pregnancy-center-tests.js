@@ -14,76 +14,27 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
-const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
-const server = require('../server')
-const UserModel = require('../users/schema/mongoose-schema')
-const PersonModel = require('../persons/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
+const server = require('../../server')
+const UserModel = require('../../users/schema/mongoose-schema')
+const PersonModel = require('../../persons/schema/mongoose-schema')
+
+const {
+	mockAuthenticate,
+	assertUnauthenticatedError,
+	assertError,
+	beforeEachPregnancyCenter,
+	importTest,
+} = require('../helpers')
 
 chai.use(chaiHttp)
 
-// Allows the middleware to think we're already authenticated.
-async function mockAuthenticate() {
-	server.request.isAuthenticated = function() {
-		return true
-	}
-	try {
-		server.request.user = await UserModel.findOne({ displayName: 'Kate Sills' })
-	} catch (err) {
-		log.error('ERROR IN MOCKAUTHENTICATE', err)
-	}
-}
-
-// Allows the middleware to think we are *not* authenticated
-function mockUnauthenticate() {
-	server.request.isAuthenticated = function() {
-		return false
-	}
-	server.request.user = null
-}
-
-function assertError(res, statusCode, error, message = null, data = null) {
-	res.should.have.status(statusCode)
-	res.body.should.have.property('statusCode')
-	res.body.should.have.property('error')
-
-	if (message) {
-		res.body.should.have.property('message')
-		res.body.message.should.equal(message)
-	}
-
-	if (data) {
-		res.body.should.have.property('data')
-		res.body.data.should.equal(data)
-	}
-
-	res.body.statusCode.should.equal(statusCode)
-	res.body.error.should.equal(error)
-}
-
-function assertUnauthenticatedError(res) {
-	assertError(res, 401, 'Unauthorized', 'User is not logged in.')
-}
-
-//Our parent block
 describe('PregnancyCenters', () => {
-	beforeEach(async () => {
-		//Before each test we empty the database
-		mockUnauthenticate()
-		await PregnancyCenterModel.remove({})
-		await UserModel.remove({})
-		await PregnancyCenterHistoryModel.remove({})
-		await PersonModel.remove({})
-		const me = new UserModel({
-			displayName: 'Kate Sills',
-		})
-		await me.save()
-		const someoneElse = new UserModel({
-			displayName: 'Someone Else',
-		})
-		await someoneElse.save()
-	})
+	beforeEach(beforeEachPregnancyCenter)
+
+	importTest('near-me', './pregnancy-centers/near-me-tests.js')
 
 	/*
 	 * Test the /GET /api/pregnancy-centers/open-now route w/o authentication
@@ -327,191 +278,6 @@ describe('PregnancyCenters', () => {
 				'2017-04-16T23:33:17.220Z',
 			)
 			res.body.verifiedData.phone.userId.should.equal(testUser._id.toString())
-		})
-	})
-
-	/*
-	 * Test the GET /api/pregnancy-centers/near-me' route with authentication
-	 */
-	describe('/GET /api/pregnancy-centers/near-me', () => {
-		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
-			const primaryContactPerson = new PersonModel({
-				firstName: 'Joanna',
-				lastName: 'Smith',
-				email: 'email@email.org',
-				phone: '+18884442222',
-			})
-			await primaryContactPerson.save()
-
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				primaryContactPerson: primaryContactPerson,
-				prcName: 'Birthright of Albany',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			// copy of above, but outOfBusiness
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				outOfBusiness: true,
-				primaryContactPerson: primaryContactPerson,
-				prcName: 'Birthright of Albany - outOfBusiness',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '23-40 Astoria Boulevard\nAstoria, NY 11102',
-					location: {
-						type: 'Point',
-						coordinates: [-73.9241081, 40.771253],
-					},
-				},
-				prcName: 'The Bridge To Life, Inc.',
-				phone: '+17182743577',
-				email: 'thebridgetolife@verizon.net',
-				website: 'http://www.thebridgetolife.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await mockAuthenticate()
-			const res = await chai
-				.request(server)
-				.get(
-					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
-				)
-
-			res.should.have.status(200)
-			res.body.should.be.a('array')
-			res.body.length.should.be.eql(1)
-			res.body[0].prcName.should.be.eql('Birthright of Albany')
-		})
-	})
-
-	describe('/pregnancy-centers/near-me', () => {
-		it('the near-me endpoint should only return verified resources', async () => {
-			// Verified before 10-31-18
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'Verified before 10-31-18',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-08-01'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			// Verified after 10-31-18
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'Verified after 10-31-18',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-01'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			// No verification data for prcName
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'No verification data for prcName',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await mockAuthenticate()
-			const res = await chai
-				.request(server)
-				.get(
-					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
-				)
-
-			res.should.have.status(200)
-			res.body.should.be.a('array')
-			res.body.length.should.be.eql(1)
-			res.body[0].prcName.should.be.eql('Verified after 10-31-18')
 		})
 	})
 
