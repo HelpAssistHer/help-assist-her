@@ -4,79 +4,28 @@
 const _ = require('lodash')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const Log = require('log')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
-const log = new Log('info')
-const FQHCModel = require('../fqhcs/schema/mongoose-schema')
-const FQHCHistoryModel = require('../fqhc-history/schema/mongoose-schema')
-const server = require('../server')
-const UserModel = require('../users/schema/mongoose-schema')
+const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
+const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
+const server = require('../../server')
+const UserModel = require('../../users/schema/mongoose-schema')
 
 chai.use(chaiHttp)
 
-// Allows the middleware to think we're already authenticated.
-async function mockAuthenticate() {
-	server.request.isAuthenticated = function() {
-		return true
-	}
-	try {
-		server.request.user = await UserModel.findOne({ displayName: 'Kate Sills' })
-	} catch (err) {
-		log.err(err)
-	}
-}
-
-// Allows the middleware to think we are *not* authenticated
-function mockUnauthenticate() {
-	server.request.isAuthenticated = function() {
-		return false
-	}
-	server.request.user = null
-}
-
-function assertError(res, statusCode, error, message = null, data = null) {
-	res.should.have.status(statusCode)
-	res.body.should.have.property('statusCode')
-	res.body.should.have.property('error')
-
-	if (message) {
-		res.body.should.have.property('message')
-		res.body.message.should.equal(message)
-	}
-
-	if (data) {
-		res.body.should.have.property('data')
-		res.body.data.should.equal(data)
-	}
-
-	res.body.statusCode.should.equal(statusCode)
-	res.body.error.should.equal(error)
-}
-
-function assertUnauthenticatedError(res) {
-	assertError(res, 401, 'Unauthorized', 'User is not logged in.')
-}
+const {
+	mockAuthenticate,
+	assertUnauthenticatedError,
+	assertError,
+	beforeEachFQHC,
+} = require('../helpers')
 
 //Our parent block
 describe('FQHCs', () => {
-	beforeEach(async () => {
-		//Before each test we empty the database
-		mockUnauthenticate()
-		await FQHCModel.remove({})
-		await UserModel.remove({})
-		const me = new UserModel({
-			displayName: 'Kate Sills',
-		})
-		await me.save()
-		const someoneElse = new UserModel({
-			displayName: 'Someone Else',
-		})
-		await someoneElse.save()
-	})
+	beforeEach(beforeEachFQHC)
 
 	/*
 	 * Test the /GET /api/fqhcs/verify route w/o authentication
