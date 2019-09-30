@@ -1,12 +1,11 @@
 'use strict'
 
-const Joi = require('joi')
-const objectIdValidator = require('../../util/object-id-validator.js')
+const Joi = require('@hapi/joi')
+const isObjectId = require('../../util/is-object-id')
 
 const pointSchemaJoi = Joi.object().keys({
-	_id: objectIdValidator
-		.objectId()
-		.isValid()
+	_id: Joi.any()
+		.custom(isObjectId)
 		.allow(null),
 	type: Joi.string()
 		.valid('Point')
@@ -28,9 +27,8 @@ const pointSchemaJoi = Joi.object().keys({
 })
 
 const addressSchemaJoi = Joi.object().keys({
-	_id: objectIdValidator
-		.objectId()
-		.isValid()
+	_id: Joi.any()
+		.custom(isObjectId)
 		.allow(null),
 	city: Joi.string(),
 	googlePlaceId: Joi.string(), // we can store the google place ID according to TOS
@@ -70,14 +68,12 @@ const hoursSchemaJoi = Joi.object().keys({
 })
 
 const dateUserActionSchemaJoi = Joi.object().keys({
-	_id: objectIdValidator
-		.objectId()
-		.isValid()
+	_id: Joi.any()
+		.custom(isObjectId)
 		.allow(null),
 	date: Joi.date().iso(),
-	userId: objectIdValidator
-		.objectId()
-		.isValid()
+	userId: Joi.any()
+		.custom(isObjectId)
 		.allow(null),
 	verified: Joi.boolean().default(false),
 })

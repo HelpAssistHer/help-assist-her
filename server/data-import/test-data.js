@@ -1,7 +1,6 @@
 'use strict'
 
 const config = require('config')
-const Joi = require('joi')
 const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
@@ -191,9 +190,8 @@ async function reimport() {
 		website: 'http://www.alphacare.com',
 	}
 
-	const validationObj = await Joi.validate(
+	const validationObj = await pregnancyCenterSchemaJoi.validate(
 		pregnancyCenter,
-		pregnancyCenterSchemaJoi,
 		{
 			abortEarly: false,
 		},

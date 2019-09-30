@@ -4,7 +4,6 @@ const config = require('config')
 // Note that EJSON was updated without testing
 const EJSON = require('mongodb-extjson')
 const fs = require('fs')
-const Joi = require('joi')
 const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
@@ -41,7 +40,7 @@ const getFqhcData = async () => {
 }
 
 const validateAndAddLocation = async (joiSchema, model, doc) => {
-	let result = await Joi.validate(doc, joiSchema, {
+	let result = await joiSchema.validate(doc, {
 		abortEarly: false,
 	})
 
