@@ -19,7 +19,7 @@ const Header = ({ classes }) => {
 				<div>
 					<img
 						className={classes.imagePhone}
-						src="../img/julia-with-flowers-phone.jpg"
+						src="../img/homepage-collage.png"
 						alt="Two Close Friends"
 					/>
 					<div className={classes.headerContainerPhone}>
@@ -54,7 +54,7 @@ const Header = ({ classes }) => {
 
 					<img
 						className={classes.imageTablet}
-						src="../img/julia-with-flowers.jpg"
+						src="../img/homepage-collage.png"
 						alt="Woman with flowers"
 					/>
 				</div>
@@ -76,7 +76,7 @@ const Header = ({ classes }) => {
 
 					<img
 						className={classes.imageDesktop}
-						src="../img/julia-with-flowers.jpg"
+						src="../img/homepage-collage.png"
 						alt="Woman with flowers"
 					/>
 				</div>
