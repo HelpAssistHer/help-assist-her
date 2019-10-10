@@ -25,7 +25,7 @@ brew install python3
 ## Install Yarn
 
 ```
-brew install yarn --without-node
+brew install yarn --ignore-dependencies
 ```
 
 ## Install NVM
@@ -38,10 +38,10 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | b
 
 ## Install Node
 
-We are using node v10.4.0
+We are using node v10.16.3
 
 ```
-nvm install 10.4.0
+nvm install 10.16.3
 ```
 
 ## Install Node Modules and Global Dependencies
@@ -108,8 +108,8 @@ yarn run watch
 sudo apt-get install build-essential checkinstall
 sudo apt-get install libssl-dev
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-nvm install 10.4.0
-nvm use 10.4.0
+nvm install 10.16.3
+nvm use 10.16.3
 nvm alias default node
 ```
 
