@@ -28,19 +28,21 @@ const LogoAndNavigation = ({ classes }) => (
 
 		<Tablet>
 			<div className={classes.headerDesktop}>
-				<div className={classes.logoDesktop}>
-					<Link to="/mini-app">
-						<LogoBetaBlack height={33} width={208} />
+				<Link to="/mini-app">
+					<LogoBetaBlack height={33} width={208} />
+				</Link>
+				<div className={classes.linksDesktop}>
+					<Link to="/about" className={classes.navigationLinkDesktop}>
+						About
 					</Link>
-					<div className={classes.linksDesktop}>
-						<Link to="/about" className={classes.navigationLinkDesktop}>
-							About
-						</Link>
-						<Spacer width="32px" />
-						<Link to="/feedback" className={classes.navigationLinkDesktop}>
-							Feedback
-						</Link>
-					</div>
+					<Spacer width="32px" />
+					<Link to="/feedback" className={classes.navigationLinkDesktop}>
+						Feedback
+					</Link>
+					<Spacer width="52px" />
+					<Link to="/emergency">
+						<EmergencyPhoneIcon height={38} width={38} />
+					</Link>
 				</div>
 			</div>
 		</Tablet>

@@ -8,82 +8,32 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
-const Joi = require('joi')
 const Log = require('log')
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
-const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
-const server = require('../server')
-const UserModel = require('../users/schema/mongoose-schema')
-const PersonModel = require('../persons/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
+const server = require('../../server')
+const UserModel = require('../../users/schema/mongoose-schema')
+const PersonModel = require('../../persons/schema/mongoose-schema')
+
+const {
+	mockAuthenticate,
+	assertUnauthenticatedError,
+	assertError,
+	beforeEachPregnancyCenter,
+	importTest,
+} = require('../helpers')
 
 chai.use(chaiHttp)
 
-// Allows the middleware to think we're already authenticated.
-async function mockAuthenticate() {
-	server.request.isAuthenticated = function() {
-		return true
-	}
-	try {
-		server.request.user = await UserModel.findOne({ displayName: 'Kate Sills' })
-	} catch (err) {
-		log.error('ERROR IN MOCKAUTHENTICATE', err)
-	}
-}
-
-// Allows the middleware to think we are *not* authenticated
-function mockUnauthenticate() {
-	server.request.isAuthenticated = function() {
-		return false
-	}
-	server.request.user = null
-}
-
-function assertError(res, statusCode, error, message = null, data = null) {
-	res.should.have.status(statusCode)
-	res.body.should.have.property('statusCode')
-	res.body.should.have.property('error')
-
-	if (message) {
-		res.body.should.have.property('message')
-		res.body.message.should.equal(message)
-	}
-
-	if (data) {
-		res.body.should.have.property('data')
-		res.body.data.should.equal(data)
-	}
-
-	res.body.statusCode.should.equal(statusCode)
-	res.body.error.should.equal(error)
-}
-
-function assertUnauthenticatedError(res) {
-	assertError(res, 401, 'Unauthorized', 'User is not logged in.')
-}
-
-//Our parent block
 describe('PregnancyCenters', () => {
-	beforeEach(async () => {
-		//Before each test we empty the database
-		mockUnauthenticate()
-		await PregnancyCenterModel.remove({})
-		await UserModel.remove({})
-		await PregnancyCenterHistoryModel.remove({})
-		await PersonModel.remove({})
-		const me = new UserModel({
-			displayName: 'Kate Sills',
-		})
-		await me.save()
-		const someoneElse = new UserModel({
-			displayName: 'Someone Else',
-		})
-		await someoneElse.save()
-	})
+	beforeEach(beforeEachPregnancyCenter)
+
+	importTest('near-me', './pregnancy-centers/near-me-tests.js')
 
 	/*
 	 * Test the /GET /api/pregnancy-centers/open-now route w/o authentication
@@ -327,191 +277,6 @@ describe('PregnancyCenters', () => {
 				'2017-04-16T23:33:17.220Z',
 			)
 			res.body.verifiedData.phone.userId.should.equal(testUser._id.toString())
-		})
-	})
-
-	/*
-	 * Test the GET /api/pregnancy-centers/near-me' route with authentication
-	 */
-	describe('/GET /api/pregnancy-centers/near-me', () => {
-		it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
-			const primaryContactPerson = new PersonModel({
-				firstName: 'Joanna',
-				lastName: 'Smith',
-				email: 'email@email.org',
-				phone: '+18884442222',
-			})
-			await primaryContactPerson.save()
-
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				primaryContactPerson: primaryContactPerson,
-				prcName: 'Birthright of Albany',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			// copy of above, but outOfBusiness
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				outOfBusiness: true,
-				primaryContactPerson: primaryContactPerson,
-				prcName: 'Birthright of Albany - outOfBusiness',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '23-40 Astoria Boulevard\nAstoria, NY 11102',
-					location: {
-						type: 'Point',
-						coordinates: [-73.9241081, 40.771253],
-					},
-				},
-				prcName: 'The Bridge To Life, Inc.',
-				phone: '+17182743577',
-				email: 'thebridgetolife@verizon.net',
-				website: 'http://www.thebridgetolife.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-15'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await mockAuthenticate()
-			const res = await chai
-				.request(server)
-				.get(
-					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
-				)
-
-			res.should.have.status(200)
-			res.body.should.be.a('array')
-			res.body.length.should.be.eql(1)
-			res.body[0].prcName.should.be.eql('Birthright of Albany')
-		})
-	})
-
-	describe('/pregnancy-centers/near-me', () => {
-		it('the near-me endpoint should only return verified resources', async () => {
-			// Verified before 10-31-18
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'Verified before 10-31-18',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-08-01'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			// Verified after 10-31-18
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'Verified after 10-31-18',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					prcName: {
-						date: new Date('2018-11-01'),
-						verified: true,
-					},
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			// No verification data for prcName
-			await PregnancyCenterModel.create({
-				address: {
-					line1: '586 Central Ave.\nAlbany, NY 12206',
-					location: {
-						type: 'Point',
-						coordinates: [-73.7814005, 42.6722152],
-					},
-				},
-				prcName: 'No verification data for prcName',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
-				services: {},
-				verifiedData: {
-					address: { verified: true },
-					phone: { verified: true },
-					website: { verified: true },
-				},
-			})
-
-			await mockAuthenticate()
-			const res = await chai
-				.request(server)
-				.get(
-					'/api/pregnancy-centers/near-me?lng=-73.781332&lat=42.6721989&miles=5',
-				)
-
-			res.should.have.status(200)
-			res.body.should.be.a('array')
-			res.body.length.should.be.eql(1)
-			res.body[0].prcName.should.be.eql('Verified after 10-31-18')
 		})
 	})
 
@@ -1659,18 +1424,11 @@ describe('PregnancyCenters', () => {
 			const testPCObj1 = {
 				address: 'My address', // should be an object with line1, line2, city, etc.
 			}
-
-			const validationObj = await Joi.validate(
-				testPCObj1,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "address" fails because ["address" must be an object]',
-			)
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj1, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal('"address" must be of type object')
 		})
 	})
 
@@ -1694,17 +1452,13 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj2,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj2, {
+				abortEarly: false,
+			})
 
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]',
+			error.name.should.equal('ValidationError')
+			error.message.should.equal(
+				'"address.location.coordinates[0]" must be less than or equal to -66. "address.location.coordinates[1]" must be larger than or equal to 23',
 			)
 		})
 	})
@@ -1729,16 +1483,12 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj3,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "address" fails because [child "location" fails because [child "coordinates" fails because ["coordinates" at position 0 fails because ["0" must be less than or equal to -66], "coordinates" at position 1 fails because ["1" must be larger than or equal to 23]]]]',
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj3, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal(
+				'"address.location.coordinates[0]" must be less than or equal to -66. "address.location.coordinates[1]" must be larger than or equal to 23',
 			)
 		})
 	})
@@ -1757,18 +1507,16 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
+			const { error, value } = await pregnancyCenterSchemaJoi.validate(
 				testPCObj6,
-				pregnancyCenterSchemaJoi,
 				{
 					abortEarly: false,
 				},
 			)
-			if (validationObj.error) {
-				throw validationObj.error
+			if (error) {
+				throw error
 			}
-			const validatedData = validationObj.value
-			validatedData.hours.should.deep.equal({
+			value.hours.should.deep.equal({
 				2: {
 					open: 800,
 					close: 1700,
@@ -1791,17 +1539,11 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj7,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "hours" fails because ["tues" is not allowed]',
-			)
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj7, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal('"hours.tues" is not allowed')
 		})
 	})
 
@@ -1819,19 +1561,16 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
+			const { error, value } = await pregnancyCenterSchemaJoi.validate(
 				testPCObj8,
-				pregnancyCenterSchemaJoi,
 				{
 					abortEarly: false,
 				},
 			)
-			if (validationObj.error) {
-				throw validationObj.error
+			if (error) {
+				throw error
 			}
-			const validatedData = validationObj.value
-
-			validatedData.hours.should.deep.equal({
+			value.hours.should.deep.equal({
 				1: {
 					open: 800,
 					close: 1600,
@@ -1849,16 +1588,12 @@ describe('PregnancyCenters', () => {
 				phone: '888.444.2222',
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj9,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "phone" fails because ["phone" needs to be a valid phone number according to E.164 international format]',
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj9, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal(
+				`"phone" with value "888.444.2222" fails to match the required pattern: /\\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/`,
 			)
 		})
 	})
@@ -1872,18 +1607,16 @@ describe('PregnancyCenters', () => {
 				phone: '+18884442222',
 			}
 
-			const validationObj = await Joi.validate(
+			const { error, value } = await pregnancyCenterSchemaJoi.validate(
 				testPCObj10,
-				pregnancyCenterSchemaJoi,
 				{
 					abortEarly: false,
 				},
 			)
-			if (validationObj.error) {
-				throw validationObj.error
+			if (error) {
+				throw error
 			}
-			const validatedData = validationObj.value
-			validatedData.phone.should.equal('+18884442222')
+			value.phone.should.equal('+18884442222')
 		})
 	})
 
@@ -1899,17 +1632,11 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj12,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "services" fails because ["Ulllltrasound" is not allowed]',
-			)
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj12, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal('"services.Ulllltrasound" is not allowed')
 		})
 	})
 
@@ -1926,16 +1653,12 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj13,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "verifiedData" fails because [child "address" fails because ["dateVerified" is not allowed]]',
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj13, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal(
+				'"verifiedData.address.dateVerified" is not allowed',
 			)
 		})
 	})
@@ -1955,20 +1678,16 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const validationObj = await Joi.validate(
+			const { error, value } = await pregnancyCenterSchemaJoi.validate(
 				testPCObj14,
-				pregnancyCenterSchemaJoi,
 				{
 					abortEarly: false,
 				},
 			)
-			if (validationObj.error) {
-				throw validationObj.error
+			if (error) {
+				throw error
 			}
-			const validatedData = validationObj.value
-			validatedData.verifiedData.address.userId.should.equal(
-				'58e46a8d210140d7e47bf58b',
-			)
+			value.verifiedData.address.userId.should.equal('58e46a8d210140d7e47bf58b')
 		})
 	})
 
@@ -1981,17 +1700,11 @@ describe('PregnancyCenters', () => {
 				inVerification: 'dwdss',
 			}
 
-			const validationObj = await Joi.validate(
-				testPCObj15,
-				pregnancyCenterSchemaJoi,
-				{
-					abortEarly: false,
-				},
-			)
-			validationObj.error.name.should.equal('ValidationError')
-			validationObj.error.message.should.equal(
-				'child "inVerification" fails because ["inVerification" needs to be a valid MongoDB ObjectId]',
-			)
+			const { error } = await pregnancyCenterSchemaJoi.validate(testPCObj15, {
+				abortEarly: false,
+			})
+			error.name.should.equal('ValidationError')
+			error.message.should.equal('"inVerification" contains an invalid value')
 		})
 	})
 
@@ -2006,15 +1719,16 @@ describe('PregnancyCenters', () => {
 				inVerification: testUser._id,
 			}
 
-			const validationObj = await Joi.validate(
+			const { error, value } = await pregnancyCenterSchemaJoi.validate(
 				testPCObj16,
-				pregnancyCenterSchemaJoi,
 				{
 					abortEarly: false,
 				},
 			)
-			const validatedData = validationObj.value
-			validatedData.inVerification.should.equal(testUser._id)
+			if (error) {
+				throw error
+			}
+			value.inVerification.should.equal(testUser._id)
 		})
 	})
 })

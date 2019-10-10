@@ -1,11 +1,10 @@
-const importTest = (name, path) => {
-	describe(name, () => {
-		require(path)
-	})
-}
+const { importTest } = require('./helpers')
 
 describe('top', () => {
-	importTest('Pregnancy Center Tests', './pregnancy-center-tests.js')
-	importTest('FQHC Tests', './fqhc-tests.js')
+	importTest(
+		'Pregnancy Center Tests',
+		'./pregnancy-centers/pregnancy-center-tests.js',
+	)
+	importTest('FQHC Tests', './fqhcs/fqhc-tests.js')
 	importTest('Unit Tests', './unit.js')
 })

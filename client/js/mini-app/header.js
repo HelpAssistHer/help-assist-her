@@ -7,10 +7,10 @@ import LogoAndNavigation from './logo-and-navigation'
 
 const Header = ({ classes }) => {
 	const titleText1 = 'Empowering Women'
-	const titleText2 = 'with Options.'
+	const titleText2 = 'with Options'
 
 	const descriptionText =
-		'Verified and affordable women’s healthcare and wellness resources at your fingertips, right when you need them most. We take the headache out of finding care you can trust.'
+		'Verified and affordable women’s healthcare and wellness resources at your fingertips, right when you need them most.'
 
 	return (
 		<div>
@@ -119,7 +119,7 @@ const styles = {
 		'flex-direction': 'column',
 		'align-items': 'center',
 		'justify-content': 'center',
-		color: '#F5EDE6',
+		color: '#FFFFFF',
 	},
 	titleTextPhone: {
 		'max-width': '250px',

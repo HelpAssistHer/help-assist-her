@@ -10,9 +10,7 @@ import Spacer from '../components/spacer'
 const TITLE_TEXT = "We're listening."
 
 const BODY_TEXT_1 =
-	'We want to hear what you have to say. Our goal is to continually ' +
-	"improve women's access to affordable, reliable, and non-violent healthcare options, " +
-	'regardless of their situation.'
+	"We want to hear what you have to say. Our goal is to continually improve women's access to local, affordable, and reliable healthcare options."
 
 const BODY_TEXT_2 = 'Got something you want to tell us? Run into an issue?'
 
