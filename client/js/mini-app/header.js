@@ -16,23 +16,21 @@ const Header = ({ classes }) => {
 		<div>
 			<LogoAndNavigation />
 			<Phone>
-				<div>
+				<div className={classes.headerContainerPhone}>
 					<img
 						className={classes.imagePhone}
 						src="../img/homepage-collage.png"
-						alt="Two Close Friends"
+						alt="Women"
 					/>
-					<div className={classes.headerContainerPhone}>
-						<div className={classes.headerText}>
-							<div className={classes.titleTextPhone}>
-								{titleText1}
-								<br />
-								{titleText2}
-							</div>
-							<Spacer height="20px" />
-							<div className={classes.descriptionTextPhone}>
-								{descriptionText}
-							</div>
+					<div className={classes.headerText}>
+						<div className={classes.titleTextPhone}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
+						<Spacer height="20px" />
+						<div className={classes.descriptionTextPhone}>
+							{descriptionText}
 						</div>
 					</div>
 				</div>
@@ -55,7 +53,7 @@ const Header = ({ classes }) => {
 					<img
 						className={classes.imageTablet}
 						src="../img/homepage-collage.png"
-						alt="Woman with flowers"
+						alt="Women"
 					/>
 				</div>
 			</Tablet>
@@ -77,7 +75,7 @@ const Header = ({ classes }) => {
 					<img
 						className={classes.imageDesktop}
 						src="../img/homepage-collage.png"
-						alt="Woman with flowers"
+						alt="Women"
 					/>
 				</div>
 			</Desktop>
@@ -87,13 +85,12 @@ const Header = ({ classes }) => {
 
 const styles = {
 	headerContainerPhone: {
-		height: '300px',
+		height: '600px',
 		display: 'flex',
 		'align-items': 'center',
 		'text-align': 'center',
 		'flex-direction': 'column',
 		'background-color': '#016454',
-		'margin-top': '-5px',
 	},
 	headerContainerTablet: {
 		height: '68vh',
@@ -158,7 +155,7 @@ const styles = {
 		'line-height': '26px',
 	},
 	imagePhone: {
-		width: '100%',
+		height: '300px',
 		'margin-top': '55px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
