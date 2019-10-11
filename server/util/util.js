@@ -150,16 +150,17 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 }
 
 const handlePrimaryContactPerson = async pregnancyCenter => {
+	const updatedPregnancyCenter = pregnancyCenter
 	// handle the primaryContactPerson
 	const primaryContactPerson = await updateCreatePrimaryContactPerson(
 		pregnancyCenter.primaryContactPerson,
 	)
 	if (primaryContactPerson) {
-		pregnancyCenter.primaryContactPerson = primaryContactPerson
+		updatedPregnancyCenter.primaryContactPerson = primaryContactPerson
 	} else {
-		delete pregnancyCenter.primaryContactPerson
+		delete updatedPregnancyCenter.primaryContactPerson
 	}
-	return pregnancyCenter
+	return updatedPregnancyCenter
 }
 
 const validateDocument = async (joiSchema, documentObj) => {
