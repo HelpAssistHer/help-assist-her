@@ -17,6 +17,11 @@ const mapDispatchToProps = dispatch => {
 		changeFieldValue: (field, value) => {
 			dispatch(change('verificationPortal', field, value || ''))
 		},
+		handleVerificationFormSubmit: values => {
+			console.log('hitting the handleVerificationFormSubmit func')
+			console.log(values)
+			debugger
+		},
 	}
 }
 

@@ -7,7 +7,11 @@ import Button from '../../components/button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
 import { updateDoNotList } from '../do-not-list/action-creators'
 
-const VerificationPortal = ({ classes, resource }) => {
+const VerificationPortal = ({
+	classes,
+	resource,
+	handleVerificationFormSubmit,
+}) => {
 	const { outOfBusiness, doNotList } = resource
 
 	return (
@@ -32,6 +36,7 @@ const VerificationPortal = ({ classes, resource }) => {
 				<VerificationPortalForm
 					outOfBusiness={outOfBusiness}
 					doNotList={doNotList}
+					onSubmit={values => handleVerificationFormSubmit(values)}
 				/>
 				<Spacer height="100px" />
 			</div>
