@@ -53,15 +53,15 @@ class BusinessHours extends React.Component {
 					return (
 						<div className={classes.day} key={today}>
 							<div className={classes.dayStatus}>
-								<lable className={classes.lable}>{today}</lable>
+								<label className={classes.label}>{today}</label>
 								<div
 									onClick={() =>
 										this.openStateToggle(i, this.state.hours, changeFieldValue)
 									}
 									className={
 										closedAllDayStatus(i, this.state.hours)
-											? classNames(classes.lable, classes.closed)
-											: classNames(classes.lable, classes.open)
+											? classNames(classes.label, classes.closed)
+											: classNames(classes.label, classes.open)
 									}
 								>
 									Closed
@@ -99,7 +99,7 @@ const styles = {
 	dayStatus: {
 		'margin-left': '85px',
 	},
-	lable: {
+	label: {
 		display: 'inline-block',
 		width: '30%',
 		'max-width': '159.63px',
