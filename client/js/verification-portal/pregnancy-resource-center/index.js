@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { change } from 'redux-form'
-
+import { updateResource } from './action-creators.js'
 import VerificationPortal from './view'
 
 const mapStateToProps = state => {
@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
 		handleVerificationFormSubmit: values => {
 			console.log('hitting the handleVerificationFormSubmit func')
 			console.log(values)
-			debugger
+			updateResource(values)
 		},
 	}
 }

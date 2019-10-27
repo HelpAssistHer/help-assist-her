@@ -79,18 +79,21 @@ export async function updateResource(updatedResource) {
 		)
 	})
 
-	const transformedResource = {
-		...updatedResource,
-		hours: convertedHours,
-		services: _.mapValues(updatedResource.services, value => !!value),
-	}
+	const transformedResource = _.omitBy(
+		{
+			...updatedResource,
+			hours: convertedHours,
+			services: _.mapValues(updatedResource.services, value => !!value),
+		},
+		_.isNull || _.isUndefined,
+	)
 	// 5-12-18, I am commenting this out for now, as we want to keep the
 	// data verification simple for now. We will eventually add this back.
 	// primaryContactPerson: {
 	// 	_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
 	// 	...updatedResource.primaryContactPerson
 	// },
-
+	console.log('transformedResource: ', transformedResource)
 	return new Promise(async (resolve, reject) => {
 		const response = await fetch(
 			`/api/pregnancy-centers/${store.getState().resource._id}`,
@@ -106,7 +109,7 @@ export async function updateResource(updatedResource) {
 		)
 
 		const result = await response.json()
-
+		console.log(result)
 		if (response.status < 400) {
 			store.dispatch(setFormStatus('Success'))
 			resolve(result)
