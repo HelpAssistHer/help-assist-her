@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
@@ -35,6 +35,27 @@ const Header = ({ classes }) => {
 					</div>
 				</div>
 			</Phone>
+
+			<BigPhone>
+				<div className={classes.headerContainerBigPhone}>
+					<img
+						className={classes.imageBigPhone}
+						src="../img/homepage-collage.png"
+						alt="Women"
+					/>
+					<div className={classes.headerText}>
+						<div className={classes.titleTextBigPhone}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
+						<Spacer height="20px" />
+						<div className={classes.descriptionTextBigPhone}>
+							{descriptionText}
+						</div>
+					</div>
+				</div>
+			</BigPhone>
 
 			<Tablet>
 				<div className={classes.headerContainerTablet}>
@@ -92,6 +113,16 @@ const styles = {
 		height: '600px',
 		display: 'flex',
 		'align-items': 'center',
+		'justify-content': 'center',
+		'text-align': 'center',
+		'flex-direction': 'column',
+		'background-color': '#016454',
+	},
+	headerContainerBigPhone: {
+		height: '600px',
+		display: 'flex',
+		'align-items': 'center',
+		'justify-content': 'center',
 		'text-align': 'center',
 		'flex-direction': 'column',
 		'background-color': '#016454',
@@ -130,6 +161,12 @@ const styles = {
 		'font-size': '8vw',
 		'line-height': '11vw',
 	},
+	titleTextBigPhone: {
+		'max-width': '450px',
+		'font-family': 'hah-light',
+		'font-size': '6vw',
+		'line-height': '8vw',
+	},
 	titleTextTablet: {
 		'max-width': '30vw',
 		'font-family': 'hah-regular',
@@ -147,6 +184,13 @@ const styles = {
 		'font-family': 'hah-light',
 		'font-size': '4.5vw',
 		'line-height': '6vw',
+		'letter-spacing': '0.3px',
+	},
+	descriptionTextBigPhone: {
+		'max-width': '400px',
+		'font-family': 'hah-light',
+		'font-size': '3vw',
+		'line-height': '4.5vw',
 		'letter-spacing': '0.3px',
 	},
 	descriptionTextTablet: {
@@ -173,6 +217,10 @@ const styles = {
 	imagePhone: {
 		height: '210px',
 		'margin-top': '90px', // this is so it starts after the header/navigation
+	},
+	imageBigPhone: {
+		height: '230px',
+		'margin-top': '50px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
 		width: '90%',
