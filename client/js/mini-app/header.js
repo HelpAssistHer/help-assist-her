@@ -216,7 +216,7 @@ const styles = {
 	},
 	imagePhone: {
 		height: '210px',
-		'margin-top': '90px', // this is so it starts after the header/navigation
+		'margin-top': '40px', // this is so it starts after the header/navigation
 	},
 	imageBigPhone: {
 		height: '230px',
