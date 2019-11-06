@@ -97,10 +97,10 @@ const styles = {
 		'background-color': '#016454',
 	},
 	headerContainerTablet: {
-		height: '68vh',
+		height: '42vw',
 		'margin-top': '67px', // this is so it starts after the header/navigation
-		display: 'flex',
-		'align-items': 'center',
+		display: 'grid',
+		'grid-template-columns': '5% 40% 5% 45% 5%',
 		'text-align': 'center',
 		'background-color': '#016454',
 		overflow: 'hidden',
@@ -131,10 +131,10 @@ const styles = {
 		'line-height': '33px',
 	},
 	titleTextTablet: {
-		'max-width': '350px',
+		'max-width': '30vw',
 		'font-family': 'hah-regular',
-		'font-size': '50px',
-		'line-height': '60px',
+		'font-size': '4vw',
+		'line-height': '5vw',
 	},
 	titleTextDesktop: {
 		'max-width': '30vw',
@@ -149,10 +149,10 @@ const styles = {
 		'line-height': '20px',
 	},
 	descriptionTextTablet: {
-		'max-width': '30vw',
+		'max-width': '35vw',
 		'font-family': 'hah-light',
-		'font-size': '18px',
-		'line-height': '26px',
+		'font-size': '20px',
+		'line-height': '28px',
 	},
 	descriptionTextDesktop: {
 		'max-width': '25vw',
@@ -174,8 +174,7 @@ const styles = {
 		'margin-top': '55px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
-		width: '50%',
-		'object-fit': 'contain',
+		width: '90%',
 	},
 	imageDesktop: {
 		width: '90%',

@@ -2,8 +2,8 @@ import React from 'react'
 import Responsive from 'react-responsive'
 
 const PHONE_MIN = 320
-const PHONE_MAX = 767
-const TABLET_MIN = 768
+const PHONE_MAX = 849
+const TABLET_MIN = 850
 const TABLET_MAX = 1023
 const DESKTOP_MIN = 1024
 
