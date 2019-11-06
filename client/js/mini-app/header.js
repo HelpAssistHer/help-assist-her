@@ -126,13 +126,13 @@ const styles = {
 	},
 	titleTextPhone: {
 		'max-width': '330px',
-		'font-family': 'hah-light',
-		'font-size': '9vw',
-		'line-height': '12vw',
+		'font-family': 'hah-regular',
+		'font-size': '8vw',
+		'line-height': '11vw',
 	},
 	titleTextTablet: {
 		'max-width': '30vw',
-		'font-family': 'hah-light',
+		'font-family': 'hah-regular',
 		'font-size': '5vw',
 		'line-height': '6.5vw',
 	},
@@ -147,6 +147,7 @@ const styles = {
 		'font-family': 'hah-light',
 		'font-size': '4.5vw',
 		'line-height': '6vw',
+		'letter-spacing': '0.3px',
 	},
 	descriptionTextTablet: {
 		'max-width': '35vw',
@@ -170,7 +171,7 @@ const styles = {
 		'grid-column-end': 5,
 	},
 	imagePhone: {
-		height: '240px',
+		height: '210px',
 		'margin-top': '90px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
