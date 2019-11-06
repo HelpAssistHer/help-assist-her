@@ -2,7 +2,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import { Link } from 'react-router-dom'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoBetaBlack from '../components/icons/icon-components/logo-beta-black'
 import HamburgerMenu from '../components/icons/icon-components/hamburger-menu'
@@ -25,6 +25,22 @@ const LogoAndNavigation = ({ classes }) => (
 				</Link>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div className={classes.headerPhone}>
+				<Link to="/mini-app" className={classes.logoPhone}>
+					<LogoBetaBlack height={25} width={160} />
+				</Link>
+
+				<Link to="/emergency" className={classes.emergencyIconPhone}>
+					<EmergencyPhoneIcon height={24} width={24} />
+				</Link>
+
+				<Link to="/menu" className={classes.hamburgerMenuPhone}>
+					<HamburgerMenu />
+				</Link>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div className={classes.headerDesktop}>

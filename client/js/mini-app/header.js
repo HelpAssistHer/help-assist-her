@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoAndNavigation from './logo-and-navigation'
 
@@ -16,27 +16,46 @@ const Header = ({ classes }) => {
 		<div>
 			<LogoAndNavigation />
 			<Phone>
-				<div>
+				<div className={classes.headerContainerPhone}>
 					<img
 						className={classes.imagePhone}
-						src="../img/julia-with-flowers-phone.jpg"
-						alt="Two Close Friends"
+						src="../img/homepage-collage.png"
+						alt="Women"
 					/>
-					<div className={classes.headerContainerPhone}>
-						<div className={classes.headerText}>
-							<div className={classes.titleTextPhone}>
-								{titleText1}
-								<br />
-								{titleText2}
-							</div>
-							<Spacer height="20px" />
-							<div className={classes.descriptionTextPhone}>
-								{descriptionText}
-							</div>
+					<div className={classes.headerText}>
+						<div className={classes.titleTextPhone}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
+						<Spacer height="20px" />
+						<div className={classes.descriptionTextPhone}>
+							{descriptionText}
 						</div>
 					</div>
 				</div>
 			</Phone>
+
+			<BigPhone>
+				<div className={classes.headerContainerBigPhone}>
+					<img
+						className={classes.imageBigPhone}
+						src="../img/homepage-collage.png"
+						alt="Women"
+					/>
+					<div className={classes.headerText}>
+						<div className={classes.titleTextBigPhone}>
+							{titleText1}
+							<br />
+							{titleText2}
+						</div>
+						<Spacer height="20px" />
+						<div className={classes.descriptionTextBigPhone}>
+							{descriptionText}
+						</div>
+					</div>
+				</div>
+			</BigPhone>
 
 			<Tablet>
 				<div className={classes.headerContainerTablet}>
@@ -46,17 +65,19 @@ const Header = ({ classes }) => {
 							<br />
 							{titleText2}
 						</div>
-						<Spacer height="40px" />
+						<Spacer height="20px" />
 						<div className={classes.descriptionTextTablet}>
 							{descriptionText}
 						</div>
 					</div>
 
-					<img
-						className={classes.imageTablet}
-						src="../img/julia-with-flowers.jpg"
-						alt="Woman with flowers"
-					/>
+					<div className={classes.imageContainer}>
+						<img
+							className={classes.imageTablet}
+							src="../img/homepage-collage.png"
+							alt="Women"
+						/>
+					</div>
 				</div>
 			</Tablet>
 
@@ -74,11 +95,13 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<img
-						className={classes.imageDesktop}
-						src="../img/julia-with-flowers.jpg"
-						alt="Woman with flowers"
-					/>
+					<div className={classes.imageContainer}>
+						<img
+							className={classes.imageDesktop}
+							src="../img/homepage-collage.png"
+							alt="Women"
+						/>
+					</div>
 				</div>
 			</Desktop>
 		</div>
@@ -87,34 +110,45 @@ const Header = ({ classes }) => {
 
 const styles = {
 	headerContainerPhone: {
-		height: '300px',
+		height: '600px',
 		display: 'flex',
 		'align-items': 'center',
+		'justify-content': 'center',
 		'text-align': 'center',
 		'flex-direction': 'column',
 		'background-color': '#016454',
-		'margin-top': '-5px',
 	},
-	headerContainerTablet: {
-		height: '68vh',
-		'margin-top': '67px', // this is so it starts after the header/navigation
+	headerContainerBigPhone: {
+		height: '600px',
 		display: 'flex',
 		'align-items': 'center',
+		'justify-content': 'center',
+		'text-align': 'center',
+		'flex-direction': 'column',
+		'background-color': '#016454',
+	},
+	headerContainerTablet: {
+		height: '500px',
+		'margin-top': '67px', // this is so it starts after the header/navigation
+		display: 'grid',
+		'grid-template-columns': '5% 40% 5% 45% 5%',
 		'text-align': 'center',
 		'background-color': '#016454',
 		overflow: 'hidden',
 	},
 	headerContainerDesktop: {
-		height: '85vh',
+		height: '42vw',
 		'margin-top': '67px', // this is so it starts after the header/navigation
-		display: 'flex',
-		'align-items': 'center',
+		display: 'grid',
+		'grid-template-columns': '5% 40% 5% 45% 5%',
 		'text-align': 'center',
 		'background-color': '#016454',
 		overflow: 'hidden',
 	},
 	headerText: {
-		flex: '1 1 0',
+		'margin-top': '34px',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
@@ -122,52 +156,77 @@ const styles = {
 		color: '#FFFFFF',
 	},
 	titleTextPhone: {
-		'max-width': '250px',
+		'max-width': '330px',
+		'font-family': 'hah-regular',
+		'font-size': '8vw',
+		'line-height': '11vw',
+	},
+	titleTextBigPhone: {
+		'max-width': '450px',
 		'font-family': 'hah-light',
-		'font-size': '30px',
-		'line-height': '33px',
+		'font-size': '6vw',
+		'line-height': '8vw',
 	},
 	titleTextTablet: {
-		'max-width': '350px',
+		'max-width': '30vw',
 		'font-family': 'hah-regular',
-		'font-size': '50px',
-		'line-height': '60px',
+		'font-size': '5vw',
+		'line-height': '6.5vw',
 	},
 	titleTextDesktop: {
-		'max-width': '450px',
+		'max-width': '30vw',
 		'font-family': 'hah-regular',
-		'font-size': '60px',
-		'line-height': '70px',
+		'font-size': '4vw',
+		'line-height': '5vw',
 	},
 	descriptionTextPhone: {
-		'max-width': '270px',
-		'font-family': 'hah-regular',
-		'font-size': '14px',
-		'line-height': '20px',
+		'max-width': '300px',
+		'font-family': 'hah-light',
+		'font-size': '4.5vw',
+		'line-height': '6vw',
+		'letter-spacing': '0.3px',
+	},
+	descriptionTextBigPhone: {
+		'max-width': '400px',
+		'font-family': 'hah-light',
+		'font-size': '3vw',
+		'line-height': '4.5vw',
+		'letter-spacing': '0.3px',
 	},
 	descriptionTextTablet: {
-		'max-width': '30vw',
+		'max-width': '35vw',
 		'font-family': 'hah-light',
-		'font-size': '18px',
-		'line-height': '26px',
+		'font-size': '2.25vw',
+		'line-height': '3.25vw',
 	},
 	descriptionTextDesktop: {
-		'max-width': '30vw',
+		'max-width': '25vw',
 		'font-family': 'hah-light',
-		'font-size': '18px',
-		'line-height': '26px',
+		'font-size': '20px',
+		'line-height': '28px',
+	},
+	imageContainer: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'justify-content': 'center',
+		'align-items': 'center',
+		'margin-top': '34px',
+		'grid-column-start': 4,
+		'grid-column-end': 5,
 	},
 	imagePhone: {
-		width: '100%',
-		'margin-top': '55px', // this is so it starts after the header/navigation
+		height: '210px',
+		'margin-top': '40px', // this is so it starts after the header/navigation
+	},
+	imageBigPhone: {
+		height: '230px',
+		'margin-top': '50px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
-		width: '50%',
-		'object-fit': 'contain',
+		width: '90%',
 	},
 	imageDesktop: {
-		width: '50%',
-		'object-fit': 'contain',
+		width: '90%',
 	},
 }
 
