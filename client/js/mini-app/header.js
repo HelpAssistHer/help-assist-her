@@ -125,10 +125,10 @@ const styles = {
 		color: '#FFFFFF',
 	},
 	titleTextPhone: {
-		'max-width': '250px',
+		'max-width': '400px',
 		'font-family': 'hah-light',
-		'font-size': '30px',
-		'line-height': '33px',
+		'font-size': '8vw',
+		'line-height': '10vw',
 	},
 	titleTextTablet: {
 		'max-width': '30vw',
@@ -143,10 +143,10 @@ const styles = {
 		'line-height': '5vw',
 	},
 	descriptionTextPhone: {
-		'max-width': '270px',
+		'max-width': '370px',
 		'font-family': 'hah-regular',
-		'font-size': '14px',
-		'line-height': '20px',
+		'font-size': '3.25vw',
+		'line-height': '4.75vw',
 	},
 	descriptionTextTablet: {
 		'max-width': '35vw',
