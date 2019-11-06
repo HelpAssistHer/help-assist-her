@@ -44,7 +44,7 @@ const Header = ({ classes }) => {
 							<br />
 							{titleText2}
 						</div>
-						<Spacer height="40px" />
+						<Spacer height="20px" />
 						<div className={classes.descriptionTextTablet}>
 							{descriptionText}
 						</div>
@@ -97,7 +97,7 @@ const styles = {
 		'background-color': '#016454',
 	},
 	headerContainerTablet: {
-		height: '42vw',
+		height: '500px',
 		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'grid',
 		'grid-template-columns': '5% 40% 5% 45% 5%',
@@ -133,8 +133,8 @@ const styles = {
 	titleTextTablet: {
 		'max-width': '30vw',
 		'font-family': 'hah-regular',
-		'font-size': '4vw',
-		'line-height': '5vw',
+		'font-size': '5vw',
+		'line-height': '6.5vw',
 	},
 	titleTextDesktop: {
 		'max-width': '30vw',
@@ -151,8 +151,8 @@ const styles = {
 	descriptionTextTablet: {
 		'max-width': '35vw',
 		'font-family': 'hah-light',
-		'font-size': '20px',
-		'line-height': '28px',
+		'font-size': '2.25vw',
+		'line-height': '3.25vw',
 	},
 	descriptionTextDesktop: {
 		'max-width': '25vw',
