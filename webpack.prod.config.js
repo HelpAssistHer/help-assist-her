@@ -2,6 +2,8 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
+	mode: 'production',
+
 	context: __dirname,
 
 	devtool: 'source-map',
