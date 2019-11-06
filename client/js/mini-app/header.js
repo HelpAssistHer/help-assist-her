@@ -125,14 +125,14 @@ const styles = {
 		color: '#FFFFFF',
 	},
 	titleTextPhone: {
-		'max-width': '400px',
+		'max-width': '330px',
 		'font-family': 'hah-light',
-		'font-size': '8vw',
-		'line-height': '10vw',
+		'font-size': '9vw',
+		'line-height': '12vw',
 	},
 	titleTextTablet: {
 		'max-width': '30vw',
-		'font-family': 'hah-regular',
+		'font-family': 'hah-light',
 		'font-size': '5vw',
 		'line-height': '6.5vw',
 	},
@@ -143,10 +143,10 @@ const styles = {
 		'line-height': '5vw',
 	},
 	descriptionTextPhone: {
-		'max-width': '370px',
-		'font-family': 'hah-regular',
-		'font-size': '3.25vw',
-		'line-height': '4.75vw',
+		'max-width': '300px',
+		'font-family': 'hah-light',
+		'font-size': '4.5vw',
+		'line-height': '6vw',
 	},
 	descriptionTextTablet: {
 		'max-width': '35vw',
@@ -170,8 +170,8 @@ const styles = {
 		'grid-column-end': 5,
 	},
 	imagePhone: {
-		height: '300px',
-		'margin-top': '55px', // this is so it starts after the header/navigation
+		height: '240px',
+		'margin-top': '90px', // this is so it starts after the header/navigation
 	},
 	imageTablet: {
 		width: '90%',
