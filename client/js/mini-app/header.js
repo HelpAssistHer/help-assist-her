@@ -50,11 +50,13 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<img
-						className={classes.imageTablet}
-						src="../img/homepage-collage.png"
-						alt="Women"
-					/>
+					<div className={classes.imageContainer}>
+						<img
+							className={classes.imageTablet}
+							src="../img/homepage-collage.png"
+							alt="Women"
+						/>
+					</div>
 				</div>
 			</Tablet>
 
@@ -72,11 +74,13 @@ const Header = ({ classes }) => {
 						</div>
 					</div>
 
-					<img
-						className={classes.imageDesktop}
-						src="../img/homepage-collage.png"
-						alt="Women"
-					/>
+					<div className={classes.imageContainer}>
+						<img
+							className={classes.imageDesktop}
+							src="../img/homepage-collage.png"
+							alt="Women"
+						/>
+					</div>
 				</div>
 			</Desktop>
 		</div>
@@ -104,14 +108,15 @@ const styles = {
 	headerContainerDesktop: {
 		height: '85vh',
 		'margin-top': '67px', // this is so it starts after the header/navigation
-		display: 'flex',
-		'align-items': 'center',
+		display: 'grid',
+		'grid-template-columns': '5% 40% 5% 45% 5%',
 		'text-align': 'center',
 		'background-color': '#016454',
 		overflow: 'hidden',
 	},
 	headerText: {
-		flex: '1 1 0',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
@@ -133,8 +138,8 @@ const styles = {
 	titleTextDesktop: {
 		'max-width': '450px',
 		'font-family': 'hah-regular',
-		'font-size': '60px',
-		'line-height': '70px',
+		'font-size': '70px',
+		'line-height': '80px',
 	},
 	descriptionTextPhone: {
 		'max-width': '270px',
@@ -149,10 +154,19 @@ const styles = {
 		'line-height': '26px',
 	},
 	descriptionTextDesktop: {
-		'max-width': '30vw',
+		'max-width': '25vw',
 		'font-family': 'hah-light',
-		'font-size': '18px',
-		'line-height': '26px',
+		'font-size': '20px',
+		'line-height': '28px',
+	},
+	imageContainer: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'justify-content': 'center',
+		'align-items': 'center',
+		'margin-top': '34px',
+		'grid-column-start': 4,
+		'grid-column-end': 5,
 	},
 	imagePhone: {
 		height: '300px',
@@ -163,8 +177,7 @@ const styles = {
 		'object-fit': 'contain',
 	},
 	imageDesktop: {
-		width: '50%',
-		'object-fit': 'contain',
+		width: '90%',
 	},
 }
 
