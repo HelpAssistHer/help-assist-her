@@ -106,7 +106,7 @@ const styles = {
 		overflow: 'hidden',
 	},
 	headerContainerDesktop: {
-		height: '85vh',
+		height: '42vw',
 		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'grid',
 		'grid-template-columns': '5% 40% 5% 45% 5%',
@@ -115,6 +115,7 @@ const styles = {
 		overflow: 'hidden',
 	},
 	headerText: {
+		'margin-top': '34px',
 		'grid-column-start': 2,
 		'grid-column-end': 3,
 		display: 'flex',
@@ -136,10 +137,10 @@ const styles = {
 		'line-height': '60px',
 	},
 	titleTextDesktop: {
-		'max-width': '450px',
+		'max-width': '30vw',
 		'font-family': 'hah-regular',
-		'font-size': '70px',
-		'line-height': '80px',
+		'font-size': '4vw',
+		'line-height': '5vw',
 	},
 	descriptionTextPhone: {
 		'max-width': '270px',
