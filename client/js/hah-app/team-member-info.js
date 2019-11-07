@@ -24,8 +24,14 @@ module.exports = [
 	{
 		id: 2,
 		name: 'Marylouise M.',
-		title: 'Lead Graphic Designer',
-		bio: 'Some stuff here',
+		title: 'Head of Design',
+		bio:
+			'Marylouise moonlights as the head of design for Help Assist Her with memories of her experience as an uninsured ' +
+			"care seeker and dealing with PCOS as her fuel. She is passionate about broadening the conversation around women's " +
+			"healthcare access to include more holistic services that respects a woman's dignity and quality of life no " +
+			'matter her situation. By day she is a Senior Visual Communication Designer at IDEO where she focuses predominately ' +
+			'on brand strategy across print, digital, service, and experiential applications. Marylouise is a midwesterner at ' +
+			'heart, in love with the California sun.',
 		imageSource: '../img/team/marylouise.jpg',
 	},
 	{
