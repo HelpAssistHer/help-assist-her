@@ -9,15 +9,15 @@ export default function PregnancyIcon(props) {
 			xmlnsXlink="http://www.w3.org/1999/xlink"
 			x="0px"
 			y="0px"
-			viewBox="0 0 50.5 50.5"
-			style={{ enableBackground: 'new 0 0 50.5 50.5' }}
+			viewBox="0.2 0.2 50 50"
+			style={{ enableBackground: 'new 0.2 0.2 50 50' }}
 			xmlSpace="preserve"
-			width="50.5"
-			height="50.5"
+			width="50"
+			height="50"
 			{...props}
 		>
-			<title>PC_Inactive_Mobile</title>
-			<desc>Created with Sketch.</desc>
+			<title>Pregnancy Resource Center</title>
+			<desc>Pregnancy Resource Center</desc>
 			<g id="Symbols_4_">
 				<g id="PC_Active_Mobile_2_">
 					<g id="Group-3_2_" transform="translate(31.000000, 0.000000)">
