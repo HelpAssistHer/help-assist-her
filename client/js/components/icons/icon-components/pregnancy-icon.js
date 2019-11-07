@@ -9,11 +9,11 @@ export default function PregnancyIcon(props) {
 			xmlnsXlink="http://www.w3.org/1999/xlink"
 			x="0px"
 			y="0px"
-			viewBox="0 0 50.5 50.5"
-			style={{ enableBackground: 'new 0 0 50.5 50.5' }}
+			viewBox="0.2 0.2 50 50"
+			style={{ enableBackground: 'new 0.2 0.2 50 50' }}
 			xmlSpace="preserve"
-			width="50.5"
-			height="50.5"
+			width="50"
+			height="50"
 			{...props}
 		>
 			<title>Pregnancy Resource Center</title>
