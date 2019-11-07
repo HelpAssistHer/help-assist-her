@@ -45,7 +45,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={49} width={49} />
 							</div>
 							<Spacer height="9px" />
@@ -72,7 +72,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 							</div>
 							<Spacer height="9px" />
 							<div className={classes.resourceNamePhone}>
-								{resources[0].name + 'Hi'}
+								{resources[0].name}
 							</div>
 						</div>
 					</button>
@@ -84,7 +84,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={49} width={49} />
 							</div>
 							<Spacer height="9px" />
@@ -123,7 +123,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={127} width={127} />
 							</div>
 							<Spacer height="20px" />
@@ -162,7 +162,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={127} width={127} />
 							</div>
 							<Spacer height="20px" />
@@ -189,10 +189,18 @@ const styles = {
 	disabledIcon: {
 		opacity: 0.2,
 	},
-	icons: {
+	chcIcon: {
+		'line-height': 0,
 		'&:hover': {
 			'border-radius': '50%',
 			'background-color': '#DEA8E0',
+		},
+	},
+	prcIcon: {
+		'line-height': 0,
+		'&:hover': {
+			'border-radius': '50%',
+			'background-color': '#F9AB7F',
 		},
 	},
 	resourceButtonsPhone: {
