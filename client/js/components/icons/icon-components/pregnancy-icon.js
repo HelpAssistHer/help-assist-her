@@ -17,7 +17,7 @@ export default function PregnancyIcon(props) {
 			{...props}
 		>
 			<title>Pregnancy Resource Center</title>
-			<desc>Created with Sketch.</desc>
+			<desc>Pregnancy Resource Center</desc>
 			<g id="Symbols_4_">
 				<g id="PC_Active_Mobile_2_">
 					<g id="Group-3_2_" transform="translate(31.000000, 0.000000)">
