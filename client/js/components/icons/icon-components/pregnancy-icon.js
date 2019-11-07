@@ -16,7 +16,7 @@ export default function PregnancyIcon(props) {
 			height="50.5"
 			{...props}
 		>
-			<title>PC_Inactive_Mobile</title>
+			<title>Pregnancy Resource Center</title>
 			<desc>Created with Sketch.</desc>
 			<g id="Symbols_4_">
 				<g id="PC_Active_Mobile_2_">

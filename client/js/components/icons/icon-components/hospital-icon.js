@@ -16,7 +16,7 @@ export default function HospitalIcon(props) {
 			height="50.5"
 			{...props}
 		>
-			<title>CHC_Inactive_Mobile</title>
+			<title>Coming Soon...</title>
 			<desc>Created with Sketch.</desc>
 			<g id="Symbols_2_">
 				<g id="CHC_Inactive_Mobile_2_">
