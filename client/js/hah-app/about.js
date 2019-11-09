@@ -159,14 +159,10 @@ const styles = {
 	imagePhone: {
 		height: '100%',
 		width: '100%',
-		'border-top': '1px solid #3D65F9',
-		'border-bottom': '1px solid #3D65F9',
 	},
 	imageDesktop: {
 		height: '100%',
 		width: '100%',
-		'border-top': '3px solid #3D65F9',
-		'border-bottom': '3px solid #3D65F9',
 	},
 }
 

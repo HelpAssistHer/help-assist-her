@@ -93,8 +93,8 @@ export async function updateResource(updatedResource) {
 	// 	_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
 	// 	...updatedResource.primaryContactPerson
 	// },
-	console.log('transformedResource: ', transformedResource)
-	return new Promise(async (resolve, reject) => {
+
+	return async (resolve, reject) => {
 		const response = await fetch(
 			`/api/pregnancy-centers/${store.getState().resource._id}`,
 			{
@@ -117,5 +117,5 @@ export async function updateResource(updatedResource) {
 			store.dispatch(setFormStatus('Failed'))
 			reject(result.error)
 		}
-	})
+	}
 }

@@ -7,6 +7,8 @@
 		"mocha": true
 	},
 
+	"extends": ["eslint:recommended", "plugin:react/recommended"],
+
 	"parser": "babel-eslint",
 
 	"parserOptions": {
@@ -19,8 +21,6 @@
 	},
 
 	"plugins": ["react"],
-
-	"extends": ["eslint:recommended", "plugin:react/recommended"],
 
 	"rules": {
 		"comma-dangle": ["error", "always-multiline"],
@@ -35,5 +35,11 @@
 		"no-param-reassign": "error",
 		"react/prop-types": "off",
 		"semi": ["error", "never"]
+	},
+
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
 	}
 }

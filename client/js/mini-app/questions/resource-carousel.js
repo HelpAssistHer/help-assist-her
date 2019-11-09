@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 import Spacer from '../../components/spacer'
 import HospitalIcon from '../../components/icons/icon-components/hospital-icon'
 import PregnancyIcon from '../../components/icons/icon-components/pregnancy-icon'
-import { Phone, Tablet, Desktop } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 const resources = [
 	{
@@ -25,9 +25,10 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
+						disabled
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.disabledIcon}>
 								<HospitalIcon key={1} height={49} width={49} />
 							</div>
 							<Spacer height="9px" />
@@ -44,7 +45,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={49} width={49} />
 							</div>
 							<Spacer height="9px" />
@@ -57,15 +58,55 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 			</div>
 		</Phone>
 
+		<BigPhone>
+			<div className={classes.resourceCarouselRootPhone}>
+				<div className={classes.resourceButtonsPhone}>
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[0].id)}
+						disabled
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.disabledIcon}>
+								<HospitalIcon key={1} height={49} width={49} />
+							</div>
+							<Spacer height="9px" />
+							<div className={classes.resourceNamePhone}>
+								{resources[0].name}
+							</div>
+						</div>
+					</button>
+
+					<div className={classes.orPhone}>or</div>
+
+					<button
+						className={classes.resourceBox}
+						onClick={() => onResourceChange(resources[1].id)}
+					>
+						<div className={classes.flexColumn}>
+							<div className={classes.prcIcon}>
+								<PregnancyIcon key={2} height={49} width={49} />
+							</div>
+							<Spacer height="9px" />
+							<div className={classes.resourceNamePhone}>
+								{resources[1].name}
+							</div>
+						</div>
+					</button>
+				</div>
+			</div>
+		</BigPhone>
+
 		<Tablet>
 			<div className={classes.paddingDesktop}>
 				<div className={classes.resourceButtonsDesktop}>
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
+						disabled
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.disabledIcon}>
 								<HospitalIcon key={1} height={127} width={127} />
 							</div>
 							<Spacer height="20px" />
@@ -82,7 +123,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={127} width={127} />
 							</div>
 							<Spacer height="20px" />
@@ -101,9 +142,10 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
+						disabled
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.disabledIcon}>
 								<HospitalIcon key={1} height={127} width={127} />
 							</div>
 							<Spacer height="20px" />
@@ -120,7 +162,7 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						onClick={() => onResourceChange(resources[1].id)}
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.icons}>
+							<div className={classes.prcIcon}>
 								<PregnancyIcon key={2} height={127} width={127} />
 							</div>
 							<Spacer height="20px" />
@@ -144,10 +186,21 @@ const styles = {
 	paddingDesktop: {
 		padding: '100px 0px 0px 0px',
 	},
-	icons: {
+	disabledIcon: {
+		opacity: 0.2,
+	},
+	chcIcon: {
+		'line-height': 0,
 		'&:hover': {
 			'border-radius': '50%',
 			'background-color': '#DEA8E0',
+		},
+	},
+	prcIcon: {
+		'line-height': 0,
+		'&:hover': {
+			'border-radius': '50%',
+			'background-color': '#F9AB7F',
 		},
 	},
 	resourceButtonsPhone: {

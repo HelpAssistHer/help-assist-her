@@ -2,7 +2,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import { Link } from 'react-router-dom'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import LogoBetaBlack from '../components/icons/icon-components/logo-beta-black'
 import HamburgerMenu from '../components/icons/icon-components/hamburger-menu'
@@ -26,21 +26,39 @@ const LogoAndNavigation = ({ classes }) => (
 			</div>
 		</Phone>
 
+		<BigPhone>
+			<div className={classes.headerPhone}>
+				<Link to="/mini-app" className={classes.logoPhone}>
+					<LogoBetaBlack height={25} width={160} />
+				</Link>
+
+				<Link to="/emergency" className={classes.emergencyIconPhone}>
+					<EmergencyPhoneIcon height={24} width={24} />
+				</Link>
+
+				<Link to="/menu" className={classes.hamburgerMenuPhone}>
+					<HamburgerMenu />
+				</Link>
+			</div>
+		</BigPhone>
+
 		<Tablet>
 			<div className={classes.headerDesktop}>
-				<div className={classes.logoDesktop}>
-					<Link to="/mini-app">
-						<LogoBetaBlack height={33} width={208} />
+				<Link to="/mini-app">
+					<LogoBetaBlack height={33} width={208} />
+				</Link>
+				<div className={classes.linksDesktop}>
+					<Link to="/about" className={classes.navigationLinkDesktop}>
+						About
 					</Link>
-					<div className={classes.linksDesktop}>
-						<Link to="/about" className={classes.navigationLinkDesktop}>
-							About
-						</Link>
-						<Spacer width="32px" />
-						<Link to="/feedback" className={classes.navigationLinkDesktop}>
-							Feedback
-						</Link>
-					</div>
+					<Spacer width="32px" />
+					<Link to="/feedback" className={classes.navigationLinkDesktop}>
+						Feedback
+					</Link>
+					<Spacer width="52px" />
+					<Link to="/emergency">
+						<EmergencyPhoneIcon height={38} width={38} />
+					</Link>
 				</div>
 			</div>
 		</Tablet>

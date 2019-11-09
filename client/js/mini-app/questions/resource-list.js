@@ -54,7 +54,7 @@ const styles = {
 	bannerMessage: {
 		padding: '30px 0px 30px 0px',
 		'background-color': '#3d65f9',
-		'font-size': '14px',
+		'font-size': '16px',
 		color: '#99cccc',
 		'text-align': 'center',
 		'margin-top': '100px',

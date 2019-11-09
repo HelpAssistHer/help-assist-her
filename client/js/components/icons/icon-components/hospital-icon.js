@@ -9,15 +9,15 @@ export default function HospitalIcon(props) {
 			xmlnsXlink="http://www.w3.org/1999/xlink"
 			x="0px"
 			y="0px"
-			viewBox="0 0 50.5 50.5"
-			style={{ enableBackground: 'new 0 0 50.5 50.5' }}
+			viewBox="0.2 0.2 50 50"
+			style={{ enableBackground: 'new 0.2 0.2 50 50' }}
 			xmlSpace="preserve"
-			width="50.5"
-			height="50.5"
+			width="50"
+			height="50"
 			{...props}
 		>
-			<title>CHC_Inactive_Mobile</title>
-			<desc>Created with Sketch.</desc>
+			<title>Coming Soon...</title>
+			<desc>Coming Soon...</desc>
 			<g id="Symbols_2_">
 				<g id="CHC_Inactive_Mobile_2_">
 					<g id="Group_1_">
