@@ -10,12 +10,20 @@ import BusinessHours from '../components/business-hours'
 import Services from './services'
 import Toggle from '../../components/toggle'
 import { formatPhone, formatZipcode } from '../util'
+import { updateResource } from './action-creators'
 
 class VerificationPortalFormClass extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
+		const {
+			classes,
+			handleSubmit,
+			outOfBusiness,
+			doNotList,
+			submitting,
+		} = this.props
+
 		return (
-			<form className={classes.form} onSubmit={handleSubmit}>
+			<form className={classes.form}>
 				<div
 					className={
 						outOfBusiness || doNotList ? classes.blockFormEditing : null
@@ -250,6 +258,8 @@ class VerificationPortalFormClass extends Component {
 						buttonText="Save Progress"
 						activeState={false}
 						size="large"
+						disabled={submitting}
+						onClick={handleSubmit(formData => updateResource(formData))}
 					/>
 				</div>
 			</form>

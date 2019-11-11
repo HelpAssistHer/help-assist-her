@@ -91,7 +91,8 @@ export async function updateResource(updatedResource) {
 	// 	...updatedResource.primaryContactPerson
 	// },
 
-	return async (resolve, reject) => {
+	// eslint-disable-next-line no-async-promise-executor
+	return new Promise(async (resolve, reject) => {
 		const response = await fetch(
 			`/api/pregnancy-centers/${store.getState().resource._id}`,
 			{
@@ -114,5 +115,5 @@ export async function updateResource(updatedResource) {
 			store.dispatch(setFormStatus('Failed'))
 			reject(result.error)
 		}
-	}
+	})
 }
