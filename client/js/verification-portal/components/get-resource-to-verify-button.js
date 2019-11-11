@@ -22,15 +22,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		website,
 	} = resource
 
-	console.log('prcName', prcName)
-	console.log('email', email)
-	console.log('address', address)
-	console.log('hours', hours)
-	console.log('notes', notes)
-	console.log('phone ', phone)
-	console.log('verifiedData', verifiedData)
-	console.log('website', website)
-
 	changeFieldValue('prcName', prcName)
 	changeFieldValue(
 		'verifiedData.prcName.verified',
