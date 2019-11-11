@@ -53,43 +53,13 @@ export const getResourceToVerify = () => {
 	}
 }
 
-const convertTimeToNumber = timeString => {
-	if (!timeString) {
-		return null
-	}
-	const hours = parseInt(timeString.slice(0, 2))
-	const hoursIn24HourFormat =
-		timeString.slice(5, timeString.length) === 'pm'
-			? hours + 12
-			: (hours < 10 ? '0' : '') + hours
-	const minutes = parseInt(timeString.slice(2, 5))
-	const minutesInTwoDesigt = (minutes < 10 ? '0' : '') + minutes
-	return Number(`${hoursIn24HourFormat}${minutesInTwoDesigt}`)
-}
-
 export async function updateResource(updatedResource) {
-	const convertedHours = _.mapValues(updatedResource.hours, dayOfWeek => {
-		return _.omitBy(
-			{
-				open: convertTimeToNumber(_.get(dayOfWeek, 'open')),
-				close: convertTimeToNumber(_.get(dayOfWeek, 'close')),
-				closedAllDay: _.get(dayOfWeek, 'closedAllDay'),
-			},
-			_.isNull || _.isUndefined,
-		)
-	})
-
-	const transformedResource = {
-		...updatedResource,
-		hours: convertedHours,
-		services: _.mapValues(updatedResource.services, value => !!value),
-	}
-	// 5-12-18, I am commenting this out for now, as we want to keep the
-	// data verification simple for now. We will eventually add this back.
-	// primaryContactPerson: {
-	// 	_id: _.get(store.getState().resource, 'primaryContactPerson._id'),
-	// 	...updatedResource.primaryContactPerson
-	// },
+	const transformedResource = _.omitBy(
+		{
+			...updatedResource,
+		},
+		_.isNull || _.isUndefined,
+	)
 
 	// eslint-disable-next-line no-async-promise-executor
 	return new Promise(async (resolve, reject) => {
