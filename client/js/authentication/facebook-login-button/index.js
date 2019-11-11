@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect, withRouter } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import FacebookLoginButton from './view'
 
@@ -10,7 +10,7 @@ class FacebookLoginButtonContainer extends React.Component {
 	}
 
 	render() {
-		const { dispatch, facebookAppId, history, isLoggedIn } = this.props
+		const { dispatch, facebookAppId, isLoggedIn } = this.props
 
 		if (isLoggedIn) {
 			return <Redirect to="/verification/pregnancy-resource-center" />
@@ -34,6 +34,4 @@ function mapStateToProps(state) {
 	}
 }
 
-export default connect(mapStateToProps)(
-	withRouter(FacebookLoginButtonContainer),
-)
+export default connect(mapStateToProps)(FacebookLoginButtonContainer)
