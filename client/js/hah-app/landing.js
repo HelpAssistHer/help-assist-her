@@ -8,24 +8,26 @@ class Landing extends React.Component {
 	render() {
 		const { classes } = this.props
 		return (
-			<div className={classes.landing}>
-				<img
-					src="./img/logo-white.png"
-					alt="Help Assist Her logo"
-					className={classes.logoWhite}
-				/>
+			<div className={classes.landingPageBackground}>
+				<div className={classes.landingPageWrapper}>
+					<img
+						src="./img/logo-white.png"
+						alt="Help Assist Her logo"
+						className={classes.logoWhite}
+					/>
 
-				<div className={classes.titleText}>Information Database</div>
-				<div className={classes.descriptionText}>
-					Sign in to start helping our sisters out!
+					<div className={classes.titleText}>Information Database</div>
+					<div className={classes.descriptionText}>
+						Sign in to start helping our sisters out!
+					</div>
+					<LoginButton />
 				</div>
-				<LoginButton />
 			</div>
 		)
 	}
 }
 const styles = {
-	landing: {
+	landingPageBackground: {
 		margin: '0',
 		height: '100%',
 		width: '100%',
@@ -33,8 +35,15 @@ const styles = {
 		'background-position': 'center',
 		'background-repeat': 'no-repeat',
 		'background-size': 'cover',
+	},
+	landingPageWrapper: {
+		height: '75%',
 		color: '#FFFFFF',
 		'text-align': 'center',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'justify-content': 'space-around',
 	},
 	logoWhite: {
 		width: '340px',

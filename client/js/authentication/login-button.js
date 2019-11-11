@@ -13,8 +13,6 @@ const LoginButton = ({ classes }) => (
 const styles = {
 	button: {
 		color: 'rgb(255, 255, 255)',
-		width: '30%',
-		margin: '35%',
 		'border-radius': '32px',
 		'font-family': 'sans-serif',
 	},
