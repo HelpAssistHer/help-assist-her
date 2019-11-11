@@ -4,12 +4,12 @@ import injectSheet from 'react-jss'
 
 import LoginButton from '../authentication/login-button'
 
-class Landing extends React.Component {
+class LoginPageView extends React.Component {
 	render() {
 		const { classes } = this.props
 		return (
-			<div className={classes.landingPageBackground}>
-				<div className={classes.landingPageWrapper}>
+			<div className={classes.loginPageBackground}>
+				<div className={classes.loginPageWrapper}>
 					<img
 						src="./img/logo-white.png"
 						alt="Help Assist Her logo"
@@ -27,7 +27,7 @@ class Landing extends React.Component {
 	}
 }
 const styles = {
-	landingPageBackground: {
+	loginPageBackground: {
 		margin: '0',
 		height: '100%',
 		width: '100%',
@@ -36,7 +36,7 @@ const styles = {
 		'background-repeat': 'no-repeat',
 		'background-size': 'cover',
 	},
-	landingPageWrapper: {
+	loginPageWrapper: {
 		height: '75%',
 		color: '#FFFFFF',
 		'text-align': 'center',
@@ -58,6 +58,6 @@ const styles = {
 		'margin-top': '45px',
 	},
 }
-const LandingWithStyle = injectSheet(styles)(Landing)
+const LoginPage = injectSheet(styles)(LoginPageView)
 
-export default connect()(LandingWithStyle)
+export default connect()(LoginPage)

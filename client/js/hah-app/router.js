@@ -6,7 +6,7 @@ import {
 	Redirect,
 } from 'react-router-dom'
 
-import Landing from './landing'
+import LoginPage from './login-page'
 import VerificationPortalContainer from '../verification-portal'
 import MiniApp from '../mini-app'
 import ResourceList from '../mini-app/questions/resource-list'
@@ -20,7 +20,7 @@ const HahRouter = () => {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/verification" component={Landing} />
+				<Route exact path="/verification" component={LoginPage} />
 				<Route exact path="/mini-app" render={() => <MiniApp />} />
 				<Route exact path="/about" component={About} />
 				<Route exact path="/feedback" component={Feedback} />
