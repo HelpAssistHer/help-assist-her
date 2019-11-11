@@ -14,7 +14,6 @@ const populateForm = ({ changeFieldValue, resource }) => {
 		prcName,
 		email,
 		address,
-		hours,
 		notes,
 		phone,
 		hotlinePhoneNumber,
