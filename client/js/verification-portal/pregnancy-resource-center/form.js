@@ -6,7 +6,6 @@ import Input from '../../components/input'
 import Spacer from '../../components/spacer'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
-import BusinessHours from '../components/business-hours'
 import Services from './services'
 import Toggle from '../../components/toggle'
 import { formatPhone, formatZipcode } from '../util'
@@ -235,15 +234,16 @@ class VerificationPortalFormClass extends Component {
 					</div>
 				</div>
 
-				<div className={classes.formSection}>
-					<Heading text="HOURS" size="medium" />
-					<Spacer height="50px" />
-					<BusinessHours />
-				</div>
+				{/* 11-10-19 Commenting out because we're not verifying hours right now */}
+				{/*<div className={classes.formSection}>*/}
+				{/*	<Heading text="HOURS" size="medium" />*/}
+				{/*	<Spacer height="50px" />*/}
+				{/*	<BusinessHours />*/}
+				{/*</div>*/}
 
-				<div className={classes.parent}>
-					<Field name="verifiedData.hours.verified" component={Toggle} />
-				</div>
+				{/*<div className={classes.parent}>*/}
+				{/*	<Field name="verifiedData.hours.verified" component={Toggle} />*/}
+				{/*</div>*/}
 
 				<div className={classes.formSection}>
 					<Heading text="NOTES" size="medium" />
