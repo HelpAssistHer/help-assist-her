@@ -25,10 +25,9 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[0].id)}
-						disabled
 					>
 						<div className={classes.flexColumn}>
-							<div className={classes.disabledIcon}>
+							<div className={classes.chcIcon}>
 								<HospitalIcon key={1} height={49} width={49} />
 							</div>
 							<Spacer height="9px" />
