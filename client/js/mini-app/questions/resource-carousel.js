@@ -221,6 +221,7 @@ const styles = {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
+		'background-color': '#FFFFFF',
 		'-webkit-tap-highlight-color': 'transparent',
 	},
 	buttonActiveState: {
