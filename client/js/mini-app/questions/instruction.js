@@ -56,7 +56,7 @@ const styles = {
 	stepNumberDesktop: {
 		'font-family': 'hah-bold',
 		'letter-spacing': '5px',
-		'font-size': '18px',
+		'font-size': '16px',
 		color: '#3d65f9',
 		height: '40px',
 		'line-height': '40px',
