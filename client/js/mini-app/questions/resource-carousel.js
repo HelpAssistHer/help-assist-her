@@ -234,7 +234,7 @@ const styles = {
 	},
 	resourceNameDesktop: {
 		'font-family': 'hah-light',
-		'font-size': '24px',
+		'font-size': '20px',
 		width: '60%',
 	},
 	orPhone: {
