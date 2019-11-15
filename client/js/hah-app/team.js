@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import injectSheet from 'react-jss'
+import classNames from 'classnames'
 
 import Spacer from '../components/spacer'
 import teamMemberInfo from './team-member-info'
@@ -18,6 +19,15 @@ class Team extends Component {
 		const { teamMemberId } = this.state
 		const { name, title, bio } = teamMemberInfo[teamMemberId]
 
+		const notClickedStyle = classNames(
+			classes.headshotSize,
+			classes.headshotNotClicked,
+		)
+		const clickedStyle = classNames(
+			classes.headshotSize,
+			classes.headshotClicked,
+		)
+
 		return (
 			<div>
 				<div className={classes.scrollContainer}>
@@ -35,7 +45,11 @@ class Team extends Component {
 										}}
 									>
 										<img
-											className={classes.headshot}
+											className={
+												teamMemberId === teamMember.id
+													? clickedStyle
+													: notClickedStyle
+											}
 											src={teamMember.imageSource}
 											alt={teamMember.name}
 										/>
@@ -70,18 +84,24 @@ const styles = {
 		display: 'flex',
 		'justify-content': 'center',
 	},
-	headshot: {
+	headshotSize: {
 		height: '240px',
 		width: '240px',
+	},
+	headshotNotClicked: {
 		border: '2px solid #FFFFFF',
 		'&:hover': {
 			border: '2px solid #24A894',
 		},
 	},
+	headshotClicked: {
+		border: '2px solid #24A894',
+	},
 	button: {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
+		'background-color': '#FFFFFF', // for Safari
 	},
 }
 
