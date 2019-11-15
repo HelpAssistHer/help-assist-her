@@ -74,7 +74,7 @@ const styles = {
 		border: 'none',
 		outline: 'none',
 		'font-family': 'hah-light',
-		'font-size': '24px',
+		'font-size': '20px',
 		color: '#000000',
 		'letter-spacing': '0.5px',
 		'line-height': '30px',

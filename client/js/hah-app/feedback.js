@@ -93,7 +93,7 @@ const styles = {
 	titleTextPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '28px',
 		'text-align': 'center',
 	},
@@ -124,7 +124,7 @@ const styles = {
 	bodyTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 		'grid-column-start': 2,

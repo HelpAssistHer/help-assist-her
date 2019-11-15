@@ -77,7 +77,7 @@ const styles = {
 	},
 	buttonDesktop: {
 		border: '2px solid #3D65F9',
-		'font-size': '24px',
+		'font-size': '20px',
 		'letter-spacing': '0.5px',
 		height: '54px',
 		width: '230px',
