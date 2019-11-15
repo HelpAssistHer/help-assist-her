@@ -89,6 +89,8 @@ const styles = {
 		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 	backButtonDesktop: {
 		'align-self': 'center',
@@ -102,6 +104,8 @@ const styles = {
 		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 }
 

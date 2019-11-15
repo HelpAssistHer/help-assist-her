@@ -221,6 +221,7 @@ const styles = {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
+		'background-color': '#FFFFFF', // for Safari
 	},
 	buttonActiveState: {
 		'background-color': '#3D65F9',
