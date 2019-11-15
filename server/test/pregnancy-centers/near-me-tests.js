@@ -15,8 +15,8 @@ const { mockAuthenticate, assertError } = require('../helpers')
 chai.use(chaiHttp)
 
 /*
-	* Test the GET /api/pregnancy-centers/near-me' route with authentication
-	*/
+ * Test the GET /api/pregnancy-centers/near-me' route with authentication
+ */
 describe('/GET /api/pregnancy-centers/near-me', () => {
 	it('it should return an array with only the Birthright of Albany in it, not the Bridge to Life', async () => {
 		const primaryContactPerson = new PersonModel({
