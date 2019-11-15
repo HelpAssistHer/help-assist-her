@@ -6,6 +6,7 @@ import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Footer from '../mini-app/components/footer'
 import { Desktop, Tablet, Phone } from '../components/breakpoints'
 import Spacer from '../components/spacer'
+import { ScrollToTop } from '../components/scroll-to-top'
 
 const TITLE_TEXT = "We're listening."
 
@@ -19,6 +20,7 @@ const BODY_TEXT_3 =
 
 const Feedback = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>

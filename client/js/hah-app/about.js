@@ -6,6 +6,7 @@ import Footer from '../mini-app/components/footer'
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Team from './team'
 import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { ScrollToTop } from '../components/scroll-to-top'
 
 const TITLE_TEXT = 'What is Help Assist Her?'
 
@@ -21,6 +22,7 @@ const TEAM_BODY = 'The dream team that makes all of this possible!'
 
 const About = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>
