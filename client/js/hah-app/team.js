@@ -82,6 +82,8 @@ const styles = {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		// '-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 }
 
