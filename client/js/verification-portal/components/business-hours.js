@@ -139,8 +139,9 @@ const mapStateToProps = state => {
 		hours: state.resource.hours,
 	}
 }
-const businessHoursContainer = connect(mapStateToProps, mapDispatchToProps)(
-	BusinessHours,
-)
+const businessHoursContainer = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(BusinessHours)
 
 export default injectSheet(styles)(businessHoursContainer)

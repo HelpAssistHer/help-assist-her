@@ -15,8 +15,9 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const LeftSideNavContainer = connect(mapStateToProps, mapDispatchToProps)(
-	LeftSideNav,
-)
+const LeftSideNavContainer = connect(
+	mapStateToProps,
+	mapDispatchToProps,
+)(LeftSideNav)
 
 export default LeftSideNavContainer
