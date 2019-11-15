@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import injectSheet from 'react-jss'
+import classNames from 'classnames'
 
 import Spacer from '../components/spacer'
 import teamMemberInfo from './team-member-info'
@@ -35,7 +36,17 @@ class Team extends Component {
 										}}
 									>
 										<img
-											className={classes.headshot}
+											className={
+												teamMemberId === teamMember.id
+													? classNames(
+															classes.headshotSize,
+															classes.headshotClicked,
+													  )
+													: classNames(
+															classes.headshotSize,
+															classes.headshotNotClicked,
+													  )
+											}
 											src={teamMember.imageSource}
 											alt={teamMember.name}
 										/>
@@ -70,20 +81,24 @@ const styles = {
 		display: 'flex',
 		'justify-content': 'center',
 	},
-	headshot: {
+	headshotSize: {
 		height: '240px',
 		width: '240px',
+	},
+	headshotNotClicked: {
 		border: '2px solid #FFFFFF',
 		'&:hover': {
 			border: '2px solid #24A894',
 		},
+	},
+	headshotClicked: {
+		border: '2px solid #24A894',
 	},
 	button: {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
 		'background-color': '#FFFFFF', // for Safari
-		// '-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 }
 
