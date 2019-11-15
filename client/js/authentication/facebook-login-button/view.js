@@ -75,6 +75,10 @@ const styles = {
 			'background-color': '#FFFFFF',
 			color: '#F0649A',
 		},
+		'&:active': {
+			'background-color': '#FFFFFF',
+			color: '#F0649A',
+		},
 	},
 }
 
