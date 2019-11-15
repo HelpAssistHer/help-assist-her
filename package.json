@@ -16,7 +16,6 @@
 		"n": "nvm use default",
 		"overwrite-fqhc-data": "NODE_ENV=localhost node ./server/data-import/overwrite-fqhc-data.js",
 		"overwrite-pc-data": "NODE_ENV=localhost node ./server/data-import/overwrite-pc-data.js",
-		"precommit": "pretty-quick --staged",
 		"prepare": "webpack",
 		"start": "NODE_ENV=localhost nodemon ./server/server.js",
 		"startdb": "mongod --dbpath ~/.hah/data",
@@ -112,5 +111,10 @@
 		"svg-to-react-cli": "^1.5.0",
 		"webpack": "4.41.0",
 		"webpack-cli": "3.3.9"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "pretty-quick --staged"
+		}
 	}
 }
