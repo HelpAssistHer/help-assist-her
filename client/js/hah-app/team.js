@@ -19,6 +19,15 @@ class Team extends Component {
 		const { teamMemberId } = this.state
 		const { name, title, bio } = teamMemberInfo[teamMemberId]
 
+		const notClickedStyle = classNames(
+			classes.headshotSize,
+			classes.headshotNotClicked,
+		)
+		const clickedStyle = classNames(
+			classes.headshotSize,
+			classes.headshotClicked,
+		)
+
 		return (
 			<div>
 				<div className={classes.scrollContainer}>
@@ -38,14 +47,8 @@ class Team extends Component {
 										<img
 											className={
 												teamMemberId === teamMember.id
-													? classNames(
-															classes.headshotSize,
-															classes.headshotClicked,
-													  )
-													: classNames(
-															classes.headshotSize,
-															classes.headshotNotClicked,
-													  )
+													? clickedStyle
+													: notClickedStyle
 											}
 											src={teamMember.imageSource}
 											alt={teamMember.name}
