@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
 
-import LoginButton from '../authentication/login-button'
+import FacebookLoginButton from '../authentication/facebook-login-button'
 
 class LoginPageView extends React.Component {
 	render() {
@@ -20,7 +20,7 @@ class LoginPageView extends React.Component {
 					<div className={classes.descriptionText}>
 						Sign in to start helping our sisters out!
 					</div>
-					<LoginButton />
+					<FacebookLoginButton />
 				</div>
 			</div>
 		)

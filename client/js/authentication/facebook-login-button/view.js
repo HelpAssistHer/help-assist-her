@@ -57,19 +57,24 @@ class FacebookLoginButton extends React.Component {
 
 const styles = {
 	facebookLoginButton: {
-		color: '#F0649A !important',
-		'font-family': 'Century Gothic, sans-serif !important',
-		'font-weight': 'bold',
-		'font-size': '20px !important',
-		'border-radius': '100px !important',
-		border: '5px solid #FFFFFF',
 		height: '76px',
 		width: '508px',
-		'background-color': '#FFFFFF',
-		'min-width': '145px !important',
-		'letter-spacing': '0.33px !important',
+		'background-color': 'rgba(255,255,255,0.4)',
+		'border-radius': '100px',
+		'font-family': 'hah-regular',
+		color: '#FFFFFF',
+		'font-size': '20px',
+		'letter-spacing': '0.33px',
 		'line-height': '24px',
 		cursor: 'pointer',
+		'text-align': 'center',
+		border: 'none',
+		outline: 'none',
+		'min-width': '145px',
+		'&:hover': {
+			'background-color': '#FFFFFF',
+			color: '#F0649A',
+		},
 	},
 }
 
