@@ -7,6 +7,7 @@ import LogoAndNavigation from '../../mini-app/logo-and-navigation'
 import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import ListOfResources from './list-of-resources'
 import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
+import { ScrollToTop } from '../../components/scroll-to-top'
 
 const TITLE_TEXT = 'You are not alone. You are loved.'
 
@@ -21,6 +22,7 @@ const PERIOD = '.'
 
 const Emergency = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>
