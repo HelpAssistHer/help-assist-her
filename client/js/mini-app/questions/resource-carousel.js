@@ -248,7 +248,7 @@ const styles = {
 	orDesktop: {
 		'font-family': 'hah-regular',
 		color: 'rgba(0,0,0,0.95)',
-		'font-size': '30px',
+		'font-size': '24px',
 		'line-height': '40px',
 		'text-align': 'center',
 		padding: '45px 0px',

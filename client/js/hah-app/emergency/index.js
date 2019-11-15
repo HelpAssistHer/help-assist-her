@@ -172,7 +172,7 @@ const styles = {
 	call911SectionDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '30px',
+		'font-size': '24px',
 		'line-height': '36px',
 		'text-align': 'center',
 		'border-bottom': '3px solid #3D65F9',

@@ -72,7 +72,7 @@ const styles = {
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',
 		color: '#000000',
-		'font-size': '30px',
+		'font-size': '24px',
 		height: '40px',
 		'line-height': '40px',
 		'max-width': '500px',
