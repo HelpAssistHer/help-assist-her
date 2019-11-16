@@ -9,9 +9,7 @@ const cors = require('cors')
 const express = require('express')
 const facebookTokenStrategy = require('passport-facebook-token')
 const Log = require('log')
-const mongoose = require('mongoose')
 const morgan = require('morgan')
-const P = require('bluebird')
 const passport = require('passport')
 const path = require('path')
 const session = require('express-session')
@@ -20,7 +18,12 @@ const UserModel = require('./users/schema/mongoose-schema')
 
 const port = config.server.port
 const server = express()
+
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useUnifiedTopology', true)
+
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
