@@ -32,7 +32,9 @@ export function createLogoutAction() {
 
 export const getInitialAppData = () => {
 	return function(dispatch) {
-		return getInitialData().then(result => dispatch(createInitialDataAction(result)))
+		return getInitialData().then(result =>
+			dispatch(createInitialDataAction(result)),
+		)
 	}
 }
 

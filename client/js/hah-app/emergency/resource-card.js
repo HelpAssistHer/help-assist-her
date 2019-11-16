@@ -133,7 +133,7 @@ const styles = {
 	additionalInfoDesktop: {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '27px',
 	},
 	websitePhone: {
@@ -144,7 +144,7 @@ const styles = {
 	websiteDesktop: {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '27px',
 		'overflow-wrap': 'break-word',
 	},

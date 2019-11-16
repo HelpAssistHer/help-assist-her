@@ -58,7 +58,7 @@ const styles = {
 	},
 	navigationLinkPhone: {
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		color: '#FFFFFF',
 		'text-decoration': 'none',
 		cursor: 'pointer',

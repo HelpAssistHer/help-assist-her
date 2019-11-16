@@ -81,7 +81,7 @@ const styles = {
 	nameAndTitleTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-bold',
-		'font-size': '18px',
+		'font-size': '16px',
 		'line-height': '26px',
 	},
 	lineBreakPhone: {
@@ -101,7 +101,7 @@ const styles = {
 	bioTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '18px',
+		'font-size': '16px',
 		'line-height': '26px',
 	},
 }

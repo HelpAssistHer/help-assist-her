@@ -21,7 +21,7 @@ const HahRouter = () => {
 		<Router>
 			<Switch>
 				<Route exact path="/verification" component={LoginPage} />
-				<Route exact path="/mini-app" render={() => <MiniApp />} />
+				<Route exact path="/mini-app" component={MiniApp} />
 				<Route exact path="/about" component={About} />
 				<Route exact path="/feedback" component={Feedback} />
 				<Route exact path="/menu" component={Menu} />
