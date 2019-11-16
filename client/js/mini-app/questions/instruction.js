@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import Spacer from '../../components/spacer'
 
 const Instruction = ({ classes, stepNumber, stepDescription }) => {
@@ -14,6 +14,14 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
 				</div>
 			</Phone>
+
+			<BigPhone>
+				<div>
+					<div className={classes.stepNumberPhone}>{stepNumber}</div>
+					<Spacer height="10px" />
+					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
+				</div>
+			</BigPhone>
 
 			<Tablet>
 				<div>

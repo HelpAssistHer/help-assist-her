@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Footer from '../mini-app/components/footer'
-import { Desktop, Tablet, Phone } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 import { ScrollToTop } from '../components/scroll-to-top'
 
@@ -39,6 +39,23 @@ const Feedback = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div className={classes.feedbackPageContainerPhone}>
+				<Spacer height="36px" />
+				<div className={classes.titleTextPhone}>{TITLE_TEXT}</div>
+				<Spacer height="28px" />
+				<div className={classes.gridContainerPhone}>
+					<div className={classes.bodyTextPhone}>
+						{BODY_TEXT_1}
+						<Spacer height="28px" />
+						{BODY_TEXT_2}
+						<Spacer height="28px" />
+						<div className={classes.blueText}>{BODY_TEXT_3}</div>
+					</div>
+				</div>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div className={classes.feedbackPageContainerDesktop}>
