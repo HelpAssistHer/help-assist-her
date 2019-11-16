@@ -84,11 +84,13 @@ const styles = {
 		width: '15px',
 		'border-top': 'none',
 		'border-right': 'none',
-		'border-bottom': '1px solid #000000',
-		'border-left': '1px solid #000000',
+		'border-bottom': '1px solid #3D65F9',
+		'border-left': '1px solid #3D65F9',
 		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 	backButtonDesktop: {
 		'align-self': 'center',
@@ -97,11 +99,13 @@ const styles = {
 		width: '30px',
 		'border-top': 'none',
 		'border-right': 'none',
-		'border-bottom': '2px solid #000000',
-		'border-left': '2px solid #000000',
+		'border-bottom': '2px solid #3D65F9',
+		'border-left': '2px solid #3D65F9',
 		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 }
 

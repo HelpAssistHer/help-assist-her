@@ -80,7 +80,7 @@ const styles = {
 		'background-color': '#F5EDE6',
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '30px',
+		'font-size': '24px',
 		'line-height': '33px',
 		'text-align': 'center',
 	},
@@ -118,7 +118,7 @@ const styles = {
 	descriptionTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 		'grid-column-start': 2,

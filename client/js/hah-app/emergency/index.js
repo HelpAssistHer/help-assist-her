@@ -7,6 +7,7 @@ import LogoAndNavigation from '../../mini-app/logo-and-navigation'
 import { Phone, Tablet, Desktop } from '../../components/breakpoints'
 import ListOfResources from './list-of-resources'
 import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
+import { ScrollToTop } from '../../components/scroll-to-top'
 
 const TITLE_TEXT = 'You are not alone. You are loved.'
 
@@ -21,6 +22,7 @@ const PERIOD = '.'
 
 const Emergency = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>
@@ -134,7 +136,7 @@ const styles = {
 	titlePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '28px',
 		'text-align': 'center',
 	},
@@ -155,14 +157,14 @@ const styles = {
 	bodyDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 	},
 	call911SectionPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '32px',
 		'text-align': 'center',
 		'border-bottom': '1px solid #3D65F9',
@@ -170,7 +172,7 @@ const styles = {
 	call911SectionDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '30px',
+		'font-size': '24px',
 		'line-height': '36px',
 		'text-align': 'center',
 		'border-bottom': '3px solid #3D65F9',

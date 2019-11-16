@@ -63,7 +63,7 @@ const styles = {
 		'line-height': '88px',
 	},
 	textTwo: {
-		'font-size': '24px',
+		'font-size': '20px',
 		'letter-spacing': '0.33px',
 		'line-height': '29px',
 		'margin-top': '45px',
