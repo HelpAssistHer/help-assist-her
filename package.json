@@ -65,7 +65,7 @@
 		"mongodb-extjson": "^3.0.3",
 		"mongoose": "^5.0.16",
 		"morgan": "^1.8.1",
-		"passport": "^0.3.2",
+		"passport": "^0.4.0",
 		"passport-facebook-token": "^3.3.0",
 		"ramda": "0.26.1",
 		"react": "16.10.2",
