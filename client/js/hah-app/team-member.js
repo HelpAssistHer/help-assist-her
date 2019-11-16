@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
 const TeamMember = ({ classes, name, title, bio }) => (
@@ -22,6 +22,23 @@ const TeamMember = ({ classes, name, title, bio }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div>
+				<Spacer height="28px" />
+				<div className={classes.gridContainerPhone}>
+					<div className={classes.gridItem}>
+						<div className={classes.nameAndTitleTextPhone}>
+							{`${name} | ${title}`}
+						</div>
+						<Spacer height="14px" />
+						<div className={classes.lineBreakPhone} />
+						<Spacer height="14px" />
+						<div className={classes.bioTextPhone}>{bio}</div>
+					</div>
+				</div>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div>
