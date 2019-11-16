@@ -100,12 +100,14 @@ passport.deserializeUser((objectId, done) => {
 	})
 })
 
-// TODO: Error handling
-const startDatabase = P.coroutine(function* startDatabase() {
-	yield mongoose.connect(config.mongo.connectionString)
-
-	log.info('Connected to database')
-})
+const startDatabase = async () => {
+	await mongoose.connect(config.mongo.connectionString, (err, client) => {
+		if (err) {
+			log.error('Unable to connect to mongo database', err)
+		}
+		log.info('Successfully connected to database', client.name)
+	})
+}
 
 startDatabase()
 
