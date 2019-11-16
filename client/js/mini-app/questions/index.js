@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 import StepOne from './step-one'
 import StepTwo from './step-two'
@@ -37,6 +37,19 @@ class Questions extends Component {
 						)}
 					</div>
 				</Phone>
+
+				<BigPhone>
+					<div className={classes.searchCardRootPhone}>
+						{!buttonClicked ? (
+							<StepOne
+								buttonClicked={buttonClicked}
+								onResourceChange={this.handleResourceChange}
+							/>
+						) : (
+							<StepTwo onResourceChange={this.handleResourceChange} />
+						)}
+					</div>
+				</BigPhone>
 
 				<Tablet>
 					<div className={classes.searchCardRootDesktop}>

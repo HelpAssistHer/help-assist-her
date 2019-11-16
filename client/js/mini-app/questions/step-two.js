@@ -6,7 +6,7 @@ import injectSheet from 'react-jss'
 import Instruction from './instruction'
 import MiniAppForm from '../form'
 import { getPregnancyResourceCenters } from '../data/action-creators'
-import { Desktop, Phone, Tablet } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 class StepTwo extends Component {
 	submit = ({ locationInput }) => {
@@ -35,6 +35,22 @@ class StepTwo extends Component {
 						</div>
 					</div>
 				</Phone>
+
+				<BigPhone>
+					<div className={classes.stepTwoContainer}>
+						<button
+							className={classes.backButtonPhone}
+							onClick={() => onResourceChange(null)}
+						/>
+						<div>
+							<Instruction
+								stepNumber="STEP TWO"
+								stepDescription="Where do you need access to care?"
+							/>
+							<MiniAppForm onSubmit={this.submit} />
+						</div>
+					</div>
+				</BigPhone>
 
 				<Tablet>
 					<div className={classes.stepTwoContainer}>

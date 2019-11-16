@@ -4,7 +4,7 @@ import injectSheet from 'react-jss'
 import Spacer from '../../components/spacer'
 import Footer from '../../mini-app/components/footer'
 import LogoAndNavigation from '../../mini-app/logo-and-navigation'
-import { Phone, Tablet, Desktop } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import ListOfResources from './list-of-resources'
 import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
 import { ScrollToTop } from '../../components/scroll-to-top'
@@ -47,6 +47,29 @@ const Emergency = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div>
+				<div className={classes.infoSectionPhone}>
+					<Spacer height="33px" />
+					<EmergencyPhoneIcon height={48} width={48} />
+					<Spacer height="22px" />
+					<div className={classes.titlePhone}>{TITLE_TEXT}</div>
+					<Spacer height="22px" />
+					<div className={classes.bodyPhone}>{BODY_TEXT}</div>
+					<Spacer height="44px" />
+				</div>
+				<div className={classes.call911SectionPhone}>
+					<Spacer height="25px" />
+					<div className={classes.textContainer}>
+						{CALL_EMERGENCY_TEXT}&nbsp;
+						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
+						{PERIOD}
+					</div>
+					<Spacer height="25px" />
+				</div>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div>
@@ -99,6 +122,12 @@ const Emergency = ({ classes }) => (
 				<ListOfResources />
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div className={classes.listOfResourcesContainerPhone}>
+				<ListOfResources />
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div className={classes.listOfResourcesContainerDesktop}>
