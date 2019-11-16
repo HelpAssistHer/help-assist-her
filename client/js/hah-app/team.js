@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import injectSheet from 'react-jss'
 import classNames from 'classnames'
+import Imgix from 'react-imgix'
 
 import Spacer from '../components/spacer'
 import teamMemberInfo from './team-member-info'
@@ -44,7 +45,7 @@ class Team extends Component {
 											this.handleClick(teamMember.id)
 										}}
 									>
-										<img
+										<Imgix
 											className={
 												teamMemberId === teamMember.id
 													? clickedStyle
@@ -52,6 +53,8 @@ class Team extends Component {
 											}
 											src={teamMember.imageSource}
 											alt={teamMember.name}
+											width={240}
+											height={240}
 										/>
 										<Spacer width="16px" />
 									</button>
