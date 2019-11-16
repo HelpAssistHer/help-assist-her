@@ -9,9 +9,7 @@ const cors = require('cors')
 const express = require('express')
 const facebookTokenStrategy = require('passport-facebook-token')
 const Log = require('log')
-const mongoose = require('mongoose')
 const morgan = require('morgan')
-const P = require('bluebird')
 const passport = require('passport')
 const path = require('path')
 const session = require('express-session')
@@ -20,7 +18,13 @@ const UserModel = require('./users/schema/mongoose-schema')
 
 const port = config.server.port
 const server = express()
+
+const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useUnifiedTopology', true)
+mongoose.set('useFindAndModify', false)
+
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
 
@@ -100,12 +104,15 @@ passport.deserializeUser((objectId, done) => {
 	})
 })
 
-// TODO: Error handling
-const startDatabase = P.coroutine(function* startDatabase() {
-	yield mongoose.connect(config.mongo.connectionString)
-
-	log.info('Connected to database')
-})
+const startDatabase = async () => {
+	await mongoose.connect(config.mongo.connectionString, (err, client) => {
+		if (err) {
+			log.error('Unable to connect to mongo database', err)
+		} else {
+			log.info('Successfully connected to database', client.name)
+		}
+	})
+}
 
 startDatabase()
 
