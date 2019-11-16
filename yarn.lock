@@ -4372,6 +4372,11 @@ ignore@^4.0.6:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
+imgix.js@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/imgix.js/-/imgix.js-3.4.1.tgz#4f343ed93138f2064fb3169eaf098db06d0e0588"
+  integrity sha512-+n6Y8zLi6WQu5749y4h5/ysqQr9YxF4YoFqFDBk3crrMSxjcL2e1z0amdrbw7VLHVye5gORXqt0//hE0+5ZPRw==
+
 immutability-helper@^2.7.1:
   version "2.9.1"
   resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.9.1.tgz#71c423ba387e67b6c6ceba0650572f2a2a6727df"
