@@ -6,16 +6,22 @@ import Input from '../../components/input'
 import Spacer from '../../components/spacer'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
-import BusinessHours from '../components/business-hours'
-import Services from './services'
 import Toggle from '../../components/toggle'
 import { formatPhone, formatZipcode } from '../util'
+import { updateResource } from './action-creators'
 
 class VerificationPortalFormClass extends Component {
 	render() {
-		const { classes, handleSubmit, outOfBusiness, doNotList } = this.props
+		const {
+			classes,
+			handleSubmit,
+			outOfBusiness,
+			doNotList,
+			submitting,
+		} = this.props
+
 		return (
-			<form className={classes.form} onSubmit={handleSubmit}>
+			<form className={classes.form}>
 				<div
 					className={
 						outOfBusiness || doNotList ? classes.blockFormEditing : null
@@ -203,39 +209,40 @@ class VerificationPortalFormClass extends Component {
 
 					<Spacer height="81px" />
 
-					<div className={classes.gridField}>
-						<div className={classes.headingGrid}>
-							<Heading text="SERVICES" size="medium" />
-						</div>
-					</div>
-					<Spacer height="53px" />
-					<Services />
+					{/*<div className={classes.gridField}>*/}
+					{/*	<div className={classes.headingGrid}>*/}
+					{/*		<Heading text="SERVICES" size="medium" />*/}
+					{/*	</div>*/}
+					{/*</div>*/}
+					{/*<Spacer height="53px" />*/}
+					{/*<Services />*/}
 				</div>
 
-				<div className={classes.formSection}>
-					<div>
-						<Field
-							name="otherServices"
-							component="textarea"
-							placeholder="Add additional services not listed above here..."
-							rows="4"
-							cols="50"
-						/>
-					</div>
-					<div className={classes.parent}>
-						<Field name="verifiedData.services.verified" component={Toggle} />
-					</div>
-				</div>
+				{/*<div className={classes.formSection}>*/}
+				{/*	<div>*/}
+				{/*		<Field*/}
+				{/*			name="otherServices"*/}
+				{/*			component="textarea"*/}
+				{/*			placeholder="Add additional services not listed above here..."*/}
+				{/*			rows="4"*/}
+				{/*			cols="50"*/}
+				{/*		/>*/}
+				{/*	</div>*/}
+				{/*	<div className={classes.parent}>*/}
+				{/*		<Field name="verifiedData.services.verified" component={Toggle} />*/}
+				{/*	</div>*/}
+				{/*</div>*/}
 
-				<div className={classes.formSection}>
-					<Heading text="HOURS" size="medium" />
-					<Spacer height="50px" />
-					<BusinessHours />
-				</div>
+				{/* 11-10-19 Commenting out because we're not verifying hours right now */}
+				{/*<div className={classes.formSection}>*/}
+				{/*	<Heading text="HOURS" size="medium" />*/}
+				{/*	<Spacer height="50px" />*/}
+				{/*	<BusinessHours />*/}
+				{/*</div>*/}
 
-				<div className={classes.parent}>
-					<Field name="verifiedData.hours.verified" component={Toggle} />
-				</div>
+				{/*<div className={classes.parent}>*/}
+				{/*	<Field name="verifiedData.hours.verified" component={Toggle} />*/}
+				{/*</div>*/}
 
 				<div className={classes.formSection}>
 					<Heading text="NOTES" size="medium" />
@@ -250,6 +257,8 @@ class VerificationPortalFormClass extends Component {
 						buttonText="Save Progress"
 						activeState={false}
 						size="large"
+						disabled={submitting}
+						onClick={handleSubmit(formData => updateResource(formData))}
 					/>
 				</div>
 			</form>
