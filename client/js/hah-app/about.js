@@ -1,5 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import Imgix from 'react-imgix'
 
 import Spacer from '../components/spacer'
 import Footer from '../mini-app/components/footer'
@@ -34,10 +35,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="36px" />
-				<img
+				<Imgix
 					className={classes.imagePhone}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="36px" />
 				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
@@ -58,10 +60,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="36px" />
-				<img
+				<Imgix
 					className={classes.imagePhone}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="36px" />
 				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
@@ -82,10 +85,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="60px" />
-				<img
+				<Imgix
 					className={classes.imageDesktop}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="70px" />
 				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
@@ -106,10 +110,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="60px" />
-				<img
+				<Imgix
 					className={classes.imageDesktop}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="70px" />
 				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>

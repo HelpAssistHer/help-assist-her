@@ -1,5 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import Imgix from 'react-imgix'
 
 import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 
@@ -7,40 +8,44 @@ const UnitedStatesMap = ({ classes }) => (
 	<div>
 		<Phone>
 			<div className={classes.imageContainerPhone}>
-				<img
+				<Imgix
 					className={classes.responsiveMapPhone}
-					src="../img/united-states-map.png"
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</Phone>
 
 		<BigPhone>
 			<div className={classes.imageContainerPhone}>
-				<img
+				<Imgix
 					className={classes.responsiveMapBigPhone}
-					src="../img/united-states-map.png"
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</BigPhone>
 
 		<Tablet>
 			<div className={classes.imageContainerTablet}>
-				<img
+				<Imgix
 					className={classes.responsiveMapTablet}
-					src="../img/united-states-map.png"
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</Tablet>
 
 		<Desktop>
 			<div className={classes.imageContainerDesktop}>
-				<img
+				<Imgix
 					className={classes.responsiveMapDesktop}
-					src="../img/united-states-map.png"
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</Desktop>
