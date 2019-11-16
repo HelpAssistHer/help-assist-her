@@ -3,6 +3,7 @@
 const _ = require('lodash')
 const bodyParser = require('body-parser')
 const boom = require('express-boom')
+const compression = require('compression')
 const config = require('config')
 const cors = require('cors')
 const express = require('express')
@@ -42,6 +43,7 @@ if (process.env.NODE_ENV === 'localhost') {
 	server.use(cors(corsOptions))
 }
 
+server.use(compression())
 server.use(boom())
 server.use(express.static('public'))
 server.use(cors())
