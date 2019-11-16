@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import injectSheet from 'react-jss'
+import Imgix from 'react-imgix'
 
 import FacebookLoginButton from '../authentication/facebook-login-button'
 
@@ -10,10 +11,11 @@ class LoginPageView extends React.Component {
 		return (
 			<div className={classes.loginPageBackground}>
 				<div className={classes.loginPageWrapper}>
-					<img
-						src="./img/logo-white.png"
+					<Imgix
+						src="https://helpassisther.imgix.net/logo-white.png"
 						alt="Help Assist Her logo"
 						className={classes.logoWhite}
+						width={400}
 					/>
 
 					<div className={classes.titleText}>Information Database</div>
@@ -31,7 +33,7 @@ const styles = {
 		margin: '0',
 		height: '100%',
 		width: '100%',
-		'background-image': 'url("./img/background.png")',
+		'background-image': 'url("https://helpassisther.imgix.net/background.png")',
 		'background-position': 'center',
 		'background-repeat': 'no-repeat',
 		'background-size': 'cover',
