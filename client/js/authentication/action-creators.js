@@ -21,7 +21,11 @@ export async function logoutUser() {
 			Accept: 'application/json',
 		},
 	})
-	return await response.ok // if we received a 200, it was successful
+
+	const responseOk = await response.ok // if we received a 200, it was successful
+	if (responseOk) {
+		return (window.location = '/verification')
+	}
 }
 
 export async function isAuthenticated() {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
 import FacebookLoginButton from './view'
 
@@ -10,6 +11,11 @@ class FacebookLoginButtonContainer extends React.Component {
 
 	render() {
 		const { dispatch, facebookAppId, isLoggedIn } = this.props
+
+		if (isLoggedIn) {
+			return <Redirect to="/verification/pregnancy-resource-center" />
+		}
+
 		return (
 			<FacebookLoginButton
 				dispatch={dispatch}
