@@ -23,6 +23,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 mongoose.set('useNewUrlParser', true)
 mongoose.set('useUnifiedTopology', true)
+mongoose.set('useFindAndModify', false)
 
 const log = new Log('info')
 const MongoStore = require('connect-mongo')(session)
