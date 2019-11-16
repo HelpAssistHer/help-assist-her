@@ -104,8 +104,9 @@ const startDatabase = async () => {
 	await mongoose.connect(config.mongo.connectionString, (err, client) => {
 		if (err) {
 			log.error('Unable to connect to mongo database', err)
+		} else {
+			log.info('Successfully connected to database', client.name)
 		}
-		log.info('Successfully connected to database', client.name)
 	})
 }
 
