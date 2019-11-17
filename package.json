@@ -55,6 +55,7 @@
 		"csv": "^2.0.0",
 		"express": "^4.15.3",
 		"express-boom": "^2.0.0",
+		"express-http-to-https": "^1.1.4",
 		"express-session": "^1.15.2",
 		"history": "^4.4.0",
 		"lodash": "4.17.13",
