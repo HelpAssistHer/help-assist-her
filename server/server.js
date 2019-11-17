@@ -13,6 +13,7 @@ const morgan = require('morgan')
 const passport = require('passport')
 const path = require('path')
 const session = require('express-session')
+const { redirectToHTTPS } = require('express-http-to-https')
 
 const UserModel = require('./users/schema/mongoose-schema')
 
@@ -55,6 +56,8 @@ server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.urlencoded())
 server.use(bodyParser.json())
 server.use(morgan('combined'))
+server.use(redirectToHTTPS([/localhost:4000/, /localhost:8080/]))
+
 server.use(
 	session({
 		secret: config.session.secret,
