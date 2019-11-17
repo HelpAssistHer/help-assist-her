@@ -1,7 +1,7 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
 
 const TITLE_1_TEXT = 'Always there.'
@@ -31,6 +31,24 @@ const HomePageBanner = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div>
+				<div className={classes.bannerPhone}>
+					<div>
+						{TITLE_1_TEXT}
+						<br />
+						{TITLE_2_TEXT}
+					</div>
+					<Spacer height="26px" />
+					<div className={classes.descriptionContainerPhone}>
+						<div className={classes.descriptionTextPhone}>
+							{DESCRIPTION_TEXT}
+						</div>
+					</div>
+				</div>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div>
@@ -80,7 +98,7 @@ const styles = {
 		'background-color': '#F5EDE6',
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '30px',
+		'font-size': '24px',
 		'line-height': '33px',
 		'text-align': 'center',
 	},
@@ -118,7 +136,7 @@ const styles = {
 	descriptionTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 		'grid-column-start': 2,

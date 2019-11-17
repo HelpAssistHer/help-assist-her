@@ -1,11 +1,13 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import Imgix from 'react-imgix'
 
 import Spacer from '../components/spacer'
 import Footer from '../mini-app/components/footer'
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Team from './team'
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
+import { ScrollToTop } from '../components/scroll-to-top'
 
 const TITLE_TEXT = 'What is Help Assist Her?'
 
@@ -21,6 +23,7 @@ const TEAM_BODY = 'The dream team that makes all of this possible!'
 
 const About = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>
@@ -32,10 +35,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="36px" />
-				<img
+				<Imgix
 					className={classes.imagePhone}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="36px" />
 				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
@@ -47,6 +51,31 @@ const About = ({ classes }) => (
 			</div>
 		</Phone>
 
+		<BigPhone>
+			<div className={classes.aboutPageContainerPhone}>
+				<Spacer height="36px" />
+				<div className={classes.titlePhone}>{TITLE_TEXT}</div>
+				<Spacer height="28px" />
+				<div className={classes.bodyPhone}>
+					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
+				</div>
+				<Spacer height="36px" />
+				<Imgix
+					className={classes.imagePhone}
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
+					alt="Women on mobile phones"
+					sizes="100vw"
+				/>
+				<Spacer height="36px" />
+				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
+				<Spacer height="3px" />
+				<div className={classes.bodyPhone}>
+					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
+				</div>
+				<Spacer height="36px" />
+			</div>
+		</BigPhone>
+
 		<Tablet>
 			<div className={classes.aboutPageContainerDesktop}>
 				<Spacer height="60px" />
@@ -56,10 +85,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="60px" />
-				<img
+				<Imgix
 					className={classes.imageDesktop}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="70px" />
 				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
@@ -80,10 +110,11 @@ const About = ({ classes }) => (
 					<div className={classes.bodyTextItem}>{BODY_TEXT}</div>
 				</div>
 				<Spacer height="60px" />
-				<img
+				<Imgix
 					className={classes.imageDesktop}
-					src="../img/women-on-phones.jpg"
+					src="https://helpassisther.imgix.net/women-on-phones.jpg"
 					alt="Women on mobile phones"
+					sizes="100vw"
 				/>
 				<Spacer height="70px" />
 				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
@@ -100,6 +131,10 @@ const About = ({ classes }) => (
 		<Phone>
 			<Spacer height="36px" />
 		</Phone>
+
+		<BigPhone>
+			<Spacer height="36px" />
+		</BigPhone>
 
 		<Tablet>
 			<Spacer height="152px" />
@@ -123,7 +158,7 @@ const styles = {
 	titlePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '28px',
 		'text-align': 'center',
 	},
@@ -146,7 +181,7 @@ const styles = {
 	bodyDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 		display: 'grid',

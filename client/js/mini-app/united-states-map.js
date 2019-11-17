@@ -1,36 +1,51 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import Imgix from 'react-imgix'
 
-import { Phone, Tablet, Desktop } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 
 const UnitedStatesMap = ({ classes }) => (
 	<div>
 		<Phone>
 			<div className={classes.imageContainerPhone}>
-				<img
-					className={classes.responsiveMap}
-					src="../img/united-states-map.png"
+				<Imgix
+					className={classes.responsiveMapPhone}
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</Phone>
 
+		<BigPhone>
+			<div className={classes.imageContainerPhone}>
+				<Imgix
+					className={classes.responsiveMapBigPhone}
+					src="https://helpassisther.imgix.net/united-states-map.png"
+					alt="Help Assist Her expansion map"
+					sizes="100vw"
+				/>
+			</div>
+		</BigPhone>
+
 		<Tablet>
 			<div className={classes.imageContainerTablet}>
-				<img
-					className={classes.responsiveMap}
-					src="../img/united-states-map.png"
+				<Imgix
+					className={classes.responsiveMapTablet}
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</Tablet>
 
 		<Desktop>
 			<div className={classes.imageContainerDesktop}>
-				<img
+				<Imgix
 					className={classes.responsiveMapDesktop}
-					src="../img/united-states-map.png"
+					src="https://helpassisther.imgix.net/united-states-map.png"
 					alt="Help Assist Her expansion map"
+					sizes="100vw"
 				/>
 			</div>
 		</Desktop>
@@ -53,11 +68,25 @@ const styles = {
 		'justify-content': 'center',
 		padding: '120px',
 	},
-	responsiveMap: {
-		'max-width': '100%',
+	responsiveMapPhone: {
+		'max-width': '90vw',
+		height: '40vh',
+		'object-fit': 'contain', // for Safari
+	},
+	responsiveMapBigPhone: {
+		'max-width': '90vw',
+		height: '50vh',
+		'object-fit': 'contain', // for Safari
+	},
+	responsiveMapTablet: {
+		'max-width': '90vw',
+		height: '60vh',
+		'object-fit': 'contain', // for Safari
 	},
 	responsiveMapDesktop: {
-		'max-width': '80%',
+		'max-width': '90vw',
+		height: '70vh',
+		'object-fit': 'contain', // for Safari
 	},
 }
 

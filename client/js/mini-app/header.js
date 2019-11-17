@@ -1,5 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
+import Imgix from 'react-imgix'
 
 import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
@@ -17,10 +18,11 @@ const Header = ({ classes }) => {
 			<LogoAndNavigation />
 			<Phone>
 				<div className={classes.headerContainerPhone}>
-					<img
+					<Imgix
 						className={classes.imagePhone}
-						src="../img/homepage-collage.png"
+						src="https://helpassisther.imgix.net/homepage-collage.png"
 						alt="Women"
+						height={200}
 					/>
 					<div className={classes.headerText}>
 						<div className={classes.titleTextPhone}>
@@ -38,10 +40,11 @@ const Header = ({ classes }) => {
 
 			<BigPhone>
 				<div className={classes.headerContainerBigPhone}>
-					<img
+					<Imgix
 						className={classes.imageBigPhone}
-						src="../img/homepage-collage.png"
+						src="https://helpassisther.imgix.net/homepage-collage.png"
 						alt="Women"
+						height={200}
 					/>
 					<div className={classes.headerText}>
 						<div className={classes.titleTextBigPhone}>
@@ -72,10 +75,11 @@ const Header = ({ classes }) => {
 					</div>
 
 					<div className={classes.imageContainer}>
-						<img
+						<Imgix
 							className={classes.imageTablet}
-							src="../img/homepage-collage.png"
+							src="https://helpassisther.imgix.net/homepage-collage.png"
 							alt="Women"
+							width={400}
 						/>
 					</div>
 				</div>
@@ -96,10 +100,11 @@ const Header = ({ classes }) => {
 					</div>
 
 					<div className={classes.imageContainer}>
-						<img
+						<Imgix
 							className={classes.imageDesktop}
-							src="../img/homepage-collage.png"
+							src="https://helpassisther.imgix.net/homepage-collage.png"
 							alt="Women"
+							width={500}
 						/>
 					</div>
 				</div>

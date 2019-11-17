@@ -134,7 +134,7 @@ const styles = {
 	},
 	navigationLinkDesktop: {
 		'font-family': 'hah-regular',
-		'font-size': '18px',
+		'font-size': '16px',
 		color: '#000000',
 		'text-decoration': 'none',
 		cursor: 'pointer',

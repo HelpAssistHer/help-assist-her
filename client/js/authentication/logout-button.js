@@ -16,16 +16,30 @@ const LogoutButton = ({ classes }) => (
 const styles = {
 	button: {
 		'padding-left': '233px',
-		'padding-top': '25.82px',
+		'padding-top': '26px',
 	},
 	logoutButton: {
-		height: '28.89px',
-		width: '72.61px',
+		height: '29px',
+		width: '73px',
 		border: '1px solid #FFFFFF',
 		'border-radius': '100px',
 		'background-color': 'transparent',
 		color: '#FFFFFF',
-		'letter-spacing': '0.18px',
+		'font-family': 'hah-bold',
+		'font-size': '11px',
+		'letter-spacing': '0.3px',
+		'line-height': '13px',
+		'text-align': 'center',
+		cursor: 'pointer',
+		outline: 'none',
+		'&:hover': {
+			'background-color': '#FFFFFF',
+			color: '#000000',
+		},
+		'&:active': {
+			'background-color': '#FFFFFF',
+			color: '#000000',
+		},
 	},
 }
 

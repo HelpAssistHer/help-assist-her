@@ -4,9 +4,10 @@ import injectSheet from 'react-jss'
 import Spacer from '../../components/spacer'
 import Footer from '../../mini-app/components/footer'
 import LogoAndNavigation from '../../mini-app/logo-and-navigation'
-import { Phone, Tablet, Desktop } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import ListOfResources from './list-of-resources'
 import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
+import { ScrollToTop } from '../../components/scroll-to-top'
 
 const TITLE_TEXT = 'You are not alone. You are loved.'
 
@@ -21,6 +22,7 @@ const PERIOD = '.'
 
 const Emergency = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>
@@ -45,6 +47,29 @@ const Emergency = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div>
+				<div className={classes.infoSectionPhone}>
+					<Spacer height="33px" />
+					<EmergencyPhoneIcon height={48} width={48} />
+					<Spacer height="22px" />
+					<div className={classes.titlePhone}>{TITLE_TEXT}</div>
+					<Spacer height="22px" />
+					<div className={classes.bodyPhone}>{BODY_TEXT}</div>
+					<Spacer height="44px" />
+				</div>
+				<div className={classes.call911SectionPhone}>
+					<Spacer height="25px" />
+					<div className={classes.textContainer}>
+						{CALL_EMERGENCY_TEXT}&nbsp;
+						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
+						{PERIOD}
+					</div>
+					<Spacer height="25px" />
+				</div>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div>
@@ -98,6 +123,12 @@ const Emergency = ({ classes }) => (
 			</div>
 		</Phone>
 
+		<BigPhone>
+			<div className={classes.listOfResourcesContainerPhone}>
+				<ListOfResources />
+			</div>
+		</BigPhone>
+
 		<Tablet>
 			<div className={classes.listOfResourcesContainerDesktop}>
 				<ListOfResources />
@@ -134,7 +165,7 @@ const styles = {
 	titlePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '28px',
 		'text-align': 'center',
 	},
@@ -155,14 +186,14 @@ const styles = {
 	bodyDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 	},
 	call911SectionPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '32px',
 		'text-align': 'center',
 		'border-bottom': '1px solid #3D65F9',
@@ -170,7 +201,7 @@ const styles = {
 	call911SectionDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '30px',
+		'font-size': '24px',
 		'line-height': '36px',
 		'text-align': 'center',
 		'border-bottom': '3px solid #3D65F9',
