@@ -179,7 +179,6 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 
 const styles = {
 	resourceCarouselRootPhone: {
-		'-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 		display: 'flex',
 		'justify-content': 'center',
 		padding: '50px 0px 0px 0px',
@@ -219,6 +218,7 @@ const styles = {
 		'align-items': 'center',
 	},
 	resourceBox: {
+		'-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
