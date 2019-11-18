@@ -35,49 +35,49 @@ router.get('/', isLoggedInAPI, async (req, res) => {
 	Returns pregnancy centers located within x miles radius of the circle centered at lng, lat
  */
 router.get('/near-me', async (req, res) => {
-	try {
-		const METERS_PER_MILE = 1609.34
-		const lng = req.query.lng || -73.781332
-		const lat = req.query.lat || 42.6721989
-		const miles = req.query.miles || 5
+	// try {
+	const METERS_PER_MILE = 1609.34
+	const lng = req.query.lng || -73.781332
+	const lat = req.query.lat || 42.6721989
+	const miles = req.query.miles || 5
 
-		const locationQuery = {
-			'address.location': {
-				$nearSphere: {
-					$geometry: {
-						type: 'Point',
-						coordinates: [lng, lat],
-					},
-					$maxDistance: miles * METERS_PER_MILE,
+	const locationQuery = {
+		'address.location': {
+			$nearSphere: {
+				$geometry: {
+					type: 'Point',
+					coordinates: [lng, lat],
 				},
+				$maxDistance: miles * METERS_PER_MILE,
 			},
-		}
-
-		const outOfBusinessQuery = {
-			outOfBusiness: { $in: [null, false] },
-		}
-
-		const fullQuery = _.merge(
-			locationQuery,
-			outOfBusinessQuery,
-			queries.fullyVerified,
-			queries.verifiedAfterOct31,
-		)
-
-		const pregnancyCentersNearMe = await PregnancyCenterModel.find(
-			fullQuery,
-		).lean()
-
-		if (pregnancyCentersNearMe.length <= 0) {
-			return res.boom.notFound(
-				`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
-			)
-		} else {
-			res.status(200).json(pregnancyCentersNearMe)
-		}
-	} catch (err) {
-		return handleError(res, err)
+		},
 	}
+
+	const outOfBusinessQuery = {
+		outOfBusiness: { $in: [null, false] },
+	}
+
+	const fullQuery = _.merge(
+		locationQuery,
+		outOfBusinessQuery,
+		queries.fullyVerified,
+		queries.verifiedAfterOct31,
+	)
+
+	const pregnancyCentersNearMe = await PregnancyCenterModel.find(
+		fullQuery,
+	).lean()
+
+	if (pregnancyCentersNearMe.length <= 0) {
+		return res.boom.notFound(
+			`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
+		)
+	} else {
+		res.status(200).json(pregnancyCentersNearMe)
+	}
+	// } catch (err) {
+	// 	return handleError(res, err)
+	// }
 })
 
 /*
