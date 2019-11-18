@@ -6,7 +6,7 @@ import injectSheet from 'react-jss'
 import Instruction from './instruction'
 import MiniAppForm from '../form'
 import { getPregnancyResourceCenters } from '../data/action-creators'
-import { Desktop, Phone, Tablet } from '../../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 class StepTwo extends Component {
 	submit = ({ locationInput }) => {
@@ -35,6 +35,22 @@ class StepTwo extends Component {
 						</div>
 					</div>
 				</Phone>
+
+				<BigPhone>
+					<div className={classes.stepTwoContainer}>
+						<button
+							className={classes.backButtonPhone}
+							onClick={() => onResourceChange(null)}
+						/>
+						<div>
+							<Instruction
+								stepNumber="STEP TWO"
+								stepDescription="Where do you need access to care?"
+							/>
+							<MiniAppForm onSubmit={this.submit} />
+						</div>
+					</div>
+				</BigPhone>
 
 				<Tablet>
 					<div className={classes.stepTwoContainer}>
@@ -84,11 +100,13 @@ const styles = {
 		width: '15px',
 		'border-top': 'none',
 		'border-right': 'none',
-		'border-bottom': '1px solid #000000',
-		'border-left': '1px solid #000000',
+		'border-bottom': '1px solid #3D65F9',
+		'border-left': '1px solid #3D65F9',
 		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 	backButtonDesktop: {
 		'align-self': 'center',
@@ -97,11 +115,13 @@ const styles = {
 		width: '30px',
 		'border-top': 'none',
 		'border-right': 'none',
-		'border-bottom': '2px solid #000000',
-		'border-left': '2px solid #000000',
+		'border-bottom': '2px solid #3D65F9',
+		'border-left': '2px solid #3D65F9',
 		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
+		'background-color': '#FFFFFF', // for Safari
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 }
 

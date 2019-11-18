@@ -31,8 +31,7 @@ class HeaderModal extends Component {
 		}
 	}
 
-	handleClick(e) {
-		e.preventDefault()
+	handleClick() {
 		this.setState({
 			closed: true,
 		})

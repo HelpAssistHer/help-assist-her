@@ -4,8 +4,9 @@ import injectSheet from 'react-jss'
 
 import LogoAndNavigation from '../mini-app/logo-and-navigation'
 import Footer from '../mini-app/components/footer'
-import { Desktop, Tablet, Phone } from '../components/breakpoints'
+import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Spacer from '../components/spacer'
+import { ScrollToTop } from '../components/scroll-to-top'
 
 const TITLE_TEXT = "We're listening."
 
@@ -19,6 +20,7 @@ const BODY_TEXT_3 =
 
 const Feedback = ({ classes }) => (
 	<div>
+		<ScrollToTop />
 		<LogoAndNavigation />
 
 		<Phone>
@@ -37,6 +39,23 @@ const Feedback = ({ classes }) => (
 				</div>
 			</div>
 		</Phone>
+
+		<BigPhone>
+			<div className={classes.feedbackPageContainerPhone}>
+				<Spacer height="36px" />
+				<div className={classes.titleTextPhone}>{TITLE_TEXT}</div>
+				<Spacer height="28px" />
+				<div className={classes.gridContainerPhone}>
+					<div className={classes.bodyTextPhone}>
+						{BODY_TEXT_1}
+						<Spacer height="28px" />
+						{BODY_TEXT_2}
+						<Spacer height="28px" />
+						<div className={classes.blueText}>{BODY_TEXT_3}</div>
+					</div>
+				</div>
+			</div>
+		</BigPhone>
 
 		<Tablet>
 			<div className={classes.feedbackPageContainerDesktop}>
@@ -91,7 +110,7 @@ const styles = {
 	titleTextPhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '28px',
 		'text-align': 'center',
 	},
@@ -122,7 +141,7 @@ const styles = {
 	bodyTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
+		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
 		'grid-column-start': 2,

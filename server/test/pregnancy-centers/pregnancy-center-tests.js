@@ -1122,8 +1122,8 @@ describe('PregnancyCenters', () => {
 	})
 
 	/*
- * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
- */
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
+	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business', () => {
 		it('it should return a single pregnancy center with updated outOfBusiness with authentication', async () => {
 			const primaryContactPerson = new PersonModel({
@@ -1221,8 +1221,8 @@ describe('PregnancyCenters', () => {
 	})
 
 	/*
- 	* Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
- 	*/
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business route with authentication
+	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId/out-of-business', () => {
 		it('it should return a single pregnancy center with updated outOfBusiness', async () => {
 			const primaryContactPerson = new PersonModel({
@@ -1320,8 +1320,8 @@ describe('PregnancyCenters', () => {
 	})
 
 	/*
- 	* Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/do-not-list route with authentication
- 	*/
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId/do-not-list route with authentication
+	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId/do-not-list', () => {
 		it('it should return a single pregnancy center with updated doNotList', async () => {
 			const primaryContactPerson = new PersonModel({
