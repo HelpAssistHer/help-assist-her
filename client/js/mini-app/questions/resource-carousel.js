@@ -218,6 +218,7 @@ const styles = {
 		'align-items': 'center',
 	},
 	resourceBox: {
+		'-webkit-tap-highlight-color': 'rgba(0, 0, 0, 0)',
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
