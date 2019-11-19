@@ -257,20 +257,16 @@ describe('FQHCs', () => {
 
 			const oldFQHC = await FQHCModel.create(oldValues)
 			oldFQHC.outOfBusiness.should.equal(true)
-			try {
-				await chai
-					.request(server)
-					.put('/api/fqhcs/' + oldFQHC._id)
-					.send(newValues)
-				chai.assert.fail(0, 1, 'Error not thrown')
-			} catch (err) {
-				assertError(
-					err.response,
-					400,
-					'Bad Request',
-					'Cannot edit an outOfBusiness FQHC or PregnancyCenter',
-				)
-			}
+			const res = await chai
+				.request(server)
+				.put('/api/fqhcs/' + oldFQHC._id)
+				.send(newValues)
+			assertError(
+				res,
+				400,
+				'Bad Request',
+				'Cannot edit an outOfBusiness FQHC or PregnancyCenter',
+			)
 		})
 	})
 
