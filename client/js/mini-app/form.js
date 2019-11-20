@@ -27,7 +27,7 @@ class MiniAppFormView extends Component {
 				</Desktop>
 
 				<Field
-					placeholder="Address, city/state, or zip code"
+					placeholder="Address, city, state, or zip code"
 					name="locationInput"
 					component={Input}
 					type="text"
