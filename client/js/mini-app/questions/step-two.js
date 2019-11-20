@@ -31,6 +31,9 @@ class StepTwo extends Component {
 								stepNumber="STEP TWO"
 								stepDescription="Where do you need access to care?"
 							/>
+							<div className={classes.betaTextPhone}>
+								*beta only available in NY*
+							</div>
 							<MiniAppForm onSubmit={this.submit} />
 						</div>
 					</div>
@@ -47,6 +50,9 @@ class StepTwo extends Component {
 								stepNumber="STEP TWO"
 								stepDescription="Where do you need access to care?"
 							/>
+							<div className={classes.betaTextBigPhone}>
+								*beta only available in NY*
+							</div>
 							<MiniAppForm onSubmit={this.submit} />
 						</div>
 					</div>
@@ -63,6 +69,9 @@ class StepTwo extends Component {
 								stepNumber="STEP TWO"
 								stepDescription="Where do you need access to care?"
 							/>
+							<div className={classes.betaTextDesktop}>
+								*beta only available in NY*
+							</div>
 							<MiniAppForm onSubmit={this.submit} />
 						</div>
 					</div>
@@ -79,6 +88,9 @@ class StepTwo extends Component {
 								stepNumber="STEP TWO"
 								stepDescription="Where do you need access to care?"
 							/>
+							<div className={classes.betaTextDesktop}>
+								*beta only available in NY*
+							</div>
 							<MiniAppForm onSubmit={this.submit} />
 						</div>
 					</div>
@@ -122,6 +134,30 @@ const styles = {
 		outline: 'none',
 		'background-color': '#FFFFFF', // for Safari
 		'-webkit-tap-highlight-color': 'transparent', // for Safari
+	},
+	betaTextPhone: {
+		'text-align': 'center',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		opacity: 0.5,
+		'font-size': '3.5vw',
+		'line-height': '30px',
+	},
+	betaTextBigPhone: {
+		'text-align': 'center',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		opacity: 0.5,
+		'font-size': '16px',
+		'line-height': '30px',
+	},
+	betaTextDesktop: {
+		'text-align': 'center',
+		color: '#000000',
+		'font-size': '16px',
+		'line-height': '30px',
+		'font-family': 'hah-regular',
+		opacity: 0.5,
 	},
 }
 

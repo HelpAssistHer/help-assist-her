@@ -15,72 +15,62 @@ const DESCRIPTION_TEXT =
 const HomePageBanner = ({ classes }) => (
 	<div>
 		<Phone>
-			<div>
-				<div className={classes.bannerPhone}>
-					<div>
-						{TITLE_1_TEXT}
-						<br />
-						{TITLE_2_TEXT}
-					</div>
-					<Spacer height="26px" />
-					<div className={classes.descriptionContainerPhone}>
-						<div className={classes.descriptionTextPhone}>
-							{DESCRIPTION_TEXT}
-						</div>
-					</div>
+			<div className={classes.bannerPhone}>
+				<div>
+					{TITLE_1_TEXT}
+					<br />
+					{TITLE_2_TEXT}
+				</div>
+				<Spacer height="26px" />
+				<div className={classes.descriptionContainerPhone}>
+					<div className={classes.descriptionTextPhone}>{DESCRIPTION_TEXT}</div>
 				</div>
 			</div>
 		</Phone>
 
 		<BigPhone>
-			<div>
-				<div className={classes.bannerPhone}>
-					<div>
-						{TITLE_1_TEXT}
-						<br />
-						{TITLE_2_TEXT}
-					</div>
-					<Spacer height="26px" />
-					<div className={classes.descriptionContainerPhone}>
-						<div className={classes.descriptionTextPhone}>
-							{DESCRIPTION_TEXT}
-						</div>
+			<div className={classes.bannerBigPhone}>
+				<div>
+					{TITLE_1_TEXT}
+					<br />
+					{TITLE_2_TEXT}
+				</div>
+				<Spacer height="26px" />
+				<div className={classes.descriptionContainerPhone}>
+					<div className={classes.descriptionTextBigPhone}>
+						{DESCRIPTION_TEXT}
 					</div>
 				</div>
 			</div>
 		</BigPhone>
 
 		<Tablet>
-			<div>
-				<div className={classes.bannerDesktop}>
-					<div>
-						{TITLE_1_TEXT}
-						<br />
-						{TITLE_2_TEXT}
-					</div>
-					<Spacer height="48px" />
-					<div className={classes.descriptionContainerDesktop}>
-						<div className={classes.descriptionTextDesktop}>
-							{DESCRIPTION_TEXT}
-						</div>
+			<div className={classes.bannerTablet}>
+				<div>
+					{TITLE_1_TEXT}
+					<br />
+					{TITLE_2_TEXT}
+				</div>
+				<Spacer height="48px" />
+				<div className={classes.descriptionContainerDesktop}>
+					<div className={classes.descriptionTextDesktop}>
+						{DESCRIPTION_TEXT}
 					</div>
 				</div>
 			</div>
 		</Tablet>
 
 		<Desktop>
-			<div>
-				<div className={classes.bannerDesktop}>
-					<div>
-						{TITLE_1_TEXT}
-						<br />
-						{TITLE_2_TEXT}
-					</div>
-					<Spacer height="48px" />
-					<div className={classes.descriptionContainerDesktop}>
-						<div className={classes.descriptionTextDesktop}>
-							{DESCRIPTION_TEXT}
-						</div>
+			<div className={classes.bannerDesktop}>
+				<div>
+					{TITLE_1_TEXT}
+					<br />
+					{TITLE_2_TEXT}
+				</div>
+				<Spacer height="48px" />
+				<div className={classes.descriptionContainerDesktop}>
+					<div className={classes.descriptionTextDesktop}>
+						{DESCRIPTION_TEXT}
 					</div>
 				</div>
 			</div>
@@ -94,41 +84,75 @@ const styles = {
 		'flex-direction': 'column',
 		'align-items': 'center',
 		'justify-content': 'center',
-		height: '328px',
 		'background-color': '#F5EDE6',
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '24px',
-		'line-height': '33px',
+		'font-size': '8vw',
+		'line-height': '11vw',
 		'text-align': 'center',
+		padding: '60px 0px 75px 0px',
+	},
+	bannerBigPhone: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'justify-content': 'center',
+		'background-color': '#F5EDE6',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '6vw',
+		'line-height': '8vw',
+		'text-align': 'center',
+		padding: '60px 0px 75px 0px',
+	},
+	bannerTablet: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'justify-content': 'center',
+		'background-color': '#F5EDE6',
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '5vw',
+		'line-height': '6.5vw',
+		'text-align': 'center',
+		padding: '100px 0px 125px 0px',
 	},
 	bannerDesktop: {
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
 		'justify-content': 'center',
-		height: '675px',
 		'background-color': '#F5EDE6',
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '80px',
-		'line-height': '94px',
-		'letter-spacing': '-0.1px',
+		'font-size': '4vw',
+		'line-height': '5vw',
 		'text-align': 'center',
+		padding: '100px 0px 125px 0px',
 	},
 	descriptionContainerPhone: {
 		display: 'grid',
-		'grid-template-columns': '10% 80% 10%',
+		'grid-template-columns': '13.5% 73% 13.5%',
 	},
 	descriptionContainerDesktop: {
 		display: 'grid',
-		'grid-template-columns': '20% 60% 20%',
+		'grid-template-columns': '25% 50% 25%;',
 	},
 	descriptionTextPhone: {
 		color: 'rgba(0,0,0,0.95)',
 		'font-family': 'hah-regular',
-		'font-size': '14px',
-		'line-height': '20px',
+		'font-size': '4.5vw',
+		'line-height': '6vw',
+		'text-align': 'center',
+		'grid-column-start': 2,
+		'grid-column-end': 3,
+	},
+	descriptionTextBigPhone: {
+		color: 'rgba(0,0,0,0.95)',
+		'font-family': 'hah-regular',
+		'font-size': '3vw',
+		'line-height': '4.5vw',
 		'text-align': 'center',
 		'grid-column-start': 2,
 		'grid-column-end': 3,
@@ -137,7 +161,7 @@ const styles = {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '20px',
-		'line-height': '35px',
+		'line-height': '28px',
 		'text-align': 'center',
 		'grid-column-start': 2,
 		'grid-column-end': 3,

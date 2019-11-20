@@ -19,14 +19,16 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 				<div>
 					<div className={classes.stepNumberPhone}>{stepNumber}</div>
 					<Spacer height="10px" />
-					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
+					<div className={classes.stepDescriptionBigPhone}>
+						{stepDescription}
+					</div>
 				</div>
 			</BigPhone>
 
 			<Tablet>
 				<div>
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
-					<Spacer height="30px" />
+					<Spacer height="20px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -36,7 +38,7 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 			<Desktop>
 				<div>
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
-					<Spacer height="30px" />
+					<Spacer height="20px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -72,17 +74,22 @@ const styles = {
 	stepDescriptionPhone: {
 		'font-family': 'hah-regular',
 		color: '#000000',
-		'font-size': '14px',
-		height: '20px',
-		'line-height': '20px',
-		'max-width': '225px',
+		'font-size': '4.5vw',
+		'line-height': '6vw',
+		'max-width': '300px',
+	},
+	stepDescriptionBigPhone: {
+		'font-family': 'hah-regular',
+		color: '#000000',
+		'font-size': '3vw',
+		'line-height': '4.5vw',
+		'max-width': '350px',
 	},
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',
 		color: '#000000',
-		'font-size': '24px',
-		height: '40px',
-		'line-height': '40px',
+		'font-size': '20px',
+		'line-height': '30px',
 		'max-width': '500px',
 	},
 }

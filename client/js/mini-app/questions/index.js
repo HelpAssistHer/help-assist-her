@@ -83,10 +83,10 @@ class Questions extends Component {
 
 const styles = {
 	searchCardRootPhone: {
-		margin: '35px 0px 35px 0px',
+		margin: '60px 0px 75px 0px',
 	},
 	searchCardRootDesktop: {
-		margin: '100px 0px 100px 0px',
+		margin: '100px 0px 125px 0px',
 	},
 }
 

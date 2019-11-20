@@ -38,8 +38,6 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						</div>
 					</button>
 
-					<div className={classes.orPhone}>or</div>
-
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[1].id)}
@@ -76,8 +74,6 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 							</div>
 						</div>
 					</button>
-
-					<div className={classes.orPhone}>or</div>
 
 					<button
 						className={classes.resourceBox}
@@ -116,8 +112,6 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						</div>
 					</button>
 
-					<div className={classes.orDesktop}>or</div>
-
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[1].id)}
@@ -155,8 +149,6 @@ const ResourceCarousel = ({ classes, onResourceChange }) => (
 						</div>
 					</button>
 
-					<div className={classes.orDesktop}>or</div>
-
 					<button
 						className={classes.resourceBox}
 						onClick={() => onResourceChange(resources[1].id)}
@@ -184,7 +176,7 @@ const styles = {
 		padding: '50px 0px 0px 0px',
 	},
 	paddingDesktop: {
-		padding: '100px 0px 0px 0px',
+		padding: '80px 0px 0px 0px',
 	},
 	disabledIcon: {
 		opacity: 0.2,
@@ -231,28 +223,13 @@ const styles = {
 	resourceNamePhone: {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
-		width: '60%',
+		width: '90%',
 	},
 	resourceNameDesktop: {
-		'font-family': 'hah-light',
+		'font-family': 'hah-regular',
 		'font-size': '20px',
+		'line-height': '30px',
 		width: '60%',
-	},
-	orPhone: {
-		'font-family': 'hah-regular',
-		color: 'rgba(0,0,0,0.95)',
-		'font-size': '14px',
-		'line-height': '20px',
-		'text-align': 'center',
-		padding: '15px 0px',
-	},
-	orDesktop: {
-		'font-family': 'hah-regular',
-		color: 'rgba(0,0,0,0.95)',
-		'font-size': '24px',
-		'line-height': '40px',
-		'text-align': 'center',
-		padding: '45px 0px',
 	},
 }
 
