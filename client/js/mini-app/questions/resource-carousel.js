@@ -223,7 +223,7 @@ const styles = {
 	resourceNamePhone: {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
-		width: '60%',
+		width: '90%',
 	},
 	resourceNameDesktop: {
 		'font-family': 'hah-regular',
