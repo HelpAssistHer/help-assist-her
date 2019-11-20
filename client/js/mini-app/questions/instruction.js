@@ -19,7 +19,9 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 				<div>
 					<div className={classes.stepNumberPhone}>{stepNumber}</div>
 					<Spacer height="10px" />
-					<div className={classes.stepDescriptionPhone}>{stepDescription}</div>
+					<div className={classes.stepDescriptionBigPhone}>
+						{stepDescription}
+					</div>
 				</div>
 			</BigPhone>
 
@@ -70,19 +72,26 @@ const styles = {
 		'line-height': '40px',
 	},
 	stepDescriptionPhone: {
-		'font-family': 'hah-regular',
+		'font-family': 'hah-light',
 		color: '#000000',
-		'font-size': '14px',
-		height: '20px',
-		'line-height': '20px',
-		'max-width': '225px',
+		'font-size': '4.5vw',
+		'line-height': '6vw',
+		'letter-spacing': '0.3px',
+		'max-width': '400px',
+	},
+	stepDescriptionBigPhone: {
+		'font-family': 'hah-light',
+		color: '#000000',
+		'font-size': '3vw',
+		'line-height': '4.5vw',
+		'letter-spacing': '0.3px',
+		'max-width': '350px',
 	},
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',
 		color: '#000000',
 		'font-size': '20px',
 		'line-height': '30px',
-		height: '40px',
 		'max-width': '500px',
 	},
 }
