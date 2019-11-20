@@ -184,7 +184,7 @@ const styles = {
 		padding: '50px 0px 0px 0px',
 	},
 	paddingDesktop: {
-		padding: '100px 0px 0px 0px',
+		padding: '80px 0px 0px 0px',
 	},
 	disabledIcon: {
 		opacity: 0.2,
@@ -234,8 +234,9 @@ const styles = {
 		width: '60%',
 	},
 	resourceNameDesktop: {
-		'font-family': 'hah-light',
+		'font-family': 'hah-regular',
 		'font-size': '20px',
+		'line-height': '30px',
 		width: '60%',
 	},
 	orPhone: {
@@ -249,8 +250,8 @@ const styles = {
 	orDesktop: {
 		'font-family': 'hah-regular',
 		color: 'rgba(0,0,0,0.95)',
-		'font-size': '24px',
-		'line-height': '40px',
+		'font-size': '20px',
+		'line-height': '30px',
 		'text-align': 'center',
 		padding: '45px 0px',
 	},

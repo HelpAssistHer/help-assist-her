@@ -26,7 +26,7 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 			<Tablet>
 				<div>
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
-					<Spacer height="30px" />
+					<Spacer height="20px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -36,7 +36,7 @@ const Instruction = ({ classes, stepNumber, stepDescription }) => {
 			<Desktop>
 				<div>
 					<div className={classes.stepNumberDesktop}>{stepNumber}</div>
-					<Spacer height="30px" />
+					<Spacer height="20px" />
 					<div className={classes.stepDescriptionDesktop}>
 						{stepDescription}
 					</div>
@@ -80,9 +80,9 @@ const styles = {
 	stepDescriptionDesktop: {
 		'font-family': 'hah-regular',
 		color: '#000000',
-		'font-size': '24px',
+		'font-size': '20px',
+		'line-height': '30px',
 		height: '40px',
-		'line-height': '40px',
 		'max-width': '500px',
 	},
 }
