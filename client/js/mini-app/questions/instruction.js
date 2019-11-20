@@ -76,7 +76,7 @@ const styles = {
 		color: '#000000',
 		'font-size': '4.5vw',
 		'line-height': '6vw',
-		'max-width': '400px',
+		'max-width': '350px',
 	},
 	stepDescriptionBigPhone: {
 		'font-family': 'hah-regular',
