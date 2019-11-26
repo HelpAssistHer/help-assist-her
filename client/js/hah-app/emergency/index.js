@@ -29,7 +29,7 @@ const Emergency = ({ classes }) => (
 		<Phone>
 			<div>
 				<div className={classes.infoSectionPhone}>
-					<Spacer height="33px" />
+					<Spacer height="80px" />
 					<EmergencyPhoneIcon height={80} width={80} />
 					<Spacer height="50px" />
 					<div className={classes.titlePhone}>{TITLE_TEXT}</div>
