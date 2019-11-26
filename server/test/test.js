@@ -1,3 +1,6 @@
+const mongoose = require('mongoose')
+
+const { server } = require('../server')
 const { importTest } = require('./helpers')
 
 describe('top', () => {
@@ -7,4 +10,9 @@ describe('top', () => {
 	)
 	importTest('FQHC Tests', './fqhcs/fqhc-tests.js')
 	importTest('Unit Tests', './unit.js')
+
+	after(() => {
+		mongoose.disconnect()
+		server.close()
+	})
 })
