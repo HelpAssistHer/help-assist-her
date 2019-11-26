@@ -137,7 +137,7 @@ const styles = {
 	},
 	descriptionContainerDesktop: {
 		display: 'grid',
-		'grid-template-columns': '25% 50% 25%;',
+		'grid-template-columns': '25% 50% 25%',
 	},
 	descriptionTextPhone: {
 		color: 'rgba(0,0,0,0.95)',

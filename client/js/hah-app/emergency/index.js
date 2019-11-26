@@ -142,6 +142,7 @@ const styles = {
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
+		'justify-content': 'center',
 		'background-color': '#F5EDE6',
 		'text-align': 'center',
 	},
@@ -151,6 +152,7 @@ const styles = {
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
+		'justify-content': 'center',
 		'background-color': '#F5EDE6',
 		'text-align': 'center',
 	},
@@ -176,6 +178,7 @@ const styles = {
 		'font-size': '40px',
 		'line-height': '48px',
 		'text-align': 'center',
+		'max-width': '600px',
 	},
 	bodyPhone: {
 		color: '#000000',
@@ -201,6 +204,7 @@ const styles = {
 		'font-size': '20px',
 		'line-height': '35px',
 		'text-align': 'center',
+		'max-width': '600px',
 	},
 	call911SectionPhone: {
 		color: '#000000',
@@ -225,8 +229,8 @@ const styles = {
 		'background-color': '#FFFFFF',
 	},
 	listOfResourcesContainerDesktop: {
-		padding: '46px 0px',
-		'background-color': 'rgba(93,93,93,0.08)',
+		'padding-bottom': '46px',
+		'background-color': '#FFFFFF',
 	},
 }
 
