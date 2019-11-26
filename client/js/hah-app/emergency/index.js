@@ -155,7 +155,6 @@ const styles = {
 		'justify-content': 'center',
 		'background-color': '#F5EDE6',
 		'text-align': 'center',
-		'margin-top': '40px', // this is so it starts after the header/navigation
 	},
 	infoSectionBigPhone: {
 		height: '300px',
@@ -164,7 +163,6 @@ const styles = {
 		'align-items': 'center',
 		'background-color': '#F5EDE6',
 		'text-align': 'center',
-		'margin-top': '50px', // this is so it starts after the header/navigation
 	},
 	infoSectionTablet: {
 		height: '500px',
