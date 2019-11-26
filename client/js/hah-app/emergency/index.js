@@ -9,10 +9,11 @@ import ListOfResources from './list-of-resources'
 import EmergencyPhoneIcon from '../../components/icons/icon-components/emergency-phone-icon'
 import { ScrollToTop } from '../../components/scroll-to-top'
 
-const TITLE_TEXT = 'You are not alone. You are loved.'
+const TITLE_TEXT = "No matter what situation you're in, you're not alone."
 
 const BODY_TEXT =
-	'We have your back and so do the people working at the organizations below.'
+	"We're here for you, and so are other compassionate and helpful people, " +
+	'trained to get you the help you need.'
 
 const CALL_EMERGENCY_TEXT = 'If this is an emergency, call'
 
@@ -29,8 +30,8 @@ const Emergency = ({ classes }) => (
 			<div>
 				<div className={classes.infoSectionPhone}>
 					<Spacer height="33px" />
-					<EmergencyPhoneIcon height={48} width={48} />
-					<Spacer height="22px" />
+					<EmergencyPhoneIcon height={80} width={80} />
+					<Spacer height="50px" />
 					<div className={classes.titlePhone}>{TITLE_TEXT}</div>
 					<Spacer height="22px" />
 					<div className={classes.bodyPhone}>{BODY_TEXT}</div>
@@ -50,7 +51,7 @@ const Emergency = ({ classes }) => (
 
 		<BigPhone>
 			<div>
-				<div className={classes.infoSectionPhone}>
+				<div className={classes.infoSectionBigPhone}>
 					<Spacer height="33px" />
 					<EmergencyPhoneIcon height={48} width={48} />
 					<Spacer height="22px" />
@@ -73,7 +74,7 @@ const Emergency = ({ classes }) => (
 
 		<Tablet>
 			<div>
-				<div className={classes.infoSectionDesktop}>
+				<div className={classes.infoSectionTablet}>
 					<Spacer height="60px" />
 					<EmergencyPhoneIcon height={82} width={82} />
 					<Spacer height="44px" />
@@ -147,27 +148,57 @@ const Emergency = ({ classes }) => (
 
 const styles = {
 	infoSectionPhone: {
+		height: '600px',
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
-		'background-color': '#DEA8E0',
-		'border-bottom': '1px solid #3D65F9',
-		'margin-top': '55px',
+		'justify-content': 'center',
+		'background-color': '#F5EDE6',
+		'text-align': 'center',
+		'margin-top': '40px', // this is so it starts after the header/navigation
+	},
+	infoSectionBigPhone: {
+		height: '300px',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'background-color': '#F5EDE6',
+		'text-align': 'center',
+		'margin-top': '50px', // this is so it starts after the header/navigation
+	},
+	infoSectionTablet: {
+		height: '500px',
+		'margin-top': '67px', // this is so it starts after the header/navigation
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+		'background-color': '#F5EDE6',
+		'text-align': 'center',
 	},
 	infoSectionDesktop: {
+		height: '42vw',
+		'margin-top': '67px', // this is so it starts after the header/navigation
 		display: 'flex',
 		'flex-direction': 'column',
 		'align-items': 'center',
-		'background-color': '#DEA8E0',
-		'border-bottom': '3px solid #3D65F9',
-		'margin-top': '100px',
+		'background-color': '#F5EDE6',
+		'text-align': 'center',
 	},
 	titlePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '20px',
-		'line-height': '28px',
+		'font-size': '8vw',
+		'line-height': '10vw',
 		'text-align': 'center',
+		'max-width': '330px',
+	},
+	titleBigPhone: {
+		color: '#000000',
+		'font-family': 'hah-regular',
+		'font-size': '8vw',
+		'line-height': '10vw',
+		'text-align': 'center',
+		'max-width': '330px',
 	},
 	titleDesktop: {
 		color: '#000000',
@@ -178,10 +209,12 @@ const styles = {
 	},
 	bodyPhone: {
 		color: '#000000',
-		'font-family': 'hah-regular',
-		'font-size': '14px',
-		'line-height': '20px',
+		'font-family': 'hah-light',
+		'font-size': '4.5vw',
+		'line-height': '6vw',
+		'letter-spacing': '0.3px',
 		'text-align': 'center',
+		'max-width': '300px',
 	},
 	bodyDesktop: {
 		color: '#000000',
