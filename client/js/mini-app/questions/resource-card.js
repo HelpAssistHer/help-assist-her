@@ -20,39 +20,48 @@ const ResourceCard = ({ classes, resource }) => {
 	return (
 		<div className={classes.resourceCardRoot}>
 			<div className={classes.resourceCardBorder}>
-				<div className={classes.resourceName}>{resource.prcName}</div>
+				<div className={classes.textContainer}>
+					<div className={classes.resourceNameText}>{resource.prcName}</div>
 
-				<div className={classes.resourceAddress}>
-					<LocationIcon height={32} width={32} />
-					<div className={classes.margin}>
-						{line1} <br />
-						{line2} {line2 && <br />}
-						{`${city}, ${state} ${zip}`}
+					<Spacer height="18px" />
+
+					<div className={classes.flexContainerForAddress}>
+						<LocationIcon height={32} width={32} />
+						<div className={classes.addressText}>
+							{line1} <br />
+							{line2} {line2 && <br />}
+							{`${city}, ${state} ${zip}`}
+						</div>
 					</div>
-				</div>
 
-				<div className={classes.resourcePhone}>
-					<PhoneIcon height={32} width={32} />
-					<a className={classes.margin} href={`tel:${resource.phone}`}>
-						{formatPhoneNumber(resource.phone)}
-					</a>
-				</div>
+					<Spacer height="12px" />
 
-				{resource.website && (
-					<div className={classes.resourceWebsite}>
-						<GlobeIcon height={32} width={32} />
+					<div className={classes.flexContainerForPhoneAndWebsite}>
+						<PhoneIcon height={32} width={32} />
 						<a
-							className={classes.margin}
-							href={resource.website}
-							target="_blank"
-							rel="noopener noreferrer"
+							className={classes.phoneAndWebsiteText}
+							href={`tel:${resource.phone}`}
 						>
-							{resource.website}
+							{formatPhoneNumber(resource.phone)}
 						</a>
 					</div>
-				)}
 
-				<Spacer height="27px" />
+					<Spacer height="12px" />
+
+					{resource.website && (
+						<div className={classes.flexContainerForPhoneAndWebsite}>
+							<GlobeIcon height={32} width={32} />
+							<a
+								className={classes.phoneAndWebsiteText}
+								href={resource.website}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{resource.website}
+							</a>
+						</div>
+					)}
+				</div>
 			</div>
 		</div>
 	)
@@ -69,30 +78,29 @@ const styles = {
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
 	},
-	resourceName: {
-		margin: '24px 0px 0px 30px',
-		'font-size': '20px',
+	textContainer: {
+		padding: '30px',
 	},
-	resourceAddress: {
+	flexContainerForAddress: {
 		display: 'flex',
 		'align-items': 'flex-start',
-		margin: '18px 0px 0px 24px',
-		'font-size': '15px',
 	},
-	resourcePhone: {
+	flexContainerForPhoneAndWebsite: {
 		display: 'flex',
 		'align-items': 'center',
-		margin: '12px 0px 0px 24px',
-		'font-size': '15px',
 	},
-	resourceWebsite: {
-		display: 'flex',
-		'align-items': 'center',
-		margin: '12px 0px 0px 24px',
-		'font-size': '15px',
+	resourceNameText: {
+		'font-size': '20px',
 	},
-	margin: {
-		'margin-left': '13px',
+	addressText: {
+		'font-size': '15px',
+		'margin-left': '15px',
+	},
+	phoneAndWebsiteText: {
+		'font-size': '15px',
+		'text-decoration': 'none',
+		color: '#3D65F9',
+		'margin-left': '15px',
 	},
 }
 
