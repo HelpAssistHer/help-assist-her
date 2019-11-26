@@ -16,6 +16,9 @@ const ValidResults = ({ classes, pregnancyResourceCenters }) => {
 const styles = {
 	validResultsRoot: {
 		padding: '48px',
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
 	},
 }
 

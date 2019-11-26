@@ -61,9 +61,11 @@ const ResourceCard = ({ classes, resource }) => {
 const styles = {
 	resourceCardRoot: {
 		padding: '8px 0px',
+		width: '100%',
+		'max-width': '600px',
 	},
 	resourceCardBorder: {
-		border: '2px solid #3d65f9',
+		border: '1px solid #3d65f9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
 	},
