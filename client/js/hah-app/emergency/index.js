@@ -63,18 +63,18 @@ const Emergency = ({ classes }) => (
 		<Tablet>
 			<div>
 				<div className={classes.infoSectionTablet}>
-					<Spacer height="60px" />
-					<EmergencyPhoneIcon height={82} width={82} />
-					<Spacer height="44px" />
+					<Spacer height="80px" />
+					<EmergencyPhoneIcon height={80} width={80} />
+					<Spacer height="50px" />
 					<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
-					<Spacer height="44px" />
+					<Spacer height="22px" />
 					<div className={classes.bodyDesktop}>{BODY_TEXT}</div>
-					<Spacer height="77px" />
+					<Spacer height="44px" />
 				</div>
 				<div className={classes.call911SectionDesktop}>
-					<Spacer height="45px" />
+					<Spacer height="35px" />
 					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
-					<Spacer height="45px" />
+					<Spacer height="35px" />
 				</div>
 			</div>
 		</Tablet>
@@ -82,18 +82,18 @@ const Emergency = ({ classes }) => (
 		<Desktop>
 			<div>
 				<div className={classes.infoSectionDesktop}>
-					<Spacer height="60px" />
-					<EmergencyPhoneIcon height={82} width={82} />
-					<Spacer height="44px" />
+					<Spacer height="80px" />
+					<EmergencyPhoneIcon height={80} width={80} />
+					<Spacer height="50px" />
 					<div className={classes.titleDesktop}>{TITLE_TEXT}</div>
-					<Spacer height="44px" />
+					<Spacer height="22px" />
 					<div className={classes.bodyDesktop}>{BODY_TEXT}</div>
-					<Spacer height="77px" />
+					<Spacer height="44px" />
 				</div>
 				<div className={classes.call911SectionDesktop}>
-					<Spacer height="45px" />
+					<Spacer height="35px" />
 					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
-					<Spacer height="45px" />
+					<Spacer height="35px" />
 				</div>
 			</div>
 		</Desktop>
