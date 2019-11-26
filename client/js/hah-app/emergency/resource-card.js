@@ -61,19 +61,24 @@ const ResourceCard = ({ classes, resource }) => {
 				<div className={classes.cardContainerDesktop}>
 					<div className={classes.cardDesktop}>
 						<div className={classes.resourceNameDesktop}>{nameOfResource}</div>
-						<Spacer height="30px" />
+						<Spacer height="20px" />
 						<a
 							className={classes.phoneNumberDesktop}
 							href={`tel:${phoneNumber}`}
 						>
 							{phoneNumber}
 						</a>
-						<Spacer height="12px" />
 						<div className={classes.additionalInfoDesktop}>
 							{additionalInfo}
 						</div>
-						<div className={classes.websiteDesktop}>
-							<a href={website} target="_blank" rel="noopener noreferrer">
+						<Spacer height="20px" />
+						<div className={classes.websiteOverflow}>
+							<a
+								className={classes.websiteDesktop}
+								href={website}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								{website}
 							</a>
 						</div>
@@ -85,25 +90,27 @@ const ResourceCard = ({ classes, resource }) => {
 				<div className={classes.cardContainerDesktop}>
 					<div className={classes.cardDesktop}>
 						<div className={classes.resourceNameDesktop}>{nameOfResource}</div>
-						<Spacer height="30px" />
+						<Spacer height="20px" />
 						<a
 							className={classes.phoneNumberDesktop}
 							href={`tel:${phoneNumber}`}
 						>
 							{phoneNumber}
 						</a>
-						<Spacer height="12px" />
 						<div className={classes.additionalInfoDesktop}>
 							{additionalInfo}
 						</div>
-						<a
-							className={classes.websiteDesktop}
-							href={website}
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							{website}
-						</a>
+						<Spacer height="20px" />
+						<div className={classes.websiteOverflow}>
+							<a
+								className={classes.websiteDesktop}
+								href={website}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{website}
+							</a>
+						</div>
 					</div>
 				</div>
 			</Desktop>
@@ -127,9 +134,8 @@ const styles = {
 		margin: '5px',
 	},
 	cardContainerDesktop: {
-		height: '360px',
-		width: '460px',
-		border: '3px solid #3D65F9',
+		width: '600px',
+		border: '1px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
 		margin: '10px 10px 10px 13px',
@@ -138,7 +144,7 @@ const styles = {
 		margin: '30px 35px',
 	},
 	cardDesktop: {
-		margin: '45px 27px 0px 27px',
+		margin: '30px 35px',
 	},
 	resourceNamePhone: {
 		color: '#000000',
@@ -149,8 +155,8 @@ const styles = {
 	resourceNameDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '33px',
-		'line-height': '44px',
+		'font-size': '20px',
+		'line-height': '24px',
 	},
 	phoneNumberPhone: {
 		color: '#3D65F9',
@@ -162,8 +168,9 @@ const styles = {
 	phoneNumberDesktop: {
 		color: '#3D65F9',
 		'font-family': 'hah-regular',
-		'font-size': '40px',
-		'line-height': '41px',
+		'font-size': '20px',
+		'line-height': '24px',
+		'text-decoration': 'none',
 	},
 	additionalInfoPhone: {
 		color: 'rgba(93,93,93,0.61)',
@@ -174,8 +181,8 @@ const styles = {
 	additionalInfoDesktop: {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
-		'font-size': '20px',
-		'line-height': '27px',
+		'font-size': '14px',
+		'line-height': '17px',
 	},
 	websitePhone: {
 		color: '#3D65F9',
@@ -184,14 +191,14 @@ const styles = {
 		'line-height': '17px',
 		'text-decoration': 'none',
 	},
-	websiteOverflow: {
-		'overflow-wrap': 'break-word',
-	},
 	websiteDesktop: {
-		color: 'rgba(93,93,93,0.61)',
+		color: '#3D65F9',
 		'font-family': 'hah-regular',
-		'font-size': '20px',
-		'line-height': '27px',
+		'font-size': '14px',
+		'line-height': '17px',
+		'text-decoration': 'none',
+	},
+	websiteOverflow: {
 		'overflow-wrap': 'break-word',
 	},
 }
