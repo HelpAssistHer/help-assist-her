@@ -16,8 +16,9 @@ const ListOfResources = ({ classes }) => (
 const styles = {
 	listOfResourcesRoot: {
 		display: 'flex',
-		'flex-wrap': 'wrap',
+		'flex-direction': 'column',
 		'justify-content': 'center',
+		'align-items': 'center',
 	},
 }
 

@@ -43,19 +43,19 @@ const Emergency = ({ classes }) => (
 
 		<BigPhone>
 			<div>
-				<div className={classes.infoSectionBigPhone}>
-					<Spacer height="33px" />
-					<EmergencyPhoneIcon height={48} width={48} />
+				<div className={classes.infoSectionPhone}>
+					<Spacer height="80px" />
+					<EmergencyPhoneIcon height={80} width={80} />
+					<Spacer height="50px" />
+					<div className={classes.titleBigPhone}>{TITLE_TEXT}</div>
 					<Spacer height="22px" />
-					<div className={classes.titlePhone}>{TITLE_TEXT}</div>
-					<Spacer height="22px" />
-					<div className={classes.bodyPhone}>{BODY_TEXT}</div>
+					<div className={classes.bodyBigPhone}>{BODY_TEXT}</div>
 					<Spacer height="44px" />
 				</div>
 				<div className={classes.call911SectionPhone}>
-					<Spacer height="25px" />
+					<Spacer height="35px" />
 					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
-					<Spacer height="25px" />
+					<Spacer height="35px" />
 				</div>
 			</div>
 		</BigPhone>
@@ -136,14 +136,6 @@ const styles = {
 		'background-color': '#F5EDE6',
 		'text-align': 'center',
 	},
-	infoSectionBigPhone: {
-		height: '300px',
-		display: 'flex',
-		'flex-direction': 'column',
-		'align-items': 'center',
-		'background-color': '#F5EDE6',
-		'text-align': 'center',
-	},
 	infoSectionTablet: {
 		height: '500px',
 		'margin-top': '67px', // this is so it starts after the header/navigation
@@ -172,11 +164,11 @@ const styles = {
 	},
 	titleBigPhone: {
 		color: '#000000',
-		'font-family': 'hah-regular',
-		'font-size': '8vw',
-		'line-height': '10vw',
+		'font-family': 'hah-light',
+		'font-size': '6vw',
+		'line-height': '8vw',
 		'text-align': 'center',
-		'max-width': '330px',
+		'max-width': '450px',
 	},
 	titleDesktop: {
 		color: '#000000',
@@ -193,6 +185,15 @@ const styles = {
 		'letter-spacing': '0.3px',
 		'text-align': 'center',
 		'max-width': '300px',
+	},
+	bodyBigPhone: {
+		color: '#000000',
+		'font-family': 'hah-light',
+		'font-size': '3vw',
+		'line-height': '4.5vw',
+		'letter-spacing': '0.3px',
+		'text-align': 'center',
+		'max-width': '400px',
 	},
 	bodyDesktop: {
 		color: '#000000',

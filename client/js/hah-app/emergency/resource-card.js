@@ -34,7 +34,7 @@ const ResourceCard = ({ classes, resource }) => {
 			</Phone>
 
 			<BigPhone>
-				<div className={classes.cardContainerPhone}>
+				<div className={classes.cardContainerBigPhone}>
 					<div className={classes.cardPhone}>
 						<div className={classes.resourceNamePhone}>{nameOfResource}</div>
 						<Spacer height="15px" />
@@ -42,8 +42,14 @@ const ResourceCard = ({ classes, resource }) => {
 							{phoneNumber}
 						</a>
 						<div className={classes.additionalInfoPhone}>{additionalInfo}</div>
-						<div className={classes.websitePhone}>
-							<a href={website} target="_blank" rel="noopener noreferrer">
+						<Spacer height="15px" />
+						<div className={classes.websiteOverflow}>
+							<a
+								className={classes.websitePhone}
+								href={website}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								{website}
 							</a>
 						</div>
@@ -108,6 +114,13 @@ const ResourceCard = ({ classes, resource }) => {
 const styles = {
 	cardContainerPhone: {
 		width: '300px',
+		border: '1px solid #3D65F9',
+		'border-radius': '2px',
+		'background-color': '#FFFFFF',
+		margin: '5px',
+	},
+	cardContainerBigPhone: {
+		width: '400px',
 		border: '1px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
