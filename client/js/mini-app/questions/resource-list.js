@@ -9,9 +9,9 @@ import ValidResults from './valid-results'
 import NoResults from './no-results'
 
 const bannerMessageValidResults =
-	'Your search results have been arranged by closest distance to your location data.'
+	'The search results closest to the location you entered are displayed first. During beta, we are limited to resources in New York.'
 const bannerMessageNoResults =
-	'We currently only have resources in the state of New York, but keep checking back for new states!'
+	'No search results match the criteria you selected. During beta, we are limited to resources in New York.'
 
 const mapStateToProps = state => {
 	return {
