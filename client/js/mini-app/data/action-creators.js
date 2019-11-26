@@ -1,4 +1,3 @@
-import P from 'bluebird'
 import { GET_PREGNANCY_RESOURCE_CENTERS } from './action-types'
 
 import { store } from '../../hah-app'
