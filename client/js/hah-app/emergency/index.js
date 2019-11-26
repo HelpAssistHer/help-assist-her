@@ -34,9 +34,9 @@ const Emergency = ({ classes }) => (
 					<Spacer height="44px" />
 				</div>
 				<div className={classes.call911SectionPhone}>
-					<Spacer height="25px" />
+					<Spacer height="35px" />
 					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
-					<Spacer height="25px" />
+					<Spacer height="35px" />
 				</div>
 			</div>
 		</Phone>
@@ -220,8 +220,8 @@ const styles = {
 		'justify-content': 'center',
 	},
 	listOfResourcesContainerPhone: {
-		padding: '20px 0px',
-		'background-color': 'rgba(93,93,93,0.08)',
+		'padding-bottom': '30px',
+		'background-color': '#FFFFFF',
 	},
 	listOfResourcesContainerDesktop: {
 		padding: '46px 0px',
