@@ -15,11 +15,7 @@ const BODY_TEXT =
 	"We're here for you, and so are other compassionate and helpful people, " +
 	'trained to get you the help you need.'
 
-const CALL_EMERGENCY_TEXT = 'If this is an emergency, call'
-
-const EMERGENCY_NUMBER = '9-1-1'
-
-const PERIOD = '.'
+const CALL_EMERGENCY_TEXT = 'If this is an emergency, call 911.'
 
 const Emergency = ({ classes }) => (
 	<div>
@@ -39,11 +35,7 @@ const Emergency = ({ classes }) => (
 				</div>
 				<div className={classes.call911SectionPhone}>
 					<Spacer height="25px" />
-					<div className={classes.textContainer}>
-						{CALL_EMERGENCY_TEXT}&nbsp;
-						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
-						{PERIOD}
-					</div>
+					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
 					<Spacer height="25px" />
 				</div>
 			</div>
@@ -62,11 +54,7 @@ const Emergency = ({ classes }) => (
 				</div>
 				<div className={classes.call911SectionPhone}>
 					<Spacer height="25px" />
-					<div className={classes.textContainer}>
-						{CALL_EMERGENCY_TEXT}&nbsp;
-						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
-						{PERIOD}
-					</div>
+					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
 					<Spacer height="25px" />
 				</div>
 			</div>
@@ -85,11 +73,7 @@ const Emergency = ({ classes }) => (
 				</div>
 				<div className={classes.call911SectionDesktop}>
 					<Spacer height="45px" />
-					<div className={classes.textContainer}>
-						{CALL_EMERGENCY_TEXT}&nbsp;
-						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
-						{PERIOD}
-					</div>
+					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
 					<Spacer height="45px" />
 				</div>
 			</div>
@@ -108,11 +92,7 @@ const Emergency = ({ classes }) => (
 				</div>
 				<div className={classes.call911SectionDesktop}>
 					<Spacer height="45px" />
-					<div className={classes.textContainer}>
-						{CALL_EMERGENCY_TEXT}&nbsp;
-						<div className={classes.emergencyNumber}>{EMERGENCY_NUMBER}</div>
-						{PERIOD}
-					</div>
+					<div className={classes.textContainer}>{CALL_EMERGENCY_TEXT}</div>
 					<Spacer height="45px" />
 				</div>
 			</div>
@@ -227,7 +207,6 @@ const styles = {
 		'font-size': '20px',
 		'line-height': '32px',
 		'text-align': 'center',
-		'border-bottom': '1px solid #3D65F9',
 	},
 	call911SectionDesktop: {
 		color: '#000000',
@@ -235,14 +214,10 @@ const styles = {
 		'font-size': '24px',
 		'line-height': '36px',
 		'text-align': 'center',
-		'border-bottom': '3px solid #3D65F9',
 	},
 	textContainer: {
 		display: 'flex',
 		'justify-content': 'center',
-	},
-	emergencyNumber: {
-		color: '#3D65F9',
 	},
 	listOfResourcesContainerPhone: {
 		padding: '20px 0px',

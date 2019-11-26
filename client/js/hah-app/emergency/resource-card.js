@@ -18,8 +18,14 @@ const ResourceCard = ({ classes, resource }) => {
 							{phoneNumber}
 						</a>
 						<div className={classes.additionalInfoPhone}>{additionalInfo}</div>
-						<div className={classes.websitePhone}>
-							<a href={website} target="_blank" rel="noopener noreferrer">
+						<Spacer height="15px" />
+						<div className={classes.websiteOverflow}>
+							<a
+								className={classes.websitePhone}
+								href={website}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
 								{website}
 							</a>
 						</div>
@@ -84,11 +90,14 @@ const ResourceCard = ({ classes, resource }) => {
 						<div className={classes.additionalInfoDesktop}>
 							{additionalInfo}
 						</div>
-						<div className={classes.websiteDesktop}>
-							<a href={website} target="_blank" rel="noopener noreferrer">
-								{website}
-							</a>
-						</div>
+						<a
+							className={classes.websiteDesktop}
+							href={website}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{website}
+						</a>
 					</div>
 				</div>
 			</Desktop>
@@ -98,7 +107,6 @@ const ResourceCard = ({ classes, resource }) => {
 
 const styles = {
 	cardContainerPhone: {
-		height: '190px',
 		width: '300px',
 		border: '1px solid #3D65F9',
 		'border-radius': '2px',
@@ -114,7 +122,7 @@ const styles = {
 		margin: '10px 10px 10px 13px',
 	},
 	cardPhone: {
-		margin: '25px 35px 0px 35px',
+		margin: '30px 35px',
 	},
 	cardDesktop: {
 		margin: '45px 27px 0px 27px',
@@ -122,8 +130,8 @@ const styles = {
 	resourceNamePhone: {
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '16px',
-		'line-height': '21px',
+		'font-size': '20px',
+		'line-height': '24px',
 	},
 	resourceNameDesktop: {
 		color: '#000000',
@@ -134,8 +142,9 @@ const styles = {
 	phoneNumberPhone: {
 		color: '#3D65F9',
 		'font-family': 'hah-regular',
-		'font-size': '22px',
-		'line-height': '22px',
+		'font-size': '20px',
+		'line-height': '24px',
+		'text-decoration': 'none',
 	},
 	phoneNumberDesktop: {
 		color: '#3D65F9',
@@ -147,6 +156,7 @@ const styles = {
 		color: 'rgba(93,93,93,0.61)',
 		'font-family': 'hah-regular',
 		'font-size': '14px',
+		'line-height': '17px',
 	},
 	additionalInfoDesktop: {
 		color: 'rgba(93,93,93,0.61)',
@@ -155,9 +165,14 @@ const styles = {
 		'line-height': '27px',
 	},
 	websitePhone: {
-		color: 'rgba(93,93,93,0.61)',
+		color: '#3D65F9',
 		'font-family': 'hah-regular',
 		'font-size': '14px',
+		'line-height': '17px',
+		'text-decoration': 'none',
+	},
+	websiteOverflow: {
+		'overflow-wrap': 'break-word',
 	},
 	websiteDesktop: {
 		color: 'rgba(93,93,93,0.61)',
