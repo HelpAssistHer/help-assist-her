@@ -131,6 +131,7 @@ const styles = {
 		'border-bottom': '2px solid #3D65F9',
 		'border-left': '2px solid #3D65F9',
 		transform: 'rotate(45deg)',
+		'-webkit-transform': 'rotate(45deg)', // for Safari
 		cursor: 'pointer',
 		outline: 'none',
 		'background-color': '#FFFFFF', // for Safari
