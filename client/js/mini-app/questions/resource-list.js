@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import injectSheet from 'react-jss'
 
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import LogoAndNavigation from '../logo-and-navigation'
 import Footer from '../components/footer'
 import ValidResults from './valid-results'
@@ -25,9 +26,30 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
 		<div className={classes.resourceListViewRoot}>
 			<LogoAndNavigation />
-			<div className={classes.bannerMessage}>
-				{noResults ? bannerMessageNoResults : bannerMessageValidResults}
-			</div>
+
+			<Phone>
+				<div className={classes.bannerMessagePhone}>
+					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+				</div>
+			</Phone>
+
+			<BigPhone>
+				<div className={classes.bannerMessagePhone}>
+					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+				</div>
+			</BigPhone>
+
+			<Tablet>
+				<div className={classes.bannerMessageDesktop}>
+					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+				</div>
+			</Tablet>
+
+			<Desktop>
+				<div className={classes.bannerMessageDesktop}>
+					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+				</div>
+			</Desktop>
 
 			{noResults ? (
 				<div className={classes.noResultsView}>
@@ -48,10 +70,18 @@ const styles = {
 	resourceListViewRoot: {
 		display: 'flex',
 		'flex-direction': 'column',
-		'min-height': '100vh',
+		'min-height': '100vh', // Make sure the footer sticks to the bottom when there are no results
 	},
-	bannerMessage: {
-		padding: '30px 0px 30px 0px',
+	bannerMessagePhone: {
+		padding: '30px 0px',
+		'background-color': '#3d65f9',
+		'font-size': '16px',
+		color: '#FFFFFF',
+		'text-align': 'center',
+		'margin-top': '55px',
+	},
+	bannerMessageDesktop: {
+		padding: '30px 0px',
 		'background-color': '#3d65f9',
 		'font-size': '16px',
 		color: '#FFFFFF',
