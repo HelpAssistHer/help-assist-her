@@ -1,4 +1,3 @@
-import P from 'bluebird'
 import { GET_PREGNANCY_RESOURCE_CENTERS } from './action-types'
 
 import { store } from '../../hah-app'
@@ -35,12 +34,13 @@ async function findPregnancyResourceCentersNearMe(address) {
 }
 
 async function geocodeAddress(address) {
-	const googleMapsClient = require('@google/maps').createClient({
-		key: store.getState().initialData.googleMapsApiKey,
-		Promise: P,
+	const geocodeURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key= ${
+		store.getState().initialData.googleMapsApiKey
+	}`
+	const response = await fetch(geocodeURL, {
+		method: 'GET',
 	})
 
-	const response = await googleMapsClient.geocode({ address }).asPromise()
-
-	return response.json.results[0].geometry.location
+	const json = await response.json()
+	return json.results[0].geometry.location
 }
