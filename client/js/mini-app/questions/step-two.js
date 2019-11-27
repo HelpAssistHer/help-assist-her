@@ -22,10 +22,9 @@ class StepTwo extends Component {
 			<div>
 				<Phone>
 					<div className={classes.stepTwoContainer}>
-						<button
-							className={classes.backButtonPhone}
-							onClick={() => onResourceChange(null)}
-						/>
+						<div className={classes.backButtonPhone}>
+							<button onClick={() => onResourceChange(null)} />
+						</div>
 						<div>
 							<Instruction
 								stepNumber="STEP TWO"
