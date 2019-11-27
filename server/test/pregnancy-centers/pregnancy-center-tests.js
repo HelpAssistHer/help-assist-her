@@ -16,7 +16,7 @@ const log = new Log('info')
 const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
 const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
-const server = require('../../server')
+const { server } = require('../../server')
 const UserModel = require('../../users/schema/mongoose-schema')
 const PersonModel = require('../../persons/schema/mongoose-schema')
 
