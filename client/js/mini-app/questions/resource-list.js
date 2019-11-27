@@ -3,15 +3,16 @@ import { connect } from 'react-redux'
 import _ from 'lodash'
 import injectSheet from 'react-jss'
 
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import LogoAndNavigation from '../logo-and-navigation'
 import Footer from '../components/footer'
 import ValidResults from './valid-results'
 import NoResults from './no-results'
 
 const bannerMessageValidResults =
-	'Your search results have been arranged by closest distance to your location data.'
+	'The search results closest to the location you entered are displayed first. During beta, we are limited to resources in New York.'
 const bannerMessageNoResults =
-	'We currently only have resources in the state of New York, but keep checking back for new states!'
+	'No search results match the criteria you selected. During beta, we are limited to resources in New York.'
 
 const mapStateToProps = state => {
 	return {
@@ -25,9 +26,38 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 	return (
 		<div className={classes.resourceListViewRoot}>
 			<LogoAndNavigation />
-			<div className={classes.bannerMessage}>
-				{noResults ? bannerMessageNoResults : bannerMessageValidResults}
-			</div>
+
+			<Phone>
+				<div className={classes.bannerMessagePhone}>
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
+				</div>
+			</Phone>
+
+			<BigPhone>
+				<div className={classes.bannerMessagePhone}>
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
+				</div>
+			</BigPhone>
+
+			<Tablet>
+				<div className={classes.bannerMessageDesktop}>
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
+				</div>
+			</Tablet>
+
+			<Desktop>
+				<div className={classes.bannerMessageDesktop}>
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
+				</div>
+			</Desktop>
 
 			{noResults ? (
 				<div className={classes.noResultsView}>
@@ -48,16 +78,26 @@ const styles = {
 	resourceListViewRoot: {
 		display: 'flex',
 		'flex-direction': 'column',
-		'min-height': '100vh',
-		'background-color': 'rgba(93,93,93,0.08)',
+		'min-height': '100vh', // Make sure the footer sticks to the bottom when there are no results
 	},
-	bannerMessage: {
-		padding: '30px 0px 30px 0px',
+	bannerMessagePhone: {
+		display: 'flex',
+		'justify-content': 'center',
 		'background-color': '#3d65f9',
-		'font-size': '16px',
-		color: '#99cccc',
-		'text-align': 'center',
+		'margin-top': '55px',
+	},
+	bannerMessageDesktop: {
+		display: 'flex',
+		'justify-content': 'center',
+		'background-color': '#3d65f9',
 		'margin-top': '100px',
+	},
+	textContainer: {
+		'max-width': '600px',
+		padding: '30px 25px',
+		'font-size': '16px',
+		color: '#FFFFFF',
+		'text-align': 'center',
 	},
 	noResultsView: {
 		padding: '56px',
