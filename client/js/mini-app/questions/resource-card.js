@@ -1,10 +1,10 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
+import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import LocationIcon from '../../components/icons/icon-components/location-icon'
 import PhoneIcon from '../../components/icons/icon-components/phone-icon'
 import GlobeIcon from '../../components/icons/icon-components/globe-icon'
-import Spacer from '../../components/spacer'
 
 const formatPhoneNumber = phoneNumber => {
 	const areaCode = phoneNumber.substring(2, 5)
@@ -18,89 +18,88 @@ const ResourceCard = ({ classes, resource }) => {
 	const { line1, line2, city, state, zip } = resource.address
 
 	return (
-		<div className={classes.resourceCardRoot}>
-			<div className={classes.resourceCardBorder}>
-				<div className={classes.textContainer}>
-					<div className={classes.resourceNameText}>{resource.prcName}</div>
+		<div className={classes.cardRoot}>
+			<div className={classes.cardContainer}>
+				<LocationIcon className={classes.locationIcon} height={32} width={32} />
+				<PhoneIcon className={classes.phoneIcon} height={32} width={32} />
+				<GlobeIcon className={classes.globeIcon} height={32} width={32} />
 
-					<Spacer height="18px" />
+				<div className={classes.resourceName}>{resource.prcName}</div>
 
-					<div className={classes.flexContainerForAddress}>
-						<LocationIcon height={32} width={32} />
-						<div className={classes.addressText}>
-							{line1} <br />
-							{line2} {line2 && <br />}
-							{`${city}, ${state} ${zip}`}
-						</div>
-					</div>
-
-					<Spacer height="12px" />
-
-					<div className={classes.flexContainerForPhoneAndWebsite}>
-						<PhoneIcon height={32} width={32} />
-						<a
-							className={classes.phoneAndWebsiteText}
-							href={`tel:${resource.phone}`}
-						>
-							{formatPhoneNumber(resource.phone)}
-						</a>
-					</div>
-
-					<Spacer height="12px" />
-
-					{resource.website && (
-						<div className={classes.flexContainerForPhoneAndWebsite}>
-							<GlobeIcon height={32} width={32} />
-							<a
-								className={classes.phoneAndWebsiteText}
-								href={resource.website}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{resource.website}
-							</a>
-						</div>
-					)}
+				<div className={classes.resourceAddress}>
+					{line1} <br />
+					{line2} {line2 && <br />}
+					{`${city}, ${state} ${zip}`}
 				</div>
+
+				<a className={classes.resourcePhone} href={`tel:${resource.phone}`}>
+					{formatPhoneNumber(resource.phone)}
+				</a>
+
+				{resource.website && (
+					<a
+						className={classes.resourceWebsite}
+						href={resource.website}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{resource.website}
+					</a>
+				)}
 			</div>
 		</div>
 	)
 }
 
 const styles = {
-	resourceCardRoot: {
+	cardRoot: {
 		padding: '8px 0px',
 		width: '100%',
 		'max-width': '600px',
 	},
-	resourceCardBorder: {
+	cardContainer: {
 		border: '1px solid #3d65f9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
+		display: 'grid',
+		'grid-template-columns': '100px 100px 100px 100px 100px',
+		'grid-template-rows': '50px 50px 50px 50px 50px 50px 50px 50px 50px',
 	},
-	textContainer: {
-		padding: '30px',
+	locationIcon: {
+		'grid-column': '2 / 3',
+		'grid-row': '4 / 5',
 	},
-	flexContainerForAddress: {
-		display: 'flex',
-		'align-items': 'flex-start',
+	phoneIcon: {
+		'grid-column': '2 / 3',
+		'grid-row': '6 / 7',
 	},
-	flexContainerForPhoneAndWebsite: {
-		display: 'flex',
-		'align-items': 'center',
+	globeIcon: {
+		'grid-column': '2 / 3',
+		'grid-row': '8 / 9',
 	},
-	resourceNameText: {
+	resourceName: {
 		'font-size': '20px',
+		'grid-column': '2 / 5',
+		'grid-row': '2 / 3',
 	},
-	addressText: {
+	resourceAddress: {
 		'font-size': '15px',
-		'margin-left': '15px',
+		'grid-column': '4 / 5',
+		'grid-row': '4 / 5',
 	},
-	phoneAndWebsiteText: {
+	resourcePhone: {
 		'font-size': '15px',
 		'text-decoration': 'none',
 		color: '#3D65F9',
-		'margin-left': '15px',
+		'grid-column': '4 / 5',
+		'grid-row': '6 / 7',
+	},
+	resourceWebsite: {
+		'font-size': '15px',
+		'text-decoration': 'none',
+		color: '#3D65F9',
+		'grid-column': '4 / 5',
+		'grid-row': '8 / 9',
 	},
 }
 
