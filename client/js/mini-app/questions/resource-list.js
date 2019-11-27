@@ -94,7 +94,7 @@ const styles = {
 	},
 	textContainer: {
 		'max-width': '600px',
-		padding: '30px 0px',
+		padding: '30px 25px',
 		'font-size': '16px',
 		color: '#FFFFFF',
 		'text-align': 'center',
