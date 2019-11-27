@@ -1,7 +1,6 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import LocationIcon from '../../components/icons/icon-components/location-icon'
 import PhoneIcon from '../../components/icons/icon-components/phone-icon'
 import GlobeIcon from '../../components/icons/icon-components/globe-icon'
