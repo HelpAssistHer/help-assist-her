@@ -34,7 +34,7 @@ class MiniAppFormView extends Component {
 				/>
 
 				<Phone>
-					<Spacer height="25px" />
+					<Spacer height="50px" />
 				</Phone>
 				<BigPhone>
 					<Spacer height="25px" />
