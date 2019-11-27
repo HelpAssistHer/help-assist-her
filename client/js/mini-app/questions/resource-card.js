@@ -62,8 +62,9 @@ const styles = {
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
 		display: 'grid',
-		'grid-template-columns': '100px 100px 100px 100px 100px',
-		'grid-template-rows': '50px 50px 50px 50px 50px 50px 50px 50px 50px',
+		'align-items': 'center',
+		'grid-template-columns': '5% 10% 5% 75% 5%',
+		'grid-template-rows': '25px 30px 18px 40px 40px 40px 25px',
 	},
 	locationIcon: {
 		'grid-column': '2 / 3',
@@ -71,11 +72,11 @@ const styles = {
 	},
 	phoneIcon: {
 		'grid-column': '2 / 3',
-		'grid-row': '6 / 7',
+		'grid-row': '5 / 6',
 	},
 	globeIcon: {
 		'grid-column': '2 / 3',
-		'grid-row': '8 / 9',
+		'grid-row': '6 / 7',
 	},
 	resourceName: {
 		'font-size': '20px',
@@ -92,14 +93,15 @@ const styles = {
 		'text-decoration': 'none',
 		color: '#3D65F9',
 		'grid-column': '4 / 5',
-		'grid-row': '6 / 7',
+		'grid-row': '5 / 6',
 	},
 	resourceWebsite: {
 		'font-size': '15px',
 		'text-decoration': 'none',
 		color: '#3D65F9',
+		'overflow-wrap': 'break-word',
 		'grid-column': '4 / 5',
-		'grid-row': '8 / 9',
+		'grid-row': '6 / 7',
 	},
 }
 
