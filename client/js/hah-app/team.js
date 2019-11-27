@@ -92,13 +92,13 @@ const styles = {
 		width: '240px',
 	},
 	headshotNotClicked: {
-		border: '2px solid #FFFFFF',
+		border: '3px solid #FFFFFF',
 		'&:hover': {
-			border: '2px solid #24A894',
+			border: '3px solid #3D65F9',
 		},
 	},
 	headshotClicked: {
-		border: '2px solid #24A894',
+		border: '3px solid #3D65F9',
 	},
 	button: {
 		cursor: 'pointer',

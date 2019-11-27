@@ -182,7 +182,7 @@ const styles = {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '20px',
-		'line-height': '35px',
+		'line-height': '30px',
 		'text-align': 'center',
 		display: 'grid',
 		'grid-template-columns': '20% 60% 20%',

@@ -103,11 +103,11 @@ const styles = {
 	},
 	lineBreakPhone: {
 		width: '35px',
-		'border-top': '1px solid #24A894',
+		'border-top': '3px solid #3D65F9',
 	},
 	lineBreakDesktop: {
 		width: '84px',
-		'border-top': '3px solid #24A894',
+		'border-top': '3px solid #3D65F9',
 	},
 	bioTextPhone: {
 		color: '#000000',
