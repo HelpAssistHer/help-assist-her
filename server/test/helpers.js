@@ -12,7 +12,7 @@ mongoose.Promise = require('bluebird')
 const log = new Log('info')
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
-const server = require('../server')
+const { app } = require('../server')
 const UserModel = require('../users/schema/mongoose-schema')
 const PersonModel = require('../persons/schema/mongoose-schema')
 const FQHCModel = require('../fqhcs/schema/mongoose-schema')
@@ -21,11 +21,11 @@ chai.use(chaiHttp)
 
 // Allows the middleware to think we're already authenticated.
 async function mockAuthenticate() {
-	server.request.isAuthenticated = function() {
+	app.request.isAuthenticated = function() {
 		return true
 	}
 	try {
-		server.request.user = await UserModel.findOne({ displayName: 'Kate Sills' })
+		app.request.user = await UserModel.findOne({ displayName: 'Kate Sills' })
 	} catch (err) {
 		log.error('ERROR IN MOCKAUTHENTICATE', err)
 	}
@@ -33,10 +33,10 @@ async function mockAuthenticate() {
 
 // Allows the middleware to think we are *not* authenticated
 function mockUnauthenticate() {
-	server.request.isAuthenticated = function() {
+	app.request.isAuthenticated = function() {
 		return false
 	}
-	server.request.user = null
+	app.request.user = null
 }
 
 function assertError(res, statusCode, error, message = null, data = null) {

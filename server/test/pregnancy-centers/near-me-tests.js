@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const server = require('../../server')
+const { server } = require('../../server')
 const PersonModel = require('../../persons/schema/mongoose-schema')
 
 const { mockAuthenticate, assertError } = require('../helpers')

@@ -17,7 +17,7 @@ const session = require('express-session')
 const UserModel = require('./users/schema/mongoose-schema')
 
 const port = config.server.port
-const server = express()
+const app = express()
 
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
@@ -44,18 +44,18 @@ if (process.env.NODE_ENV === 'localhost') {
 		credentials: true,
 	}
 
-	server.use(cors(corsOptions))
+	app.use(cors(corsOptions))
 }
 
-server.use(compression())
-server.use(boom())
-server.use(express.static('public'))
-server.use(cors())
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(bodyParser.urlencoded())
-server.use(bodyParser.json())
-server.use(morgan('combined'))
-server.use(
+app.use(compression())
+app.use(boom())
+app.use(express.static('public'))
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded())
+app.use(bodyParser.json())
+app.use(morgan('combined'))
+app.use(
 	session({
 		secret: config.session.secret,
 		resave: false,
@@ -64,8 +64,8 @@ server.use(
 		store: new MongoStore({ mongooseConnection: mongoose.connection }),
 	}),
 )
-server.use(passport.initialize())
-server.use(passport.session())
+app.use(passport.initialize())
+app.use(passport.session())
 
 passport.use(
 	new facebookTokenStrategy(
@@ -117,14 +117,14 @@ const startDatabase = async () => {
 startDatabase()
 
 // anything beginning with "/api" will go into this
-server.use('/api', require('./routes/api'))
+app.use('/api', require('./routes/api'))
 
-server.get('/*', (req, res) => {
+app.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
-server.listen(port, function() {
+const server = app.listen(port, function() {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
 
-module.exports = server
+module.exports = { server, app }
