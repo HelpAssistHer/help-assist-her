@@ -29,25 +29,33 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 
 			<Phone>
 				<div className={classes.bannerMessagePhone}>
-					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
 				</div>
 			</Phone>
 
 			<BigPhone>
 				<div className={classes.bannerMessagePhone}>
-					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
 				</div>
 			</BigPhone>
 
 			<Tablet>
 				<div className={classes.bannerMessageDesktop}>
-					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
 				</div>
 			</Tablet>
 
 			<Desktop>
 				<div className={classes.bannerMessageDesktop}>
-					{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					<div className={classes.textContainer}>
+						{noResults ? bannerMessageNoResults : bannerMessageValidResults}
+					</div>
 				</div>
 			</Desktop>
 
@@ -73,20 +81,23 @@ const styles = {
 		'min-height': '100vh', // Make sure the footer sticks to the bottom when there are no results
 	},
 	bannerMessagePhone: {
-		padding: '30px 0px',
+		display: 'flex',
+		'justify-content': 'center',
 		'background-color': '#3d65f9',
-		'font-size': '16px',
-		color: '#FFFFFF',
-		'text-align': 'center',
 		'margin-top': '55px',
 	},
 	bannerMessageDesktop: {
-		padding: '30px 0px',
+		display: 'flex',
+		'justify-content': 'center',
 		'background-color': '#3d65f9',
+		'margin-top': '100px',
+	},
+	textContainer: {
+		'max-width': '600px',
+		padding: '30px 0px',
 		'font-size': '16px',
 		color: '#FFFFFF',
 		'text-align': 'center',
-		'margin-top': '100px',
 	},
 	noResultsView: {
 		padding: '56px',
