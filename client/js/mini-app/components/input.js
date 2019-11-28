@@ -77,8 +77,8 @@ const styles = {
 		'text-align': 'center',
 		height: '26px',
 		width: '100%',
-		'border-radius': '0px', // for iOS
-		padding: '0px', // for iOS
+		'border-radius': '0px', // for mobile devices
+		padding: '0px', // for mobile devices
 		'&::placeholder': {
 			opacity: '0.27',
 		},
