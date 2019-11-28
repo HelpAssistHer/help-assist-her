@@ -12,7 +12,7 @@ class MiniAppFormView extends Component {
 		const { handleSubmit, classes } = this.props
 
 		return (
-			<form onSubmit={handleSubmit}>
+			<form className={classes.test} onSubmit={handleSubmit}>
 				<Phone>
 					<Spacer height="13px" />
 				</Phone>
@@ -58,6 +58,10 @@ const styles = {
 	goButtonRoot: {
 		display: 'flex',
 		'justify-content': 'center',
+	},
+	test: {
+		'-webkit-perspective': '900000px',
+		perspective: '900000px',
 	},
 }
 
