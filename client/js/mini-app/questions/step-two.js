@@ -119,8 +119,8 @@ const styles = {
 		outline: 'none',
 		'background-color': '#FFFFFF', // for Safari
 		'-webkit-tap-highlight-color': 'transparent', // for Safari
-		'-webkit-perspective': '900000px',
-		perspective: '900000px',
+		// '-webkit-perspective': '900000px',
+		// perspective: '900000px',
 	},
 	backButtonDesktop: {
 		'align-self': 'center',
