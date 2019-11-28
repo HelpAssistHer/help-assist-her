@@ -108,8 +108,8 @@ const styles = {
 	backButtonPhone: {
 		'align-self': 'center',
 		'justify-self': 'center',
-		height: '20px',
-		width: '20px',
+		height: '20px', // 15px is too small for iOS
+		width: '20px', // 15px is too small for iOS
 		'border-top': 'none',
 		'border-right': 'none',
 		'border-bottom': '1px solid #3D65F9',
