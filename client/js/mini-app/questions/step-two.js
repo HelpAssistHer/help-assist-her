@@ -22,9 +22,10 @@ class StepTwo extends Component {
 			<div>
 				<Phone>
 					<div className={classes.stepTwoContainer}>
-						<div className={classes.backButtonPhone}>
-							<button onClick={() => onResourceChange(null)} />
-						</div>
+						<button
+							className={classes.backButtonPhone}
+							onClick={() => onResourceChange(null)}
+						/>
 						<div>
 							<Instruction
 								stepNumber="STEP TWO"
@@ -113,14 +114,11 @@ const styles = {
 		'border-right': 'none',
 		'border-bottom': '1px solid #3D65F9',
 		'border-left': '1px solid #3D65F9',
-		transform: 'rotateZ(45deg)',
-		'-webkit-transform': 'rotateZ(45deg)', // for Safari
+		transform: 'rotate(45deg)',
 		cursor: 'pointer',
 		outline: 'none',
 		'background-color': '#FFFFFF', // for Safari
 		'-webkit-tap-highlight-color': 'transparent', // for Safari
-		// '-webkit-perspective': '900000px',
-		// perspective: '900000px',
 	},
 	backButtonDesktop: {
 		'align-self': 'center',
@@ -132,7 +130,6 @@ const styles = {
 		'border-bottom': '2px solid #3D65F9',
 		'border-left': '2px solid #3D65F9',
 		transform: 'rotate(45deg)',
-		'-webkit-transform': 'rotate(45deg)', // for Safari
 		cursor: 'pointer',
 		outline: 'none',
 		'background-color': '#FFFFFF', // for Safari
