@@ -59,7 +59,7 @@ const styles = {
 		'justify-content': 'center',
 	},
 	borderPhone: {
-		'border-bottom': '2px solid #000000', // 1px is too small to show up on iOS
+		'border-bottom': '1px solid #000000',
 		width: '425px',
 	},
 	borderDesktop: {
@@ -78,6 +78,7 @@ const styles = {
 		height: '26px',
 		width: '100%',
 		'border-radius': '0px', // for iOS
+		padding: '0px', // for iOS
 		'&::placeholder': {
 			opacity: '0.27',
 		},
