@@ -5,6 +5,7 @@ import cx from 'classnames'
 
 import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import ResourceCard from './resource-card'
+import { ScrollToTop } from '../../components/scroll-to-top'
 
 const ValidResults = ({ classes, pregnancyResourceCenters }) => {
 	const phoneStyle = cx(classes.validResultsRoot, classes.paddingPhone)
@@ -12,37 +13,41 @@ const ValidResults = ({ classes, pregnancyResourceCenters }) => {
 
 	return (
 		<div>
-			<Phone>
-				<div className={phoneStyle}>
-					{_.map(pregnancyResourceCenters, prc => {
-						return <ResourceCard key={prc._id} resource={prc} />
-					})}
-				</div>
-			</Phone>
+			<ScrollToTop />
 
-			<BigPhone>
-				<div className={phoneStyle}>
-					{_.map(pregnancyResourceCenters, prc => {
-						return <ResourceCard key={prc._id} resource={prc} />
-					})}
-				</div>
-			</BigPhone>
+			<div>
+				<Phone>
+					<div className={phoneStyle}>
+						{_.map(pregnancyResourceCenters, prc => {
+							return <ResourceCard key={prc._id} resource={prc} />
+						})}
+					</div>
+				</Phone>
 
-			<Tablet>
-				<div className={desktopStyle}>
-					{_.map(pregnancyResourceCenters, prc => {
-						return <ResourceCard key={prc._id} resource={prc} />
-					})}
-				</div>
-			</Tablet>
+				<BigPhone>
+					<div className={phoneStyle}>
+						{_.map(pregnancyResourceCenters, prc => {
+							return <ResourceCard key={prc._id} resource={prc} />
+						})}
+					</div>
+				</BigPhone>
 
-			<Desktop>
-				<div className={desktopStyle}>
-					{_.map(pregnancyResourceCenters, prc => {
-						return <ResourceCard key={prc._id} resource={prc} />
-					})}
-				</div>
-			</Desktop>
+				<Tablet>
+					<div className={desktopStyle}>
+						{_.map(pregnancyResourceCenters, prc => {
+							return <ResourceCard key={prc._id} resource={prc} />
+						})}
+					</div>
+				</Tablet>
+
+				<Desktop>
+					<div className={desktopStyle}>
+						{_.map(pregnancyResourceCenters, prc => {
+							return <ResourceCard key={prc._id} resource={prc} />
+						})}
+					</div>
+				</Desktop>
+			</div>
 		</div>
 	)
 }
