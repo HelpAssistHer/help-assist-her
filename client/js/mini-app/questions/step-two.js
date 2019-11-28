@@ -22,10 +22,12 @@ class StepTwo extends Component {
 			<div>
 				<Phone>
 					<div className={classes.stepTwoContainer}>
-						<button
-							className={classes.backButtonPhone}
-							onClick={() => onResourceChange(null)}
-						/>
+						<div className={classes.backButtonParent}>
+							<button
+								className={classes.backButtonPhone}
+								onClick={() => onResourceChange(null)}
+							/>
+						</div>
 						<div>
 							<Instruction
 								stepNumber="STEP TWO"
@@ -104,6 +106,9 @@ const styles = {
 	stepTwoContainer: {
 		display: 'grid',
 		'grid-template-columns': '20% 60% 20%',
+	},
+	backButtonParent: {
+		'background-color': 'red',
 	},
 	backButtonPhone: {
 		'align-self': 'center',
