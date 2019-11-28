@@ -59,7 +59,7 @@ const styles = {
 		'justify-content': 'center',
 	},
 	borderPhone: {
-		'border-bottom': '1px solid #979797',
+		'border-bottom': '1px solid #000000',
 		width: '425px',
 	},
 	borderDesktop: {
@@ -77,6 +77,8 @@ const styles = {
 		'text-align': 'center',
 		height: '26px',
 		width: '100%',
+		'border-radius': '0px', // for mobile devices
+		padding: '0px', // for mobile devices
 		'&::placeholder': {
 			opacity: '0.27',
 		},

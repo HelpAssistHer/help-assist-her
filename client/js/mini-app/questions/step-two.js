@@ -108,8 +108,8 @@ const styles = {
 	backButtonPhone: {
 		'align-self': 'center',
 		'justify-self': 'center',
-		height: '15px',
-		width: '15px',
+		height: '20px', // 15px is too small for mobile devices
+		width: '20px', // 15px is too small for mobile devices
 		'border-top': 'none',
 		'border-right': 'none',
 		'border-bottom': '1px solid #3D65F9',
