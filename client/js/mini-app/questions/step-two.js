@@ -108,8 +108,8 @@ const styles = {
 	backButtonPhone: {
 		'align-self': 'center',
 		'justify-self': 'center',
-		height: '15px',
-		width: '15px',
+		height: '20px',
+		width: '20px',
 		'border-top': 'none',
 		'border-right': 'none',
 		'border-bottom': '1px solid #3D65F9',
