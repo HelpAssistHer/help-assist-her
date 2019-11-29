@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import injectSheet from 'react-jss'
@@ -9,10 +9,21 @@ import Footer from '../components/footer'
 import ValidResults from './valid-results'
 import NoResults from './no-results'
 
-const bannerMessageValidResults =
-	'The search results closest to the location you entered are displayed first. During beta, we are limited to resources in New York.'
-const bannerMessageNoResults =
-	'No search results match the criteria you selected. During beta, we are limited to resources in New York.'
+const bannerMessageValidResults = (
+	<Fragment>
+		The search results closest to the location you entered are displayed first.
+		<br />
+		During beta, we are limited to resources in New York.
+	</Fragment>
+)
+
+const bannerMessageNoResults = (
+	<Fragment>
+		No search results match the criteria you selected.
+		<br />
+		During beta, we are limited to resources in New York.
+	</Fragment>
+)
 
 const mapStateToProps = state => {
 	return {
@@ -93,7 +104,7 @@ const styles = {
 		'margin-top': '100px',
 	},
 	textContainer: {
-		'max-width': '600px',
+		'max-width': '700px',
 		padding: '30px 25px',
 		'font-size': '16px',
 		color: '#FFFFFF',
