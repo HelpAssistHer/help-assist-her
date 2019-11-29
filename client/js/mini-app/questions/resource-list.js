@@ -32,7 +32,9 @@ const mapStateToProps = state => {
 }
 
 const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
-	const noResults = _.get(pregnancyResourceCenters, 'statusCode') === 404
+	const noResults =
+		_.get(pregnancyResourceCenters, 'statusCode') === 404 ||
+		pregnancyResourceCenters === undefined
 
 	return (
 		<div className={classes.resourceListViewRoot}>
