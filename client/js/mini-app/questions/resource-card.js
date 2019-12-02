@@ -54,7 +54,7 @@ const styles = {
 	cardRoot: {
 		padding: '8px 0px',
 		width: '100%',
-		'max-width': '600px',
+		'max-width': '700px',
 	},
 	cardContainer: {
 		border: '1px solid #3d65f9',
