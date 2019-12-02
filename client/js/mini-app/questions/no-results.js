@@ -57,6 +57,7 @@ const styles = {
 		'justify-content': 'center',
 	},
 	noResultsPhone: {
+		width: '100%',
 		display: 'flex',
 		'flex-direction': 'column',
 		'justify-content': 'space-between',
@@ -83,7 +84,7 @@ const styles = {
 		border: '1px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
-		padding: '41px 80px 41px 80px',
+		padding: '40px 80px',
 	},
 }
 

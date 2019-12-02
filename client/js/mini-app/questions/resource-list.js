@@ -113,7 +113,7 @@ const styles = {
 		'text-align': 'center',
 	},
 	noResultsView: {
-		padding: '56px',
+		padding: '28px 20px',
 	},
 	resultsFooter: {
 		'margin-top': 'auto',
