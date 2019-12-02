@@ -80,6 +80,7 @@ const styles = {
 			'background-color': '#3D65F9',
 			color: '#FFFFFF',
 		},
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 	buttonPhone: {
 		border: '1px solid #3D65F9',
