@@ -106,7 +106,7 @@ const styles = {
 		'margin-top': '100px',
 	},
 	textContainer: {
-		'max-width': '700px',
+		'max-width': '600px',
 		padding: '30px 25px',
 		'font-size': '16px',
 		color: '#FFFFFF',
