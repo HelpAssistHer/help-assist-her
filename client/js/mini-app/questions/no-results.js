@@ -10,7 +10,7 @@ const noResultsMessage = 'No results match your search.'
 const buttonText = 'Return to Search'
 
 const NoResults = ({ classes }) => (
-	<div>
+	<div className={classes.flexCenter}>
 		<Phone>
 			<div className={classes.noResultsPhone}>
 				{noResultsMessage}
@@ -52,7 +52,12 @@ const NoResults = ({ classes }) => (
 )
 
 const styles = {
+	flexCenter: {
+		display: 'flex',
+		'justify-content': 'center',
+	},
 	noResultsPhone: {
+		width: '100%',
 		display: 'flex',
 		'flex-direction': 'column',
 		'justify-content': 'space-between',
@@ -67,17 +72,19 @@ const styles = {
 		padding: '24px',
 	},
 	noResultsDesktop: {
+		'max-width': '700px',
+		width: '100%',
 		display: 'flex',
 		'justify-content': 'space-between',
 		'align-items': 'center',
 		color: '#000000',
 		'font-family': 'hah-regular',
-		'font-size': '33px',
+		'font-size': '20px',
 		'line-height': '34px',
-		border: '3px solid #3D65F9',
+		border: '1px solid #3D65F9',
 		'border-radius': '2px',
 		'background-color': '#FFFFFF',
-		padding: '41px 80px 41px 80px',
+		padding: '40px 80px',
 	},
 }
 

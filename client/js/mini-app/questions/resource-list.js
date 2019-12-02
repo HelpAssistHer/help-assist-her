@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
 import injectSheet from 'react-jss'
@@ -9,10 +9,21 @@ import Footer from '../components/footer'
 import ValidResults from './valid-results'
 import NoResults from './no-results'
 
-const bannerMessageValidResults =
-	'The search results closest to the location you entered are displayed first. During beta, we are limited to resources in New York.'
-const bannerMessageNoResults =
-	'No search results match the criteria you selected. During beta, we are limited to resources in New York.'
+const bannerMessageValidResults = (
+	<Fragment>
+		The search results closest to the location you entered are displayed first.
+		<br />
+		During beta, we are limited to resources in New York.
+	</Fragment>
+)
+
+const bannerMessageNoResults = (
+	<Fragment>
+		No search results match the criteria you selected.
+		<br />
+		During beta, we are limited to resources in New York.
+	</Fragment>
+)
 
 const mapStateToProps = state => {
 	return {
@@ -21,7 +32,9 @@ const mapStateToProps = state => {
 }
 
 const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
-	const noResults = _.get(pregnancyResourceCenters, 'statusCode') === 404
+	const noResults =
+		_.get(pregnancyResourceCenters, 'statusCode') === 404 ||
+		pregnancyResourceCenters === undefined
 
 	return (
 		<div className={classes.resourceListViewRoot}>
@@ -100,7 +113,7 @@ const styles = {
 		'text-align': 'center',
 	},
 	noResultsView: {
-		padding: '56px',
+		padding: '28px 20px',
 	},
 	resultsFooter: {
 		'margin-top': 'auto',

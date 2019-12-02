@@ -176,7 +176,7 @@ const styles = {
 		'line-height': '20px',
 		'text-align': 'center',
 		display: 'grid',
-		'grid-template-columns': '5% 90% 5%',
+		'grid-template-columns': '10% 80% 10%',
 	},
 	bodyDesktop: {
 		color: '#000000',

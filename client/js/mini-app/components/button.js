@@ -80,12 +80,14 @@ const styles = {
 			'background-color': '#3D65F9',
 			color: '#FFFFFF',
 		},
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
 	buttonPhone: {
 		border: '1px solid #3D65F9',
 		'font-size': '14px',
 		height: '31px',
 		width: '130px',
+		padding: '0px', // for mobile devices
 	},
 	buttonDesktop: {
 		border: '2px solid #3D65F9',
