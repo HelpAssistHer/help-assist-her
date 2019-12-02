@@ -87,6 +87,7 @@ const styles = {
 		'font-size': '14px',
 		height: '31px',
 		width: '130px',
+		padding: '0px', // for mobile devices
 	},
 	buttonDesktop: {
 		border: '2px solid #3D65F9',
