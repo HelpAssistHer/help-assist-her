@@ -42,7 +42,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-15'),
+					date: new Date('2019-12-04'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -68,7 +68,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-15'),
+					date: new Date('2019-12-04'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -92,7 +92,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-15'),
+					date: new Date('2019-12-04'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -117,7 +117,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 
 describe('/pregnancy-centers/near-me', () => {
 	it('the near-me endpoint should only return verified resources', async () => {
-		// Verified before 10-31-18
+		// Verified before 12-01-2019
 		await PregnancyCenterModel.create({
 			address: {
 				line1: '586 Central Ave.\nAlbany, NY 12206',
@@ -126,7 +126,7 @@ describe('/pregnancy-centers/near-me', () => {
 					coordinates: [-73.7814005, 42.6722152],
 				},
 			},
-			prcName: 'Verified before 10-31-18',
+			prcName: 'Verified before 12-01-19',
 			phone: '+15184382978',
 			website: 'http://www.birthright.org',
 			services: {},
@@ -141,7 +141,7 @@ describe('/pregnancy-centers/near-me', () => {
 			},
 		})
 
-		// Verified after 10-31-18
+		// Verified after 12-01-19
 		await PregnancyCenterModel.create({
 			address: {
 				line1: '586 Central Ave.\nAlbany, NY 12206',
@@ -150,13 +150,13 @@ describe('/pregnancy-centers/near-me', () => {
 					coordinates: [-73.7814005, 42.6722152],
 				},
 			},
-			prcName: 'Verified after 10-31-18',
+			prcName: 'Verified after 12-01-19',
 			phone: '+15184382978',
 			website: 'http://www.birthright.org',
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-01'),
+					date: new Date('2019-12-02'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -195,11 +195,11 @@ describe('/pregnancy-centers/near-me', () => {
 		res.should.have.status(200)
 		res.body.should.be.a('array')
 		res.body.length.should.be.eql(1)
-		res.body[0].prcName.should.be.eql('Verified after 10-31-18')
+		res.body[0].prcName.should.be.eql('Verified after 12-01-19')
 	})
 })
 
-/* 
+/*
 Right now, results should be shown if...
 - The resource has the name, address, phone, and website verified
 - The name was verified after Oct 31 (this is because we're re-verifying some of the original resources that were verified)
@@ -224,9 +224,9 @@ const websiteVerified = {
 	website: { verified: true },
 }
 
-const nameVerifiedAfterOct31 = {
+const nameVerifiedAfterDecOne2019 = {
 	prcName: {
-		date: new Date('2018-11-15'),
+		date: new Date('2019-12-03'),
 		verified: true,
 	},
 }
@@ -258,7 +258,7 @@ const verifiedRules = [
 	addressVerified,
 	phoneVerified,
 	websiteVerified,
-	nameVerifiedAfterOct31,
+	nameVerifiedAfterDecOne2019,
 ]
 
 describe('/pregnancy-centers/near-me filter combinations', () => {

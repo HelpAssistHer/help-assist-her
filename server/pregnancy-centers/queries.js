@@ -16,11 +16,11 @@ module.exports = {
 		],
 	},
 	anything: {},
-	verificationBeforeOct31orNone: {
+	verificationBeforeDateOrNone: {
 		$or: [
 			{
 				'verifiedData.prcName.date': {
-					$lt: new Date('2018-10-31'),
+					$lt: new Date('2019-12-01'),
 				},
 			},
 			{
@@ -30,9 +30,9 @@ module.exports = {
 			},
 		],
 	},
-	verifiedAfterOct31: {
+	verifiedAfterDate: {
 		'verifiedData.prcName.date': {
-			$gte: new Date('2018-10-31'),
+			$gte: new Date('2019-12-01'),
 		},
 	},
 	fullyVerified: {

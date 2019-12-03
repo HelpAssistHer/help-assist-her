@@ -61,7 +61,7 @@ router.get('/near-me', async (req, res) => {
 			locationQuery,
 			outOfBusinessQuery,
 			queries.fullyVerified,
-			queries.verifiedAfterOct31,
+			queries.verifiedAfterDate,
 		)
 
 		const pregnancyCentersNearMe = await PregnancyCenterModel.find(
@@ -91,7 +91,7 @@ router.get('/verify', isLoggedInAPI, async (req, res) => {
 		const pregnancyCenters = await PregnancyCenterModel.aggregate([
 			{
 				$match: _.merge(
-					queries.verificationBeforeOct31orNone,
+					queries.verificationBeforeDateOrNone,
 					notInVerification,
 				),
 			},
