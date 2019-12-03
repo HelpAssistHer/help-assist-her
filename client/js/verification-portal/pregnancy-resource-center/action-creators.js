@@ -56,6 +56,11 @@ export const getResourceToVerify = () => {
 export async function updateResource(updatedResource) {
 	const transformedResource = _.omitBy(
 		{
+			phone: '',
+			hotlinePhoneNumber: '',
+			email: '',
+			website: '',
+			notes: '',
 			...updatedResource,
 		},
 		_.isNull || _.isUndefined,
