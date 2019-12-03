@@ -42,7 +42,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-15'),
+					date: new Date('2019-12-04'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -68,7 +68,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-15'),
+					date: new Date('2019-12-04'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -92,7 +92,7 @@ describe('/GET /api/pregnancy-centers/near-me', () => {
 			services: {},
 			verifiedData: {
 				prcName: {
-					date: new Date('2018-11-15'),
+					date: new Date('2019-12-04'),
 					verified: true,
 				},
 				address: { verified: true },
@@ -224,9 +224,9 @@ const websiteVerified = {
 	website: { verified: true },
 }
 
-const nameVerifiedAfterOct31 = {
+const nameVerifiedAfterDecOne2019 = {
 	prcName: {
-		date: new Date('2018-11-15'),
+		date: new Date('2019-12-03'),
 		verified: true,
 	},
 }
@@ -258,7 +258,7 @@ const verifiedRules = [
 	addressVerified,
 	phoneVerified,
 	websiteVerified,
-	nameVerifiedAfterOct31,
+	nameVerifiedAfterDecOne2019,
 ]
 
 describe('/pregnancy-centers/near-me filter combinations', () => {
