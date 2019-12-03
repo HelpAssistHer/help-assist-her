@@ -19,7 +19,9 @@ const pregnancyCenterSchemaJoi = Joi.object({
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
 	doNotList: Joi.boolean(),
-	email: Joi.string().email(),
+	email: Joi.string()
+		.email()
+		.allow(''),
 	hotlinePhoneNumber: Joi.string()
 		.trim()
 		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/),
