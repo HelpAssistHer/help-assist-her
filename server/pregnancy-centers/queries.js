@@ -16,7 +16,7 @@ module.exports = {
 		],
 	},
 	anything: {},
-	verificationBeforeDecOne2019orNone: {
+	verificationBeforeDateOrNone: {
 		$or: [
 			{
 				'verifiedData.prcName.date': {
@@ -30,7 +30,7 @@ module.exports = {
 			},
 		],
 	},
-	verifiedAfterDecOne2019: {
+	verifiedAfterDate: {
 		'verifiedData.prcName.date': {
 			$gte: new Date('2019-12-01'),
 		},
