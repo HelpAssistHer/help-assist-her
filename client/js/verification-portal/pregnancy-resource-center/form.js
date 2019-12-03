@@ -7,7 +7,7 @@ import Spacer from '../../components/spacer'
 import Button from '../../components/button'
 import Heading from '../../components/heading'
 import Toggle from '../../components/toggle'
-import { formatPhone, formatZipcode } from '../util'
+import { formatPhoneNumber, parsePhoneNumber, formatZipcode } from '../util'
 import { updateResource } from './action-creators'
 
 class VerificationPortalFormClass extends Component {
@@ -115,7 +115,8 @@ class VerificationPortalFormClass extends Component {
 								component={Input}
 								placeholder="Phone Number"
 								type="tel"
-								format={formatPhone}
+								format={formatPhoneNumber}
+								parse={parsePhoneNumber}
 							/>
 						</div>
 					</div>
@@ -133,7 +134,8 @@ class VerificationPortalFormClass extends Component {
 								component={Input}
 								placeholder="Hotline Phone Number"
 								type="tel"
-								format={formatPhone}
+								format={formatPhoneNumber}
+								parse={parsePhoneNumber}
 							/>
 						</div>
 					</div>

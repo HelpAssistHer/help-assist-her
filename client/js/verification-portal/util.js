@@ -1,26 +1,39 @@
-export const formatPhone = input => {
-	if (!input) return ''
-
-	const validNumber = input.replace(/\D/g, '').substring(0, 11)
-	const size = validNumber.length
-	const first3 = validNumber.substring(1, 4)
-	const middle3 = validNumber.substring(4, 7)
-	const last4 = validNumber.substring(7, 11)
-
-	switch (size) {
-		case size === 0:
-			return validNumber
-		case size < 4:
-			return '+1 (' + validNumber
-		case size < 7:
-			return '+1 (' + first3 + ') ' + middle3
-		case size <= 10:
-			return '+1 (' + first3 + ') ' + middle3 + ' - ' + last4
-		default:
-			return size > 0
-				? '+1 (' + first3 + ') ' + middle3 + ' - ' + last4
-				: validNumber
+export const formatPhoneNumber = digits => {
+	if (!digits) {
+		return ''
 	}
+
+	const phoneNumber = digits.substr(2, 10)
+	const areaCode = phoneNumber.substring(0, 3)
+	const prefix = phoneNumber.substring(3, 6)
+	const lineNumber = phoneNumber.substring(6, 10)
+
+	if (phoneNumber.length === 0) {
+		return ''
+	}
+
+	if (phoneNumber.length < 3) {
+		return phoneNumber
+	}
+
+	if (phoneNumber.length < 4) {
+		return `(${areaCode})`
+	}
+
+	if (phoneNumber.length < 7) {
+		return `(${areaCode})-${prefix}`
+	}
+
+	if (phoneNumber.length <= 10) {
+		return `(${areaCode})-${prefix}-${lineNumber}`
+	}
+
+	throw new Error('Invalid Phone Number')
+}
+
+export const parsePhoneNumber = phoneNumber => {
+	//replaces every part of phone number that's not a digit with an empty string
+	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
 export const formatZipcode = input => {
