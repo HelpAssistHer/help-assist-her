@@ -19,21 +19,25 @@ const pregnancyCenterSchemaJoi = Joi.object({
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
 	doNotList: Joi.boolean(),
-	email: Joi.string().email(),
+	email: Joi.string()
+		.email()
+		.allow(''),
 	hotlinePhoneNumber: Joi.string()
 		.trim()
-		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/),
+		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/)
+		.allow(''),
 	hours: hoursSchemaJoi,
 	inVerification: Joi.any()
 		.custom(isObjectId)
 		.allow(null),
 	prcName: Joi.string(),
-	notes: Joi.string(),
-	otherServices: Joi.string(),
+	notes: Joi.string().allow(''),
+	otherServices: Joi.string().allow(''),
 	outOfBusiness: Joi.boolean(),
 	phone: Joi.string()
 		.trim()
-		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/),
+		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/)
+		.allow(''),
 	primaryContactPerson: personSchemaJoi,
 	services: helpers.getPregnancyCenterServicesSchema(Joi.boolean()),
 	verifiedData: {
@@ -62,7 +66,7 @@ const pregnancyCenterSchemaJoi = Joi.object({
 		website: dateUserActionSchemaJoi,
 	},
 	updatedAt: Joi.date().iso(),
-	website: Joi.string(),
+	website: Joi.string().allow(''),
 })
 
 module.exports = pregnancyCenterSchemaJoi

@@ -1731,4 +1731,125 @@ describe('PregnancyCenters', () => {
 			value.inVerification.should.equal(testUser._id)
 		})
 	})
+
+	/*
+	 * Test the Joi validation for pregnancy centers separately from the API routes
+	 */
+	describe('Test Joi validation for pregnancy centers - empty values', () => {
+		it('validation should pass even though values are empty (blank or null)', async () => {
+			const testPCObj = {
+				email: '',
+				hotlinePhoneNumber: '',
+				prcName: 'PRC',
+				notes: '',
+				otherServices: '',
+				phone: '',
+				website: '',
+			}
+
+			const { error, value } = await pregnancyCenterSchemaJoi.validate(
+				testPCObj,
+				{
+					abortEarly: false,
+				},
+			)
+			if (error) {
+				throw error
+			}
+			value.email.should.equal('')
+		})
+	})
+
+	/*
+	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route
+	 * blank values
+	 */
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId blank values', () => {
+		it('it should return the updated pregnancyCenter record with blank values', async () => {
+			await mockAuthenticate()
+
+			const primaryContactPerson = new PersonModel({
+				firstName: 'Joanna',
+				lastName: 'Smith',
+				email: 'email@email.org',
+				phone: '+18884442222',
+			})
+			await primaryContactPerson.save()
+
+			const oldValues = {
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				email: 'myemail@gmail.com',
+				prcName: 'Birthright of Albany',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+				primaryContactPerson: primaryContactPerson,
+				verifiedData: {
+					address: {
+						verified: true,
+						date: '2017-04-16T23:33:17.220Z',
+					},
+				},
+			}
+
+			const newValues = {
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				email: '',
+				prcName: 'PRC',
+				phone: '',
+				website: '',
+				services: {},
+			}
+
+			const testUser = await UserModel.findOne({ displayName: 'Kate Sills' })
+
+			const oldPCObj = await PregnancyCenterModel.create(oldValues)
+
+			const res = await chai
+				.request(server)
+				.put('/api/pregnancy-centers/' + oldPCObj._id)
+				.send(newValues)
+
+			res.should.have.status(200)
+			res.body.should.be.a('object')
+			res.body._id.should.equal(String(oldPCObj._id))
+			res.body.should.have.property('_id')
+			res.body.should.have.property('prcName')
+			res.body.should.have.property('primaryContactPerson')
+			res.body.should.have.property('email')
+			res.body.email.should.equal('')
+			res.body.prcName.should.equal('PRC')
+			res.body.phone.should.equal('')
+			res.body.website.should.equal('')
+			res.body.updated.should.have.property('address')
+			res.body.updated.address.should.have.property('userId')
+			res.body.updated.address.userId.should.equal(testUser._id.toString())
+
+			// check that the pregnancy center history is created as well.
+			const histories = await PregnancyCenterHistoryModel.find({
+				pregnancyCenterId: oldPCObj._id,
+			})
+			const fields = _.map(histories, 'field')
+			fields.should.have.members([
+				'address',
+				'email',
+				'prcName',
+				'phone',
+				'website',
+				'verifiedData',
+			])
+		})
+	})
 })

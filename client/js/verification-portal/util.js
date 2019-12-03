@@ -32,6 +32,10 @@ export const formatPhoneNumber = digits => {
 }
 
 export const parsePhoneNumber = phoneNumber => {
+	if (phoneNumber === '') {
+		return ''
+	}
+
 	//replaces every part of phone number that's not a digit with an empty string
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
