@@ -1758,7 +1758,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route
 	 * blank email (i.e. delete email)
 	 */
-	describe.only('/PUT /api/pregnancy-centers/:pregnancyCenterId blank email', () => {
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId blank email', () => {
 		it('it should return the updated pregnancyCenter record with deleted email', async () => {
 			await mockAuthenticate()
 
