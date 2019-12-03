@@ -1735,10 +1735,16 @@ describe('PregnancyCenters', () => {
 	/*
 	 * Test the Joi validation for pregnancy centers separately from the API routes
 	 */
-	describe('Test Joi validation for pregnancy centers - empty email', () => {
-		it('validation should pass even though email is empty (blank)', async () => {
+	describe('Test Joi validation for pregnancy centers - empty values', () => {
+		it('validation should pass even though values are empty (blank or null)', async () => {
 			const testPCObj = {
 				email: '',
+				hotlinePhoneNumber: '',
+				prcName: 'PRC',
+				notes: '',
+				otherServices: '',
+				phone: '',
+				website: '',
 			}
 
 			const { error, value } = await pregnancyCenterSchemaJoi.validate(
@@ -1756,10 +1762,10 @@ describe('PregnancyCenters', () => {
 
 	/*
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route
-	 * blank email (i.e. delete email)
+	 * blank values
 	 */
-	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId blank email', () => {
-		it('it should return the updated pregnancyCenter record with deleted email', async () => {
+	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId blank values', () => {
+		it('it should return the updated pregnancyCenter record with blank values', async () => {
 			await mockAuthenticate()
 
 			const primaryContactPerson = new PersonModel({
@@ -1792,34 +1798,19 @@ describe('PregnancyCenters', () => {
 				},
 			}
 
-			const primaryContactPerson2 = {
-				firstName: 'Joanna B',
-				lastName: 'Smith',
-				email: 'email2@email.org',
-				phone: '+18884442222',
-				_id: primaryContactPerson._id,
-			}
-
 			const newValues = {
 				address: {
-					line1: 'New Address',
+					line1: '586 Central Ave.\nAlbany, NY 12206',
 					location: {
 						type: 'Point',
 						coordinates: [-73.7814005, 42.6722152],
 					},
 				},
 				email: '',
-				prcName: 'Birthright of Albany',
-				phone: '+15184382978',
-				website: 'http://www.birthright.org',
+				prcName: 'PRC',
+				phone: '',
+				website: '',
 				services: {},
-				primaryContactPerson: primaryContactPerson2,
-				verifiedData: {
-					address: {
-						verified: true,
-						date: '2017-04-16T23:33:17.220Z',
-					},
-				},
 			}
 
 			const testUser = await UserModel.findOne({ displayName: 'Kate Sills' })
@@ -1833,20 +1824,18 @@ describe('PregnancyCenters', () => {
 
 			res.should.have.status(200)
 			res.body.should.be.a('object')
+			res.body._id.should.equal(String(oldPCObj._id))
 			res.body.should.have.property('_id')
 			res.body.should.have.property('prcName')
 			res.body.should.have.property('primaryContactPerson')
 			res.body.should.have.property('email')
 			res.body.email.should.equal('')
-			res.body._id.should.equal(String(oldPCObj._id))
-			res.body.prcName.should.equal('Birthright of Albany')
-			res.body.should.have.property('verifiedData')
-			res.body.should.have.property('updated')
+			res.body.prcName.should.equal('PRC')
+			res.body.phone.should.equal('')
+			res.body.website.should.equal('')
 			res.body.updated.should.have.property('address')
 			res.body.updated.address.should.have.property('userId')
 			res.body.updated.address.userId.should.equal(testUser._id.toString())
-			res.body.verifiedData.should.have.property('address')
-			res.body.verifiedData.address.userId.should.equal(testUser._id.toString())
 
 			// check that the pregnancy center history is created as well.
 			const histories = await PregnancyCenterHistoryModel.find({
@@ -1856,7 +1845,9 @@ describe('PregnancyCenters', () => {
 			fields.should.have.members([
 				'address',
 				'email',
-				'primaryContactPerson',
+				'prcName',
+				'phone',
+				'website',
 				'verifiedData',
 			])
 		})
