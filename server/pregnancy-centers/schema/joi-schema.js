@@ -66,7 +66,9 @@ const pregnancyCenterSchemaJoi = Joi.object({
 		website: dateUserActionSchemaJoi,
 	},
 	updatedAt: Joi.date().iso(),
-	website: Joi.string().allow(''),
+	website: Joi.string()
+		.uri()
+		.allow(''),
 })
 
 module.exports = pregnancyCenterSchemaJoi
