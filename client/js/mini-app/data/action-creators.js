@@ -18,7 +18,7 @@ export const getPregnancyResourceCenters = address => {
 }
 
 async function findPregnancyResourceCentersNearMe(address) {
-	const miles = 50
+	const miles = 25
 
 	const coordinates = await geocodeAddress(address)
 	const { lat, lng } = coordinates
