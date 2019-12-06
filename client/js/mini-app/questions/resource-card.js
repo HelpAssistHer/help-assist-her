@@ -14,7 +14,13 @@ const formatPhoneNumber = phoneNumber => {
 }
 
 const ResourceCard = ({ classes, resource }) => {
-	const { line1, line2, city, state, zip } = resource.address
+	const {
+		line1 = '',
+		line2 = '',
+		city = '',
+		state = '',
+		zip = '',
+	} = resource.address
 
 	return (
 		<div className={classes.cardRoot}>
