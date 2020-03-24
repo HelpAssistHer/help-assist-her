@@ -1,7 +1,8 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, Field } from 'formik'
 import injectSheet from 'react-jss'
 
+import Input from '../../components/input'
 import Button from '../../components/button'
 import Spacer from '../../components/spacer'
 
@@ -33,14 +34,16 @@ const CommunityHealthCenterForm = ({ classes }) => {
 					</div>
 					<Spacer height="50px" />
 					<div>
-						<input
-							placeholder="Name of Community Health Center"
-							type="email"
+						<Field
 							name="chcName"
+							placeholder="Name of Community Health Center"
+							type="text"
 							onChange={handleChange}
 							onBlur={handleBlur}
 							value={values.chcName}
+							as={Input}
 						/>
+						<Spacer height="50px" />
 					</div>
 					<Button
 						type="submit"
