@@ -6,6 +6,11 @@ import Input from '../../components/input'
 import Button from '../../components/button'
 import Spacer from '../../components/spacer'
 
+const initialValues = {
+	chcName: '',
+	addressLine1: '',
+}
+
 const validate = values => {
 	const errors = {}
 
@@ -19,7 +24,7 @@ const validate = values => {
 const CommunityHealthCenterForm = ({ classes }) => {
 	return (
 		<Formik
-			initialValues={{ email: 'something', password: '', chcName: '' }}
+			initialValues={initialValues}
 			validate={validate}
 			onSubmit={(values, { setSubmitting }) => {
 				setTimeout(() => {
@@ -55,7 +60,19 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							as={Input}
 						/>
 						{errors.email}
-						<Spacer height="50px" />
+						<Spacer height="55px" />
+
+						<Field
+							name="addressLine1"
+							placeholder="Address 1"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.addressLine1}
+							as={Input}
+						/>
+						{errors.addressLine1}
+						<Spacer height="64px" />
 					</div>
 					<Button
 						type="submit"
