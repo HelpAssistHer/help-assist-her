@@ -6,10 +6,21 @@ import Input from '../../components/input'
 import Button from '../../components/button'
 import Spacer from '../../components/spacer'
 
+const validate = values => {
+	const errors = {}
+
+	if (!values.chcName) {
+		errors.email = 'Required'
+	}
+
+	return errors
+}
+
 const CommunityHealthCenterForm = ({ classes }) => {
 	return (
 		<Formik
 			initialValues={{ email: 'something', password: '', chcName: '' }}
+			validate={validate}
 			onSubmit={(values, { setSubmitting }) => {
 				setTimeout(() => {
 					alert(JSON.stringify(values, null, 2))
@@ -43,6 +54,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.chcName}
 							as={Input}
 						/>
+						{errors.email}
 						<Spacer height="50px" />
 					</div>
 					<Button
