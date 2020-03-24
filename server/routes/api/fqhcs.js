@@ -12,6 +12,11 @@ const queries = require('../../pregnancy-centers/queries')
 
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
+router.post('/', async (req, res) => {
+	// create a new fqhc
+
+	return res.boom.notFound('duhhh')
+})
 /*
  Returns one fqhc that needs verification
  */
