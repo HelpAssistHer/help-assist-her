@@ -26,38 +26,36 @@ const CommunityHealthCenterForm = ({ classes }) => {
 				isSubmitting,
 				/* and other goodies */
 			}) => (
-				<form onSubmit={handleSubmit}>
-					<input
-						placeholder="Name of Community Health Center"
-						type="email"
-						name="chcName"
-						onChange={handleChange}
-						onBlur={handleBlur}
-						value={values.chcName}
-					/>
-					<button type="submit" disabled={isSubmitting}>
+				<form className={classes.form} onSubmit={handleSubmit}>
+					<div>
+						<div className={classes.leftColumn}>VERIFIED</div>
+						<div className={classes.rightColumn}>GENERAL INFORMATION</div>
+					</div>
+					<Spacer height="50px" />
+					<div>
+						<input
+							placeholder="Name of Community Health Center"
+							type="email"
+							name="chcName"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.chcName}
+						/>
+					</div>
+					<Button
+						type="submit"
+						buttonText="Save Progress"
+						activeState={false}
+						size="large"
+						disabled={isSubmitting}
+					>
 						Submit!!
-					</button>
+					</Button>
 				</form>
 			)}
 		</Formik>
 	)
 }
-
-// <form className={classes.form} onSubmit={handleSubmit}>
-// 	<div>
-// 		<div className={classes.leftColumn}>VERIFIED</div>
-// 		<div className={classes.rightColumn}>GENERAL INFORMATION</div>
-// 	</div>
-// 	{chcFormFields.map(field => registerFields(field))}
-// 	<Spacer height="50px" />
-// 	<Button
-// 		type="submit"
-// 		buttonText="Save Progress"
-// 		activeState={false}
-// 		size="large"
-// 	/>
-// </form>
 
 const styles = {
 	form: {
