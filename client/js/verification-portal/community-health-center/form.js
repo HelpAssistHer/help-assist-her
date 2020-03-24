@@ -1,37 +1,63 @@
 import React from 'react'
-import { reduxForm } from 'redux-form'
+import { Formik } from 'formik'
 import injectSheet from 'react-jss'
 
-import RegisterField from '../components/register-field'
 import Button from '../../components/button'
 import Spacer from '../../components/spacer'
 
-const registerFields = inputField => {
-	if (!inputField.name) return inputField.map(field => registerFields(field))
-	return <RegisterField inputField={inputField} key={inputField.name} />
-}
-const chcForm = ({ classes, chcFormFields, handleSubmit }) => {
+const CommunityHealthCenterForm = ({ classes }) => {
 	return (
-		<form className={classes.form} onSubmit={handleSubmit}>
-			<div>
-				<div className={classes.leftColumn}>VERIFIED</div>
-				<div className={classes.rightColumn}>GENERAL INFORMATION</div>
-			</div>
-			{chcFormFields.map(field => registerFields(field))}
-			<Spacer height="50px" />
-			<Button
-				type="submit"
-				buttonText="Save Progress"
-				activeState={false}
-				size="large"
-			/>
-		</form>
+		<Formik
+			initialValues={{ email: 'something', password: '', chcName: '' }}
+			onSubmit={(values, { setSubmitting }) => {
+				setTimeout(() => {
+					alert(JSON.stringify(values, null, 2))
+					setSubmitting(false)
+				}, 400)
+			}}
+		>
+			{({
+				values,
+				errors,
+				touched,
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				isSubmitting,
+				/* and other goodies */
+			}) => (
+				<form onSubmit={handleSubmit}>
+					<input
+						placeholder="Name of Community Health Center"
+						type="email"
+						name="chcName"
+						onChange={handleChange}
+						onBlur={handleBlur}
+						value={values.chcName}
+					/>
+					<button type="submit" disabled={isSubmitting}>
+						Submit!!
+					</button>
+				</form>
+			)}
+		</Formik>
 	)
 }
 
-const CommunityHealthCenterForm = reduxForm({
-	form: 'chcForm',
-})(chcForm)
+// <form className={classes.form} onSubmit={handleSubmit}>
+// 	<div>
+// 		<div className={classes.leftColumn}>VERIFIED</div>
+// 		<div className={classes.rightColumn}>GENERAL INFORMATION</div>
+// 	</div>
+// 	{chcFormFields.map(field => registerFields(field))}
+// 	<Spacer height="50px" />
+// 	<Button
+// 		type="submit"
+// 		buttonText="Save Progress"
+// 		activeState={false}
+// 		size="large"
+// 	/>
+// </form>
 
 const styles = {
 	form: {
