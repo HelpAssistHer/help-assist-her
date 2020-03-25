@@ -13,7 +13,7 @@ class FacebookLoginButtonContainer extends React.Component {
 		const { dispatch, facebookAppId, isLoggedIn } = this.props
 
 		if (isLoggedIn) {
-			return <Redirect to="/verification/pregnancy-resource-center" />
+			return <Redirect to="/verification/community-health-center" />
 		}
 
 		return (
