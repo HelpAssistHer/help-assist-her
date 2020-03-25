@@ -183,8 +183,8 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 						<Field
 							name="website"
-							placeholder="Website"
-							type="text"
+							placeholder="Website (format is https://www.google.com)"
+							type="url"
 							onChange={handleChange}
 							onBlur={handleBlur}
 							value={values.website}
