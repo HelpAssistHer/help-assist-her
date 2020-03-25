@@ -9,13 +9,18 @@ import Spacer from '../../components/spacer'
 const initialValues = {
 	chcName: '',
 	addressLine1: '',
+	addressLine2: '',
 }
 
-const validate = values => {
+const validate = ({ chcName, addressLine1 }) => {
 	const errors = {}
 
-	if (!values.chcName) {
-		errors.email = 'Required'
+	if (!chcName) {
+		errors.chcName = 'Required'
+	}
+
+	if (!addressLine1) {
+		errors.addressLine1 = 'Required'
 	}
 
 	return errors
@@ -59,7 +64,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.chcName}
 							as={Input}
 						/>
-						{errors.email}
+						{errors.chcName}
 						<Spacer height="55px" />
 
 						<Field
@@ -72,7 +77,16 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							as={Input}
 						/>
 						{errors.addressLine1}
-						<Spacer height="64px" />
+
+						<Field
+							name="addressLine2"
+							placeholder="Address 2"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.addressLine2}
+							as={Input}
+						/>
 					</div>
 					<Button
 						type="submit"
