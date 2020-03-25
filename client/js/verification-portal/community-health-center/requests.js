@@ -1,6 +1,4 @@
 export async function addNewCommunityHealthCenter(values) {
-	console.log('values', values)
-
 	const response = await fetch(`/api/fqhcs`, {
 		method: 'POST',
 		credentials: 'include',
