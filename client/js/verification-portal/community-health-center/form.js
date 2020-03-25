@@ -5,6 +5,7 @@ import injectSheet from 'react-jss'
 import Input from '../../components/input'
 import Button from '../../components/button'
 import Spacer from '../../components/spacer'
+import Heading from '../../components/heading'
 
 const initialValues = {
 	chcName: '',
@@ -98,7 +99,8 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.chcName}
 							as={Input}
 						/>
-						{errors.chcName}
+						{errors.chcName && touched.chcName && errors.chcName}
+
 						<Spacer height="55px" />
 
 						<Field
@@ -110,7 +112,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.addressLine1}
 							as={Input}
 						/>
-						{errors.addressLine1}
+						{errors.addressLine1 && touched.addressLine1 && errors.addressLine1}
 
 						<Field
 							name="addressLine2"
@@ -131,7 +133,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.city}
 							as={Input}
 						/>
-						{errors.city}
+						{errors.city && touched.city && errors.city}
 
 						<Field
 							name="state"
@@ -142,7 +144,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.state}
 							as={Input}
 						/>
-						{errors.state}
+						{errors.state && touched.state && errors.state}
 
 						<Field
 							name="zipCode"
@@ -153,7 +155,9 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.zipCode}
 							as={Input}
 						/>
-						{errors.zipCode}
+						{errors.zipCode && touched.zipCode && errors.zipCode}
+
+						<Spacer height="55px" />
 
 						<Field
 							name="phoneNumber"
@@ -164,18 +168,18 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.phoneNumber}
 							as={Input}
 						/>
-						{errors.phoneNumber}
+						{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
 
 						<Field
 							name="email"
 							placeholder="Email"
-							type="text"
+							type="email"
 							onChange={handleChange}
 							onBlur={handleBlur}
 							value={values.email}
 							as={Input}
 						/>
-						{errors.email}
+						{errors.email && touched.email && errors.email}
 
 						<Field
 							name="website"
@@ -186,7 +190,17 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.website}
 							as={Input}
 						/>
-						{errors.website}
+						{errors.website && touched.website && errors.website}
+
+						<Spacer height="81px" />
+
+						<div>
+							<Heading text="NOTES" size="medium" />
+							<Spacer height="50px" />
+							<Field name="notes" component="textarea" rows="4" cols="50" />
+						</div>
+
+						<Spacer height="50px" />
 					</div>
 					<Button
 						type="submit"
