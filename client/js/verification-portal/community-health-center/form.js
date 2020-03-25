@@ -10,9 +10,23 @@ const initialValues = {
 	chcName: '',
 	addressLine1: '',
 	addressLine2: '',
+	city: '',
+	state: '',
+	zipCode: '',
+	phoneNumber: '',
+	email: '',
+	website: '',
 }
 
-const validate = ({ chcName, addressLine1 }) => {
+const validate = ({
+	chcName,
+	addressLine1,
+	city,
+	state,
+	zipCode,
+	phoneNumber,
+	website,
+}) => {
 	const errors = {}
 
 	if (!chcName) {
@@ -21,6 +35,26 @@ const validate = ({ chcName, addressLine1 }) => {
 
 	if (!addressLine1) {
 		errors.addressLine1 = 'Required'
+	}
+
+	if (!city) {
+		errors.city = 'Required'
+	}
+
+	if (!state) {
+		errors.state = 'Required'
+	}
+
+	if (!zipCode) {
+		errors.zipCode = 'Required'
+	}
+
+	if (!phoneNumber) {
+		errors.phoneNumber = 'Required'
+	}
+
+	if (!website) {
+		errors.website = 'Required'
 	}
 
 	return errors
@@ -87,6 +121,72 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							value={values.addressLine2}
 							as={Input}
 						/>
+
+						<Field
+							name="city"
+							placeholder="City"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.city}
+							as={Input}
+						/>
+						{errors.city}
+
+						<Field
+							name="state"
+							placeholder="State"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.state}
+							as={Input}
+						/>
+						{errors.state}
+
+						<Field
+							name="zipCode"
+							placeholder="Zip Code"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.zipCode}
+							as={Input}
+						/>
+						{errors.zipCode}
+
+						<Field
+							name="phoneNumber"
+							placeholder="Phone Number"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.phoneNumber}
+							as={Input}
+						/>
+						{errors.phoneNumber}
+
+						<Field
+							name="email"
+							placeholder="Email"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.email}
+							as={Input}
+						/>
+						{errors.email}
+
+						<Field
+							name="website"
+							placeholder="Website"
+							type="text"
+							onChange={handleChange}
+							onBlur={handleBlur}
+							value={values.website}
+							as={Input}
+						/>
+						{errors.website}
 					</div>
 					<Button
 						type="submit"
