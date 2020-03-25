@@ -33,7 +33,7 @@ const addressSchemaJoi = Joi.object().keys({
 	city: Joi.string(),
 	googlePlaceId: Joi.string(), // we can store the google place ID according to TOS
 	line1: Joi.string(),
-	line2: Joi.string(),
+	line2: Joi.string().allow(''),
 	location: pointSchemaJoi,
 	state: Joi.string(),
 	zip: Joi.string(),
