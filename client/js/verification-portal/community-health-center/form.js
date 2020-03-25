@@ -61,17 +61,19 @@ const validate = ({
 	return errors
 }
 
+const onSubmit = (values, { setSubmitting }) => {
+	setTimeout(() => {
+		alert(JSON.stringify(values, null, 2))
+		setSubmitting(false)
+	}, 400)
+}
+
 const CommunityHealthCenterForm = ({ classes }) => {
 	return (
 		<Formik
 			initialValues={initialValues}
 			validate={validate}
-			onSubmit={(values, { setSubmitting }) => {
-				setTimeout(() => {
-					alert(JSON.stringify(values, null, 2))
-					setSubmitting(false)
-				}, 400)
-			}}
+			onSubmit={onSubmit}
 		>
 			{({
 				values,
@@ -211,6 +213,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 					>
 						Submit!!
 					</Button>
+					<Spacer height="100px" />
 				</form>
 			)}
 		</Formik>
