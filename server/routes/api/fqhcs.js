@@ -14,8 +14,9 @@ const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
 router.post('/', async (req, res) => {
 	// create a new fqhc
+	console.log('req', req.body)
 
-	return res.boom.notFound('duhhh')
+	return res.status(200)
 })
 /*
  Returns one fqhc that needs verification

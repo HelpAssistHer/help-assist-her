@@ -7,6 +7,8 @@ import Button from '../../components/button'
 import Spacer from '../../components/spacer'
 import Heading from '../../components/heading'
 
+import { addNewCommunityHealthCenter } from './requests'
+
 const initialValues = {
 	chcName: '',
 	addressLine1: '',
@@ -61,11 +63,10 @@ const validate = ({
 	return errors
 }
 
-const onSubmit = (values, { setSubmitting }) => {
-	setTimeout(() => {
-		alert(JSON.stringify(values, null, 2))
-		setSubmitting(false)
-	}, 400)
+const onSubmit = async values => {
+	const result = await addNewCommunityHealthCenter(values)
+	console.log('result', result)
+	alert('result added successfully')
 }
 
 const CommunityHealthCenterForm = ({ classes }) => {
