@@ -63,10 +63,11 @@ const validate = ({
 	return errors
 }
 
-const onSubmit = async values => {
+const onSubmit = async (values, { setSubmitting }) => {
 	const result = await addNewCommunityHealthCenter(values)
 	console.log('result', result)
-	alert('result added successfully')
+	// change isSubmitting todo
+	setSubmitting(false)
 }
 
 const CommunityHealthCenterForm = ({ classes }) => {
