@@ -1,8 +1,6 @@
 const router = require('express').Router()
-const { ObjectId } = require('mongoose').Types
 
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
-const fqhcSchemaValidator = require('../../fqhcs/schema/joi-schema')
 
 const {
 	updateFqhc,
@@ -14,26 +12,6 @@ const queries = require('../../pregnancy-centers/queries')
 
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
-router.post('/', async (req, res) => {
-	try {
-		const values = req.body
-
-		const newCommunityHealthCenter = {
-			_id: new ObjectId(),
-			...values,
-		}
-
-		const result = fqhcSchemaValidator.validate(newCommunityHealthCenter)
-
-		if (result.error) {
-			return handleError(res, result.error)
-		}
-
-		return res.status(200).json(result.value)
-	} catch (error) {
-		return handleError(res, error)
-	}
-})
 /*
  Returns one fqhc that needs verification
  */
