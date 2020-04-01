@@ -66,7 +66,6 @@ const validate = ({
 const onSubmit = async (values, { setSubmitting }) => {
 	const result = await addNewCommunityHealthCenter(values)
 	console.log('result', result)
-	// change isSubmitting todo
 	setSubmitting(false)
 }
 
@@ -85,7 +84,6 @@ const CommunityHealthCenterForm = ({ classes }) => {
 				handleBlur,
 				handleSubmit,
 				isSubmitting,
-				/* and other goodies */
 			}) => (
 				<form className={classes.form} onSubmit={handleSubmit}>
 					<div>
@@ -212,9 +210,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 						activeState={false}
 						size="large"
 						disabled={isSubmitting}
-					>
-						Submit!!
-					</Button>
+					/>
 					<Spacer height="100px" />
 				</form>
 			)}
