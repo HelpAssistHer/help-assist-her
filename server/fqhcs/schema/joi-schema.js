@@ -11,19 +11,19 @@ const {
 
 const fqhcSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
-	_id: Joi.custom(isObjectId),
+	_id: Joi.string(),
 	address: addressSchemaJoi,
+	classification: Joi.string(),
 	createdAt: Joi.date().iso(),
 	doNotList: Joi.boolean(),
-	email: Joi.string()
-		.email()
-		.allow(''),
+	email: Joi.string().email(),
 	hours: hoursSchemaJoi,
 	inVerification: Joi.any()
 		.custom(isObjectId)
 		.allow(null),
-	chcName: Joi.string(),
-	notes: Joi.string().allow(''),
+	fqhcName: Joi.string(),
+	notes: Joi.string(),
+	otherServices: Joi.string(),
 	outOfBusiness: Joi.boolean(),
 	phone: Joi.string()
 		.trim()
@@ -51,7 +51,7 @@ const fqhcSchemaJoi = Joi.object().keys({
 		website: dateUserActionSchemaJoi,
 	},
 	updatedAt: Joi.date().iso(),
-	website: Joi.string().uri(),
+	website: Joi.string().allow(null),
 })
 
 module.exports = fqhcSchemaJoi
