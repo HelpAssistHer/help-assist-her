@@ -273,20 +273,22 @@ const CommunityHealthCenterForm = ({ classes }) => {
 					</div>
 
 					<div className={classes.formSection}>
-						<Heading text="NOTES" size="medium" />
-						<Spacer height="50px" />
-						<Field name="notes" component="textarea" rows="4" cols="50" />
-					</div>
+						<div className={classes.gridField}>
+							<div className={classes.secondBox}>
+								<Heading text="NOTES" size="medium" />
+								<Spacer height="50px" />
+								<Field name="notes" component="textarea" rows="4" cols="50" />
 
-					<div className={classes.formSection}>
-						<Spacer height="50px" />
-						<Button
-							type="submit"
-							buttonText="Save Progress"
-							activeState={false}
-							size="large"
-							disabled={isSubmitting}
-						/>
+								<Spacer height="50px" />
+								<Button
+									type="submit"
+									buttonText="Save Progress"
+									activeState={false}
+									size="large"
+									disabled={isSubmitting}
+								/>
+							</div>
+						</div>
 					</div>
 				</form>
 			)}
@@ -305,6 +307,7 @@ const styles = {
 		'flex-direction': 'column',
 		'align-items': 'baseline',
 		'justify-content': 'space-evenly',
+		margin: '0px 100px 50px 0px',
 	},
 	formSection: {
 		width: '100%',
