@@ -6,7 +6,7 @@ import Input from '../../components/input'
 import Button from '../../components/button'
 import Spacer from '../../components/spacer'
 import Heading from '../../components/heading'
-
+import ToggleFormik from '../../components/toggle-formik'
 import { addNewCommunityHealthCenter } from './requests'
 
 const initialValues = {
@@ -19,6 +19,23 @@ const initialValues = {
 	phoneNumber: '',
 	email: '',
 	website: '',
+	verifiedData: {
+		chcName: {
+			verified: false,
+		},
+		address: {
+			verified: false,
+		},
+		phone: {
+			verified: false,
+		},
+		email: {
+			verified: false,
+		},
+		website: {
+			verified: false,
+		},
+	},
 }
 
 const validate = ({
@@ -92,6 +109,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 					</div>
 					<Spacer height="50px" />
 					<div>
+						<div>
+							<ToggleFormik name="verifiedData.chcName.verified" />
+						</div>
+
 						<Field
 							name="chcName"
 							placeholder="Name of Community Health Center"
@@ -148,6 +169,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 						/>
 						{errors.state && touched.state && errors.state}
 
+						<div>
+							<ToggleFormik name="verifiedData.address.verified" />
+						</div>
+
 						<Field
 							name="zipCode"
 							placeholder="Zip Code"
@@ -161,6 +186,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 						<Spacer height="55px" />
 
+						<div>
+							<ToggleFormik name="verifiedData.phone.verified" />
+						</div>
+
 						<Field
 							name="phoneNumber"
 							placeholder="Phone Number"
@@ -172,6 +201,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 						/>
 						{errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
 
+						<div>
+							<ToggleFormik name="verifiedData.email.verified" />
+						</div>
+
 						<Field
 							name="email"
 							placeholder="Email"
@@ -182,6 +215,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 							as={Input}
 						/>
 						{errors.email && touched.email && errors.email}
+
+						<div>
+							<ToggleFormik name="verifiedData.website.verified" />
+						</div>
 
 						<Field
 							name="website"
