@@ -2,7 +2,10 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import cx from 'classnames'
 
-const Toggle = ({ classes, input }) => {
+const Toggle = ({ classes, ...props }) => {
+	// Redux Forms and Formik pass in input differently
+	const input = props.input || props
+
 	const buttonClasses = cx(
 		classes.toggleButton,
 		input.value && classes.toggleMove,
