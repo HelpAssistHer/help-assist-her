@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactModal from 'react-modal'
 import injectSheet from 'react-jss'
 
@@ -22,7 +22,7 @@ const SuccessModal = ({ classes }) => {
 
 	let subtitle
 
-	const [modalIsOpen, setIsOpen] = React.useState(false)
+	const [modalIsOpen, setIsOpen] = useState(false)
 
 	function openModal() {
 		setIsOpen(true)
