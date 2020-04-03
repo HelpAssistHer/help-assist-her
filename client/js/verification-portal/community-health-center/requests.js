@@ -29,7 +29,7 @@ export async function addNewCommunityHealthCenter({
 		verifiedData,
 	}
 
-	const response = await fetch(`/api/fqhcs`, {
+	return await fetch(`/api/fqhcs`, {
 		method: 'POST',
 		credentials: 'include',
 		headers: {
@@ -38,5 +38,4 @@ export async function addNewCommunityHealthCenter({
 		},
 		body: JSON.stringify(newCommunityHealthCenter),
 	})
-	return await response.json()
 }
