@@ -82,11 +82,25 @@ const validate = ({
 }
 
 const CommunityHealthCenterForm = ({ classes }) => {
-	const [modalIsOpen, setIsOpen] = useState(false)
+	const [successModalIsOpen, openSuccessModal] = useState(false)
+	const [errorModalIsOpen, openErrorModal] = useState(false)
 
 	return (
 		<div>
-			<Modal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} />
+			<Modal
+				modalIsOpen={successModalIsOpen}
+				setIsOpen={openSuccessModal}
+				title="Success"
+				message="New Community Health Center was added successfully!"
+				buttonText="OK"
+			/>
+			<Modal
+				modalIsOpen={errorModalIsOpen}
+				setIsOpen={openErrorModal}
+				title="Error"
+				message="The new CHC was not saved correctly, please try again."
+				buttonText="OK"
+			/>
 			<Formik
 				initialValues={initialValues}
 				validate={validate}
@@ -96,10 +110,9 @@ const CommunityHealthCenterForm = ({ classes }) => {
 					setSubmitting(false)
 
 					if (response.ok) {
-						// Open modal
-						setIsOpen(true)
+						openSuccessModal(true)
 					} else {
-						console.log('UHOH')
+						openErrorModal(true)
 					}
 				}}
 			>
