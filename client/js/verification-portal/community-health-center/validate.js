@@ -4,6 +4,10 @@ const validateEmail = email => {
 	return validator.isEmail(email)
 }
 
+const validateZipCode = zipCode => {
+	return validator.isPostalCode(zipCode, 'US')
+}
+
 const validate = ({
 	chcName,
 	addressLine1,
@@ -15,6 +19,14 @@ const validate = ({
 	website,
 }) => {
 	const errors = {}
+
+	if (!validateZipCode(zipCode)) {
+		errors.zipCode = 'Please enter a valid zip code'
+	}
+
+	if (email && !validateEmail(email)) {
+		errors.email = 'Please enter a valid email address'
+	}
 
 	if (!chcName) {
 		errors.chcName = 'Required'
@@ -42,10 +54,6 @@ const validate = ({
 
 	if (!website) {
 		errors.website = 'Required'
-	}
-
-	if (email && !validateEmail(email)) {
-		errors.email = 'Please enter a valid email address'
 	}
 
 	return errors
