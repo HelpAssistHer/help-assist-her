@@ -1,7 +1,7 @@
-import validator from 'email-validator'
+import validator from 'validator'
 
 const validateEmail = email => {
-	return validator.validate(email)
+	return validator.isEmail(email)
 }
 
 const validate = ({
