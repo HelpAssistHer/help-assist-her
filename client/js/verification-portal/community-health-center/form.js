@@ -9,6 +9,7 @@ import Heading from '../../components/heading'
 import ToggleFormik from '../../components/toggle-formik'
 import Modal from '../../components/modal'
 import { addNewCommunityHealthCenter } from './requests'
+import validate from './validate'
 
 const initialValues = {
 	chcName: '',
@@ -37,48 +38,6 @@ const initialValues = {
 			verified: false,
 		},
 	},
-}
-
-const validate = ({
-	chcName,
-	addressLine1,
-	city,
-	state,
-	zipCode,
-	phoneNumber,
-	website,
-}) => {
-	const errors = {}
-
-	if (!chcName) {
-		errors.chcName = 'Required'
-	}
-
-	if (!addressLine1) {
-		errors.addressLine1 = 'Required'
-	}
-
-	if (!city) {
-		errors.city = 'Required'
-	}
-
-	if (!state) {
-		errors.state = 'Required'
-	}
-
-	if (!zipCode) {
-		errors.zipCode = 'Required'
-	}
-
-	if (!phoneNumber) {
-		errors.phoneNumber = 'Required'
-	}
-
-	if (!website) {
-		errors.website = 'Required'
-	}
-
-	return errors
 }
 
 const CommunityHealthCenterForm = ({ classes }) => {
