@@ -97,9 +97,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 			<Modal
 				modalIsOpen={errorModalIsOpen}
 				setIsOpen={openErrorModal}
-				title="Error"
+				title="!!  Error  !!"
 				message="The new CHC was not saved correctly, please try again."
 				buttonText="OK"
+				isError={true}
 			/>
 			<Formik
 				initialValues={initialValues}

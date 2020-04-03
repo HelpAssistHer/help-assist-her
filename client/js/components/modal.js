@@ -24,6 +24,7 @@ const Modal = ({
 	title,
 	message,
 	buttonText,
+	isError,
 }) => {
 	// This is needed so screen readers don't see main content when modal is opened.
 	ReactModal.setAppElement('#root')
@@ -37,7 +38,7 @@ const Modal = ({
 
 	function afterOpenModal() {
 		// references are now sync'd and can be accessed.
-		subtitle.style.color = '#000'
+		subtitle.style.color = isError ? '#D21F3C' : '#000'
 	}
 
 	return (
