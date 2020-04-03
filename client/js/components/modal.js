@@ -36,7 +36,6 @@ const Modal = ({ classes, modalIsOpen, setIsOpen }) => {
 
 	return (
 		<Portal node={document && modalRoot}>
-			<button onClick={openModal}>Open Modal</button>
 			<ReactModal
 				isOpen={modalIsOpen}
 				onAfterOpen={afterOpenModal}
