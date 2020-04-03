@@ -1,9 +1,13 @@
 import React from 'react'
 import ReactModal from 'react-modal'
+import injectSheet from 'react-jss'
 
-const customStyles = {
+import Spacer from '../../components/spacer'
+import Button from '../../components/button'
+
+const customModalStyle = {
 	content: {
-		top: '50%',
+		top: '25%',
 		left: '50%',
 		right: 'auto',
 		bottom: 'auto',
@@ -12,7 +16,7 @@ const customStyles = {
 	},
 }
 
-const SuccessModal = () => {
+const SuccessModal = ({ classes }) => {
 	// This is needed so screen readers don't see main content when modal is opened.
 	ReactModal.setAppElement('#root')
 
@@ -28,7 +32,7 @@ const SuccessModal = () => {
 
 	function afterOpenModal() {
 		// references are now sync'd and can be accessed.
-		subtitle.style.color = '#f00'
+		subtitle.style.color = '#000'
 	}
 
 	function closeModal() {
@@ -42,15 +46,26 @@ const SuccessModal = () => {
 				isOpen={modalIsOpen}
 				onAfterOpen={afterOpenModal}
 				onRequestClose={closeModal}
-				style={customStyles}
-				contentLabel="Minimal Modal Example"
+				style={customModalStyle}
+				contentLabel="Success Modal"
 			>
-				<h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2>
-				<button onClick={closeModal}>Close Modal</button>
-				<div>I am a modal</div>
+				<div className={classes.root}>
+					<h2 ref={_subtitle => (subtitle = _subtitle)}>Success</h2>
+					<div>New Community Health Center was added successfully!</div>
+					<Spacer height="50px" />
+					<Button onClick={closeModal} buttonText="OK" size="small" />
+				</div>
 			</ReactModal>
 		</div>
 	)
 }
 
-export default SuccessModal
+const styles = {
+	root: {
+		display: 'flex',
+		'flex-direction': 'column',
+		'align-items': 'center',
+	},
+}
+
+export default injectSheet(styles)(SuccessModal)
