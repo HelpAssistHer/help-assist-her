@@ -17,9 +17,12 @@ const customModalStyle = {
 	},
 }
 
-const Modal = ({ classes, modalIsOpen, closeModal, openModal }) => {
+const Modal = ({ classes, modalIsOpen, setIsOpen }) => {
 	// This is needed so screen readers don't see main content when modal is opened.
 	ReactModal.setAppElement('#root')
+
+	const closeModal = () => setIsOpen(false)
+	const openModal = () => setIsOpen(true)
 
 	const modalRoot = document.getElementById('modal')
 	if (!modalRoot) return null
