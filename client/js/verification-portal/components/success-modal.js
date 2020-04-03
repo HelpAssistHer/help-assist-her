@@ -23,8 +23,6 @@ const SuccessModal = ({ classes }) => {
 	let subtitle
 
 	const [modalIsOpen, setIsOpen] = React.useState(false)
-	console.log('modalIsOpen', modalIsOpen)
-	console.log('setIsOpen', setIsOpen)
 
 	function openModal() {
 		setIsOpen(true)
@@ -48,6 +46,7 @@ const SuccessModal = ({ classes }) => {
 				onRequestClose={closeModal}
 				style={customModalStyle}
 				contentLabel="Success Modal"
+				shouldCloseOnOverlayClick={false}
 			>
 				<div className={classes.root}>
 					<h2 ref={_subtitle => (subtitle = _subtitle)}>Success</h2>
