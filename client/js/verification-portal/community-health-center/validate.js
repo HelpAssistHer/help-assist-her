@@ -1,4 +1,5 @@
 import validator from 'validator'
+import googlePhoneNumber from 'google-libphonenumber'
 
 const validateEmail = email => {
 	return validator.isEmail(email)
@@ -6,6 +7,16 @@ const validateEmail = email => {
 
 const validateZipCode = zipCode => {
 	return validator.isPostalCode(zipCode, 'US')
+}
+
+const validatePhoneNumber = phoneNumber => {
+	try {
+		const phoneUtil = googlePhoneNumber.PhoneNumberUtil.getInstance()
+		const parsedPhoneNumber = phoneUtil.parse(phoneNumber, 'US')
+		return phoneUtil.isValidNumber(parsedPhoneNumber)
+	} catch (error) {
+		return false
+	}
 }
 
 const validateWebsite = website => {
@@ -26,6 +37,10 @@ const validate = ({
 
 	if (!validateZipCode(zipCode)) {
 		errors.zipCode = 'Please enter a valid zip code'
+	}
+
+	if (!validatePhoneNumber(phoneNumber)) {
+		errors.phoneNumber = 'Please enter a valid phone number'
 	}
 
 	if (email && !validateEmail(email)) {
