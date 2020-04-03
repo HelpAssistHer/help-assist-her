@@ -8,6 +8,10 @@ const validateZipCode = zipCode => {
 	return validator.isPostalCode(zipCode, 'US')
 }
 
+const validateWebsite = website => {
+	return validator.isURL(website, { require_protocol: true })
+}
+
 const validate = ({
 	chcName,
 	addressLine1,
@@ -26,6 +30,10 @@ const validate = ({
 
 	if (email && !validateEmail(email)) {
 		errors.email = 'Please enter a valid email address'
+	}
+
+	if (!validateWebsite(website)) {
+		errors.website = 'Please enter a valid website'
 	}
 
 	if (!chcName) {
