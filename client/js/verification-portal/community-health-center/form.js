@@ -282,7 +282,7 @@ const CommunityHealthCenterForm = ({ classes }) => {
 								<Spacer height="50px" />
 								<Button
 									type="submit"
-									buttonText="Save Progress"
+									buttonText="Add New CHC"
 									activeState={false}
 									size="large"
 									disabled={isSubmitting}
