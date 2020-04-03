@@ -17,7 +17,14 @@ const customModalStyle = {
 	},
 }
 
-const Modal = ({ classes, modalIsOpen, setIsOpen }) => {
+const Modal = ({
+	classes,
+	modalIsOpen,
+	setIsOpen,
+	title,
+	message,
+	buttonText,
+}) => {
 	// This is needed so screen readers don't see main content when modal is opened.
 	ReactModal.setAppElement('#root')
 
@@ -44,10 +51,10 @@ const Modal = ({ classes, modalIsOpen, setIsOpen }) => {
 				shouldCloseOnOverlayClick={false}
 			>
 				<div className={classes.root}>
-					<h2 ref={_subtitle => (subtitle = _subtitle)}>Success</h2>
-					<div>New Community Health Center was added successfully!</div>
+					<h2 ref={_subtitle => (subtitle = _subtitle)}>{title}</h2>
+					{message}
 					<Spacer height="50px" />
-					<Button onClick={closeModal} buttonText="OK" size="small" />
+					<Button onClick={closeModal} buttonText={buttonText} size="small" />
 				</div>
 			</ReactModal>
 		</Portal>
