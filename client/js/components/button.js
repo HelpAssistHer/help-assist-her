@@ -52,6 +52,13 @@ const styles = {
 		'border-color': '#f28274',
 		'background-color': '#f28274',
 	},
+	small: {
+		'font-size': '15px',
+		height: '35px',
+		width: '70px',
+		'letter-spacing': '0.23px',
+		'line-height': '18px',
+	},
 	medium: {
 		'font-size': '15px',
 		height: '49.69px',
