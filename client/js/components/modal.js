@@ -22,7 +22,6 @@ const Modal = ({ classes, modalIsOpen, setIsOpen }) => {
 	ReactModal.setAppElement('#root')
 
 	const closeModal = () => setIsOpen(false)
-	const openModal = () => setIsOpen(true)
 
 	const modalRoot = document.getElementById('modal')
 	if (!modalRoot) return null

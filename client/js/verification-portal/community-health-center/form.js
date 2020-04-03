@@ -91,10 +91,16 @@ const CommunityHealthCenterForm = ({ classes }) => {
 				initialValues={initialValues}
 				validate={validate}
 				onSubmit={async (values, { setSubmitting }) => {
-					const result = await addNewCommunityHealthCenter(values)
-					console.log('result', result)
+					const response = await addNewCommunityHealthCenter(values)
+					console.log('result', response)
 					setSubmitting(false)
-					setIsOpen(true)
+
+					if (response.ok) {
+						// Open modal
+						setIsOpen(true)
+					} else {
+						console.log('UHOH')
+					}
 				}}
 			>
 				{({
