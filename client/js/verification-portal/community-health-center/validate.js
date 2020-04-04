@@ -32,6 +32,10 @@ const validate = ({
 	phoneNumber,
 	email,
 	website,
+	chcNameVerified,
+	addressVerified,
+	phoneVerified,
+	websiteVerified,
 }) => {
 	const errors = {}
 
@@ -77,6 +81,22 @@ const validate = ({
 
 	if (!website) {
 		errors.website = 'Required'
+	}
+
+	if (!chcNameVerified) {
+		errors.chcNameVerified = 'Required'
+	}
+
+	if (!addressVerified) {
+		errors.addressVerified = 'Required'
+	}
+
+	if (!phoneVerified) {
+		errors.phoneVerified = 'Required'
+	}
+
+	if (!websiteVerified) {
+		errors.websiteVerified = 'Required'
 	}
 
 	return errors

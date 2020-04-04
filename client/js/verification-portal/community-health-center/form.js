@@ -21,23 +21,11 @@ const initialValues = {
 	phoneNumber: '',
 	email: '',
 	website: '',
-	verifiedData: {
-		chcName: {
-			verified: false,
-		},
-		address: {
-			verified: false,
-		},
-		phone: {
-			verified: false,
-		},
-		email: {
-			verified: false,
-		},
-		website: {
-			verified: false,
-		},
-	},
+	chcNameVerified: false,
+	addressVerified: false,
+	phoneVerified: false,
+	emailVerified: false,
+	websiteVerified: false,
 }
 
 const CommunityHealthCenterForm = ({ classes }) => {
@@ -99,7 +87,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.chcName.verified" />
+									<ToggleFormik name="chcNameVerified" />
+									{errors.chcNameVerified &&
+										touched.chcNameVerified &&
+										errors.chcNameVerified}
 								</div>
 
 								<div className={classes.secondAndThirdBox}>
@@ -175,7 +166,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.address.verified" />
+									<ToggleFormik name="addressVerified" />
+									{errors.addressVerified &&
+										touched.addressVerified &&
+										errors.addressVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -195,7 +189,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.phone.verified" />
+									<ToggleFormik name="phoneVerified" />
+									{errors.phoneVerified &&
+										touched.phoneVerified &&
+										errors.phoneVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -216,7 +213,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.email.verified" />
+									<ToggleFormik name="emailVerified" />
+									{errors.emailVerified &&
+										touched.emailVerified &&
+										errors.emailVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -235,7 +235,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.website.verified" />
+									<ToggleFormik name="websiteVerified" />
+									{errors.websiteVerified &&
+										touched.websiteVerified &&
+										errors.websiteVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -315,6 +318,9 @@ const styles = {
 		'grid-column-end': 2,
 		'justify-self': 'center',
 		'align-self': 'center',
+		// The below flex styling is for the error messages on the verified toggles
+		display: 'flex',
+		'flex-direction': 'column',
 	},
 	secondBox: {
 		'grid-column-start': 2,
