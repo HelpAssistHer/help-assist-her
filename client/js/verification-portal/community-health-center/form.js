@@ -55,7 +55,6 @@ const CommunityHealthCenterForm = ({ classes }) => {
 				validate={validate}
 				onSubmit={async (values, { setSubmitting, resetForm }) => {
 					const response = await addNewCommunityHealthCenter(values)
-					console.log('result', response)
 					setSubmitting(false)
 
 					if (response.ok) {
