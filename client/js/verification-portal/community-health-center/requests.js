@@ -11,7 +11,11 @@ export async function addNewCommunityHealthCenter({
 	email,
 	website,
 	notes,
-	verifiedData,
+	chcNameVerified,
+	addressVerified,
+	phoneVerified,
+	emailVerified,
+	websiteVerified,
 }) {
 	const newCommunityHealthCenter = {
 		chcName,
@@ -26,7 +30,23 @@ export async function addNewCommunityHealthCenter({
 		email,
 		website,
 		notes,
-		verifiedData,
+		verifiedData: {
+			chcName: {
+				verified: chcNameVerified,
+			},
+			address: {
+				verified: addressVerified,
+			},
+			phone: {
+				verified: phoneVerified,
+			},
+			email: {
+				verified: emailVerified,
+			},
+			website: {
+				verified: websiteVerified,
+			},
+		},
 	}
 
 	return await fetch(`/api/fqhcs`, {

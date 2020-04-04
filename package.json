@@ -57,6 +57,7 @@
 		"express-boom": "^2.0.0",
 		"express-session": "^1.15.2",
 		"formik": "^2.1.4",
+		"google-libphonenumber": "^3.2.8",
 		"history": "^4.4.0",
 		"lodash": "4.17.13",
 		"log": "^1.4.0",
@@ -84,7 +85,8 @@
 		"react-typeform-embed": "^0.2.1",
 		"redux": "^4.0.4",
 		"redux-form": "^8.2.6",
-		"redux-thunk": "^2.3.0"
+		"redux-thunk": "^2.3.0",
+		"validator": "^13.0.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.6.4",

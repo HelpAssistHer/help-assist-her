@@ -19,8 +19,8 @@ const ToggleFormik = ({ classes, ...props }) => {
 		<div
 			className={activeClasses}
 			onClick={() => {
-				setValue(!field.value)
 				setTouched(true)
+				setValue(!field.value)
 			}}
 		>
 			<input

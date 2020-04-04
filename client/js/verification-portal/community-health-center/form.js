@@ -9,6 +9,7 @@ import Heading from '../../components/heading'
 import ToggleFormik from '../../components/toggle-formik'
 import Modal from '../../components/modal'
 import { addNewCommunityHealthCenter } from './requests'
+import validate from './validate'
 
 const initialValues = {
 	chcName: '',
@@ -20,65 +21,12 @@ const initialValues = {
 	phoneNumber: '',
 	email: '',
 	website: '',
-	verifiedData: {
-		chcName: {
-			verified: false,
-		},
-		address: {
-			verified: false,
-		},
-		phone: {
-			verified: false,
-		},
-		email: {
-			verified: false,
-		},
-		website: {
-			verified: false,
-		},
-	},
-}
-
-const validate = ({
-	chcName,
-	addressLine1,
-	city,
-	state,
-	zipCode,
-	phoneNumber,
-	website,
-}) => {
-	const errors = {}
-
-	if (!chcName) {
-		errors.chcName = 'Required'
-	}
-
-	if (!addressLine1) {
-		errors.addressLine1 = 'Required'
-	}
-
-	if (!city) {
-		errors.city = 'Required'
-	}
-
-	if (!state) {
-		errors.state = 'Required'
-	}
-
-	if (!zipCode) {
-		errors.zipCode = 'Required'
-	}
-
-	if (!phoneNumber) {
-		errors.phoneNumber = 'Required'
-	}
-
-	if (!website) {
-		errors.website = 'Required'
-	}
-
-	return errors
+	notes: '',
+	chcNameVerified: false,
+	addressVerified: false,
+	phoneVerified: false,
+	emailVerified: false,
+	websiteVerified: false,
 }
 
 const CommunityHealthCenterForm = ({ classes }) => {
@@ -105,13 +53,13 @@ const CommunityHealthCenterForm = ({ classes }) => {
 			<Formik
 				initialValues={initialValues}
 				validate={validate}
-				onSubmit={async (values, { setSubmitting }) => {
+				onSubmit={async (values, { setSubmitting, resetForm }) => {
 					const response = await addNewCommunityHealthCenter(values)
-					console.log('result', response)
 					setSubmitting(false)
 
 					if (response.ok) {
 						openSuccessModal(true)
+						resetForm({})
 					} else {
 						openErrorModal(true)
 					}
@@ -140,7 +88,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.chcName.verified" />
+									<ToggleFormik name="chcNameVerified" />
+									{errors.chcNameVerified &&
+										touched.chcNameVerified &&
+										errors.chcNameVerified}
 								</div>
 
 								<div className={classes.secondAndThirdBox}>
@@ -216,7 +167,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.address.verified" />
+									<ToggleFormik name="addressVerified" />
+									{errors.addressVerified &&
+										touched.addressVerified &&
+										errors.addressVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -236,7 +190,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.phone.verified" />
+									<ToggleFormik name="phoneVerified" />
+									{errors.phoneVerified &&
+										touched.phoneVerified &&
+										errors.phoneVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -257,7 +214,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.email.verified" />
+									<ToggleFormik name="emailVerified" />
+									{errors.emailVerified &&
+										touched.emailVerified &&
+										errors.emailVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -276,7 +236,10 @@ const CommunityHealthCenterForm = ({ classes }) => {
 
 							<div className={classes.gridField}>
 								<div className={classes.firstBox}>
-									<ToggleFormik name="verifiedData.website.verified" />
+									<ToggleFormik name="websiteVerified" />
+									{errors.websiteVerified &&
+										touched.websiteVerified &&
+										errors.websiteVerified}
 								</div>
 
 								<div className={classes.secondBox}>
@@ -301,7 +264,16 @@ const CommunityHealthCenterForm = ({ classes }) => {
 								<div className={classes.secondBox}>
 									<Heading text="NOTES" size="medium" />
 									<Spacer height="50px" />
-									<Field name="notes" component="textarea" rows="4" cols="50" />
+									<Field
+										name="notes"
+										placeholder="Notes are for internal/volunteer use only, they will not be displayed to users"
+										as="textarea"
+										rows="4"
+										cols="50"
+										onChange={handleChange}
+										onBlur={handleBlur}
+										value={values.notes}
+									/>
 
 									<Spacer height="50px" />
 									<Button
@@ -356,6 +328,9 @@ const styles = {
 		'grid-column-end': 2,
 		'justify-self': 'center',
 		'align-self': 'center',
+		// The below flex styling is for the error messages on the verified toggles
+		display: 'flex',
+		'flex-direction': 'column',
 	},
 	secondBox: {
 		'grid-column-start': 2,
