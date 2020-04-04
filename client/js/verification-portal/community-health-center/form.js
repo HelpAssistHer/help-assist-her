@@ -21,6 +21,7 @@ const initialValues = {
 	phoneNumber: '',
 	email: '',
 	website: '',
+	notes: '',
 	chcNameVerified: false,
 	addressVerified: false,
 	phoneVerified: false,
@@ -52,13 +53,14 @@ const CommunityHealthCenterForm = ({ classes }) => {
 			<Formik
 				initialValues={initialValues}
 				validate={validate}
-				onSubmit={async (values, { setSubmitting }) => {
+				onSubmit={async (values, { setSubmitting, resetForm }) => {
 					const response = await addNewCommunityHealthCenter(values)
 					console.log('result', response)
 					setSubmitting(false)
 
 					if (response.ok) {
 						openSuccessModal(true)
+						resetForm({})
 					} else {
 						openErrorModal(true)
 					}
@@ -263,7 +265,16 @@ const CommunityHealthCenterForm = ({ classes }) => {
 								<div className={classes.secondBox}>
 									<Heading text="NOTES" size="medium" />
 									<Spacer height="50px" />
-									<Field name="notes" component="textarea" rows="4" cols="50" />
+									<Field
+										name="notes"
+										placeholder="Notes are for internal/volunteer use only, they will not be displayed to users"
+										as="textarea"
+										rows="4"
+										cols="50"
+										onChange={handleChange}
+										onBlur={handleBlur}
+										value={values.notes}
+									/>
 
 									<Spacer height="50px" />
 									<Button
