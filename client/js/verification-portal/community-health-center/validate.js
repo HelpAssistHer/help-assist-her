@@ -35,6 +35,7 @@ const validate = ({
 	chcNameVerified,
 	addressVerified,
 	phoneVerified,
+	emailVerified,
 	websiteVerified,
 }) => {
 	const errors = {}
@@ -49,6 +50,10 @@ const validate = ({
 
 	if (email && !validateEmail(email)) {
 		errors.email = 'Please enter a valid email address'
+	}
+
+	if (emailVerified && !email) {
+		errors.email = 'Cannot verify a blank email address'
 	}
 
 	if (!validateWebsite(website)) {
