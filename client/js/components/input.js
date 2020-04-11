@@ -2,7 +2,10 @@ import React from 'react'
 import injectSheet from 'react-jss'
 import cx from 'classnames'
 
-const Input = ({ classes, input, type, placeholder }) => {
+const Input = ({ classes, type, placeholder, ...props }) => {
+	// Redux Forms and Formik pass in input differently
+	const input = props.input || props
+
 	const inputClasses = cx(
 		classes.textInput,
 		(input.name === 'prcName' || input.name === 'chcName') &&

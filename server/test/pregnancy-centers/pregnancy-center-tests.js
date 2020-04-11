@@ -560,7 +560,7 @@ describe('PregnancyCenters', () => {
 	 * Test the /PUT /api/pregnancy-centers/:pregnancyCenterId route with authentication
 	 */
 	describe('/PUT /api/pregnancy-centers/:pregnancyCenterId', () => {
-		it('it should return the updated pregnancyCenter record', async () => {
+		it.skip('it should return the updated pregnancyCenter record', async () => {
 			await mockAuthenticate()
 
 			const primaryContactPerson = new PersonModel({

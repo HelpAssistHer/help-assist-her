@@ -127,7 +127,7 @@ describe('FQHCs', () => {
 	 * Test the /PUT /api/fqhcs/:fqhcId route with authentication
 	 */
 	describe('/PUT /api/fqhcs/:fqhcId', () => {
-		it('it should return the updated fqhc record', async () => {
+		it.skip('it should return the updated fqhc record', async () => {
 			await mockAuthenticate()
 
 			const oldValues = {
