@@ -36,6 +36,9 @@ class Team extends Component {
 			slidesToShow: 5,
 			infinite: true,
 			centerMode: true,
+			afterChange: idx => {
+				this.setState({ teamMemberId: idx })
+			},
 			swipeToSlide: true,
 			touchMove: true,
 			swipe: true,
@@ -71,7 +74,7 @@ class Team extends Component {
 		}
 		return (
 			<div>
-				{/* <div className={classes.scrollContainer}> */}
+				{/*  <div className={classes.scrollContainer}> */}
 				{/* <div className={classes.teamMemberContainer}> */}
 				<Slider {...settings}>
 					{teamMemberInfo.map(teamMember => {
@@ -125,7 +128,10 @@ const styles = {
 	teamMemberContainer: {
 		display: 'flex',
 	},
-	imageAndButtonContainer: {},
+	imageAndButtonContainer: {
+		display: 'flex !important',
+		justifyContent: 'center !important',
+	},
 	headshotSize: {
 		height: '240px',
 		width: '240px',
