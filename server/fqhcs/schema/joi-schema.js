@@ -11,19 +11,21 @@ const {
 
 const fqhcSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
-	_id: Joi.string(),
+	_id: Joi.any()
+		.custom(isObjectId)
+		.allow(null),
 	address: addressSchemaJoi,
-	classification: Joi.string(),
 	createdAt: Joi.date().iso(),
 	doNotList: Joi.boolean(),
-	email: Joi.string().email(),
+	email: Joi.string()
+		.email()
+		.allow(''),
 	hours: hoursSchemaJoi,
 	inVerification: Joi.any()
 		.custom(isObjectId)
 		.allow(null),
-	fqhcName: Joi.string(),
-	notes: Joi.string(),
-	otherServices: Joi.string(),
+	chcName: Joi.string(),
+	notes: Joi.string().allow(''),
 	outOfBusiness: Joi.boolean(),
 	phone: Joi.string()
 		.trim()

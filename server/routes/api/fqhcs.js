@@ -3,6 +3,7 @@ const router = require('express').Router()
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
 
 const {
+	createFqhc,
 	updateFqhc,
 	updateFqhcDoNotList,
 	updateFqhcOutOfBusiness,
@@ -13,8 +14,13 @@ const queries = require('../../pregnancy-centers/queries')
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
 router.post('/', isLoggedInAPI, async (req, res) => {
-	// TODO implement endpoint
-	res.status(200).json(req.body)
+	try {
+		const newFqhc = req.body
+		const createdFqhc = await createFqhc(req.user._id, newFqhc)
+		res.status(201).json(createdFqhc)
+	} catch (err) {
+		return handleError(res, err)
+	}
 })
 
 /*
