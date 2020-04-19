@@ -45,25 +45,25 @@ class Team extends Component {
 			focusOnSelect: true,
 			draggable: true,
 			responsive: [
+				// {
+				// 	breakpoint: 1300,
+				// 	settings: {
+				// 		slidesToShow: 5,
+				// 		slidesToScroll: 1,
+				// 		infinite: true,
+				// 	},
+				// },
 				{
-					breakpoint: 1024,
+					breakpoint: 1300,
 					settings: {
 						slidesToShow: 3,
-						slidesToScroll: 1,
-						infinite: true,
-					},
-				},
-				{
-					breakpoint: 600,
-					settings: {
-						slidesToShow: 2,
 						slidesToScroll: 1,
 						infinite: true,
 						centerPadding: '25px',
 					},
 				},
 				{
-					breakpoint: 480,
+					breakpoint: 815,
 					settings: {
 						slidesToShow: 1,
 						slidesToScroll: 1,
@@ -74,8 +74,6 @@ class Team extends Component {
 		}
 		return (
 			<div>
-				{/*  <div className={classes.scrollContainer}> */}
-				{/* <div className={classes.teamMemberContainer}> */}
 				<Slider {...settings}>
 					{teamMemberInfo.map(teamMember => {
 						return (
@@ -106,9 +104,6 @@ class Team extends Component {
 						)
 					})}
 				</Slider>
-				{/* </div> */}
-				{/* </div> */}
-
 				<TeamMember name={name} title={title} bio={bio} />
 			</div>
 		)
