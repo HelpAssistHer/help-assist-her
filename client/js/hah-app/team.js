@@ -44,22 +44,24 @@ class Team extends Component {
 			swipe: true,
 			focusOnSelect: true,
 			draggable: true,
+			centerPadding: '130px',
 			responsive: [
-				// {
-				// 	breakpoint: 1300,
-				// 	settings: {
-				// 		slidesToShow: 5,
-				// 		slidesToScroll: 1,
-				// 		infinite: true,
-				// 	},
-				// },
 				{
-					breakpoint: 1300,
+					breakpoint: 1500,
+					settings: {
+						slidesToShow: 5,
+						slidesToScroll: 1,
+						infinite: true,
+						centerPadding: '0px',
+					},
+				},
+				{
+					breakpoint: 1250,
 					settings: {
 						slidesToShow: 3,
 						slidesToScroll: 1,
 						infinite: true,
-						centerPadding: '25px',
+						centerPadding: '15px',
 					},
 				},
 				{
