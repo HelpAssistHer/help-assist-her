@@ -9,12 +9,13 @@ import Button from './components/button'
 import Input from './components/input'
 import Spacer from '../components/spacer'
 import { findPregnancyResourceCentersNearMe } from './requests'
+import { addPrcsToRedux } from './data/action-creators'
 
 const initialValues = {
 	locationInput: '',
 }
 
-const MiniAppForm = ({ classes, history }) => {
+const MiniAppForm = ({ classes, dispatch, history }) => {
 	return (
 		<Formik
 			initialValues={initialValues}
@@ -25,12 +26,9 @@ const MiniAppForm = ({ classes, history }) => {
 
 				setSubmitting(false)
 
-				console.log('response', response)
-				console.log('history', history)
-
 				if (response.ok) {
-					// add to redux?
-					// return await response.json()
+					const result = await response.json()
+					dispatch(addPrcsToRedux(result))
 					history.push('/mini-app/pregnancy-resource-centers')
 				}
 			}}

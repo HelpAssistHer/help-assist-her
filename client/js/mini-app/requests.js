@@ -9,7 +9,7 @@ export async function findPregnancyResourceCentersNearMe(address) {
 	const queryString = `?lng=${lng}&lat=${lat}&miles=${miles}`
 	const fullUrl = `/api/pregnancy-centers/near-me${queryString}`
 
-	return await fetch(fullUrl, {
+	return fetch(fullUrl, {
 		method: 'GET',
 	})
 }
