@@ -5,16 +5,9 @@ import injectSheet from 'react-jss'
 
 import Instruction from './instruction'
 import MiniAppForm from '../form'
-import { getPregnancyResourceCenters } from '../data/action-creators'
 import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 class StepTwo extends Component {
-	submit = ({ locationInput }) => {
-		const { dispatch, history } = this.props
-		dispatch(getPregnancyResourceCenters(locationInput))
-		history.push('/mini-app/pregnancy-resource-centers')
-	}
-
 	render() {
 		const { classes, onResourceChange } = this.props
 
@@ -34,7 +27,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextPhone}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</Phone>
@@ -53,7 +46,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextBigPhone}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</BigPhone>
@@ -72,7 +65,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextDesktop}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</Tablet>
@@ -91,7 +84,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextDesktop}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</Desktop>
