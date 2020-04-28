@@ -3,7 +3,7 @@ import injectSheet from 'react-jss'
 
 import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
-const Input = ({ classes, input, type, placeholder }) => {
+const Input = ({ classes, type, placeholder, ...props }) => {
 	return (
 		<div className={classes.inputRoot}>
 			<Phone>
@@ -12,7 +12,7 @@ const Input = ({ classes, input, type, placeholder }) => {
 						className={classes.inputPhone}
 						type={type}
 						placeholder={placeholder}
-						{...input}
+						{...props}
 					/>
 				</div>
 			</Phone>
@@ -23,7 +23,7 @@ const Input = ({ classes, input, type, placeholder }) => {
 						className={classes.inputPhone}
 						type={type}
 						placeholder={placeholder}
-						{...input}
+						{...props}
 					/>
 				</div>
 			</BigPhone>
@@ -34,7 +34,7 @@ const Input = ({ classes, input, type, placeholder }) => {
 						className={classes.inputDesktop}
 						type={type}
 						placeholder={placeholder}
-						{...input}
+						{...props}
 					/>
 				</div>
 			</Tablet>
@@ -45,7 +45,7 @@ const Input = ({ classes, input, type, placeholder }) => {
 						className={classes.inputDesktop}
 						type={type}
 						placeholder={placeholder}
-						{...input}
+						{...props}
 					/>
 				</div>
 			</Desktop>
