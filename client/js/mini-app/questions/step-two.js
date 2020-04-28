@@ -16,7 +16,8 @@ class StepTwo extends Component {
 	}
 
 	render() {
-		const { classes, onResourceChange } = this.props
+		const { classes, onResourceChange, resourceType } = this.props
+		console.log('resource type in step 2', resourceType)
 
 		return (
 			<div>

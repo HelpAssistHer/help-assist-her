@@ -33,7 +33,10 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo onResourceChange={this.handleResourceChange} />
+							<StepTwo
+								onResourceChange={this.handleResourceChange}
+								resourceType={buttonClicked}
+							/>
 						)}
 					</div>
 				</Phone>
@@ -46,7 +49,10 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo onResourceChange={this.handleResourceChange} />
+							<StepTwo
+								onResourceChange={this.handleResourceChange}
+								resourceType={buttonClicked}
+							/>
 						)}
 					</div>
 				</BigPhone>
@@ -59,7 +65,10 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo onResourceChange={this.handleResourceChange} />
+							<StepTwo
+								onResourceChange={this.handleResourceChange}
+								resourceType={buttonClicked}
+							/>
 						)}
 					</div>
 				</Tablet>
@@ -72,7 +81,10 @@ class Questions extends Component {
 								onResourceChange={this.handleResourceChange}
 							/>
 						) : (
-							<StepTwo onResourceChange={this.handleResourceChange} />
+							<StepTwo
+								onResourceChange={this.handleResourceChange}
+								resourceType={buttonClicked}
+							/>
 						)}
 					</div>
 				</Desktop>
