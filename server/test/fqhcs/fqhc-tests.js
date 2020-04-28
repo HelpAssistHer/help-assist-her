@@ -56,7 +56,7 @@ describe('FQHCs', () => {
 						],
 					},
 				},
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -69,7 +69,7 @@ describe('FQHCs', () => {
 			// note that verification is randomized, so there is no guarantee of the resulting object
 			res.should.have.status(200)
 			res.body.should.be.a('object')
-			res.body.should.have.property('fqhcName')
+			res.body.should.have.property('chcName')
 		})
 	})
 
@@ -104,7 +104,7 @@ describe('FQHCs', () => {
 						],
 					},
 				},
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -141,7 +141,7 @@ describe('FQHCs', () => {
 						],
 					},
 				},
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -158,7 +158,7 @@ describe('FQHCs', () => {
 						],
 					},
 				},
-				fqhcName: 'New Name',
+				chcName: 'New Name',
 				phone: '+17185969899',
 				website: 'www.newurl.org',
 				services: { wellWomanCare: true },
@@ -181,9 +181,9 @@ describe('FQHCs', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
-			res.body.should.have.property('fqhcName')
+			res.body.should.have.property('chcName')
 			res.body._id.should.equal(String(oldFQHC._id))
-			res.body.fqhcName.should.equal('New Name')
+			res.body.chcName.should.equal('New Name')
 			res.body.should.have.property('verifiedData')
 			res.body.should.have.property('updated')
 			res.body.updated.should.have.property('address')
@@ -198,7 +198,7 @@ describe('FQHCs', () => {
 			})
 			const fields = _.map(histories, 'field')
 			fields.should.have.members([
-				'fqhcName',
+				'chcName',
 				'phone',
 				'website',
 				'services',
@@ -227,7 +227,7 @@ describe('FQHCs', () => {
 					},
 				},
 				outOfBusiness: true,
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -244,7 +244,7 @@ describe('FQHCs', () => {
 						],
 					},
 				},
-				fqhcName: 'New Name',
+				chcName: 'New Name',
 				phone: '+17185969899',
 				website: 'www.newurl.org',
 				services: { wellWomanCare: true },
@@ -291,7 +291,7 @@ describe('FQHCs', () => {
 					},
 				},
 				outOfBusiness: true,
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -309,9 +309,9 @@ describe('FQHCs', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
-			res.body.should.have.property('fqhcName')
+			res.body.should.have.property('chcName')
 			res.body._id.should.equal(String(oldFQHC._id))
-			res.body.fqhcName.should.equal(oldValues.fqhcName)
+			res.body.chcName.should.equal(oldValues.chcName)
 			res.body.should.have.property('verifiedData')
 			res.body.should.have.property('updated')
 			res.body.updated.should.have.property('outOfBusiness')
@@ -348,7 +348,7 @@ describe('FQHCs', () => {
 					},
 				},
 				outOfBusiness: true,
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -366,9 +366,9 @@ describe('FQHCs', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
-			res.body.should.have.property('fqhcName')
+			res.body.should.have.property('chcName')
 			res.body._id.should.equal(String(oldFQHC._id))
-			res.body.fqhcName.should.equal(oldValues.fqhcName)
+			res.body.chcName.should.equal(oldValues.chcName)
 			res.body.should.have.property('verifiedData')
 			res.body.should.have.property('updated')
 			res.body.updated.should.have.property('outOfBusiness')
@@ -405,7 +405,7 @@ describe('FQHCs', () => {
 					},
 				},
 				doNotList: true,
-				fqhcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
 				phone: '+17185969800',
 				website: 'www.brooklynplaza.org',
 				services: {},
@@ -423,9 +423,9 @@ describe('FQHCs', () => {
 			res.should.have.status(200)
 			res.body.should.be.a('object')
 			res.body.should.have.property('_id')
-			res.body.should.have.property('fqhcName')
+			res.body.should.have.property('chcName')
 			res.body._id.should.equal(String(oldFQHC._id))
-			res.body.fqhcName.should.equal(oldValues.fqhcName)
+			res.body.chcName.should.equal(oldValues.chcName)
 			res.body.should.have.property('verifiedData')
 			res.body.should.have.property('updated')
 			res.body.updated.should.have.property('doNotList')
@@ -438,6 +438,90 @@ describe('FQHCs', () => {
 			})
 			const fields = _.map(histories, 'field')
 			fields.should.have.members(['doNotList'])
+		})
+	})
+
+	/*
+	 * Test the /POST /api/fqhcs route w/o authentication
+	 */
+	describe('/POST /api/fqhcs no-auth', () => {
+		it('it should return a 401 error because there is no authentication', async () => {
+			const fqhc = {
+				address: {
+					line1: '586 Central Ave.\nAlbany, NY 12206',
+					location: {
+						type: 'Point',
+						coordinates: [-73.7814005, 42.6722152],
+					},
+				},
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				phone: '+15184382978',
+				website: 'http://www.birthright.org',
+				services: {},
+			}
+
+			try {
+				await chai
+					.request(server)
+					.post('/api/fqhcs')
+
+					.send(fqhc)
+			} catch (err) {
+				assertUnauthenticatedError(err.response)
+			}
+		})
+	})
+
+	/*
+	 * Test the /POST /api/fqhcs/
+	 */
+	describe('/POST /api/fqhcs/', () => {
+		it('it should return the created fqhc', async () => {
+			await mockAuthenticate()
+
+			const fqhc = {
+				chcName: 'BROOKLYN PLAZA MEDICAL CENTER, INC.',
+				address: {
+					line1: '650 Fulton St',
+					line2: '123',
+					city: 'BROOKLYN',
+					state: 'NY',
+					zip: '11217',
+				},
+				phone: '+17185969800',
+				email: '',
+				website: 'www.brooklynplaza.org',
+				notes: '',
+				verifiedData: {
+					chcName: {
+						verified: true,
+					},
+					address: {
+						verified: true,
+					},
+					phone: {
+						verified: true,
+					},
+					email: {
+						verified: true,
+					},
+					website: {
+						verified: true,
+					},
+				},
+			}
+
+			const res = await chai
+				.request(server)
+				.post('/api/fqhcs/')
+				.send(fqhc)
+
+			res.should.have.status(201)
+			res.body.should.be.a('object')
+			res.body.should.have.property('_id')
+			res.body.should.have.property('chcName')
+			res.body.chcName.should.equal('BROOKLYN PLAZA MEDICAL CENTER, INC.')
+			res.body.should.have.property('verifiedData')
 		})
 	})
 })
