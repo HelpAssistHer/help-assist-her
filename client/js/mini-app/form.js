@@ -1,4 +1,6 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { Formik, Field } from 'formik'
 import injectSheet from 'react-jss'
 
@@ -12,22 +14,25 @@ const initialValues = {
 	locationInput: '',
 }
 
-const MiniAppForm = ({ classes }) => {
+const MiniAppForm = ({ classes, history }) => {
 	return (
 		<Formik
 			initialValues={initialValues}
-			// validate={validate}
 			onSubmit={async (values, { setSubmitting }) => {
-				console.log('values!!', values.locationInput)
 				const response = await findPregnancyResourceCentersNearMe(
 					values.locationInput,
 				)
-				setSubmitting(false)
-				console.log('response', response)
 
-				// if (response.ok) {
-				// 	//redirect
-				// }
+				setSubmitting(false)
+
+				console.log('response', response)
+				console.log('history', history)
+
+				if (response.ok) {
+					// add to redux?
+					// return await response.json()
+					history.push('/mini-app/pregnancy-resource-centers')
+				}
 			}}
 		>
 			{({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
@@ -90,4 +95,6 @@ const styles = {
 	},
 }
 
-export default injectSheet(styles)(MiniAppForm)
+const MiniAppFormWithStyle = injectSheet(styles)(MiniAppForm)
+
+export default connect()(withRouter(MiniAppFormWithStyle))
