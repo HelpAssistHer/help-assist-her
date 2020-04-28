@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import injectSheet from 'react-jss'
 
 import Instruction from './instruction'
@@ -154,6 +152,4 @@ const styles = {
 	},
 }
 
-const StepTwoWithStyle = injectSheet(styles)(StepTwo)
-
-export default connect()(withRouter(StepTwoWithStyle))
+export default injectSheet(styles)(StepTwo)
