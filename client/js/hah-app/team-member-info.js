@@ -39,7 +39,7 @@ module.exports = [
 		name: 'Valery Z.',
 		title: 'Frontend Software Engineer',
 		bio:
-			'Valery is a full stack developer at trade.io with experience building web apps using Ruby on Rails and React. ' +
+			'Valery is a full stack engineer at HireArt with experience building web apps using Ruby on Rails and React. ' +
 			'He started volunteering for Help Assist Her in 2018 as a frontend engineer to try to use his skill set as a developer ' +
 			"to help others who are in need. When he's not coding, Valery likes to lift weights, play chess, and travel.",
 		imageSource: 'https://helpassisther.imgix.net/team/valery.jpg',

@@ -6,6 +6,10 @@ import Imgix from 'react-imgix'
 import Spacer from '../components/spacer'
 import teamMemberInfo from './team-member-info'
 import TeamMember from './team-member'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+import Slider from 'react-slick'
 
 class Team extends Component {
 	constructor(props) {
@@ -28,42 +32,80 @@ class Team extends Component {
 			classes.headshotSize,
 			classes.headshotClicked,
 		)
-
+		const settings = {
+			slidesToShow: 5,
+			infinite: true,
+			centerMode: true,
+			afterChange: idx => {
+				this.setState({ teamMemberId: idx })
+			},
+			swipeToSlide: true,
+			touchMove: true,
+			swipe: true,
+			focusOnSelect: true,
+			draggable: true,
+			centerPadding: '130px',
+			responsive: [
+				{
+					breakpoint: 1500,
+					settings: {
+						slidesToShow: 5,
+						slidesToScroll: 1,
+						infinite: true,
+						centerPadding: '0px',
+					},
+				},
+				{
+					breakpoint: 1250,
+					settings: {
+						slidesToShow: 3,
+						slidesToScroll: 1,
+						infinite: true,
+						centerPadding: '15px',
+					},
+				},
+				{
+					breakpoint: 815,
+					settings: {
+						slidesToShow: 1,
+						slidesToScroll: 1,
+						centerPadding: '25px',
+					},
+				},
+			],
+		}
 		return (
 			<div>
-				<div className={classes.scrollContainer}>
-					<div className={classes.teamMemberContainer}>
-						{teamMemberInfo.map(teamMember => {
-							return (
-								<div
-									key={teamMember.id}
-									className={classes.imageAndButtonContainer}
+				<Slider {...settings}>
+					{teamMemberInfo.map(teamMember => {
+						return (
+							<div
+								key={teamMember.id}
+								className={classes.imageAndButtonContainer}
+							>
+								<button
+									className={classes.button}
+									onClick={() => {
+										this.handleClick(teamMember.id)
+									}}
 								>
-									<button
-										className={classes.button}
-										onClick={() => {
-											this.handleClick(teamMember.id)
-										}}
-									>
-										<Imgix
-											className={
-												teamMemberId === teamMember.id
-													? clickedStyle
-													: notClickedStyle
-											}
-											src={teamMember.imageSource}
-											alt={teamMember.name}
-											width={240}
-											height={240}
-										/>
-										<Spacer width="16px" />
-									</button>
-								</div>
-							)
-						})}
-					</div>
-				</div>
-
+									<Imgix
+										className={
+											teamMemberId === teamMember.id
+												? clickedStyle
+												: notClickedStyle
+										}
+										src={teamMember.imageSource}
+										alt={teamMember.name}
+										width={240}
+										height={240}
+									/>
+									<Spacer width="16px" />
+								</button>
+							</div>
+						)
+					})}
+				</Slider>
 				<TeamMember name={name} title={title} bio={bio} />
 			</div>
 		)
@@ -78,14 +120,14 @@ class Team extends Component {
 
 const styles = {
 	scrollContainer: {
-		overflow: 'auto',
+		overflow: 'scroll',
 	},
 	teamMemberContainer: {
 		display: 'flex',
 	},
 	imageAndButtonContainer: {
-		display: 'flex',
-		'justify-content': 'center',
+		display: 'flex !important',
+		justifyContent: 'center !important',
 	},
 	headshotSize: {
 		height: '240px',
