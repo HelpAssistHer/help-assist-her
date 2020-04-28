@@ -114,12 +114,14 @@ const styles = {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
 		'line-height': '21px',
+		height: '200px',
 	},
 	bioTextDesktop: {
 		color: '#000000',
 		'font-family': 'hah-regular',
 		'font-size': '16px',
 		'line-height': '26px',
+		height: '200px',
 	},
 }
 
