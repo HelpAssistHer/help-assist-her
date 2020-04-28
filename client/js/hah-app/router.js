@@ -26,11 +26,7 @@ const HahRouter = () => {
 				<Route exact path="/feedback" component={Feedback} />
 				<Route exact path="/menu" component={Menu} />
 				<Route exact path="/emergency" component={Emergency} />
-				<Route
-					exact
-					path="/mini-app/pregnancy-resource-centers"
-					component={ResourceList}
-				/>
+				<Route exact path="/mini-app/results" component={ResourceList} />
 				<Route
 					exact
 					path="/verification/pregnancy-resource-center"

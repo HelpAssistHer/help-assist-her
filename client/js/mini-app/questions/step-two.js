@@ -12,7 +12,7 @@ class StepTwo extends Component {
 	submit = ({ locationInput }) => {
 		const { dispatch, history } = this.props
 		dispatch(getPregnancyResourceCenters(locationInput))
-		history.push('/mini-app/pregnancy-resource-centers')
+		history.push('/mini-app/results')
 	}
 
 	render() {
