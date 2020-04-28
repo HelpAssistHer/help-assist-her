@@ -1,16 +1,21 @@
-import { connect } from 'react-redux'
-import { change } from 'redux-form'
+import React from 'react'
 
-import MiniApp from './view'
+import Header from './header'
+import Questions from './questions'
+import HomePageBanner from './home-page-banner'
+import Footer from './components/footer'
+import UnitedStatesMap from './united-states-map'
+import { ScrollToTop } from '../components/scroll-to-top'
 
-const mapDispatchToProps = dispatch => {
-	return {
-		changeFieldValue: (field, value) => {
-			dispatch(change('miniApp', field, value || ''))
-		},
-	}
-}
+const MiniApp = () => (
+	<div>
+		<ScrollToTop />
+		<Header />
+		<Questions />
+		<HomePageBanner />
+		<UnitedStatesMap />
+		<Footer />
+	</div>
+)
 
-const MiniAppContainer = connect(mapDispatchToProps)(MiniApp)
-
-export default MiniAppContainer
+export default MiniApp
