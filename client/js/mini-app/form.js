@@ -15,21 +15,29 @@ const initialValues = {
 	locationInput: '',
 }
 
-const MiniAppForm = ({ classes, dispatch, history }) => {
+const MiniAppForm = ({ classes, dispatch, history, resourceType }) => {
 	return (
 		<Formik
 			initialValues={initialValues}
 			onSubmit={async (values, { setSubmitting }) => {
-				const response = await findPregnancyResourceCentersNearMe(
-					values.locationInput,
-				)
+				let response
+
+				if (resourceType === 'prc') {
+					response = await findPregnancyResourceCentersNearMe(
+						values.locationInput,
+					)
+				}
+
+				if (resourceType === 'chc') {
+					console.log('chc')
+				}
 
 				setSubmitting(false)
 
 				if (response.ok) {
 					const result = await response.json()
 					dispatch(addPrcsToRedux(result))
-					history.push('/mini-app/pregnancy-resource-centers')
+					history.push('/mini-app/results')
 				}
 			}}
 		>
