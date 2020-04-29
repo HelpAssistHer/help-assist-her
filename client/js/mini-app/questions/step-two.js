@@ -1,20 +1,11 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import injectSheet from 'react-jss'
 
 import Instruction from './instruction'
 import MiniAppForm from '../form'
-import { getPregnancyResourceCenters } from '../data/action-creators'
 import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 class StepTwo extends Component {
-	submit = ({ locationInput }) => {
-		const { dispatch, history } = this.props
-		dispatch(getPregnancyResourceCenters(locationInput))
-		history.push('/mini-app/results')
-	}
-
 	render() {
 		const { classes, onResourceChange, resourceType } = this.props
 		console.log('resource type in step 2', resourceType)
@@ -35,7 +26,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextPhone}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</Phone>
@@ -54,7 +45,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextBigPhone}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</BigPhone>
@@ -73,7 +64,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextDesktop}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</Tablet>
@@ -92,7 +83,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextDesktop}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm onSubmit={this.submit} />
+							<MiniAppForm />
 						</div>
 					</div>
 				</Desktop>
@@ -162,6 +153,4 @@ const styles = {
 	},
 }
 
-const StepTwoWithStyle = injectSheet(styles)(StepTwo)
-
-export default connect()(withRouter(StepTwoWithStyle))
+export default injectSheet(styles)(StepTwo)

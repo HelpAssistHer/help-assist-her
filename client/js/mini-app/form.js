@@ -1,57 +1,89 @@
-import React, { Component } from 'react'
-import { Field, reduxForm } from 'redux-form'
+import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Formik, Field } from 'formik'
 import injectSheet from 'react-jss'
 
 import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Button from './components/button'
 import Input from './components/input'
 import Spacer from '../components/spacer'
+import { findPregnancyResourceCentersNearMe } from './requests'
+import { addPrcsToRedux } from './data/action-creators'
 
-class MiniAppFormView extends Component {
-	render() {
-		const { handleSubmit, classes } = this.props
+const initialValues = {
+	locationInput: '',
+}
 
-		return (
-			<form onSubmit={handleSubmit}>
-				<Phone>
-					<Spacer height="13px" />
-				</Phone>
-				<BigPhone>
-					<Spacer height="13px" />
-				</BigPhone>
-				<Tablet>
-					<Spacer height="92px" />
-				</Tablet>
-				<Desktop>
-					<Spacer height="92px" />
-				</Desktop>
+const MiniAppForm = ({ classes, dispatch, history }) => {
+	return (
+		<Formik
+			initialValues={initialValues}
+			onSubmit={async (values, { setSubmitting }) => {
+				const response = await findPregnancyResourceCentersNearMe(
+					values.locationInput,
+				)
 
-				<Field
-					placeholder="Address, city, state, or zip code"
-					name="locationInput"
-					component={Input}
-					type="text"
-				/>
+				setSubmitting(false)
 
-				<Phone>
-					<Spacer height="25px" />
-				</Phone>
-				<BigPhone>
-					<Spacer height="25px" />
-				</BigPhone>
-				<Tablet>
-					<Spacer height="93px" />
-				</Tablet>
-				<Desktop>
-					<Spacer height="93px" />
-				</Desktop>
+				if (response.ok) {
+					const result = await response.json()
+					dispatch(addPrcsToRedux(result))
+					history.push('/mini-app/pregnancy-resource-centers')
+				}
+			}}
+		>
+			{({ values, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
+				<form onSubmit={handleSubmit}>
+					<Phone>
+						<Spacer height="13px" />
+					</Phone>
+					<BigPhone>
+						<Spacer height="13px" />
+					</BigPhone>
+					<Tablet>
+						<Spacer height="92px" />
+					</Tablet>
+					<Desktop>
+						<Spacer height="92px" />
+					</Desktop>
 
-				<div className={classes.goButtonRoot}>
-					<Button buttonText="Go" />
-				</div>
-			</form>
-		)
-	}
+					<Field
+						name="locationInput"
+						placeholder="Address, city, state, or zip code"
+						type="text"
+						onChange={handleChange}
+						onBlur={handleBlur}
+						value={values.locationInput}
+						as={Input}
+					/>
+
+					<Phone>
+						<Spacer height="25px" />
+					</Phone>
+					<BigPhone>
+						<Spacer height="25px" />
+					</BigPhone>
+					<Tablet>
+						<Spacer height="93px" />
+					</Tablet>
+					<Desktop>
+						<Spacer height="93px" />
+					</Desktop>
+
+					<div className={classes.goButtonRoot}>
+						<Button
+							type="submit"
+							buttonText="Go"
+							activeState={false}
+							size="medium"
+							disabled={isSubmitting}
+						/>
+					</div>
+				</form>
+			)}
+		</Formik>
+	)
 }
 
 const styles = {
@@ -61,8 +93,6 @@ const styles = {
 	},
 }
 
-const MiniAppForm = reduxForm({
-	form: 'miniApp',
-})(MiniAppFormView)
+const MiniAppFormWithStyle = injectSheet(styles)(MiniAppForm)
 
-export default injectSheet(styles)(MiniAppForm)
+export default connect()(withRouter(MiniAppFormWithStyle))
