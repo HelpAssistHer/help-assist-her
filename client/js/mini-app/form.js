@@ -8,28 +8,47 @@ import { Phone, BigPhone, Tablet, Desktop } from '../components/breakpoints'
 import Button from './components/button'
 import Input from './components/input'
 import Spacer from '../components/spacer'
-import { findPregnancyResourceCentersNearMe } from './requests'
-import { addPrcsToRedux } from './data/action-creators'
+import { findPregnancyResourceCentersNearMe, findChcsNearMe } from './requests'
+import { addPrcsToRedux, addChcsToRedux } from './data/action-creators'
 
 const initialValues = {
 	locationInput: '',
 }
 
-const MiniAppForm = ({ classes, dispatch, history }) => {
+const MiniAppForm = ({ classes, dispatch, history, resourceType }) => {
 	return (
 		<Formik
 			initialValues={initialValues}
 			onSubmit={async (values, { setSubmitting }) => {
-				const response = await findPregnancyResourceCentersNearMe(
-					values.locationInput,
-				)
+				let response
+
+				if (resourceType === 'prc') {
+					response = await findPregnancyResourceCentersNearMe(
+						values.locationInput,
+					)
+				}
+
+				if (resourceType === 'chc') {
+					response = await findChcsNearMe(values.locationInput)
+				}
 
 				setSubmitting(false)
 
 				if (response.ok) {
 					const result = await response.json()
-					dispatch(addPrcsToRedux(result))
-					history.push('/mini-app/pregnancy-resource-centers')
+
+					if (resourceType === 'prc') {
+						dispatch(addPrcsToRedux(result))
+					}
+
+					if (resourceType === 'chc') {
+						dispatch(addChcsToRedux(result))
+					}
+
+					history.push({
+						pathname: '/mini-app/results',
+						search: `?query=${resourceType}`,
+					})
 				}
 			}}
 		>

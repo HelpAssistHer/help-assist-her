@@ -7,7 +7,7 @@ import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 import ResourceCard from './resource-card'
 import { ScrollToTop } from '../../components/scroll-to-top'
 
-const ValidResults = ({ classes, pregnancyResourceCenters }) => {
+const ValidResults = ({ classes, results }) => {
 	const phoneStyle = cx(classes.validResultsRoot, classes.paddingPhone)
 	const desktopStyle = cx(classes.validResultsRoot, classes.paddingDesktop)
 
@@ -18,32 +18,32 @@ const ValidResults = ({ classes, pregnancyResourceCenters }) => {
 			<div>
 				<Phone>
 					<div className={phoneStyle}>
-						{_.map(pregnancyResourceCenters, prc => {
-							return <ResourceCard key={prc._id} resource={prc} />
+						{_.map(results, result => {
+							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
 				</Phone>
 
 				<BigPhone>
 					<div className={phoneStyle}>
-						{_.map(pregnancyResourceCenters, prc => {
-							return <ResourceCard key={prc._id} resource={prc} />
+						{_.map(results, result => {
+							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
 				</BigPhone>
 
 				<Tablet>
 					<div className={desktopStyle}>
-						{_.map(pregnancyResourceCenters, prc => {
-							return <ResourceCard key={prc._id} resource={prc} />
+						{_.map(results, result => {
+							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
 				</Tablet>
 
 				<Desktop>
 					<div className={desktopStyle}>
-						{_.map(pregnancyResourceCenters, prc => {
-							return <ResourceCard key={prc._id} resource={prc} />
+						{_.map(results, result => {
+							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
 				</Desktop>

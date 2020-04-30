@@ -7,7 +7,7 @@ import { Phone, BigPhone, Tablet, Desktop } from '../../components/breakpoints'
 
 class StepTwo extends Component {
 	render() {
-		const { classes, onResourceChange } = this.props
+		const { classes, onResourceChange, resourceType } = this.props
 
 		return (
 			<div>
@@ -25,7 +25,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextPhone}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm />
+							<MiniAppForm resourceType={resourceType} />
 						</div>
 					</div>
 				</Phone>
@@ -44,7 +44,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextBigPhone}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm />
+							<MiniAppForm resourceType={resourceType} />
 						</div>
 					</div>
 				</BigPhone>
@@ -63,7 +63,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextDesktop}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm />
+							<MiniAppForm resourceType={resourceType} />
 						</div>
 					</div>
 				</Tablet>
@@ -82,7 +82,7 @@ class StepTwo extends Component {
 							<div className={classes.betaTextDesktop}>
 								*beta only available in NY*
 							</div>
-							<MiniAppForm />
+							<MiniAppForm resourceType={resourceType} />
 						</div>
 					</div>
 				</Desktop>
