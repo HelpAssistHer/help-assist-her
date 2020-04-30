@@ -45,7 +45,10 @@ const MiniAppForm = ({ classes, dispatch, history, resourceType }) => {
 						dispatch(addChcsToRedux(result))
 					}
 
-					history.push('/mini-app/results')
+					history.push({
+						pathname: '/mini-app/results',
+						search: `?query=${resourceType}`,
+					})
 				}
 			}}
 		>

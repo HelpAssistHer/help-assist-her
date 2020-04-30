@@ -28,13 +28,28 @@ const bannerMessageNoResults = (
 const mapStateToProps = state => {
 	return {
 		pregnancyResourceCenters: state.miniApp.pregnancyResourceCenters,
+		communityHealthCenters: state.miniApp.communityHealthCenters,
 	}
 }
 
-const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
+const ResourceListView = ({
+	classes,
+	pregnancyResourceCenters,
+	communityHealthCenters,
+	location,
+}) => {
+	const resourceType = location.search.substr(location.search.length - 3)
+
+	let results
+	if (resourceType === 'prc') {
+		results = pregnancyResourceCenters
+	}
+	if (resourceType === 'chc') {
+		results = communityHealthCenters
+	}
+
 	const noResults =
-		_.get(pregnancyResourceCenters, 'statusCode') === 404 ||
-		pregnancyResourceCenters === undefined
+		_.get(results, 'statusCode') === 404 || results === undefined
 
 	return (
 		<div className={classes.resourceListViewRoot}>
@@ -77,7 +92,7 @@ const ResourceListView = ({ classes, pregnancyResourceCenters }) => {
 					<NoResults />
 				</div>
 			) : (
-				<ValidResults pregnancyResourceCenters={pregnancyResourceCenters} />
+				<ValidResults results={results} />
 			)}
 
 			<div className={classes.resultsFooter}>
