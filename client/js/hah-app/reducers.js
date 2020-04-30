@@ -10,7 +10,10 @@ import {
 } from '../verification-portal/pregnancy-resource-center/action-types'
 import { OUT_OF_BUSINESS } from '../verification-portal/out-of-business/action-types'
 import { DO_NOT_LIST } from '../verification-portal/do-not-list/action-types'
-import { GET_PREGNANCY_RESOURCE_CENTERS } from '../mini-app/data/action-types'
+import {
+	GET_PREGNANCY_RESOURCE_CENTERS,
+	GET_COMMUNITY_HEALTH_CENTERS,
+} from '../mini-app/data/action-types'
 
 const authenticationReducer = (state = {}, action) => {
 	switch (action.type) {
@@ -53,6 +56,11 @@ const miniAppReducer = (state = {}, action) => {
 			return {
 				...state,
 				pregnancyResourceCenters: action.pregnancyResourceCenters,
+			}
+		case GET_COMMUNITY_HEALTH_CENTERS:
+			return {
+				...state,
+				communityHealthCenters: action.communityHealthCenters,
 			}
 		default:
 			return state

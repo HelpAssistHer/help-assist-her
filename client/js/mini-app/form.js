@@ -9,7 +9,7 @@ import Button from './components/button'
 import Input from './components/input'
 import Spacer from '../components/spacer'
 import { findPregnancyResourceCentersNearMe, findChcsNearMe } from './requests'
-import { addPrcsToRedux } from './data/action-creators'
+import { addPrcsToRedux, addChcsToRedux } from './data/action-creators'
 
 const initialValues = {
 	locationInput: '',
@@ -36,7 +36,15 @@ const MiniAppForm = ({ classes, dispatch, history, resourceType }) => {
 
 				if (response.ok) {
 					const result = await response.json()
-					dispatch(addPrcsToRedux(result)) // todo add chcs to redux
+
+					if (resourceType === 'prc') {
+						dispatch(addPrcsToRedux(result))
+					}
+
+					if (resourceType === 'chc') {
+						dispatch(addChcsToRedux(result))
+					}
+
 					history.push('/mini-app/results')
 				}
 			}}
