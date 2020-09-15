@@ -21,11 +21,14 @@ const {
 	assertUnauthenticatedError,
 	assertError,
 	beforeEachFQHC,
+	importTest,
 } = require('../helpers')
 
 //Our parent block
 describe('FQHCs', () => {
 	beforeEach(beforeEachFQHC)
+
+	importTest('near-me', './fqhcs/near-me-tests.js')
 
 	/*
 	 * Test the /GET /api/fqhcs/verify route w/o authentication
