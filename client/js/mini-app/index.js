@@ -11,7 +11,7 @@ const MiniApp = () => (
 	<div>
 		<ScrollToTop />
 		<Header />
-		<Questions />
+		{!process.env.IS_PROD && <Questions />}
 		<HomePageBanner />
 		<UnitedStatesMap />
 		<Footer />

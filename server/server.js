@@ -67,6 +67,7 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+console.log(config)
 passport.use(
 	new facebookTokenStrategy(
 		{

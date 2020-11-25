@@ -3,6 +3,8 @@
 const path = require('path')
 const webpack = require('webpack')
 
+const isProd = process.env.NODE_ENV === 'prod'
+
 module.exports = {
 	mode: 'development',
 	context: __dirname,
@@ -19,6 +21,7 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.DefinePlugin({
+			IS_PROD: isProd,
 			VERIFICATION_PORTAL_FACEBOOK_APP_ID: JSON.stringify(
 				process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
 			),
