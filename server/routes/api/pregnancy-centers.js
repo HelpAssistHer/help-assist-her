@@ -1,14 +1,14 @@
 const router = require('express').Router()
 const _ = require('lodash')
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
 const {
 	createPregnancyCenter,
 	updatePregnancyCenter,
 	updatePregnancyCenterDoNotList,
 	updatePregnancyCenterOutOfBusiness,
 } = require('../../util/actions')
-const queries = require('../../pregnancy-centers/queries')
+const queries = require('../../queries/pregnancy-center')
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
 /*

@@ -13,12 +13,12 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
-const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
+const PregnancyCenterHistoryModel = require('../../models/pregnancy-center-history')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
+const pregnancyCenterSchemaJoi = require('../../schema/pregnancy-center')
 const { server } = require('../../server')
-const UserModel = require('../../users/schema/mongoose-schema')
-const PersonModel = require('../../persons/schema/mongoose-schema')
+const UserModel = require('../../models/user')
+const PersonModel = require('../../models/person')
 
 const {
 	mockAuthenticate,

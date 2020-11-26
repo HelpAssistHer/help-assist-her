@@ -16,7 +16,7 @@
 		"heroku-postbuild": "webpack --mode production",
 		"start": "NODE_ENV=localhost nodemon ./server/server.js",
 		"startdb": "mongod --dbpath ~/.hah/data",
-		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 3000",
+		"test": "NODE_ENV=test mocha 'server/test/test.js' --timeout 20000",
 		"test-data": "NODE_ENV=localhost node ./server/data-import/test-data.js",
 		"watch": "webpack serve --mode development"
 	},
@@ -65,6 +65,7 @@
 		"mongodb-extjson": "^3.0.3",
 		"mongoose": "^5.7.11",
 		"morgan": "^1.8.1",
+		"next": "^10.0.3",
 		"passport": "^0.4.0",
 		"passport-facebook-token": "^3.3.0",
 		"ramda": "0.26.1",

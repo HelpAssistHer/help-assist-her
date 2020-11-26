@@ -2,12 +2,8 @@
 
 const mongoose = require('mongoose')
 
-const helpers = require('./helpers')
-const {
-	addressSchema,
-	userDateSchema,
-	getFullAddress,
-} = require('../../locations/schema/mongoose-schema')
+const { buildPregnancyCenterSchema } = require('../util/services')
+const { addressSchema, userDateSchema, getFullAddress } = require('./location')
 
 const pregnancyCenterSchema = mongoose.Schema(
 	{
@@ -26,7 +22,7 @@ const pregnancyCenterSchema = mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Persons',
 		},
-		services: helpers.getPregnancyCenterServicesSchema(Boolean),
+		services: buildPregnancyCenterSchema(Boolean),
 		verifiedData: {
 			address: userDateSchema,
 			email: userDateSchema,

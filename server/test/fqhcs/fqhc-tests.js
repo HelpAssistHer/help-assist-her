@@ -9,10 +9,10 @@ const should = chai.should()
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
-const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
-const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
+const FQHCModel = require('../../models/fqhc')
+const FQHCHistoryModel = require('../../models/fqhc-history')
 const { server } = require('../../server')
-const UserModel = require('../../users/schema/mongoose-schema')
+const UserModel = require('../../models/user')
 
 chai.use(chaiHttp)
 

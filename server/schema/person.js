@@ -1,7 +1,7 @@
 'use strict'
 
 const Joi = require('@hapi/joi')
-const isObjectId = require('../../util/is-object-id')
+const isObjectId = require('../util/is-object-id')
 
 const personSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),

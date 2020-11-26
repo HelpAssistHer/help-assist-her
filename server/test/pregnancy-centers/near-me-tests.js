@@ -6,9 +6,9 @@ const should = chai.should()
 const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
 const { server } = require('../../server')
-const PersonModel = require('../../persons/schema/mongoose-schema')
+const PersonModel = require('../../models/person')
 
 const { mockAuthenticate, assertError } = require('../helpers')
 

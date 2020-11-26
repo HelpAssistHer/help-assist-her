@@ -1,15 +1,14 @@
 'use strict'
 
 const Joi = require('@hapi/joi')
-const isObjectId = require('../../util/is-object-id')
-
-const helpers = require('./helpers')
-const personSchemaJoi = require('../../persons/schema/joi-schema')
+const isObjectId = require('../util/is-object-id')
+const { buildPregnancyCenterSchema } = require('../util/services')
+const personSchemaJoi = require('./person')
 const {
 	addressSchemaJoi,
 	hoursSchemaJoi,
 	dateUserActionSchemaJoi,
-} = require('../../locations/schema/joi-schema')
+} = require('./location')
 
 const pregnancyCenterSchemaJoi = Joi.object({
 	__v: Joi.number().min(0),
@@ -33,7 +32,7 @@ const pregnancyCenterSchemaJoi = Joi.object({
 		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/)
 		.allow(''),
 	primaryContactPerson: personSchemaJoi,
-	services: helpers.getPregnancyCenterServicesSchema(Joi.boolean()),
+	services: buildPregnancyCenterSchema(Joi.boolean()),
 	verifiedData: {
 		address: dateUserActionSchemaJoi,
 		email: dateUserActionSchemaJoi,

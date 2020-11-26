@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const P = require('bluebird')
 const R = require('ramda')
 
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterModel = require('../models/pregnancy-center')
 const {
 	getGoogleGeocode,
 	getLocation,

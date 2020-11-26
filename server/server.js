@@ -14,7 +14,7 @@ const passport = require('passport')
 const path = require('path')
 const session = require('express-session')
 
-const UserModel = require('./users/schema/mongoose-schema')
+const UserModel = require('./models/user')
 
 const port = config.server.port
 const app = express()

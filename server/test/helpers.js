@@ -10,12 +10,12 @@ const mongoose = require('mongoose')
 mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
-const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterHistoryModel = require('../models/pregnancy-center-history')
+const PregnancyCenterModel = require('../models/pregnancy-center')
 const { app } = require('../server')
-const UserModel = require('../users/schema/mongoose-schema')
-const PersonModel = require('../persons/schema/mongoose-schema')
-const FQHCModel = require('../fqhcs/schema/mongoose-schema')
+const UserModel = require('../models/user')
+const PersonModel = require('../models/person')
+const FQHCModel = require('../models/fqhc')
 
 chai.use(chaiHttp)
 

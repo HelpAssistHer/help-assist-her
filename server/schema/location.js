@@ -1,7 +1,7 @@
 'use strict'
 
 const Joi = require('@hapi/joi')
-const isObjectId = require('../../util/is-object-id')
+const isObjectId = require('../util/is-object-id')
 
 const pointSchemaJoi = Joi.object().keys({
 	_id: Joi.any().custom(isObjectId).allow(null),

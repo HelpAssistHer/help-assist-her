@@ -1,10 +1,10 @@
 const R = require('ramda')
-const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
+const pregnancyCenterSchemaJoi = require('../../schema/pregnancy-center')
 const { validateAndFillDoc, geocode } = require('../util')
 
 const { pipeP } = require('../ramda-util')
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema.js')
+const PregnancyCenterModel = require('../../models/pregnancy-center.js')
 
 const createPregnancyCenterAndPopulate = async (obj) => {
 	const createdPregnancyCenter = new PregnancyCenterModel(obj)

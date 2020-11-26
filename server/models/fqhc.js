@@ -2,12 +2,8 @@
 
 const mongoose = require('mongoose')
 
-const helpers = require('../../pregnancy-centers/schema/helpers.js')
-const {
-	addressSchema,
-	userDateSchema,
-	getFullAddress,
-} = require('../../locations/schema/mongoose-schema')
+const { buildPregnancyCenterSchema } = require('../util/services')
+const { addressSchema, userDateSchema, getFullAddress } = require('./location')
 
 const fqhcSchema = mongoose.Schema(
 	{
@@ -22,7 +18,7 @@ const fqhcSchema = mongoose.Schema(
 		otherServices: String,
 		outOfBusiness: Boolean,
 		phone: String,
-		services: helpers.getPregnancyCenterServicesSchema(Boolean),
+		services: buildPregnancyCenterSchema(Boolean),
 		verifiedData: {
 			address: userDateSchema,
 			email: userDateSchema,

@@ -4,7 +4,8 @@ const config = require('config')
 const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+
+const PregnancyCenterModel = require('../server/models/pregnancy-center')
 mongoose.Promise = require('bluebird')
 
 const log = new Log('info')
@@ -16,15 +17,15 @@ const startDatabase = P.coroutine(function* startDatabase() {
 
 startDatabase()
 
-async function clearVerifiedDataField() {
-	const filter = { verifiedData: { $exists: true } }
-	const update = { verifiedData: null }
+async function clearInVerificationField() {
+	const query = { inVerification: { $exists: true } }
+	const update = { inVerification: null }
 	try {
-		await PregnancyCenterModel.updateMany(filter, update)
+		await PregnancyCenterModel.update(query, update, { multi: true })
 	} catch (err) {
 		log.error(err)
 	}
 	process.exit()
 }
 
-clearVerifiedDataField()
+clearInVerificationField()

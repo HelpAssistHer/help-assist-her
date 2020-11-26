@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
+const FQHCModel = require('../../models/fqhc')
 
 const {
 	createFqhc,
@@ -9,7 +9,7 @@ const {
 	updateFqhcOutOfBusiness,
 } = require('../../util/actions')
 
-const queries = require('../../pregnancy-centers/queries')
+const queries = require('../../queries/pregnancy-center')
 
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 

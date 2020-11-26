@@ -1,10 +1,10 @@
 const R = require('ramda')
-const fqhcSchemaJoi = require('../../fqhcs/schema/joi-schema')
+const fqhcSchemaJoi = require('../../schema/fqhc')
 const { validateAndFillDoc, geocode } = require('../util')
 
 const { pipeP } = require('../ramda-util')
 
-const FQHCModel = require('../../fqhcs/schema/mongoose-schema.js')
+const FQHCModel = require('../../models/fqhc')
 
 const createFqhcAndPopulate = async (obj) => {
 	const createdFqhc = new FQHCModel(obj)

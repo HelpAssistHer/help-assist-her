@@ -8,8 +8,8 @@ const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
-const pregnancyCenterSchemaJoi = require('../pregnancy-centers/schema/joi-schema')
+const PregnancyCenterModel = require('../models/pregnancy-center')
+const pregnancyCenterSchemaJoi = require('../schema/pregnancy-center')
 
 mongoose.Promise = require('bluebird')
 const log = new Log('info')

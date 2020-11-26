@@ -1,9 +1,9 @@
 'use strict'
 
 const R = require('ramda')
-const pregnancyCenterSchemaJoi = require('../../pregnancy-centers/schema/joi-schema')
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
+const pregnancyCenterSchemaJoi = require('../../schema/pregnancy-center')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
+const PregnancyCenterHistoryModel = require('../../models/pregnancy-center-history')
 const {
 	validateAndFillDoc,
 	geocode,
