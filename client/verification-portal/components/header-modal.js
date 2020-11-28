@@ -4,7 +4,7 @@ import cx from 'classnames'
 import { connect } from 'react-redux'
 
 import { setFormStatus } from '../pregnancy-resource-center/action-creators'
-import { store } from '../../hah-app'
+import { store } from '../../index'
 
 class HeaderModal extends Component {
 	constructor(props) {

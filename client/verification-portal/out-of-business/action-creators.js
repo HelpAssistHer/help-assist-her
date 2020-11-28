@@ -1,5 +1,5 @@
 import { OUT_OF_BUSINESS } from './action-types'
-import { store } from '../../hah-app/index'
+import { store } from '../../index'
 
 export async function updateOutOfBusiness(isOutOfBusiness) {
 	const response = await fetch(

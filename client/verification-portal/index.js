@@ -5,7 +5,7 @@ import injectSheet from 'react-jss'
 
 import LeftSideNavContainer from './left-side-nav-container'
 import ResourceView from './resource-view'
-import { isAuthenticated } from '../authentication/action-creators'
+import { isAuthenticated } from './authentication/action-creators'
 
 const mapStateToProps = (state) => {
 	return {

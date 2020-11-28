@@ -1,5 +1,5 @@
 import { DO_NOT_LIST } from './action-types'
-import { store } from '../../hah-app/index'
+import { store } from '../../index'
 
 export async function updateDoNotList(doNotList) {
 	const response = await fetch(

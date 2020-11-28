@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { GET_RESOURCE_TO_VERIFY } from './action-types'
 import { FORM_SUCCESSFULLY_SUBMITTED } from './action-types'
 import { CLEAR_RESOURCE } from './action-types'
-import { store } from '../../hah-app/index'
+import { store } from '../../index'
 import { change } from 'redux-form'
 
 async function getOneResource() {

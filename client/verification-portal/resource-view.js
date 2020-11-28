@@ -2,7 +2,7 @@ import React from 'react'
 import injectSheet from 'react-jss'
 
 import HeaderModal from './components/header-modal'
-import Spacer from '../components/spacer'
+import Spacer from '../components/Spacer'
 import Tabs from './components/tabs'
 import CommunityHealthCenterForm from './community-health-center'
 import PregnancyResourceCenterForm from './pregnancy-resource-center'

@@ -1,83 +1,100 @@
 import React from 'react'
 import injectSheet from 'react-jss'
-import classNames from 'classnames'
+import classnames from 'classnames'
 
-const Button = ({
-	classes,
-	onClick,
-	buttonText,
-	activeState,
-	type,
-	size,
-	disabled,
-}) => {
-	let buttonStyle = activeState ? classes.active : classes.inactive
+import { Phone, BigPhone, Tablet, Desktop } from './Breakpoints'
 
-	if (disabled) {
-		buttonStyle = classes.disabled
-	}
-
+const Button = ({ classes, onClick, buttonText }) => {
 	return (
-		<button
-			type={type}
-			className={classNames(buttonStyle, classes[size], classes.default)}
-			onClick={onClick}
-			disabled={disabled}
-		>
-			{buttonText}
-		</button>
+		<div>
+			<div>
+				<Phone>
+					<div>
+						<button
+							className={classnames(classes.buttonCommon, classes.buttonPhone)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
+				</Phone>
+
+				<BigPhone>
+					<div>
+						<button
+							className={classnames(classes.buttonCommon, classes.buttonPhone)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
+				</BigPhone>
+
+				<Tablet>
+					<div>
+						<button
+							className={classnames(
+								classes.buttonCommon,
+								classes.buttonDesktop,
+							)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
+				</Tablet>
+
+				<Desktop>
+					<div>
+						<button
+							className={classnames(
+								classes.buttonCommon,
+								classes.buttonDesktop,
+							)}
+							type="submit"
+							onClick={onClick}
+						>
+							{buttonText}
+						</button>
+					</div>
+				</Desktop>
+			</div>
+		</div>
 	)
 }
 
 const styles = {
-	default: {
-		outline: 'none',
-		'font-weight': 'bold',
-		border: '2px solid #000000',
-		'border-radius': '100px',
+	buttonCommon: {
+		'background-color': '#FFFFFF',
+		'border-radius': '8px',
+		color: '#000000',
+		'font-family': 'hah-regular',
 		'text-align': 'center',
 		cursor: 'pointer',
-	},
-	inactive: {
-		color: '#000',
-		'background-color': '#fff',
+		'text-decoration': 'none',
+		outline: 'none',
 		'&:hover': {
-			color: '#fff',
-			'border-color': '#f28274',
-			'background-color': '#f28274',
+			'background-color': '#3D65F9',
+			color: '#FFFFFF',
 		},
+		'-webkit-tap-highlight-color': 'transparent', // for Safari
 	},
-	active: {
-		color: '#fff',
-		'border-color': '#f28274',
-		'background-color': '#f28274',
+	buttonPhone: {
+		border: '1px solid #3D65F9',
+		'font-size': '14px',
+		height: '31px',
+		width: '130px',
+		padding: '0px', // for mobile devices
 	},
-	small: {
-		'font-size': '15px',
-		height: '35px',
-		width: '70px',
-		'letter-spacing': '0.23px',
-		'line-height': '18px',
-	},
-	medium: {
-		'font-size': '15px',
-		height: '49.69px',
-		width: '153.18px',
-		'letter-spacing': '0.23px',
-		'line-height': '18px',
-	},
-	large: {
-		'font-size': '18px',
-		height: '48.84px',
-		width: '280px',
-		'letter-spacing': '0.3px',
-		'line-height': '22px',
-	},
-	disabled: {
-		color: '#000',
-		'background-color': '#fff',
-		opacity: 0.5,
-		cursor: 'progress',
+	buttonDesktop: {
+		border: '2px solid #3D65F9',
+		'font-size': '20px',
+		'letter-spacing': '0.5px',
+		height: '54px',
+		width: '230px',
 	},
 }
 

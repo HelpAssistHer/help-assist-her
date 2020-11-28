@@ -1,9 +1,9 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 
-import Spacer from '../../components/spacer'
+import Spacer from '../../components/Spacer'
 import VerificationPortalForm from './form'
-import Button from '../../components/button'
+import Button from '../../components/Button'
 import { updateOutOfBusiness } from '../out-of-business/action-creators'
 import { updateDoNotList } from '../do-not-list/action-creators'
 

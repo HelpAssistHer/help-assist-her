@@ -59,22 +59,15 @@ router.get('/near-me', async (req, res) => {
 
 		const fullQuery = _.merge(
 			locationQuery,
-			outOfBusinessQuery,
-			queries.fullyVerified,
-			queries.verifiedAfterDate,
+			// outOfBusinessQuery,
+			// queries.fullyVerified,
+			// queries.verifiedAfterDate,
 		)
 
 		const pregnancyCentersNearMe = await PregnancyCenterModel.find(
 			fullQuery,
 		).lean()
-
-		if (pregnancyCentersNearMe.length <= 0) {
-			return res.boom.notFound(
-				`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
-			)
-		} else {
-			res.status(200).json(pregnancyCentersNearMe)
-		}
+		res.status(200).json(pregnancyCentersNearMe)
 	} catch (err) {
 		return handleError(res, err)
 	}

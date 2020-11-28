@@ -3,8 +3,8 @@ import injectSheet from 'react-jss'
 import { Field } from 'redux-form'
 import classNames from 'classnames'
 
-import Input from '../../components/input'
-import Toggle from '../../components/toggle'
+import Input from './Input'
+import Toggle from './toggle'
 import Spacer from '../../components/spacer'
 
 const RegisterField = ({ classes, inputField }) => {
