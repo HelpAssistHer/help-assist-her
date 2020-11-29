@@ -12,7 +12,7 @@ const {
 
 const FQHCModel = require('../../models/fqhc')
 const FQHCHistoryModel = require('../../models/fqhc-history')
-const getFqhcObj = async fqhcId => {
+const getFqhcObj = async (fqhcId) => {
 	const doc = await FQHCModel.findById(fqhcId)
 	return doc.toObject()
 }
