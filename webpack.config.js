@@ -8,7 +8,7 @@ module.exports = (_, { mode }) => ({
 	devtool: mode === 'production' ? 'source-map' : 'cheap-module-source-map',
 	output: {
 		path: path.join(__dirname, '/public'),
-		publicPath: mode === 'production' ? '/public/' : '/',
+		publicPath: '/',
 		filename: mode === 'production' ? '[name]--[chunkhash].js' : '[name].js',
 	},
 	devServer: {
