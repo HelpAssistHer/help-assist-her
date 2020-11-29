@@ -1,27 +1,24 @@
 language: node_js
 
 node_js:
-  - 10.16.3
+  - 14
 
 cache:
   - yarn: true
   - directories:
-    - node_modules
+      - node_modules
 
 sudo: false
 services:
-- mongodb
+  - mongodb
 addons:
   apt:
     sources:
-    - mongodb-3.2-precise
+      - mongodb-3.2-precise
     packages:
-    - mongodb-org-server
+      - mongodb-org-server
 
 script:
   - yarn lint
   - yarn test
   - webpack
-
-
-
