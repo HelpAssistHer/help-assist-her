@@ -1,4 +1,4 @@
-export const formatPhoneNumber = digits => {
+export const formatPhoneNumber = (digits) => {
 	if (!digits) {
 		return ''
 	}
@@ -31,7 +31,7 @@ export const formatPhoneNumber = digits => {
 	throw new Error('Invalid Phone Number')
 }
 
-export const parsePhoneNumber = phoneNumber => {
+export const parsePhoneNumber = (phoneNumber) => {
 	if (phoneNumber === '') {
 		return ''
 	}
@@ -40,6 +40,6 @@ export const parsePhoneNumber = phoneNumber => {
 	return '+1' + phoneNumber.replace(/([\D])/g, '').substr(0, 10)
 }
 
-export const formatZipcode = input => {
+export const formatZipcode = (input) => {
 	return input ? input.replace(/\D/g, '').substring(0, 5) : ''
 }

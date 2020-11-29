@@ -23,7 +23,7 @@ const startDatabase = P.coroutine(function* startDatabase() {
 
 startDatabase()
 
-const mapYesNo = booleanValue => {
+const mapYesNo = (booleanValue) => {
 	if (_.isUndefined(booleanValue)) return ''
 	return booleanValue ? 'Yes' : 'No'
 }
@@ -33,7 +33,7 @@ async function getOtherServicesPregnancyCenters() {
 
 	const services = _.reduce(
 		pregnancyCenterServices,
-		function(obj, service) {
+		function (obj, service) {
 			obj[service.id] = service.name
 			return obj
 		},
@@ -75,7 +75,7 @@ async function getOtherServicesPregnancyCenters() {
 			log.error(err)
 			throw err
 		}
-		fs.writeFile('otherservices.csv', output, err => {
+		fs.writeFile('otherservices.csv', output, (err) => {
 			if (err) {
 				log.error(err)
 				throw err

@@ -108,7 +108,7 @@ const getVerifiedDateUserId = (verifiedData, userId) => {
 	return verifiedDataWithDateUserId
 }
 
-const updateCreatePrimaryContactPerson = async primaryContactPerson => {
+const updateCreatePrimaryContactPerson = async (primaryContactPerson) => {
 	// CASE 1: If the _id is undefined && there is no other data, then do nothing with Person
 
 	try {
@@ -149,7 +149,7 @@ const updateCreatePrimaryContactPerson = async primaryContactPerson => {
 	}
 }
 
-const handlePrimaryContactPerson = async pregnancyCenter => {
+const handlePrimaryContactPerson = async (pregnancyCenter) => {
 	const updatedPregnancyCenter = pregnancyCenter
 	// handle the primaryContactPerson
 	const primaryContactPerson = await updateCreatePrimaryContactPerson(
@@ -187,7 +187,7 @@ const validateAndFillDoc = async (model, joiSchema, userId, docObj) => {
 	return validatedObj
 }
 
-const geocode = doc => {
+const geocode = (doc) => {
 	try {
 		return safePipeP([
 			getSafeFullAddress,

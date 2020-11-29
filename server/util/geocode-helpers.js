@@ -25,11 +25,11 @@ const googleMapsClient = googleMaps.createClient({
 // }
 
 // string => response data as promise
-const getGoogleGeocode = fullAddress =>
+const getGoogleGeocode = (fullAddress) =>
 	googleMapsClient.geocode({ address: fullAddress }).asPromise() // a promise
 
 // response => location json or null
-const getLocation = response => {
+const getLocation = (response) => {
 	try {
 		return response.json.results[0].geometry.location
 	} catch (err) {
@@ -46,14 +46,14 @@ const addLocation = (doc, location) => {
 	return doc
 }
 
-const saveDoc = doc => {
+const saveDoc = (doc) => {
 	log.info(`saving ${doc.prcName || doc.fqhcName}`)
 	return doc.save() // a promise
 }
 
 function getFullAddress(doc) {
 	if (_.isUndefined(doc.address)) return ''
-	const getProperty = property => _.get(doc.address, property, '')
+	const getProperty = (property) => _.get(doc.address, property, '')
 
 	return [
 		getProperty('line1'),
@@ -64,7 +64,7 @@ function getFullAddress(doc) {
 	].join(' ')
 }
 
-const getSafeFullAddress = doc => {
+const getSafeFullAddress = (doc) => {
 	if (R.isEmpty(doc)) log.info(`doc was empty`)
 	const address = getFullAddress(doc)
 	if (R.isEmpty(address))

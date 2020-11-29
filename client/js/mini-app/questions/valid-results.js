@@ -18,7 +18,7 @@ const ValidResults = ({ classes, results }) => {
 			<div>
 				<Phone>
 					<div className={phoneStyle}>
-						{_.map(results, result => {
+						{_.map(results, (result) => {
 							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
@@ -26,7 +26,7 @@ const ValidResults = ({ classes, results }) => {
 
 				<BigPhone>
 					<div className={phoneStyle}>
-						{_.map(results, result => {
+						{_.map(results, (result) => {
 							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
@@ -34,7 +34,7 @@ const ValidResults = ({ classes, results }) => {
 
 				<Tablet>
 					<div className={desktopStyle}>
-						{_.map(results, result => {
+						{_.map(results, (result) => {
 							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>
@@ -42,7 +42,7 @@ const ValidResults = ({ classes, results }) => {
 
 				<Desktop>
 					<div className={desktopStyle}>
-						{_.map(results, result => {
+						{_.map(results, (result) => {
 							return <ResourceCard key={result._id} resource={result} />
 						})}
 					</div>

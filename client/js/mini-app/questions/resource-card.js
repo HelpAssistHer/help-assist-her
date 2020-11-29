@@ -5,7 +5,7 @@ import LocationIcon from '../../components/icons/icon-components/location-icon'
 import PhoneIcon from '../../components/icons/icon-components/phone-icon'
 import GlobeIcon from '../../components/icons/icon-components/globe-icon'
 
-const formatPhoneNumber = phoneNumber => {
+const formatPhoneNumber = (phoneNumber) => {
 	const areaCode = phoneNumber.substring(2, 5)
 	const prefix = phoneNumber.substring(5, 8)
 	const lineNumber = phoneNumber.substring(8, 12)

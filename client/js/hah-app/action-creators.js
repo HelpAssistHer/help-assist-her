@@ -31,16 +31,16 @@ export function createLogoutAction() {
 }
 
 export const getInitialAppData = () => {
-	return function(dispatch) {
-		return getInitialData().then(result =>
+	return function (dispatch) {
+		return getInitialData().then((result) =>
 			dispatch(createInitialDataAction(result)),
 		)
 	}
 }
 
-export const login = accessToken => {
-	return function(dispatch) {
-		return authenticateUser(accessToken).then(result => {
+export const login = (accessToken) => {
+	return function (dispatch) {
+		return authenticateUser(accessToken).then((result) => {
 			if (result) {
 				dispatch(createLoginAction())
 			}
@@ -49,8 +49,8 @@ export const login = accessToken => {
 }
 
 export const logout = () => {
-	return function(dispatch) {
-		return logoutUser().then(result => {
+	return function (dispatch) {
+		return logoutUser().then((result) => {
 			if (result) {
 				dispatch(createLogoutAction())
 			}

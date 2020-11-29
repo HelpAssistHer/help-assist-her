@@ -260,7 +260,7 @@ class VerificationPortalFormClass extends Component {
 						activeState={false}
 						size="large"
 						disabled={submitting}
-						onClick={handleSubmit(formData => updateResource(formData))}
+						onClick={handleSubmit((formData) => updateResource(formData))}
 					/>
 				</div>
 			</form>

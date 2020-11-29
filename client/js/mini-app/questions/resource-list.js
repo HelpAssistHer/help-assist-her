@@ -25,7 +25,7 @@ const bannerMessageNoResults = (
 	</Fragment>
 )
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		pregnancyResourceCenters: state.miniApp.pregnancyResourceCenters,
 		communityHealthCenters: state.miniApp.communityHealthCenters,

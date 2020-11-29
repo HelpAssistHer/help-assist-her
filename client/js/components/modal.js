@@ -52,7 +52,7 @@ const Modal = ({
 				shouldCloseOnOverlayClick={false}
 			>
 				<div className={classes.root}>
-					<h2 ref={_subtitle => (subtitle = _subtitle)}>{title}</h2>
+					<h2 ref={(_subtitle) => (subtitle = _subtitle)}>{title}</h2>
 					{message}
 					<Spacer height="50px" />
 					<Button onClick={closeModal} buttonText={buttonText} size="small" />

@@ -24,12 +24,12 @@ mongoose.connect(config.mongo.connectionString).then(
 	() => {
 		log.info('Connected to database')
 	},
-	err => {
+	(err) => {
 		log.error(err)
 	},
 )
 
-const geocodeAndSave = async pregnancyCenter => {
+const geocodeAndSave = async (pregnancyCenter) => {
 	try {
 		return safePipeP([
 			getSafeFullAddress,

@@ -126,7 +126,7 @@ const styles = {
 	},
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		changeFieldValue: (field, value) => {
 			dispatch(change('verificationPortal', field, value || ''))
@@ -134,7 +134,7 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		hours: state.resource.hours,
 	}

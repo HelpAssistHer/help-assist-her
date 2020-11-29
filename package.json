@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"clear-iv": "NODE_ENV=localhost node ./server/scripts/clear-in-verification-field.js",
+		"lint": "eslint .",
 		"geocode": "NODE_ENV=localhost node ./server/data-import/geocode.js",
 		"overwrite-fqhc-data": "NODE_ENV=localhost node ./server/data-import/overwrite-fqhc-data.js",
 		"overwrite-pc-data": "NODE_ENV=localhost node ./server/data-import/overwrite-pc-data.js",

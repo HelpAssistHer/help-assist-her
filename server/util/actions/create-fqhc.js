@@ -6,7 +6,7 @@ const { pipeP } = require('../ramda-util')
 
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema.js')
 
-const createFqhcAndPopulate = async obj => {
+const createFqhcAndPopulate = async (obj) => {
 	const createdFqhc = new FQHCModel(obj)
 	await createdFqhc.save()
 	await FQHCModel.populate(createdFqhc, 'primaryContactPerson')
