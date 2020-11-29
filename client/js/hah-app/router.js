@@ -30,7 +30,7 @@ const HahRouter = () => {
 				<Route
 					exact
 					path="/verification/pregnancy-resource-center"
-					render={props => (
+					render={(props) => (
 						<VerificationPortalContainer
 							formType={formTypes.PREGNANCY_RESOURCE_CENTER}
 							{...props}
@@ -40,7 +40,7 @@ const HahRouter = () => {
 				<Route
 					exact
 					path="/verification/pregnancy-resource-center/:id"
-					render={props => (
+					render={(props) => (
 						<VerificationPortalContainer
 							formType={formTypes.PREGNANCY_RESOURCE_CENTER}
 							{...props}
@@ -50,7 +50,7 @@ const HahRouter = () => {
 				<Route
 					exact
 					path="/verification/community-health-center"
-					render={props => (
+					render={(props) => (
 						<VerificationPortalContainer
 							formType={formTypes.COMMUNITY_HEALTH_CENTER}
 							{...props}

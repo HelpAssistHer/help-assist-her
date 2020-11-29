@@ -7,6 +7,6 @@ const hahSoftwareEngineers = [
 	'Valery Zajkov',
 ]
 
-export const shouldShowFeature = userDisplayName => {
+export const shouldShowFeature = (userDisplayName) => {
 	return R.contains(userDisplayName, hahSoftwareEngineers)
 }

@@ -61,37 +61,37 @@ async function reimport() {
 		createdAt: '2017-03-03T00:00:00',
 		email: 'info@alphacare.org',
 		hours: {
-			'0': {
+			0: {
 				open: 800,
 				close: 1700,
 				closedAllDay: false,
 			},
-			'1': {
+			1: {
 				open: 800,
 				close: 1700,
 				closedAllDay: false,
 			},
-			'2': {
+			2: {
 				open: 800,
 				close: 1700,
 				closedAllDay: false,
 			},
-			'3': {
+			3: {
 				open: 800,
 				close: 1700,
 				closedAllDay: false,
 			},
-			'4': {
+			4: {
 				open: 800,
 				close: 1700,
 				closedAllDay: false,
 			},
-			'5': {
+			5: {
 				open: 800,
 				close: 1700,
 				closedAllDay: false,
 			},
-			'6': {
+			6: {
 				closedAllDay: true,
 			},
 		},

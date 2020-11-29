@@ -5,9 +5,7 @@ const isObjectId = require('../../util/is-object-id')
 
 const personSchemaJoi = Joi.object().keys({
 	__v: Joi.number().min(0),
-	_id: Joi.any()
-		.custom(isObjectId)
-		.allow(null),
+	_id: Joi.any().custom(isObjectId).allow(null),
 	createdAt: Joi.date().iso(),
 	email: Joi.string().email(),
 	firstName: Joi.string(),

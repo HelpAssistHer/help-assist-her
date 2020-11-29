@@ -70,7 +70,7 @@ const GetResourceToVerifyButton = ({ dispatch, changeFieldValue, history }) => {
 				size="large"
 				buttonText="Verify Next Resource"
 				onClick={() => {
-					dispatch(getResourceToVerify()).then(result => {
+					dispatch(getResourceToVerify()).then((result) => {
 						dispatch(
 							updateOutOfBusinessActionCreator(!!result.resource.outOfBusiness),
 						)

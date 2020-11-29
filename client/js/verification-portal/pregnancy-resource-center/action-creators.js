@@ -40,16 +40,16 @@ export function setFormStatus(status) {
 function resetFormAndResource(dispatch) {
 	_.forEach(
 		store.getState().form.verificationPortal.registeredFields,
-		field => {
+		(field) => {
 			dispatch(change('verificationPortal', field, null))
 		},
 	)
 	dispatch(clearResource())
 }
 export const getResourceToVerify = () => {
-	return function(dispatch) {
+	return function (dispatch) {
 		resetFormAndResource(dispatch)
-		return getOneResource().then(result => dispatch(getResource(result)))
+		return getOneResource().then((result) => dispatch(getResource(result)))
 	}
 }
 

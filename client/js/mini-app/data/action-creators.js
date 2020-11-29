@@ -17,14 +17,14 @@ function getChcsAction(chcs) {
 	}
 }
 
-export const addPrcsToRedux = prcs => {
-	return function(dispatch) {
+export const addPrcsToRedux = (prcs) => {
+	return function (dispatch) {
 		dispatch(getPregnancyResourceCentersAction(prcs))
 	}
 }
 
-export const addChcsToRedux = chcs => {
-	return function(dispatch) {
+export const addChcsToRedux = (chcs) => {
+	return function (dispatch) {
 		dispatch(getChcsAction(chcs))
 	}
 }

@@ -21,7 +21,7 @@ chai.use(chaiHttp)
 
 // Allows the middleware to think we're already authenticated.
 async function mockAuthenticate() {
-	app.request.isAuthenticated = function() {
+	app.request.isAuthenticated = function () {
 		return true
 	}
 	try {
@@ -33,7 +33,7 @@ async function mockAuthenticate() {
 
 // Allows the middleware to think we are *not* authenticated
 function mockUnauthenticate() {
-	app.request.isAuthenticated = function() {
+	app.request.isAuthenticated = function () {
 		return false
 	}
 	app.request.user = null

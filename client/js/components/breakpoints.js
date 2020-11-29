@@ -9,11 +9,11 @@ const TABLET_MIN_BREAKPOINT = 700
 const TABLET_MAX_BREAKPOINT = 1099
 const DESKTOP_MIN_BREAKPOINT = 1100
 
-const Desktop = props => (
+const Desktop = (props) => (
 	<Responsive {...props} minWidth={DESKTOP_MIN_BREAKPOINT} />
 )
 
-const Tablet = props => (
+const Tablet = (props) => (
 	<Responsive
 		{...props}
 		minWidth={TABLET_MIN_BREAKPOINT}
@@ -21,7 +21,7 @@ const Tablet = props => (
 	/>
 )
 
-const BigPhone = props => (
+const BigPhone = (props) => (
 	<Responsive
 		{...props}
 		minWidth={BIG_PHONE_MIN_BREAKPOINT}
@@ -29,7 +29,7 @@ const BigPhone = props => (
 	/>
 )
 
-const Phone = props => (
+const Phone = (props) => (
 	<Responsive
 		{...props}
 		minWidth={PHONE_MIN_BREAKPOINT}

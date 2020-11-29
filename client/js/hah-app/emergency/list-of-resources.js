@@ -7,7 +7,7 @@ import ResourceCard from './resource-card'
 
 const ListOfResources = ({ classes }) => (
 	<div className={classes.listOfResourcesRoot}>
-		{_.map(resourceData, resource => (
+		{_.map(resourceData, (resource) => (
 			<ResourceCard key={resource.nameOfResource} resource={resource} />
 		))}
 	</div>

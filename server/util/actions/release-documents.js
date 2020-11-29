@@ -2,7 +2,7 @@
 
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
 
-const releaseDocuments = userId => {
+const releaseDocuments = (userId) => {
 	const query = { inVerification: userId }
 	const update = { inVerification: null }
 	return PregnancyCenterModel.update(query, update, {

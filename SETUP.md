@@ -38,10 +38,10 @@ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.9/install.sh | b
 
 ## Install Node
 
-We are using node v10.16.3
+We are using node v14
 
 ```
-nvm install 10.16.3
+nvm install 14
 ```
 
 ## Install Node Modules and Global Dependencies
@@ -108,8 +108,8 @@ yarn run watch
 sudo apt-get install build-essential checkinstall
 sudo apt-get install libssl-dev
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash
-nvm install 10.16.3
-nvm use 10.16.3
+nvm install 14
+nvm use 14
 nvm alias default node
 ```
 

@@ -36,7 +36,7 @@ class Team extends Component {
 			slidesToShow: 5,
 			infinite: true,
 			centerMode: true,
-			afterChange: idx => {
+			afterChange: (idx) => {
 				this.setState({ teamMemberId: idx })
 			},
 			swipeToSlide: true,
@@ -77,7 +77,7 @@ class Team extends Component {
 		return (
 			<div>
 				<Slider {...settings}>
-					{teamMemberInfo.map(teamMember => {
+					{teamMemberInfo.map((teamMember) => {
 						return (
 							<div
 								key={teamMember.id}

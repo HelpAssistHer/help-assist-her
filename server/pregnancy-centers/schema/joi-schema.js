@@ -13,23 +13,17 @@ const {
 
 const pregnancyCenterSchemaJoi = Joi.object({
 	__v: Joi.number().min(0),
-	_id: Joi.any()
-		.custom(isObjectId)
-		.allow(null),
+	_id: Joi.any().custom(isObjectId).allow(null),
 	address: addressSchemaJoi,
 	createdAt: Joi.date().iso(),
 	doNotList: Joi.boolean(),
-	email: Joi.string()
-		.email()
-		.allow(''),
+	email: Joi.string().email().allow(''),
 	hotlinePhoneNumber: Joi.string()
 		.trim()
 		.regex(/\+1([2-9][0-8][0-9])([2-9][0-9]{2})([0-9]{4})/)
 		.allow(''),
 	hours: hoursSchemaJoi,
-	inVerification: Joi.any()
-		.custom(isObjectId)
-		.allow(null),
+	inVerification: Joi.any().custom(isObjectId).allow(null),
 	prcName: Joi.string(),
 	notes: Joi.string().allow(''),
 	otherServices: Joi.string().allow(''),
@@ -66,9 +60,7 @@ const pregnancyCenterSchemaJoi = Joi.object({
 		website: dateUserActionSchemaJoi,
 	},
 	updatedAt: Joi.date().iso(),
-	website: Joi.string()
-		.uri()
-		.allow(''),
+	website: Joi.string().uri().allow(''),
 })
 
 module.exports = pregnancyCenterSchemaJoi

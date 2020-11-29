@@ -106,7 +106,7 @@ const styles = {
 	},
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
 	return {
 		changeFieldValue: (field, value) => {
 			dispatch(change('verificationPortal', field, value || ''))

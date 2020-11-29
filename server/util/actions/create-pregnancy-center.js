@@ -6,7 +6,7 @@ const { pipeP } = require('../ramda-util')
 
 const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema.js')
 
-const createPregnancyCenterAndPopulate = async obj => {
+const createPregnancyCenterAndPopulate = async (obj) => {
 	const createdPregnancyCenter = new PregnancyCenterModel(obj)
 	await createdPregnancyCenter.save()
 	await PregnancyCenterModel.populate(

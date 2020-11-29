@@ -12,7 +12,7 @@ const {
 
 const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
 const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
-const getFqhcObj = async fqhcId => {
+const getFqhcObj = async (fqhcId) => {
 	const doc = await FQHCModel.findById(fqhcId)
 	return doc.toObject()
 }

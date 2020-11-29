@@ -15,7 +15,7 @@ class Questions extends Component {
 		}
 	}
 
-	handleResourceChange = resource => {
+	handleResourceChange = (resource) => {
 		this.setState({ buttonClicked: resource })
 	}
 

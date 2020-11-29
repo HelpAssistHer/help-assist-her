@@ -123,7 +123,7 @@ app.get('/*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../public/index.html'))
 })
 
-const server = app.listen(port, function() {
+const server = app.listen(port, function () {
 	log.info(`Help Assist Her server listening on port ${port}`)
 })
 

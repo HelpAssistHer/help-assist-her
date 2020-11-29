@@ -7,7 +7,7 @@ const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
 
 const locationSchemaJoi = require('../../locations/schema/joi-schema')
 
-const getFqhcObj = fqhcId => FQHCModel.findById(fqhcId)
+const getFqhcObj = (fqhcId) => FQHCModel.findById(fqhcId)
 const { getPregnancyCenterObj } = require('../pregnancy-center-helpers')
 
 const R = require('ramda')

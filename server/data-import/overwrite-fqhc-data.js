@@ -53,7 +53,7 @@ const importDocs = async (getDataFunction, schemaJoi, model) => {
 		const docs = await getDataFunction()
 
 		return await Promise.all(
-			docs.map(async doc => {
+			docs.map(async (doc) => {
 				const _id = await validateAndAddLocation(schemaJoi, model, doc)
 				log.info(_id)
 			}),

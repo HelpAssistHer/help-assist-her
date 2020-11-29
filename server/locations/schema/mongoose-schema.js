@@ -26,7 +26,7 @@ const userDateSchema = new mongoose.Schema({
 
 function getFullAddress() {
 	if (_.isUndefined(this.address)) return ''
-	const getProperty = property => _.get(this.address, property, '')
+	const getProperty = (property) => _.get(this.address, property, '')
 
 	return [
 		getProperty('line1'),

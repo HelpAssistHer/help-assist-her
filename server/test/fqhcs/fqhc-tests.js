@@ -511,10 +511,7 @@ describe('FQHCs', () => {
 				},
 			}
 
-			const res = await chai
-				.request(server)
-				.post('/api/fqhcs/')
-				.send(fqhc)
+			const res = await chai.request(server).post('/api/fqhcs/').send(fqhc)
 
 			res.should.have.status(201)
 			res.body.should.be.a('object')

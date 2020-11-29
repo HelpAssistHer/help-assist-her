@@ -2,26 +2,26 @@
 	font-family: 'hah-light';
 	font-style: normal;
 	font-weight: normal;
-	src: url('../fonts/GT-Walsheim-Light.woff') format('woff');
+	src: url('../../assets/fonts/GT-Walsheim-Light.woff') format('woff');
 }
 
 @font-face {
 	font-family: 'hah-regular';
 	font-style: normal;
 	font-weight: normal;
-	src: url('../fonts/GT-Walsheim-Regular.woff') format('woff');
+	src: url('../../assets/fonts/GT-Walsheim-Regular.woff') format('woff');
 }
 
 @font-face {
 	font-family: 'hah-medium';
 	font-style: normal;
 	font-weight: normal;
-	src: url('../fonts/GT-Walsheim-Medium.woff') format('woff');
+	src: url('../../assets/fonts/GT-Walsheim-Medium.woff') format('woff');
 }
 
 @font-face {
 	font-family: 'hah-bold';
 	font-style: normal;
 	font-weight: normal;
-	src: url('../fonts/GT-Walsheim-Bold.woff') format('woff');
+	src: url('../../assets/fonts/GT-Walsheim-Bold.woff') format('woff');
 }

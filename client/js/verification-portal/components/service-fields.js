@@ -6,7 +6,7 @@ import ServicesCheckbox from './services-checkbox'
 
 const ServiceFields = ({ listOfServices }) => (
 	<div>
-		{_.map(listOfServices, service => {
+		{_.map(listOfServices, (service) => {
 			return (
 				<div key={service.id}>
 					<Field

@@ -121,7 +121,7 @@ const styles = {
 	},
 }
 
-const HeaderConnected = connect(state => ({
+const HeaderConnected = connect((state) => ({
 	submitStatus: state.localState.verificationPortalFormStatus,
 }))(HeaderModal)
 

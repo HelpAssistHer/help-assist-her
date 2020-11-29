@@ -5,19 +5,19 @@ const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schem
 const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
 const { createHistories, findByIdAndUpdate } = require('./util')
 
-const makeModelAndPopulate = obj => {
+const makeModelAndPopulate = (obj) => {
 	return _.omit(
 		new PregnancyCenterModel(obj).populate('primaryContactPerson').toObject(),
 		['_id'],
 	)
 }
-const populatePrimaryContact = pregnancyCenterMongooseObj => {
+const populatePrimaryContact = (pregnancyCenterMongooseObj) => {
 	return PregnancyCenterModel.populate(pregnancyCenterMongooseObj, {
 		path: 'primaryContactPerson',
 	})
 }
 
-const getPregnancyCenterObj = async id => {
+const getPregnancyCenterObj = async (id) => {
 	const pregnancyCenter = await PregnancyCenterModel.findById(id)
 	return pregnancyCenter.toObject()
 }

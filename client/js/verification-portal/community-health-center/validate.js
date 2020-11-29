@@ -1,15 +1,15 @@
 import validator from 'validator'
 import googlePhoneNumber from 'google-libphonenumber'
 
-const validateEmail = email => {
+const validateEmail = (email) => {
 	return validator.isEmail(email)
 }
 
-const validateZipCode = zipCode => {
+const validateZipCode = (zipCode) => {
 	return validator.isPostalCode(zipCode, 'US')
 }
 
-const validatePhoneNumber = phoneNumber => {
+const validatePhoneNumber = (phoneNumber) => {
 	try {
 		const phoneUtil = googlePhoneNumber.PhoneNumberUtil.getInstance()
 		const parsedPhoneNumber = phoneUtil.parse(phoneNumber, 'US')
@@ -19,7 +19,7 @@ const validatePhoneNumber = phoneNumber => {
 	}
 }
 
-const validateWebsite = website => {
+const validateWebsite = (website) => {
 	return validator.isURL(website, { require_protocol: true })
 }
 
