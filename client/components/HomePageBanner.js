@@ -7,10 +7,9 @@ import Spacer from './Spacer'
 const TITLE_1_TEXT = 'Always there.'
 const TITLE_2_TEXT = 'Just for you.'
 const DESCRIPTION_TEXT =
-	'Sorting through google search results just isn’t cutting it. Whether you’re home or traveling, ' +
-	'need care yourself or are doing some research for a loved one, we want to make sure you get ' +
-	'access to trustworthy healthcare resources. Starting with resource information for pregnancy and ' +
-	'basic medical care is just that, a start. Our beta site will launch in New York, but after that, we’re coming to you.'
+	'Sorting through google search results just isn’t cutting it. ' +
+	"We want to make sure you get access to trustworthy women's resources, to get what you need without compromise. " +
+	'Our beta site will launch in New York, but after that, we’re coming to you.'
 
 const HomePageBanner = ({ classes }) => (
 	<div>

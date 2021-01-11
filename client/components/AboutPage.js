@@ -5,22 +5,19 @@ import Imgix from 'react-imgix'
 import Spacer from './Spacer'
 import Footer from './Footer'
 import LogoAndNavigation from './LogoAndNavigation'
-import Team from './TeamPage'
 import { Phone, BigPhone, Tablet, Desktop } from './Breakpoints'
 import { ScrollToTop } from './ScrollToTop'
 
 const TITLE_TEXT = 'What is Help Assist Her?'
 
-const BODY_TEXT =
-	'Let’s face it, googling for answers just isn’t cutting it. We could all use a little help navigating and assessing the myriad of ' +
-	"women's healthcare resources out there. Whether you don’t know yet what you’re looking for or just don’t know where to find it in " +
-	'your area, Help Assist Her is designed to simplify the process. Our database is being constantly verified and updated so that you or ' +
-	'someone you love can locate the healthcare provider you need.'
+const BODY_TEXT = `
+	Help Assist Her is an app that allows you to search for resources based on what you need and where you are.
+	We've got your back. You are strong, and you don't have to do it alone.
 
-const TEAM_HEADING = 'The Team'
-
-const TEAM_BODY = 'The dream team that makes all of this possible!'
-
+	We will help you find, affordable and emergency housing, abuse and homeless shelters,
+	food assistance, health clinics, affordable healthcare, OB/GYN care, baby and kid supplies,	help paying bills,
+	counseling, affordable childcare etc.	We've included some guides for tapping into social services as well.
+`
 const About = ({ classes }) => (
 	<div>
 		<ScrollToTop />
@@ -42,12 +39,12 @@ const About = ({ classes }) => (
 					sizes="100vw"
 				/>
 				<Spacer height="36px" />
-				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
+				{/* <div className={classes.titlePhone}>{TEAM_HEADING}</div>
 				<Spacer height="3px" />
 				<div className={classes.bodyPhone}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
-				<Spacer height="36px" />
+				<Spacer height="36px" /> */}
 			</div>
 		</Phone>
 
@@ -67,12 +64,12 @@ const About = ({ classes }) => (
 					sizes="100vw"
 				/>
 				<Spacer height="36px" />
-				<div className={classes.titlePhone}>{TEAM_HEADING}</div>
+				{/* <div className={classes.titlePhone}>{TEAM_HEADING}</div>
 				<Spacer height="3px" />
 				<div className={classes.bodyPhone}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
-				<Spacer height="36px" />
+				<Spacer height="36px" /> */}
 			</div>
 		</BigPhone>
 
@@ -91,13 +88,13 @@ const About = ({ classes }) => (
 					alt="Women on mobile phones"
 					sizes="100vw"
 				/>
-				<Spacer height="70px" />
+				{/* <Spacer height="70px" />
 				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
 				<Spacer height="27px" />
 				<div className={classes.bodyDesktop}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
-				<Spacer height="65px" />
+				<Spacer height="65px" /> */}
 			</div>
 		</Tablet>
 
@@ -116,17 +113,17 @@ const About = ({ classes }) => (
 					alt="Women on mobile phones"
 					sizes="100vw"
 				/>
-				<Spacer height="70px" />
+				{/* <Spacer height="70px" />
 				<div className={classes.titleDesktop}>{TEAM_HEADING}</div>
 				<Spacer height="27px" />
 				<div className={classes.bodyDesktop}>
 					<div className={classes.bodyTextItem}>{TEAM_BODY}</div>
 				</div>
-				<Spacer height="65px" />
+				<Spacer height="65px" /> */}
 			</div>
 		</Desktop>
 
-		<Team />
+		{/* <Team /> */}
 
 		<Phone>
 			<Spacer height="36px" />

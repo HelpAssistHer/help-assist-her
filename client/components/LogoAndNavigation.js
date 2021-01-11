@@ -51,10 +51,10 @@ const LogoAndNavigation = ({ classes }) => (
 					<Link to="/about" className={classes.navigationLinkDesktop}>
 						About
 					</Link>
-					<Spacer width="32px" />
-					<Link to="/feedback" className={classes.navigationLinkDesktop}>
+					{/* <Spacer width="32px" /> */}
+					{/* <Link to="/feedback" className={classes.navigationLinkDesktop}>
 						Feedback
-					</Link>
+					</Link> */}
 					<Spacer width="52px" />
 					<Link to="/emergency">
 						<EmergencyPhoneIcon height={38} width={38} />
@@ -72,10 +72,10 @@ const LogoAndNavigation = ({ classes }) => (
 					<Link to="/about" className={classes.navigationLinkDesktop}>
 						About
 					</Link>
-					<Spacer width="32px" />
-					<Link to="/feedback" className={classes.navigationLinkDesktop}>
+					{/* <Spacer width="32px" /> */}
+					{/* <Link to="/feedback" className={classes.navigationLinkDesktop}>
 						Feedback
-					</Link>
+					</Link> */}
 					<Spacer width="52px" />
 					<Link to="/emergency">
 						<EmergencyPhoneIcon height={38} width={38} />

@@ -9,11 +9,11 @@ import { Phone, BigPhone, Tablet, Desktop } from './Breakpoints'
 const resources = [
 	{
 		id: 'chc',
-		name: 'Community Health Center',
+		name: 'Healthcare',
 	},
 	{
 		id: 'prc',
-		name: 'Pregnancy Resource Center',
+		name: 'Pregnancy Help',
 	},
 ]
 
@@ -210,6 +210,8 @@ const styles = {
 		cursor: 'pointer',
 		outline: 'none',
 		border: 'none',
+		display: 'flex',
+		'align-items': 'flex-start',
 		'background-color': '#FFFFFF', // for Safari
 	},
 	buttonActiveState: {
@@ -219,13 +221,15 @@ const styles = {
 	resourceNamePhone: {
 		'font-family': 'hah-regular',
 		'font-size': '14px',
+		height: '100%',
 		width: '100%',
 	},
 	resourceNameDesktop: {
 		'font-family': 'hah-regular',
 		'font-size': '20px',
 		'line-height': '30px',
-		width: '60%',
+		height: '100%',
+		'max-width': 'min-content',
 	},
 }
 

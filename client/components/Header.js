@@ -11,7 +11,7 @@ const Header = ({ classes }) => {
 	const titleText2 = 'with Options'
 
 	const descriptionText =
-		'Verified and affordable women’s healthcare and wellness resources at your fingertips, right when you need them most.'
+		'Verified and holistic women’s resources, right when you need them most.'
 
 	return (
 		<div>

@@ -1,6 +1,3 @@
-'use strict'
-
-const _ = require('lodash')
 const mongoose = require('mongoose')
 
 const pointSchema = new mongoose.Schema({
@@ -25,8 +22,8 @@ const userDateSchema = new mongoose.Schema({
 })
 
 function getFullAddress() {
-	if (_.isUndefined(this.address)) return ''
-	const getProperty = (property) => _.get(this.address, property, '')
+	if (!this.address) return ''
+	const getProperty = (property) => this.address?.[property]
 
 	return [
 		getProperty('line1'),
@@ -34,7 +31,9 @@ function getFullAddress() {
 		getProperty('city'),
 		getProperty('state'),
 		getProperty('zip'),
-	].join(' ')
+	]
+		.filter(Boolean)
+		.join(' ')
 }
 
 module.exports = { pointSchema, addressSchema, userDateSchema, getFullAddress }
