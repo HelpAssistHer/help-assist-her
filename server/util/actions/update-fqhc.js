@@ -1,6 +1,6 @@
 'use strict'
 const R = require('ramda')
-const fqhcSchemaJoi = require('../../fqhcs/schema/joi-schema')
+const fqhcSchemaJoi = require('../../schema/fqhc')
 const {
 	validateAndFillDoc,
 	geocode,
@@ -10,8 +10,8 @@ const {
 	createUpdatedField,
 } = require('../util')
 
-const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
-const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
+const FQHCModel = require('../../models/fqhc')
+const FQHCHistoryModel = require('../../models/fqhc-history')
 const getFqhcObj = async (fqhcId) => {
 	const doc = await FQHCModel.findById(fqhcId)
 	return doc.toObject()

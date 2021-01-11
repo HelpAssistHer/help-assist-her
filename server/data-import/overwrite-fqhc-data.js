@@ -8,8 +8,8 @@ const Log = require('log')
 const mongoose = require('mongoose')
 const P = require('bluebird')
 
-const FqhcModel = require('../fqhcs/schema/mongoose-schema')
-const fqhcSchemaJoi = require('../fqhcs/schema/joi-schema')
+const FqhcModel = require('../models/fqhc')
+const fqhcSchemaJoi = require('../schema/fqhc')
 
 mongoose.Promise = require('bluebird')
 const log = new Log('info')

@@ -4,7 +4,7 @@ const { rules, plugins } = require('webpack-atoms')
 
 module.exports = (_, { mode }) => ({
 	mode,
-	entry: './client/js/hah-app/index.js',
+	entry: './client/index.js',
 	devtool: mode === 'production' ? 'source-map' : 'cheap-module-source-map',
 	output: {
 		path: path.join(__dirname, '/public'),

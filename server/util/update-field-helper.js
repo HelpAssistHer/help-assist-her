@@ -1,6 +1,6 @@
 'use strict'
 
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterModel = require('../models/pregnancy-center')
 const { validateDocument, findByIdAndUpdate, createHistory } = require('./util')
 const { populatePrimaryContact } = require('./pregnancy-center-helpers')
 

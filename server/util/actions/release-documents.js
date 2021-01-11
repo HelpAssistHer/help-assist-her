@@ -1,6 +1,6 @@
 'use strict'
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
 
 const releaseDocuments = (userId) => {
 	const query = { inVerification: userId }

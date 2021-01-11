@@ -1,14 +1,14 @@
 const router = require('express').Router()
 const _ = require('lodash')
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
 const {
 	createPregnancyCenter,
 	updatePregnancyCenter,
 	updatePregnancyCenterDoNotList,
 	updatePregnancyCenterOutOfBusiness,
 } = require('../../util/actions')
-const queries = require('../../pregnancy-centers/queries')
+const queries = require('../../queries/pregnancy-center')
 const { isLoggedInAPI, handleError } = require('../../util/express-helpers')
 
 /*
@@ -67,14 +67,7 @@ router.get('/near-me', async (req, res) => {
 		const pregnancyCentersNearMe = await PregnancyCenterModel.find(
 			fullQuery,
 		).lean()
-
-		if (pregnancyCentersNearMe.length <= 0) {
-			return res.boom.notFound(
-				`No pregnancy centers found near lat ${lat}, lng ${lng}, miles ${miles}`,
-			)
-		} else {
-			res.status(200).json(pregnancyCentersNearMe)
-		}
+		res.status(200).json(pregnancyCentersNearMe)
 	} catch (err) {
 		return handleError(res, err)
 	}

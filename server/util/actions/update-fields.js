@@ -1,11 +1,11 @@
 'use strict'
 
-const PregnancyCenterModel = require('../../pregnancy-centers/schema/mongoose-schema')
-const PregnancyCenterHistoryModel = require('../../pregnancy-center-history/schema/mongoose-schema')
-const FQHCModel = require('../../fqhcs/schema/mongoose-schema')
-const FQHCHistoryModel = require('../../fqhc-history/schema/mongoose-schema')
+const PregnancyCenterModel = require('../../models/pregnancy-center')
+const PregnancyCenterHistoryModel = require('../../models/pregnancy-center-history')
+const FQHCModel = require('../../models/fqhc')
+const FQHCHistoryModel = require('../../models/fqhc-history')
 
-const locationSchemaJoi = require('../../locations/schema/joi-schema')
+const locationSchemaJoi = require('../../schema/location')
 
 const getFqhcObj = (fqhcId) => FQHCModel.findById(fqhcId)
 const { getPregnancyCenterObj } = require('../pregnancy-center-helpers')

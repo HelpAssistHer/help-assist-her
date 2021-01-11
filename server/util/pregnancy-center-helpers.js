@@ -1,8 +1,9 @@
 'use strict'
 const _ = require('lodash')
 const R = require('ramda')
-const PregnancyCenterModel = require('../pregnancy-centers/schema/mongoose-schema')
-const PregnancyCenterHistoryModel = require('../pregnancy-center-history/schema/mongoose-schema')
+
+const PregnancyCenterModel = require('../models/pregnancy-center')
+const PregnancyCenterHistoryModel = require('../models/pregnancy-center-history')
 const { createHistories, findByIdAndUpdate } = require('./util')
 
 const makeModelAndPopulate = (obj) => {
