@@ -12,7 +12,7 @@ const LogoAndNavigation = ({ classes }) => (
 	<div>
 		<Phone>
 			<div className={classes.headerPhone}>
-				<Link to="/mini-app" className={classes.logoPhone}>
+				<Link to="/" className={classes.logoPhone}>
 					<LogoBetaBlack height={25} width={160} />
 				</Link>
 
@@ -28,7 +28,7 @@ const LogoAndNavigation = ({ classes }) => (
 
 		<BigPhone>
 			<div className={classes.headerPhone}>
-				<Link to="/mini-app" className={classes.logoPhone}>
+				<Link to="/" className={classes.logoPhone}>
 					<LogoBetaBlack height={25} width={160} />
 				</Link>
 
@@ -44,7 +44,7 @@ const LogoAndNavigation = ({ classes }) => (
 
 		<Tablet>
 			<div className={classes.headerDesktop}>
-				<Link to="/mini-app">
+				<Link to="/">
 					<LogoBetaBlack height={33} width={208} />
 				</Link>
 				<div className={classes.linksDesktop}>
@@ -65,7 +65,7 @@ const LogoAndNavigation = ({ classes }) => (
 
 		<Desktop>
 			<div className={classes.headerDesktop}>
-				<Link to="/mini-app">
+				<Link to="/">
 					<LogoBetaBlack height={33} width={208} />
 				</Link>
 				<div className={classes.linksDesktop}>

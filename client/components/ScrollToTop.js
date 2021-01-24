@@ -11,7 +11,7 @@ export const ScrollToTop = () => {
 			// Fallback for older browsers
 			window.scrollTo(0, 0)
 		}
-	}, ['/mini-app', '/about', '/emergency', '/feedback'])
+	}, [])
 
 	return null
 }

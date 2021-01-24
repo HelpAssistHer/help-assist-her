@@ -19,7 +19,7 @@ const MiniAppForm = ({ classes, resourceType }) => {
 			initialValues={initialValues}
 			onSubmit={async ({ locationInput }) => {
 				history.push({
-					pathname: '/mini-app/results',
+					pathname: '/results',
 					search: `?${new URLSearchParams({
 						type: resourceType,
 						address: locationInput,

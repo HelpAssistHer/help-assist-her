@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - master
+      - prod
   pull_request:
     branches:
       - master
+      - prod
 
 jobs:
   build:
@@ -34,5 +36,3 @@ jobs:
       - run: yarn --frozen-lockfile
       - run: yarn lint
       - run: yarn test
-        env:
-          CI: true
