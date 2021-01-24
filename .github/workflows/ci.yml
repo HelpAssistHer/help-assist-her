@@ -11,6 +11,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      MONGO_DB_CONNECTION: ${{ secrets.MONGO_DB_CONNECTION }}
+      NODE_ENV: ${{ secrets.NODE_ENV }}
+      SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+      VERIFICATION_PORTAL_FACEBOOK_APP_ID: ${{ secrets.VERIFICATION_PORTAL_FACEBOOK_APP_ID }}
+      VERIFICATION_PORTAL_FACEBOOK_APP_SECRET: ${{ secrets.VERIFICATION_PORTAL_FACEBOOK_APP_SECRET }}
+      VERIFICATION_PORTAL_GOOGLE_MAPS_KEY: ${{ secrets.VERIFICATION_PORTAL_GOOGLE_MAPS_KEY }}
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
