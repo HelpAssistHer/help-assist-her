@@ -15,7 +15,7 @@ const NoResults = ({ classes }) => (
 			<div className={classes.noResultsPhone}>
 				{noResultsMessage}
 				<Spacer height="20px" />
-				<Link to="/mini-app">
+				<Link to="/">
 					<Button buttonText={buttonText} />
 				</Link>
 			</div>
@@ -25,7 +25,7 @@ const NoResults = ({ classes }) => (
 			<div className={classes.noResultsPhone}>
 				{noResultsMessage}
 				<Spacer height="20px" />
-				<Link to="/mini-app">
+				<Link to="/">
 					<Button buttonText={buttonText} />
 				</Link>
 			</div>
@@ -34,7 +34,7 @@ const NoResults = ({ classes }) => (
 		<Tablet>
 			<div className={classes.noResultsDesktop}>
 				{noResultsMessage}
-				<Link to="/mini-app">
+				<Link to="/">
 					<Button buttonText={buttonText} />
 				</Link>
 			</div>
@@ -43,7 +43,7 @@ const NoResults = ({ classes }) => (
 		<Desktop>
 			<div className={classes.noResultsDesktop}>
 				{noResultsMessage}
-				<Link to="/mini-app">
+				<Link to="/">
 					<Button buttonText={buttonText} />
 				</Link>
 			</div>
