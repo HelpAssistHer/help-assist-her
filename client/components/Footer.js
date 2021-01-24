@@ -41,12 +41,12 @@ const Footer = ({ classes }) => (
 					</div>
 
 					<div className={classes.links}>
-						<Link to="/about" className={classes.navigationLink}>
+						{/* <Link to="/about" className={classes.navigationLink}>
 							About
 						</Link>
 						<Link to="/feedback" className={classes.navigationLink}>
 							Feedback
-						</Link>
+						</Link> */}
 					</div>
 
 					<div className={classes.socialMediaFormatting}>
@@ -66,12 +66,12 @@ const Footer = ({ classes }) => (
 					</div>
 
 					<div className={classes.links}>
-						<Link to="/about" className={classes.navigationLink}>
+						{/* <Link to="/about" className={classes.navigationLink}>
 							About
 						</Link>
 						<Link to="/feedback" className={classes.navigationLink}>
 							Feedback
-						</Link>
+						</Link> */}
 					</div>
 
 					<div className={classes.socialMediaFormatting}>

@@ -38,7 +38,12 @@ module.exports = (_, { mode }) => ({
 		plugins.copy({ patterns: ['client/assets/favicon.ico'] }),
 		// plugins.favicons('./client/assets/favicon.ico'),
 		plugins.define({
-			NODE_ENV: mode,
+			// 'process.env.NODE_ENV': mode,
+			'process.env.ENABLE_APP': JSON.stringify(
+				process.env.NODE_ENV === 'dev' ||
+					process.env.NODE_ENV === 'localhost' ||
+					process.env.NODE_ENV === 'test',
+			),
 			VERIFICATION_PORTAL_FACEBOOK_APP_ID: JSON.stringify(
 				process.env.VERIFICATION_PORTAL_FACEBOOK_APP_ID,
 			),
