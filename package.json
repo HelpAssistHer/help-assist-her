@@ -57,7 +57,7 @@
 		"formik": "^2.1.4",
 		"google-libphonenumber": "^3.2.8",
 		"history": "^4.4.0",
-		"lodash": "4.17.13",
+		"lodash": "4.17.21",
 		"log": "^1.4.0",
 		"mocha": "6.2.2",
 		"moment": "2.19.3",
