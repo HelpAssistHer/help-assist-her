@@ -113,7 +113,7 @@
 		"eslint-plugin-standard": "4.0.1",
 		"husky": "4.3.0",
 		"jsdom": "16.4.0",
-		"postcss": "^8.1.10",
+		"postcss": "^8.2.10",
 		"prettier": "^2.2.1",
 		"pretty-quick": "^3.1.0",
 		"react-addons-test-utils": "^15.6.2",
