@@ -87,7 +87,7 @@
 		"redux-form": "^8.2.6",
 		"redux-thunk": "^2.3.0",
 		"slick-carousel": "^1.8.1",
-		"validator": "^13.0.0"
+		"validator": "^13.7.0"
 	},
 	"devDependencies": {
 		"@babel/core": "7.12.9",
