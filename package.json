@@ -60,7 +60,7 @@
 		"lodash": "4.17.13",
 		"log": "^1.4.0",
 		"mocha": "6.2.2",
-		"moment": "2.19.3",
+		"moment": "2.29.2",
 		"mongodb": "^3.3.4",
 		"mongodb-extjson": "^3.0.3",
 		"mongoose": "^5.7.11",
