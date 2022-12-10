@@ -51,7 +51,7 @@
 		"core-js": "^3.8.0",
 		"cors": "^2.8.1",
 		"csv": "^2.0.0",
-		"express": "^4.15.3",
+		"express": "^4.17.3",
 		"express-boom": "^2.0.0",
 		"express-session": "^1.15.2",
 		"formik": "^2.1.4",
